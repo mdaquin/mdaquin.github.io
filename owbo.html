@@ -1,0 +1,582 @@
+<html><head><title>OWBO - Ontology White Board</title></head>
+  <body>
+    <!-- top bar -->
+    <div id="functions" style="margin-top: 1vh; height: 4vh">
+      <a href="javascript:showPrefixes();"
+	 style="padding: 5px 10px 5px 10px; background: #254468; border-radius: 5px; color: white; text-decoration: none">prefixes</a>      
+      <input id="onto_name" type="text" value="onto" style="padding: 5px 10px 5px 10px; font-size: 14px; color: #254468; border-radius: 5px; border: 1px solid #254468"></input>
+      <a href="javascript: save();" style="padding: 5px 10px 5px 10px; background: #254468; border-radius: 5px; color: white; text-decoration: none">save</a> 
+      <span style="color: #254468">Load:</span> <input type="file" id="file-input" style="color: #254468"/>
+    </div>
+    <!-- prefix dialog -->
+    <div id="prefixes" style="display: none; position: fixed; top: 20%; left: 20%; width: 60%; background: white;">
+      <textarea id="prefixes_ta" style="width: 100%; height: 200px; border-radius: 5px; color: #254468">
+@base <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .    
+      </textarea>
+      <a href="javascript:showPrefixes();" style="float: right; margin-top: 5px; padding: 5px 10px 5px 10px; background: #254468; border-radius: 5px; color: white; text-decoration: none">OK</a>
+    </div>
+    <!-- actual drawing area --> 
+    <div id="owbo_board" style="width: 100%; height: 90vh"></div>    
+    <!-- help button and dialog -->
+    <div style="position: fixed; bottom: 10px; right: 10px;" id="help_button"><a href="javascript:showHelp();" style="color: #254468; font-size: 30px; text-decoration: none;">?</a></div>
+    <div id="help_dialog" style="display: none; color: #254468; border: 1px #254468 solid; border-radius: 5px; position: fixed; bottom: 10px; right: 50px; max-width: 50vw; padding: 10px;">
+	<p>Click/tap on the white space to create a class</p>
+    <p>Click/tap on class name to change it, or delete the class</p>
+	<p>Click/tap on class to create a property</p>
+    <p>Click/tap on property name to change it, or delete the property</p>
+	<p>Long click/tap on class to move it</p>
+    </div>
+    <!-- script -->
+    <script>	    
+// base / globals
+var events = []
+var classColour = "#D5EAF0"
+var classStroke =  "stroke-width: 0px; stroke: black"
+var litColour = "#fff"
+var litStroke =  "stroke-width: 1px; stroke: #254468"
+const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+svg.setAttribute("width", "100%")
+svg.setAttribute("height", "100%")
+svg.onmousemove = function() {classDragOver()};
+svg.onclick = function() {svg_clicked()};
+(function() {
+    document.getElementById("owbo_board").appendChild(svg);
+    document.getElementById("file-input")
+	.addEventListener("change", load, false);
+})();
+
+// variables
+var creating_prop = false;
+var prop_origin = undefined;
+var pcount=0;
+var clcount=0;
+var existingProp = {}
+
+// events
+function svg_clicked(){
+    hideHelp();
+    if (events.length>0 && events[events.length-1].type=="click" && (new Date().getTime() - events[events.length-1].time) < 200){
+    } else {
+	if (creating_prop) {
+	    creating_prop = false
+	    document.getElementById("prop_cr_message").remove()
+	} else {
+	    const mx = event.clientX
+	    const my = event.clientY
+	    addClass(mx,my,undefined)
+	}
+    }
+}
+var classDragged
+var dragging = false
+var timeStarted
+var deltaX
+var deltaY
+function classDragStart(el){
+    timeStarted = new Date().getTime()
+    if (!dragging){
+	classDragged = el
+	deltaX=parseInt(el.getAttribute("cx"))-event.clientX
+	deltaY=parseInt(el.getAttribute("cy"))-event.clientY	
+    } 
+}
+function classDragOver(){
+    if (dragging){
+	classDragged.setAttribute("cx", event.clientX+deltaX)
+	classDragged.setAttribute("cy", event.clientY+deltaY)
+	var tel = classDragged.parentNode.childNodes[1]
+	var mx = parseInt(classDragged.getAttribute("cx"))
+	var my = parseInt(classDragged.getAttribute("cy"))
+        var cltl = tel.getBBox().width
+        var clth = tel.getBBox().height      
+        tel.setAttribute("x", mx-(cltl/2))
+        tel.setAttribute("y", my+(clth/4))
+    }
+}
+function class_clicked(el){
+    if (new Date().getTime() - timeStarted > 500) {
+	dragging = true
+        events.push({type: "click", caughtby: "class__clicked", time: new Date().getTime()})	
+	var clname = el.parentNode.childNodes[1].innerHTML
+	const txt = document.createElement("div")
+	txt.setAttribute("style", "position:fixed; bottom: 20px; left:20%; text-align: center; width: 60%;")
+	txt.setAttribute("id","prop_cr_message")
+	txt.innerHTML="Dragging class "+clname+". Click/tap again to stop."
+	document.getElementsByTagName("BODY")[0].appendChild(txt);
+	return
+    } else if (dragging) {
+	dragging=false
+        events.push({type: "click", caughtby: "class__clicked", time: new Date().getTime()})
+	var clid = el.parentNode.getAttribute("id")
+	var props = document.getElementsByClassName("property_"+clid)
+	var toremove = []
+	for(var p in props)
+	    if (typeof props[p].remove == "function") 
+		toremove.push(props[p])	    
+	for(var e in toremove) {
+	    var classID1 = toremove[e].getAttribute("class").split(" ")[1].substring(9)
+	    var classID2 = toremove[e].getAttribute("class").split(" ")[2].substring(9)	    
+	    var x1 = parseInt(document.getElementById(classID1).childNodes[0].getAttribute("cx"))
+	    var y1 = parseInt(document.getElementById(classID1).childNodes[0].getAttribute("cy"))
+	    var x2 = parseInt(document.getElementById(classID2).childNodes[0].getAttribute("cx"))
+	    var y2 = parseInt(document.getElementById(classID2).childNodes[0].getAttribute("cy"))
+	    var label = toremove[e].childNodes[4].innerHTML
+	    console.log(x1+" "+y1+" "+x2+" "+y2)
+	    addProperty(x1,y1,x2,y2,classID1,classID2, label)
+	    toremove[e].remove()
+	}
+	document.getElementById("prop_cr_message").remove()
+	return 
+    }
+    if (events.length>0 && events[events.length-1].type=="click" && (new Date().getTime() - events[events.length-1].time) < 200){
+    } else {
+        events.push({type: "click", caughtby: "class__clicked", time: new Date().getTime()})
+	if (creating_prop){
+	    creating_prop = false
+	    document.getElementById("prop_cr_message").remove()	    
+	    var x1 = parseFloat(prop_origin.getAttribute("cx"))
+	    var y1 = parseFloat(prop_origin.getAttribute("cy"))
+	    var x2 = parseFloat(el.getAttribute("cx"))
+	    var y2 = parseFloat(el.getAttribute("cy"))
+	    var classId1 = prop_origin.parentNode.getAttribute('id')
+	    var classId2 = el.parentNode.getAttribute('id')	    
+	    addProperty(x1,y1,x2,y2,classId1,classId2, undefined)
+	} else {
+	    creating_prop = true
+	    prop_origin = el
+	    const txt = document.createElement("div")
+	    txt.setAttribute("style", "position:fixed; bottom: 20px; left:20%; text-align: center; width: 60%;")
+	    txt.setAttribute("id","prop_cr_message")
+	    txt.innerHTML="Creating a property. Select the destination class (or click/tap in white space to cancel)."
+	    document.getElementsByTagName("BODY")[0].appendChild(txt);
+	}
+    }
+}
+function class_name_clicked(el){
+    events.push({type: "click", caughtby: "class_name_clicked", time: new Date().getTime()})
+    changeClassName(el, el.innerHTML)
+}
+function property_name_clicked(el){
+    events.push({type: "click", caughtby: "property_name_clicked", time: new Date().getTime()})
+    changePropertyName(el, el.innerHTML)
+}
+function toUri(s){
+    if (s=="string") return "xsd:string"
+    if (s=="integer") return "xsd:integer"
+    if (s=="float") return "xsd:float"						    
+    if (s.indexOf(':')!==-1) return s
+    else return '<'+s+'>'
+}
+function save() {
+    events.push({type: "click", caughtby: "save", time: new Date().getTime()})
+    var data = document.getElementById("prefixes_ta").value
+    data += "\n@prefix owbo: <http://datascienceinstitute.ie/owbo/> . \n"
+    const svg = document.getElementsByTagName('svg')[0]
+    var gs = svg.getElementsByTagName('g')    
+    var classes = {}
+    var properties = {}
+    for (var g in gs){
+	if (gs[g] && gs[g].getAttribute){
+	    var id = gs[g].getAttribute('id')
+	    if (id.indexOf("property")==0){
+		var cl = gs[g].getAttribute("class").split(' ')
+		properties[id] = {}
+		properties[id].name = toUri(gs[g].childNodes[4].innerHTML)
+		properties[id].from = cl[1].substring(9)
+		properties[id].to = cl[2].substring(9)		
+	    } else if (id.indexOf("class")==0){
+		classes[id] = {}
+		classes[id].name=toUri(gs[g].childNodes[1].innerHTML)
+		classes[id].x=gs[g].childNodes[0].getAttribute('cx')
+		classes[id].y=gs[g].childNodes[0].getAttribute('cy')
+	    }
+	}
+    }
+    for(var p in properties) {
+	if (properties[p].name == "<isa>") {
+	    data += "\n"+classes[properties[p].from].name+" rdfs:subClassOf "+classes[properties[p].to].name+" . "
+	} else {
+	    data += "\n"+properties[p].name+" rdfs:domain "+classes[properties[p].from].name+" . "
+	    data += "\n"+properties[p].name+" rdfs:range "+classes[properties[p].to].name+" . "
+	}
+    }
+    for(var p in classes){
+	data += "\n"+classes[p].name+" owbo:x "+classes[p].x+" . "
+	data += "\n"+classes[p].name+" owbo:y "+classes[p].y+" . "	
+    }
+    var file = new Blob([data], {type: "text/plain"});
+    var filename = document.getElementById("onto_name").value+".ttl"
+    if (window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    } else { 
+        var a = document.createElement("a"),
+            url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
+}
+function load(e){
+    document.getElementsByTagName('svg')[0].innerHTML=''
+    existingProp = {}
+    var file = e.target.files[0]
+    document.getElementById("onto_name").value = file.name.replace(/\.ttl/, '')
+    if (!file) {
+	return
+    }
+    var reader = new FileReader()
+    reader.onload = function(e) {
+	const contents = e.target.result
+	var lines = contents.split(/\r?\n/)
+	var prefstr = ""
+	var properties = {}
+	var classes = {}
+	for (var l in lines){
+	    var tr = lines[l].split(/  */)
+	    if (tr[0]=='@base' || tr[0]=='@prefix')
+		prefstr += lines[l]+'\n'
+	    else {
+		if (tr.length > 3){
+		    if (tr[1]=='rdfs:domain'){
+			if (!properties[tr[0]])
+			    properties[tr[0]] = []			
+			if (properties[tr[0]].length > 0 &&
+			    !properties[tr[0]][properties[tr[0]].length-1].domain)
+			    properties[tr[0]][properties[tr[0]].length-1].domain = tr[2]
+			else
+			    properties[tr[0]].push({'domain': tr[2]})
+		    }
+		    if (tr[1]=='rdfs:range'){
+			if (!properties[tr[0]])
+			    properties[tr[0]] = []
+			if (properties[tr[0]].length > 0 &&
+			    !properties[tr[0]][properties[tr[0]].length-1].range)
+			    properties[tr[0]][properties[tr[0]].length-1].range = tr[2]
+			else
+			    properties[tr[0]].push({'range': tr[2]})
+		    }
+		    if (tr[1]=='rdfs:subClassOf'){
+			if (!properties["isa"])
+			    properties["isa"] = []			
+			properties["isa"].push({'domain': tr[0], 'range': tr[2]})
+		    }
+		    if (tr[1]=='owbo:x'){
+			if (classes[tr[0]])
+			    classes[tr[0]].x = tr[2]
+			else			    
+			    classes[tr[0]] = {'x': tr[2]}
+		    }
+		    if (tr[1]=='owbo:y'){
+			if (classes[tr[0]])
+			    classes[tr[0]].y = tr[2]
+			else			    
+			    classes[tr[0]] = {'y': tr[2]}
+		    }
+		}
+	    }
+	}
+	console.log(properties)
+	console.log(classes)	
+	document.getElementById('prefixes_ta').value=prefstr
+	var clids = {}
+	for (var c in classes){
+	    var clid = addClass(parseInt(classes[c].x), parseInt(classes[c].y), c.replace(/>/,'').replace(/</,'').replace("xsd:", ""))
+	    clids[c] = clid
+	}
+	console.log(clids)
+	for (var p in properties){
+	    for(var i in properties[p]){
+		pr = properties[p][i]	    
+		console.log(p)
+		console.log(pr)
+		addProperty(parseInt(classes[pr.domain].x),
+			    parseInt(classes[pr.domain].y),
+			    parseInt(classes[pr.range].x),
+			    parseInt(classes[pr.range].y), 
+			    clids[pr.domain],
+			    clids[pr.range], p.replace(/>/,'').replace(/</,'').replace("xsd:", ""))
+	    }
+	}
+    };
+    reader.readAsText(file);
+}
+function showPrefixes(){
+    if (document.getElementById("prefixes").style.display == "block")
+	document.getElementById("prefixes").style.display = "none"
+    else
+	document.getElementById("prefixes").style.display = "block"
+}
+function showHelp(){
+    if (document.getElementById("help_dialog").style.display == "block")
+	document.getElementById("help_dialog").style.display = "none"
+    else
+	document.getElementById("help_dialog").style.display = "block"	
+}
+function hideHelp(){
+    document.getElementById("help_dialog").style.display = "none"
+}
+// changing model
+function addClass(mx,my,name){
+    const clg = document.createElementNS("http://www.w3.org/2000/svg", "g")
+    clg.setAttribute("id", "class_"+(clcount++))  
+    const clcir = document.createElementNS("http://www.w3.org/2000/svg", "ellipse")
+    clcir.setAttribute("cx", mx)
+    clcir.setAttribute("cy", my)
+    clcir.setAttribute("rx", "60")
+    clcir.setAttribute("ry", "30")
+    clcir.setAttribute("fill", classColour)
+    clcir.setAttribute("style", classStroke)    
+    clcir.setAttribute("class", "owbo_class")
+    clcir.setAttribute("draggable", "true")    
+    clcir.onmousedown = function() {classDragStart(this);}
+    clcir.onmousemove = function() {classDragOver(this);}
+//    clcir.onmouseleave = function() {class_clicked(this);}
+    clcir.onmouseup = function() {class_clicked(this);}
+    clg.appendChild(clcir)
+    const cltext = document.createElementNS("http://www.w3.org/2000/svg", "text")
+    clname = "New Class"
+    if (name) clname = name
+    cltext.innerHTML= clname
+    cltext.setAttribute("x", mx)
+    cltext.setAttribute("y", my)
+    cltext.setAttribute("style", "fill: #254468")
+    clg.appendChild(cltext)
+    svg.appendChild(clg)
+    var cltl = cltext.getBBox().width
+    var clth = cltext.getBBox().height      
+    cltext.setAttribute("x", mx-(cltl/2))
+    cltext.setAttribute("y", my+(clth/4))
+    cltext.setAttribute("class", "owbo_class_name")
+    cltext.onclick = function() {class_name_clicked(this)}
+    if (!name)
+	changeClassName(cltext, undefined)
+    else {
+	if (name=="string"){
+	    clcir.setAttribute("fill", litColour)
+	    clcir.setAttribute("class", "owbo_literal")
+	    clcir.setAttribute("style", litStroke)   
+	}
+	if (name =="integer" || name =="int"){
+	    clcir.setAttribute("fill", litColour)
+	    clcir.setAttribute("class", "owbo_literal")
+	    clcir.setAttribute("style", litStroke)   
+	}
+	if (name=="float"){
+	    clcir.setAttribute("fill", litColour)
+	    clcir.setAttribute("class", "owbo_literal")
+	    clcir.setAttribute("style", litStroke)   
+	}
+    }
+    return "class_"+(clcount-1)
+}
+function addProperty(ox1,y1,ox2,y2,c1,c2,pname){
+    var x1 = ox1; var x2 = ox2;
+    if (ox1==ox2 && y1==y2) {x1 = ox1 - 20; x2 = ox2 + 20;}
+    const pg = document.createElementNS("http://www.w3.org/2000/svg", "g")
+    pg.setAttribute("id", "property_"+(pcount++))
+    pg.setAttribute("class", "property_"+c1+"_"+c2+" property_"+c1+" property_"+c2)
+    var mx = (x1+x2)/2
+    var my = (y1+y2)/2
+    var label = Math.max(x1,x2)+" "+Math.max(y1,y2)+" "+Math.min(x1,x2)+" "+Math.min(y1,y2)
+    var l = Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2))
+    var cosa = (x2-x1)/l
+    var sina = (y2-y1)/l    
+    if (!existingProp[label])
+	existingProp[label] = 1
+    else
+	existingProp[label]++
+    var sign = 1
+    if (existingProp[label]%2==0) sign = -1    
+    if (ox1==ox2 && y1==y2) my = my + (sign*100)
+    var increment = 20*Math.floor(existingProp[label]/2)
+    if (Math.abs(cosa)>Math.abs(sina)) my += sign*increment
+    else mx += sign*increment
+    const pline11 = document.createElementNS("http://www.w3.org/2000/svg", "line")
+    pline11.setAttribute("x1", x1)
+    pline11.setAttribute("y1", y1)
+    pline11.setAttribute("x2", mx)
+    pline11.setAttribute("y2", my)
+    pline11.setAttribute("style", "stroke-width: 1px; stroke: #254468; stroke-dasharray: 3 1;")
+    pg.appendChild(pline11)
+    const pline12 = document.createElementNS("http://www.w3.org/2000/svg", "line")
+    pline12.setAttribute("x1", mx)
+    pline12.setAttribute("y1", my)
+    pline12.setAttribute("x2", x2)
+    pline12.setAttribute("y2", y2)
+    pline12.setAttribute("style", "stroke-width: 1px; stroke: #254468; stroke-dasharray: 3 1;")
+    pg.appendChild(pline12)    
+    console.log(mx+" "+my+" "+l+" "+cosa+" "+sina)
+    const pline2 = document.createElementNS("http://www.w3.org/2000/svg", "line")
+    pline2.setAttribute("x1", mx)
+    pline2.setAttribute("y1", my)
+    pline2.setAttribute("x2", mx+((cosa*-10)-(sina*-5)))
+    pline2.setAttribute("y2", my+((cosa*-5)-(sina*10)))
+    pline2.setAttribute("style", "stroke-width: 1px; stroke: #254468")
+    pg.appendChild(pline2)
+    const pline3 = document.createElementNS("http://www.w3.org/2000/svg", "line")
+    pline3.setAttribute("x1", mx)
+    pline3.setAttribute("y1", my)
+    pline3.setAttribute("x2", mx+((cosa*-10)-(sina*+5)))
+    pline3.setAttribute("y2", my+((cosa*+5)-(sina*10)))
+    pline3.setAttribute("style", "stroke-width: 1px; stroke: #254468")
+    pg.appendChild(pline3)
+    const ptext = document.createElementNS("http://www.w3.org/2000/svg", "text")    
+    ptext.innerHTML=pname
+    if (!pname) ptext.innerHTML="New Property"
+    ptext.setAttribute("x", mx-10)
+    ptext.setAttribute("y", my-10)
+    ptext.setAttribute("style", "fill: #254468")
+    pg.appendChild(ptext)
+    svg.insertBefore(pg, svg.childNodes[0])
+    var cltl = ptext.getBBox().width
+    var clth = ptext.getBBox().height      
+    ptext.setAttribute("x", mx-10-(cltl/2))
+    ptext.setAttribute("y", my-10+(clth/4))
+    ptext.setAttribute("class", "owbo_property_name")
+    ptext.onclick = function() {property_name_clicked(this)}
+    if (!pname)
+	changePropertyName(ptext, undefined)
+    else if (pname=="isa"){
+	    pline11.parentNode.children[0].setAttribute("style",  "stroke-width: 1px; stroke: black;")
+	    pline12.parentNode.children[1].setAttribute("style",  "stroke-width: 1px; stroke: black;")	
+	}
+}
+function changeClassName(el, v){
+    var diags = document.getElementsByClassName('diag')
+    if (diags.length!=0) diags[0].remove()
+    const body = document.getElementsByTagName("BODY")[0]
+    const ndiv = document.createElement("div")
+    const pp = el.parentNode    
+    ndiv.setAttribute("style", "position:fixed; top: 100px; left: 20%; width: 60%; background: white; border: 1px solid #666; border-radius: 10px; padding: 10px 10px 10px 10px;")
+    ndiv.setAttribute("id", "diag_n_"+pp.id)
+    ndiv.setAttribute("class", "diag")    
+    const inputtext = document.createElement("input")
+    inputtext.setAttribute("type", "text")
+    inputtext.setAttribute("style", "width: 100%; border: 1px solid #aaa; padding: 5px 5px 5px 5px; border-radius: 5px;")
+    inputtext.setAttribute("placeholder", "class name")
+    if (v){
+	inputtext.setAttribute("value", v)
+    }
+    inputtext.onchange = function() {
+	var newname = this.value
+	var isLiteral = false
+	if (newname.toLowerCase()=="string" || newname.toLowerCase()=="str"){
+	    newname="string"
+	    isLiteral=true
+	}
+	if (newname.toLowerCase()=="integer" || newname.toLowerCase()=="int"){
+	    newname="integer"
+	    isLiteral=true	    
+	}
+	if (newname.toLowerCase()=="float" || newname.toLowerCase()=="double"){
+	    newname="float"
+	    isLiteral=true	    
+	}
+	el.innerHTML = newname
+	const p = el.previousSibling
+	var mx = parseInt(p.getAttribute("cx"))
+	var my = parseInt(p.getAttribute("cy"))
+        var cltl = el.getBBox().width
+        var clth = el.getBBox().height      
+        el.setAttribute("x", mx-(cltl/2))
+        el.setAttribute("y", my+(clth/4))
+	p.setAttribute("rx", (cltl/2)+20)
+	p.setAttribute("ry", (clth/2)+20)
+	if (isLiteral){
+	    p.setAttribute("fill", litColour)
+	    p.setAttribute("class", "owbo_literal")
+	    p.setAttribute("style", litStroke)   
+	} else {
+	    p.setAttribute("fill", classColour)
+	    p.setAttribute("class", "owbo_class")
+	    p.setAttribute("style", classStroke)	   
+	}
+	ndiv.remove()
+    }
+    const message = document.createElement("p")
+    message.setAttribute("class", "message")
+    message.innerHTML="Type <i>string</i>, <i>str</i>, <i>integer</i>, <i>int</i>, <i>float</i>, or <i>double</i> to refer to a literal of a specific datatype"
+    const dl = document.createElement("a")
+    dl.href= "javascript:deleteClass('"+pp.id+"');"
+    dl.innerHTML = "delete class"
+    ndiv.appendChild(inputtext)
+    ndiv.appendChild(message)    
+    ndiv.appendChild(dl)
+    body.appendChild(ndiv)
+    inputtext.focus()
+}
+function changePropertyName(el, v){
+    var diags = document.getElementsByClassName('diag')
+    if (diags.length!=0) diags[0].remove()
+    const body = document.getElementsByTagName("BODY")[0]
+    const ndiv = document.createElement("div")
+    const pp = el.parentNode
+    ndiv.setAttribute("style", "position:fixed; top: 100px; left: 20%; width: 60%; background: white; border: 1px solid #666; border-radius: 10px; padding: 10px 10px 10px 10px;")
+    ndiv.setAttribute("id", "diag_n_"+pp.id)
+    ndiv.setAttribute("class", "diag")    
+    const inputtext = document.createElement("input")
+    inputtext.setAttribute("type", "text")
+    inputtext.setAttribute("style", "width: 100%; border: 1px solid #aaa; padding: 5px 5px 5px 5px; border-radius: 5px;")
+    inputtext.setAttribute("placeholder", "property name")
+    if (v){
+	inputtext.setAttribute("value", v)
+    }
+    inputtext.onchange = function() {
+	var newname = this.value
+	el.parentNode.children[0].setAttribute("style",  "stroke-width: 1px; stroke: black; stroke-dasharray: 3 1;")
+	el.parentNode.children[1].setAttribute("style",  "stroke-width: 1px; stroke: black; stroke-dasharray: 3 1;")	
+	if (newname.toLowerCase() == "subclassof" || newname.toLowerCase() == "isa"){
+	    newname = "isa"
+	    el.parentNode.children[0].setAttribute("style",  "stroke-width: 1px; stroke: black;")
+	    el.parentNode.children[1].setAttribute("style",  "stroke-width: 1px; stroke: black;")	
+	}
+	el.innerHTML = newname
+	const p = el.previousSibling
+	var mx = parseFloat(p.getAttribute("x1"))
+	var my = parseFloat(p.getAttribute("y1"))
+        var cltl = el.getBBox().width
+        var clth = el.getBBox().height      
+        el.setAttribute("x", mx-10-(cltl/2))
+        el.setAttribute("y", my-10+(clth/4))
+	ndiv.remove()
+	  }
+    const message = document.createElement("p")
+    message.setAttribute("class", "message")
+    message.innerHTML="Type <i>subClassOf</i> or <i>isa</i> to create a subclass relation."
+    const dl = document.createElement("a")
+    dl.href= "javascript:deleteProperty('"+pp.id+"');"
+    dl.innerHTML = "delete property"
+    ndiv.appendChild(inputtext)
+    ndiv.appendChild(message)
+    ndiv.appendChild(dl)
+    body.appendChild(ndiv)
+    inputtext.focus()    
+}
+function deleteClass(id){
+    document.getElementById("diag_n_"+id).remove()
+    document.getElementById(id).remove()
+    var props = document.getElementsByClassName("property_"+id)
+    console.log(props)
+    var toremove = []
+    for(var p in props)
+	if (typeof props[p].remove == "function") 
+	    toremove.push(props[p])
+    for(var e in toremove)
+	toremove[e].remove()
+}
+function deleteProperty(id){
+    document.getElementById("diag_n_"+id).remove()
+    document.getElementById(id).remove()
+}
+    </script>    
+  </body>
+</html>
