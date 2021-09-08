@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="graph_search.js"></script>
+        <script src="show_graph.js"></script>
+        <script src="gui.js"></script>
+        <style>
+            *{box-sizing: border-box;}
+            .node{fill: #ccc;stroke: #fff;stroke-width: 0px;}
+            .origin{fill: #118822;stroke: #004402;stroke-width: 0px;}
+            .target{fill: #881122;stroke: #440002;stroke-width: 0px;}
+            .path{fill: #112288;stroke: #440002;stroke-width: 0px;}
+            .link{stroke: #777;stroke-width: 1px;}
+            .button{background: #226600; padding: 5px; border-radius: 5px; margin-top: 10px; color: white; text-decoration: none}
+            #origin {fill: #118822}
+            #target {fill: #881122}
+            #control { float: left; width: 20%;}
+            #graph { float: left; width: 80%; height: 100%}
+            #message {display: none;} 
+            #searchControl{display: none;}
+            #heuristic{display: none;}
+            #dfs_params{display: none;
+        </style>
+    </head>
+    </html>
+    <body>
+        <div id="control">
+            <div id="graphgencontrol">
+                Max number of levels from root: <input id="maxlevel" type="number" value=4 style="width: 40px"/><br/>
+                Max number of branchs per node: <input id="maxbranchs" type="number" value=4 style="width: 40px"/><br/>
+                Linking to existing nodes (0 for tree): <input id="reuserate" type="number" step=0.1 value=0.0 style="width: 40px"/> <br/>
+                <br/>
+                <a href="javascript:generate();" class="button">Generate Graph</a><br/><br/>
+            </div>
+            <div id="message">Click on two nodes to select initial state and end state.</div>
+            <div id="searchcontrol">
+                Speed:
+                <input type="number" id="speed" value=5 style="width: 40px"></input><br/><br/>
+                <select id="graphtype">
+                    <option value="bfs">Breadth First Search</option>
+                    <!-- <option value="bbfs">Bi-directional BFS</option> -->
+                    <option value="dfs">Depth First Search</option>
+                    <!-- <option value="bestfs">Best First Search</option> -->     
+<!--                    <option value="a*">A*</option> -->
+                </select><br/><br/>
+                <div id="dfs_params">
+                    Depth limit: 
+                    <input type="number" id="dlimit" value=0 style="width: 40px"></input><br/><br/>
+                </div>
+                <div id="heuristic">
+                    Heuristic is the straight-line distance.<br/><br/>
+                 </div>
+        <a class="button" href="javascript:go()">go</a> <a class="button" href="javascript:clear()" style="background: #661122">clear</a>
+            </div>
+        </div>
+        <div id="graph"></div>
+    </body>
+    </html>
+
