@@ -3,10 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>Mathieu d'Aquin - Data and Knowledge Engineering Research</title>
-  <meta name='description' content='Mathieu d'Aquin is a researcher and a developper. Director of the Data Science Institute at NUI Galway, Ireland and Site-Director of the Insight SFI Research Centre for Data Analytics. His work addresses semantic web, linked data, knowledge engineering, ontologies, the internet of things, artificial intelligence, smart cities, privacy, data ethics.' />
-<link rel='canonical' href='https://www.adaptcentre.ie' />
+  <meta name='description' content='Mathieu d'Aquin is a professor, researcher and a developper. His work addresses current challenges in bridging the gap between raw, heterogeneous, multi-source data, and exploitable knowledge. His research on the semantic web, linked data, knowledge engineering, ontologies, artificial intelligence, privacy and data ethics has been applied in many different domaines.'>
 <style>
-
   @font-face {
   font-family: 'simplificasimplifica';
   src: url('fonts/simplifica_typeface-webfont.woff2') format('woff2'),
@@ -20,6 +18,7 @@
   padding: 0px;
   border: 0px;
   color: #333;
+  box-sizing: border-box;
   }
   h1 {
   font-size: 6vw;
@@ -29,7 +28,7 @@
   margin-left: 2vw;
   }
   .title{
-  font-size: 2vw;
+  font-size: 2.5vw;
   margin-bottom: 1vh;
   margin-left: 2vw;
   }
@@ -38,7 +37,7 @@
   font-weight: 600;
   }
   #photo{
-  width: 19%;
+  width: 30%;
   float: left;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -49,9 +48,15 @@
   width: 100%;
   }
   #description{
-  width: 55%;
+  width: 69%;
   float: left;
   padding-left: 3%;
+  padding-right: 3%;
+  }
+  #bio {
+  margin-left: 2vw;
+  font-size: 2vw;
+  margin-top: 4vh;
   }
   #ilogos{
   float: right;
@@ -64,7 +69,7 @@
   padding-top: 10%;
   }
   #smlogos {
-  margin-top: 4vh;
+  margin-top: 6vh;
   }
   #smlogos img{
   width: 6%;
@@ -77,12 +82,14 @@
   overflow-y: hidden;
   padding-left: 2vw;
   padding-top: 6vh;
+  display: none;
   }
   #publications{
   float: right;
   width: 65%;
   height: 300vh;
   overflow: hidden;
+  display: none;
   }
   h2{
   font-size: 5vh;
@@ -117,10 +124,10 @@
     </div> <!-- photo -->
     <div id="description">
       <h1 id="name">Mathieu d'Aquin</h1>
-      <p class="title">Established Professor (chair) of Data Analytics</p>
-      <p class="title">Director of the <a href="http://datascienceinstitute.ie">Data Science Institute</a></p>
-      <p class="title">Site-Director of the <a href="http://insight-centre.org">Insight SFI Research Centre for Data Analytics</a></p>
-      <p class="title">National University of Ireland Galway (<a href="nuigalway.ie">NUI Galway</a>)</p>
+      <p class="title">Professor of computer science
+      <p class="title">LORIA/IDMC</p>
+      <p class="title">Université de Lorraine, Nancy, France</p>
+      <p id="bio">Mathieu d'Aquin is a professor, researcher and a developper. His work addresses current challenges in bridging the gap between raw, heterogeneous, multi-source data, and exploitable knowledge. His research on the semantic web, linked data, knowledge engineering, ontologies, artificial intelligence, privacy and data ethics has been applied in many different domaines.</p>
       <p id="smlogos" class="logos">
 	<a href="https://twitter.com/mdaquin"><img src="imgs/twitter.png" /></a>	
 	<a href="https://www.linkedin.com/in/mathieudaquin/"><img src="imgs/linkedin.png" /></a>
@@ -130,9 +137,9 @@
 	<a href="https://www.flickr.com/photos/xcv"><img src="imgs/flickr.png" /></a>
 	<a href="https://www.youtube.com/channel/UC3BAUeegB9s86GFlN1aiEXQ"><img src="imgs/youtube.png" /></a>
 	<a href="https://www.instagram.com/mdaquin/"><img src="imgs/instagram.png" /></a>		
-      </p> <!-- smlogos -->
+      </p> <!-- smlogos -->      
     </div> <!-- description -->
-    <div id="ilogos" class="logos">
+<!--    <div id="ilogos" class="logos">
       <a href="http://datascienceinstitute.ie"><img src="imgs/DSI_logo.png" /></a>
       <a href="http://nuigalway.ie"><img src="imgs/NUIG-logo.jpg" /></a>
       <a href="http://insight-centre.org"><img src="imgs/insight-logo.png" /></a>
