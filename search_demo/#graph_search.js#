@@ -1,0 +1,42 @@
+// Data Structure and search algorithms
+// in graphs. Used as part of search demo
+// @mdaquin
+
+class DirectedGraphNode {
+    // build random graph with up to 
+    // maxLevel levels, up to maxBranch 
+    // branches for each node, and that will 
+    // reuse existing nodes at the rate of reuseRate
+    // a reuse rate of 0 means that it will be a tree
+    // optional parameter kn is used to list known nodes
+    // for recursion. The first one is the root.
+    constructor(maxLevel, maxBranch, reuseRate, kn=[]){
+	this.id = "node"+Math.random()
+        kn.push(this)
+        if (maxLevel > 0) {
+            this.children = []
+            const nbc = 1+Math.floor(Math.random()*(maxBranch))
+            for(var i =0; i < nbc; i++){
+                // reuse from kn
+                if (Math.random()<reuseRate){
+                    const kni = Math.floor(Math.random()*kn.length)
+                    this.children.push(kn[kni])
+                } else {
+                    var newN = new DirectedGraphNode(maxLevel-1, maxBranch, reuseRate, kn)
+                    this.children.push(newN)
+                    kn.push(newN)
+                }
+            }
+        }
+    }
+    
+    // recursivly lists all nodes 
+    // assuming this is the root of the graph
+    listNodes(vn = []) {
+        if (vn.indexOf(this) != -1) return []
+        var result = [this]
+        for(var c in this.children) result = result.concat(this.children[c].listNodes(vn.concat([this])))
+        return result
+    }
+    
+}

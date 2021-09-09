@@ -72,11 +72,10 @@ function highlight(a){
 
 function resetHighlights(){
        var ps = document.getElementsByClassName("path")
-       while (ps.length > 0){ 
-           console.log(ps)
-           for (var p in ps) 
-               if (ps[p].setAttribute) ps[p].setAttribute("class", "node")
-       }
+       console.log(ps)
+       for (var p in ps) 
+           if (ps[p].setAttribute) ps[p].setAttribute("class", "node")
+           if (ps[p].attr) ps[p].attr("class", "node")
 }
 
 function hideSearchControl(){
