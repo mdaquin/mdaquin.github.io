@@ -13,7 +13,7 @@ window.addEventListener('load', function () {
             document.getElementById("dfs_params").style.display = "block"
         else 
             document.getElementById("dfs_params").style.display = "none"
-        if (type=="a*" || type=="bestfs") 
+        if (type=="a*" || type=="gbefs" || type=="befs") 
             document.getElementById("heuristic").style.display = "block"
         else 
             document.getElementById("heuristic").style.display = "none"
@@ -42,7 +42,8 @@ function nodeClicked(a){
 function makeOrigin(a){
     origin = a
     resetOrigin()
-    document.getElementById(a.id).setAttribute("class", "origin")
+    var elms = document.querySelectorAll("[id='"+a.id+"']");
+    elms[elms.length-1].setAttribute("class", "origin")
     document.getElementById("message").style.display = "none"
     if (target!=undefined) showSearchControl()
 }
@@ -50,7 +51,8 @@ function makeOrigin(a){
 function makeTarget(a){
     target = a
     resetTarget()
-    document.getElementById(a.id).setAttribute("class", "target")
+    var elms = document.querySelectorAll("[id='"+a.id+"']");
+    elms[elms.length-1].setAttribute("class", "target")
     if (origin!=undefined) showSearchControl()   
 }
 
@@ -67,7 +69,8 @@ function resetTarget(){
 }
 
 function highlight(a){
-    document.getElementById(a.id).setAttribute("class", "path")    
+    var elms = document.querySelectorAll("[id='"+a.id+"']")
+    elms[elms.length-1].setAttribute("class", "path")    
 }
 
 function resetHighlights(){
@@ -92,6 +95,9 @@ function go(){
        var type = document.getElementById("graphtype").value
        if (type == "dfs") origin.dfs(target, document.getElementById("dlimit").value)
        if (type == "bfs") origin.bfs(target, document.getElementById("dlimit").value)
+       if (type == "gbefs") origin.gbefs(target, document.getElementById("dlimit").value)
+       if (type == "befs") origin.befs(target)
+
 }
 
 function clear(){

@@ -59,20 +59,12 @@ class DirectedGraphNode {
         return result
     }
     
-    // depth first search 
-    async dfs(target, limit=0, kn=[]){
-        if (this == target || kn.indexOf(this)!=-1){
-            return this == target // should return path...
-        }
-        console.log(this.id)
-        if (kn.length!=0) highlight(this)
-        kn.push(this)
-        if (limit!=1)
-        for(var i in this.links) { 
-            await new Promise(r => setTimeout(r, (10-speed)*75));
-            var res = await this.links[i].dfs(target, limit-1, kn)
-            if (res) return true
-        }
+    // heuristique function
+    h(target){
+     var dist = Math.sqrt(((this.x-target.x)**2)+((this.y-target.y)**2))
+     var width = document.getElementById("graph").offsetWidth
+     var height = document.getElementById("graph").offsetHeight
+     return dist/Math.min(width,height)
     }
     
     // breadth first search
@@ -93,5 +85,62 @@ class DirectedGraphNode {
             }
         }
     }
+       
+    // depth first search 
+    async dfs(target, limit=0, kn=[]){
+        if (this == target || kn.indexOf(this)!=-1){
+            return this == target // should return path...
+        }
+        console.log(this.id)
+        if (kn.length!=0) highlight(this)
+        kn.push(this)
+        if (limit!=1)
+        for(var i in this.links) { 
+            await new Promise(r => setTimeout(r, (10-speed)*75));
+            var res = await this.links[i].dfs(target, limit-1, kn)
+            if (res) return true
+        }
+    }
+    
+    // hill-climbing (greedy best-first-search
+    async gbefs(target, limit=0, kn=[]){
+        if (this == target || kn.indexOf(this)!=-1){
+            return this == target
+        }
+        console.log(this.id)
+        console.log(this.h(target))
+        if (kn.length!=0) highlight(this)
+        kn.push(this)
+        if (limit!=1)
+        this.links.sort(function(a,b){ 
+            return a.h(target)-b.h(target) } )
+        for(var i in this.links) { 
+            await new Promise(r => setTimeout(r, (10-speed)*75));
+            var res = await this.links[i].gbefs(target, limit-1, kn)
+            if (res) return true
+        }
+    }
+
+    // best first search
+    async befs(target){
+        var akn = []
+        var list = [this]
+        while (list.length > 0){
+            var n = list.shift()
+            console.log(n.id)
+            if (akn.indexOf(n)!= -1) continue
+            if (n == target) return
+            if (akn.length!=0) highlight(n)
+            akn.push(n)
+            await new Promise(r => setTimeout(r, (10-speed)*75));
+            for (var i in n.links){
+                var nn = n.links[i]
+                list.push(nn)
+            }
+            list.sort(function(a,b){ 
+            return a.h(target)-b.h(target) } )
+        }
+    }
+
     
 }
