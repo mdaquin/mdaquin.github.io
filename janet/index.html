@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | MODS 45: Janet</title>
+  </head>
+  <body style="text-align: center">
+    <canvas id="unity-canvas" width=960 height=600 style="width: 960px; height: 600px; background: #231F20"></canvas>
+    <script src="Build/126f6c7a556bf94001fa232dafce8ab6.js"></script>
+    <script>
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/6eb0961c109dc5e722042feb344b2246.data",
+        frameworkUrl: "Build/8ccb281af00c5213681e3bbc8c8c1ebd.js",
+        codeUrl: "Build/01b0551b809bd1927781d303a163d2c5.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Hairy Game Dev",
+        productName: "MODS 45: Janet",
+        productVersion: "1.0",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      });
+    </script>
+  </body>
+</html>
