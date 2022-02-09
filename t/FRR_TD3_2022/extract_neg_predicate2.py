@@ -6,7 +6,7 @@ headers = []
 data = []
 
 with open("mkbodies.csv") as f:
-    line = f.readline()
+    line = f.readline().strip()
     first = True
     while line:
         la = line.split(",")
@@ -15,7 +15,7 @@ with open("mkbodies.csv") as f:
             first = False
         else:
             data.append(la)
-        line = f.readline()
+        line = f.readline().strip()
         
 def tovar(s):
     return s.lower().replace(" ", "").replace(".", "").replace("-", "")
