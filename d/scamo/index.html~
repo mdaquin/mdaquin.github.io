@@ -1,0 +1,23 @@
+<html>
+  <head><title>CSV files for scamo</title></head>
+  <body>
+
+    <h1>Scamo</h1>
+
+
+    <h2>Base centrale</h2>
+    <ul>
+    <li><a href="offices.csv">offices.csv</a></li>
+    <li><a href="productlines.csv">productlines.csv</a></li>
+    <li><a href="employees.csv">employees.csv</a></li>
+    <li><a href="products.csv">products.csv</a></li>
+    </ul>
+    <h2>Base client</h2>
+    <ul>
+    <li><a href="customers.csv">customers.csv</a></li>
+    <li><a href="orders.csv">orders.csv</a></li>
+    <li><a href="orderdetails.csv">orderdetails.csv</a></li>
+    <li><a href="payments.csv">payments.csv</a></li>
+    </ul>
+  </body>
+</html>
