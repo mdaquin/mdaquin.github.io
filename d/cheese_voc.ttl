@@ -14,40 +14,40 @@ cs:certification rdfs:domain cs:Food ;
 
 cs:country rdfs:domain cs:Food ;
 	   rdfs:range cs:Country ;
-	   rdfs:subPropertyOf cs:location ;
+	   rdfs:subPropertyOf cs:location .
 
 cs:municipality rdfs:domain cs:Food ;
 	   rdfs:range cs:Municipality ;
-	   rdfs:subPropertyOf cs:location ;
+	   rdfs:subPropertyOf cs:location .
 
 cs:province rdfs:domain cs:Food ;
 	   rdfs:range cs:Province ;
-	   rdfs:subPropertyOf cs:location ;
+	   rdfs:subPropertyOf cs:location .
 
 cs:region rdfs:domain cs:Food ;
 	   rdfs:range cs:Region ;
-	   rdfs:subPropertyOf cs:location ;
+	   rdfs:subPropertyOf cs:location .
 
 cs:location rdfs:domain cs:Food ;
 		 rdfs:range cs:Location .
 
 cs:milkProcessing rdfs:domain cs:DairyProduct ;
 		 rdfs:range cs:MilkProcess ;
-		 rdfs:subPropertyOf cs:foodCharacteristic.
+		 rdfs:subPropertyOf cs:foodCharacteristic .
 
 cs:milkSource rdfs:domain cs:DairyProduct ;
 		 rdfs:range cs:MilkSource ;
-		 rdfs:subPropertyOf cs:foodCharacteristic.
+		 rdfs:subPropertyOf cs:foodCharacteristic .
 
 cs:milkType rdfs:domain cs:DairyProduct ;
 		 rdfs:range cs:MilkType ;
-		 rdfs:subPropertyOf cs:foodCharacteristic.		 
+		 rdfs:subPropertyOf cs:foodCharacteristic .		 
 
 cs:texture rdfs:domain cs:Cheese ;
 		 rdfs:range cs:CheeseTexture ;
-		 rdfs:subPropertyOf cs:foodCharacteristic.
+		 rdfs:subPropertyOf cs:foodCharacteristic .
 
 cs:foodCharacteristic rdfs:domain cs:Food .
 
 cs:use rdfs:domain cs:Food ;
-       rdfs:range cs:FoodUse ;
+       rdfs:range cs:FoodUse .
