@@ -1,0 +1,270 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.w3.org/2002/07/owl#> .
+
+[ rdf:type owl:Ontology
+ ] .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/ontology/conduct
+<https://idmc.univ-lorraine.fr/ontology/conduct> rdf:type owl:AnnotationProperty ;
+                                                 rdfs:subPropertyOf <https://idmc.univ-lorraine.fr/ontology/involvedIn> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/gives
+<https://idmc.univ-lorraine.fr/ontology/gives> rdf:type owl:AnnotationProperty ;
+                                               rdfs:subPropertyOf <https://idmc.univ-lorraine.fr/ontology/involvedIn> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/includes
+<https://idmc.univ-lorraine.fr/ontology/includes> rdf:type owl:AnnotationProperty ;
+                                                  rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Course> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/involvedIn
+<https://idmc.univ-lorraine.fr/ontology/involvedIn> rdf:type owl:AnnotationProperty .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/responsibleFor
+<https://idmc.univ-lorraine.fr/ontology/responsibleFor> rdf:type owl:AnnotationProperty ;
+                                                        rdfs:subPropertyOf <https://idmc.univ-lorraine.fr/ontology/involvedIn> .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#attendedBy
+<http://www.co-ode.org/ontologies/ont.owl#attendedBy> rdf:type owl:ObjectProperty ;
+                                                      owl:inverseOf <https://idmc.univ-lorraine.fr/ontology/attends> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/attends
+<https://idmc.univ-lorraine.fr/ontology/attends> rdf:type owl:ObjectProperty ;
+                                                 rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Person> ;
+                                                 rdfs:range <https://idmc.univ-lorraine.fr/ontology/Lecture> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/conducts
+<https://idmc.univ-lorraine.fr/ontology/conducts> rdf:type owl:ObjectProperty ;
+                                                  rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Person> ;
+                                                  rdfs:range <https://idmc.univ-lorraine.fr/ontology/Lab> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/enrolledIn
+<https://idmc.univ-lorraine.fr/ontology/enrolledIn> rdf:type owl:ObjectProperty ;
+                                                    rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Person> ;
+                                                    rdfs:range <https://idmc.univ-lorraine.fr/ontology/TeachingSemester> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/givenBy
+<https://idmc.univ-lorraine.fr/ontology/givenBy> rdf:type owl:ObjectProperty ;
+                                                 owl:inverseOf <https://idmc.univ-lorraine.fr/ontology/gives> ;
+                                                 rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Lecture> ;
+                                                 rdfs:range <https://idmc.univ-lorraine.fr/ontology/Person> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/gives
+<https://idmc.univ-lorraine.fr/ontology/gives> rdf:type owl:ObjectProperty ;
+                                               rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Person> ;
+                                               rdfs:range <https://idmc.univ-lorraine.fr/ontology/Lecture> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/hasLanguage
+<https://idmc.univ-lorraine.fr/ontology/hasLanguage> rdf:type owl:ObjectProperty ;
+                                                     rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Course> ;
+                                                     rdfs:range <https://idmc.univ-lorraine.fr/ontology/Language> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/hasRole
+<https://idmc.univ-lorraine.fr/ontology/hasRole> rdf:type owl:ObjectProperty ;
+                                                 rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Person> ;
+                                                 rdfs:range <https://idmc.univ-lorraine.fr/ontology/Role> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/ia
+<https://idmc.univ-lorraine.fr/ontology/ia> rdf:type owl:ObjectProperty ;
+                                            rdfs:domain <https://idmc.univ-lorraine.fr/ontology/NLPSemester> ;
+                                            rdfs:range <https://idmc.univ-lorraine.fr/ontology/TeachingSemester> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/inLanguage
+<https://idmc.univ-lorraine.fr/ontology/inLanguage> rdf:type owl:ObjectProperty ;
+                                                    rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Lecture> ;
+                                                    rdfs:range <https://idmc.univ-lorraine.fr/ontology/Language> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/includedIn
+<https://idmc.univ-lorraine.fr/ontology/includedIn> rdf:type owl:ObjectProperty ;
+                                                    rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Lecture> ;
+                                                    rdfs:range <https://idmc.univ-lorraine.fr/ontology/Course> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/partOf
+<https://idmc.univ-lorraine.fr/ontology/partOf> rdf:type owl:ObjectProperty ;
+                                                rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Course> ;
+                                                rdfs:range <https://idmc.univ-lorraine.fr/ontology/TeachingSemester> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/participatesIn
+<https://idmc.univ-lorraine.fr/ontology/participatesIn> rdf:type owl:ObjectProperty ;
+                                                        rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Person> ;
+                                                        rdfs:range <https://idmc.univ-lorraine.fr/ontology/Lab> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/responsibleFor
+<https://idmc.univ-lorraine.fr/ontology/responsibleFor> rdf:type owl:ObjectProperty ;
+                                                        rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Person> ;
+                                                        rdfs:range <https://idmc.univ-lorraine.fr/ontology/Course> .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#SCSemester
+<http://www.co-ode.org/ontologies/ont.owl#SCSemester> rdf:type owl:Class ;
+                                                      rdfs:subClassOf <https://idmc.univ-lorraine.fr/ontology/TeachingSemester> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/Course
+<https://idmc.univ-lorraine.fr/ontology/Course> rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/Lab
+<https://idmc.univ-lorraine.fr/ontology/Lab> rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/Language
+<https://idmc.univ-lorraine.fr/ontology/Language> rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/Lecture
+<https://idmc.univ-lorraine.fr/ontology/Lecture> rdf:type owl:Class ;
+                                                 rdfs:subClassOf [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                          owl:onProperty <https://idmc.univ-lorraine.fr/ontology/givenBy> ;
+                                                                                          owl:allValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                              owl:onProperty <https://idmc.univ-lorraine.fr/ontology/hasRole> ;
+                                                                                                              owl:hasValue <https://idmc.univ-lorraine.fr/ontology/lecturer>
+                                                                                                            ]
+                                                                                        ]
+                                                                                        [ rdf:type owl:Restriction ;
+                                                                                          owl:onProperty <https://idmc.univ-lorraine.fr/ontology/givenBy> ;
+                                                                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                                          owl:onClass <https://idmc.univ-lorraine.fr/ontology/Person>
+                                                                                        ]
+                                                                                      ) ;
+                                                                   rdf:type owl:Class
+                                                                 ] .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/LectureInEnglish
+<https://idmc.univ-lorraine.fr/ontology/LectureInEnglish> rdf:type owl:Class ;
+                                                          owl:equivalentClass [ owl:intersectionOf ( <https://idmc.univ-lorraine.fr/ontology/Lecture>
+                                                                                                     [ rdf:type owl:Restriction ;
+                                                                                                       owl:onProperty <https://idmc.univ-lorraine.fr/ontology/hasLanguage> ;
+                                                                                                       owl:hasValue <https://idmc.univ-lorraine.fr/ontology/english>
+                                                                                                     ]
+                                                                                                   ) ;
+                                                                                rdf:type owl:Class
+                                                                              ] ;
+                                                          rdfs:subClassOf <https://idmc.univ-lorraine.fr/ontology/Lecture> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/LectureInFrench
+<https://idmc.univ-lorraine.fr/ontology/LectureInFrench> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <https://idmc.univ-lorraine.fr/ontology/Lecture> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/NLPLecture
+<https://idmc.univ-lorraine.fr/ontology/NLPLecture> rdf:type owl:Class ;
+                                                    owl:equivalentClass [ owl:intersectionOf ( <https://idmc.univ-lorraine.fr/ontology/Lecture>
+                                                                                               [ rdf:type owl:Restriction ;
+                                                                                                 owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#attendedBy> ;
+                                                                                                 owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                                      owl:onProperty <https://idmc.univ-lorraine.fr/ontology/enrolledIn> ;
+                                                                                                                      owl:someValuesFrom <https://idmc.univ-lorraine.fr/ontology/NLPSemester>
+                                                                                                                    ]
+                                                                                               ]
+                                                                                             ) ;
+                                                                          rdf:type owl:Class
+                                                                        ] ;
+                                                    rdfs:subClassOf <https://idmc.univ-lorraine.fr/ontology/Lecture> ,
+                                                                    <https://idmc.univ-lorraine.fr/ontology/LectureInEnglish> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/NLPSemester
+<https://idmc.univ-lorraine.fr/ontology/NLPSemester> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <https://idmc.univ-lorraine.fr/ontology/TeachingSemester> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/Person
+<https://idmc.univ-lorraine.fr/ontology/Person> rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/Role
+<https://idmc.univ-lorraine.fr/ontology/Role> rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/SCLecture
+<https://idmc.univ-lorraine.fr/ontology/SCLecture> rdf:type owl:Class ;
+                                                   owl:equivalentClass [ owl:intersectionOf ( <https://idmc.univ-lorraine.fr/ontology/Lecture>
+                                                                                              [ rdf:type owl:Restriction ;
+                                                                                                owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#attendedBy> ;
+                                                                                                owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                                     owl:onProperty <https://idmc.univ-lorraine.fr/ontology/enrolledIn> ;
+                                                                                                                     owl:someValuesFrom <http://www.co-ode.org/ontologies/ont.owl#SCSemester>
+                                                                                                                   ]
+                                                                                              ]
+                                                                                            ) ;
+                                                                         rdf:type owl:Class
+                                                                       ] ;
+                                                   rdfs:subClassOf <https://idmc.univ-lorraine.fr/ontology/Lecture> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/SCLectureInEnglish
+<https://idmc.univ-lorraine.fr/ontology/SCLectureInEnglish> rdf:type owl:Class ;
+                                                            owl:equivalentClass [ owl:intersectionOf ( <https://idmc.univ-lorraine.fr/ontology/LectureInEnglish>
+                                                                                                       <https://idmc.univ-lorraine.fr/ontology/SCLecture>
+                                                                                                     ) ;
+                                                                                  rdf:type owl:Class
+                                                                                ] ;
+                                                            rdfs:subClassOf <https://idmc.univ-lorraine.fr/ontology/LectureInEnglish> ,
+                                                                            <https://idmc.univ-lorraine.fr/ontology/SCLecture> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/TeachingSemester
+<https://idmc.univ-lorraine.fr/ontology/TeachingSemester> rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/ontology/english
+<https://idmc.univ-lorraine.fr/ontology/english> rdf:type owl:NamedIndividual ,
+                                                          <https://idmc.univ-lorraine.fr/ontology/Language> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/french
+<https://idmc.univ-lorraine.fr/ontology/french> rdf:type owl:NamedIndividual ,
+                                                         <https://idmc.univ-lorraine.fr/ontology/Language> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/lecturer
+<https://idmc.univ-lorraine.fr/ontology/lecturer> rdf:type owl:NamedIndividual ,
+                                                           <https://idmc.univ-lorraine.fr/ontology/Role> .
+
+
+###  https://idmc.univ-lorraine.fr/ontology/student
+<https://idmc.univ-lorraine.fr/ontology/student> rdf:type owl:NamedIndividual ,
+                                                          <https://idmc.univ-lorraine.fr/ontology/Role> .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
