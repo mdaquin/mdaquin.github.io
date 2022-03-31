@@ -130,8 +130,8 @@
 #    Classes
 #################################################################
 
-###  http://www.co-ode.org/ontologies/ont.owl#SCSemester
-<http://www.co-ode.org/ontologies/ont.owl#SCSemester> rdf:type owl:Class ;
+### https://idmc.univ-lorraine.fr/ontology/SCSemester
+<https://idmc.univ-lorraine.fr/ontology/SCSemester> rdf:type owl:Class ;
                                                       rdfs:subClassOf <https://idmc.univ-lorraine.fr/ontology/TeachingSemester> .
 
 
@@ -170,7 +170,7 @@
 <https://idmc.univ-lorraine.fr/ontology/LectureInEnglish> rdf:type owl:Class ;
                                                           owl:equivalentClass [ owl:intersectionOf ( <https://idmc.univ-lorraine.fr/ontology/Lecture>
                                                                                                      [ rdf:type owl:Restriction ;
-                                                                                                       owl:onProperty <https://idmc.univ-lorraine.fr/ontology/hasLanguage> ;
+                                                                                                       owl:onProperty <https://idmc.univ-lorraine.fr/ontology/inLanguage> ;
                                                                                                        owl:hasValue <https://idmc.univ-lorraine.fr/ontology/english>
                                                                                                      ]
                                                                                                    ) ;
@@ -221,7 +221,7 @@
                                                                                                 owl:onProperty <http://www.co-ode.org/ontologies/ont.owl#attendedBy> ;
                                                                                                 owl:someValuesFrom [ rdf:type owl:Restriction ;
                                                                                                                      owl:onProperty <https://idmc.univ-lorraine.fr/ontology/enrolledIn> ;
-                                                                                                                     owl:someValuesFrom <http://www.co-ode.org/ontologies/ont.owl#SCSemester>
+                                                                                                                     owl:someValuesFrom <https://idmc.univ-lorraine.fr/ontology/SCSemester>
                                                                                                                    ]
                                                                                               ]
                                                                                             ) ;
