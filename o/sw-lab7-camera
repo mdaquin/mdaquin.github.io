@@ -1,0 +1,482 @@
+@prefix : <https://mdaquin.github.io/o/sw-lab7-camera#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owbo: <http://datascienceinstitute.ie/owbo/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://mdaquin.github.io/o/sw-lab7-camera> .
+
+<https://mdaquin.github.io/o/sw-lab7-camera> rdf:type owl:Ontology .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://datascienceinstitute.ie/owbo/x
+owbo:x rdf:type owl:AnnotationProperty .
+
+
+###  http://datascienceinstitute.ie/owbo/y
+owbo:y rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#integer
+xsd:integer owbo:x 486 ;
+            owbo:y 140 .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#attachedTo
+<https://mdaquin.github.io/o/sw-lab7-camera#attachedTo> rdf:type owl:ObjectProperty ;
+                                rdfs:domain [ rdf:type owl:Class ;
+                                              owl:unionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel>
+                                                            <https://mdaquin.github.io/o/sw-lab7-camera#PhotoCamera>
+                                                          )
+                                            ] ;
+                                rdfs:range [ rdf:type owl:Class ;
+                                             owl:unionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#Flash>
+                                                           <https://mdaquin.github.io/o/sw-lab7-camera#FlashModel>
+                                                           <https://mdaquin.github.io/o/sw-lab7-camera#Lens>
+                                                           <https://mdaquin.github.io/o/sw-lab7-camera#LensModel>
+                                                           <https://mdaquin.github.io/o/sw-lab7-camera#ViewFinder>
+                                                           <https://mdaquin.github.io/o/sw-lab7-camera#ViewFinderModel>
+                                                         )
+                                           ] .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#compatibleWith
+<https://mdaquin.github.io/o/sw-lab7-camera#compatibleWith> rdf:type owl:ObjectProperty ;
+                                    rdfs:domain [ rdf:type owl:Class ;
+                                                  owl:unionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel>
+                                                                <https://mdaquin.github.io/o/sw-lab7-camera#PhotoCamera>
+                                                              )
+                                                ] ;
+                                    rdfs:range [ rdf:type owl:Class ;
+                                                 owl:unionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#Flash>
+                                                               <https://mdaquin.github.io/o/sw-lab7-camera#FlashModel>
+                                                               <https://mdaquin.github.io/o/sw-lab7-camera#Lens>
+                                                               <https://mdaquin.github.io/o/sw-lab7-camera#LensModel>
+                                                               <https://mdaquin.github.io/o/sw-lab7-camera#ViewFinder>
+                                                               <https://mdaquin.github.io/o/sw-lab7-camera#ViewFinderModel>
+                                                             )
+                                               ] .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#hasBrand
+<https://mdaquin.github.io/o/sw-lab7-camera#hasBrand> rdf:type owl:ObjectProperty ;
+                              rdfs:domain <https://mdaquin.github.io/o/sw-lab7-camera#Product> ;
+                              rdfs:range <https://mdaquin.github.io/o/sw-lab7-camera#Brand> .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#manufacturerOf
+<https://mdaquin.github.io/o/sw-lab7-camera#manufacturerOf> rdf:type owl:ObjectProperty ;
+                                    rdfs:domain <https://mdaquin.github.io/o/sw-lab7-camera#Company> ;
+                                    rdfs:range <https://mdaquin.github.io/o/sw-lab7-camera#Product> .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#model
+<https://mdaquin.github.io/o/sw-lab7-camera#model> rdf:type owl:ObjectProperty ;
+                           rdfs:domain <https://mdaquin.github.io/o/sw-lab7-camera#Device> ;
+                           rdfs:range <https://mdaquin.github.io/o/sw-lab7-camera#Product> .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#price
+<https://mdaquin.github.io/o/sw-lab7-camera#price> rdf:type owl:DatatypeProperty ;
+                           rdfs:domain <https://mdaquin.github.io/o/sw-lab7-camera#Product> ;
+                           rdfs:range xsd:integer .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#value
+<https://mdaquin.github.io/o/sw-lab7-camera#value> rdf:type owl:DatatypeProperty ;
+                           rdfs:domain <https://mdaquin.github.io/o/sw-lab7-camera#Device> ;
+                           rdfs:range xsd:integer .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#year
+<https://mdaquin.github.io/o/sw-lab7-camera#year> rdf:type owl:DatatypeProperty ;
+                          rdfs:domain <https://mdaquin.github.io/o/sw-lab7-camera#Device> ;
+                          rdfs:range xsd:integer .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#yearProductionEnd
+<https://mdaquin.github.io/o/sw-lab7-camera#yearProductionEnd> rdf:type owl:DatatypeProperty ;
+                                       rdfs:domain <https://mdaquin.github.io/o/sw-lab7-camera#Product> ;
+                                       rdfs:range xsd:integer .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#yearProductionStart
+<https://mdaquin.github.io/o/sw-lab7-camera#yearProductionStart> rdf:type owl:DatatypeProperty ;
+                                         rdfs:domain <https://mdaquin.github.io/o/sw-lab7-camera#Product> ;
+                                         rdfs:range xsd:integer .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#numberOfLensAttachment
+:numberOfLensAttachment rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf owl:topDataProperty ;
+                        rdfs:domain <https://mdaquin.github.io/o/sw-lab7-camera#InterchangeableLensCamera> ;
+                        rdfs:range xsd:integer .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#numberOfLenses
+:numberOfLenses rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdfs:domain <https://mdaquin.github.io/o/sw-lab7-camera#FixedLensCamera> ;
+                rdfs:range xsd:integer .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#AnalogCamera
+<https://mdaquin.github.io/o/sw-lab7-camera#AnalogCamera> rdf:type owl:Class ;
+                                  rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel> ;
+                                  owbo:x 1018 ;
+                                  owbo:y 396.33331298828125 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#Brand
+<https://mdaquin.github.io/o/sw-lab7-camera#Brand> rdf:type owl:Class ;
+                           owbo:x 997 ;
+                           owbo:y 52.33332824707031 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#CameraModel
+<https://mdaquin.github.io/o/sw-lab7-camera#CameraModel> rdf:type owl:Class ;
+                                 rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#Product> ;
+                                 owbo:x 982 ;
+                                 owbo:y 316.33331298828125 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#CompactCamera
+<https://mdaquin.github.io/o/sw-lab7-camera#CompactCamera> rdf:type owl:Class ;
+                                   rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#FixedLensCamera> ;
+                                   owbo:x 539.6666259765625 ;
+                                   owbo:y 443.6666564941406 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#Company
+<https://mdaquin.github.io/o/sw-lab7-camera#Company> rdf:type owl:Class ;
+                             rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#Organisation> ;
+                             owbo:x 1084.6666259765625 ;
+                             owbo:y 170 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#DSLR
+<https://mdaquin.github.io/o/sw-lab7-camera#DSLR> rdf:type owl:Class ;
+                          owl:equivalentClass [ owl:intersectionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#Camera>
+                                                                     <https://mdaquin.github.io/o/sw-lab7-camera#SLR>
+                                                                   ) ;
+                                                rdf:type owl:Class
+                                              ] ;
+                          rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#DigitalCamera> ,
+                                          <https://mdaquin.github.io/o/sw-lab7-camera#SLR> ;
+                          owbo:x 957 ;
+                          owbo:y 544.3333129882812 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#Device
+<https://mdaquin.github.io/o/sw-lab7-camera#Device> rdf:type owl:Class ;
+                            owbo:x 166 ;
+                            owbo:y 90.33332824707031 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#DigitalCamera
+<https://mdaquin.github.io/o/sw-lab7-camera#DigitalCamera> rdf:type owl:Class ;
+                                   owl:equivalentClass [ owl:intersectionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel>
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <https://mdaquin.github.io/o/sw-lab7-camera#compatibleWith> ;
+                                                                                owl:someValuesFrom <https://mdaquin.github.io/o/sw-lab7-camera#DigitalStorageMedium>
+                                                                              ]
+                                                                            ) ;
+                                                         rdf:type owl:Class
+                                                       ] ;
+                                   rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel> ;
+                                   owbo:x 1156 ;
+                                   owbo:y 430.6666259765625 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#DigitalStorageMedium
+<https://mdaquin.github.io/o/sw-lab7-camera#DigitalStorageMedium> rdf:type owl:Class ;
+                                          rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#InformationStorageMedium> ;
+                                          owbo:x 576.6666259765625 ;
+                                          owbo:y 321.33331298828125 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#FilmCamera
+<https://mdaquin.github.io/o/sw-lab7-camera#FilmCamera> rdf:type owl:Class ;
+                                owl:equivalentClass [ owl:intersectionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel>
+                                                                           [ rdf:type owl:Restriction ;
+                                                                             owl:onProperty <https://mdaquin.github.io/o/sw-lab7-camera#compatibleWith> ;
+                                                                             owl:someValuesFrom <https://mdaquin.github.io/o/sw-lab7-camera#FilmMedium>
+                                                                           ]
+                                                                         ) ;
+                                                      rdf:type owl:Class
+                                                    ] ;
+                                rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#AnalogCamera> ;
+                                owbo:x 969 ;
+                                owbo:y 478 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#FilmMedium
+<https://mdaquin.github.io/o/sw-lab7-camera#FilmMedium> rdf:type owl:Class ;
+                                rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#InformationStorageMedium> ;
+                                owbo:x 464 ;
+                                owbo:y 366 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#FixedLensCamera
+<https://mdaquin.github.io/o/sw-lab7-camera#FixedLensCamera> rdf:type owl:Class ;
+                                     owl:equivalentClass [ owl:intersectionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel>
+                                                                                [ rdf:type owl:Class ;
+                                                                                  owl:complementOf [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty <https://mdaquin.github.io/o/sw-lab7-camera#compatibleWith> ;
+                                                                                                     owl:someValuesFrom <https://mdaquin.github.io/o/sw-lab7-camera#LensModel>
+                                                                                                   ]
+                                                                                ]
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty <https://mdaquin.github.io/o/sw-lab7-camera#attachedTo> ;
+                                                                                  owl:someValuesFrom <https://mdaquin.github.io/o/sw-lab7-camera#LensModel>
+                                                                                ]
+                                                                              ) ;
+                                                           rdf:type owl:Class
+                                                         ] ;
+                                     rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel> ;
+                                     owbo:x 675 ;
+                                     owbo:y 378 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#Flash
+<https://mdaquin.github.io/o/sw-lab7-camera#Flash> rdf:type owl:Class ;
+                           rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#Device> ;
+                           owbo:x 153.66665649414062 ;
+                           owbo:y 171.3333282470703 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#FlashModel
+<https://mdaquin.github.io/o/sw-lab7-camera#FlashModel> rdf:type owl:Class ;
+                                rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#Product> ;
+                                owbo:x 739.3333129882812 ;
+                                owbo:y 194.3333282470703 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#GlassMedium
+<https://mdaquin.github.io/o/sw-lab7-camera#GlassMedium> rdf:type owl:Class ;
+                                 rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#InformationStorageMedium> ;
+                                 owbo:x 371 ;
+                                 owbo:y 321.6666564941406 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#GlassPlateCamera
+<https://mdaquin.github.io/o/sw-lab7-camera#GlassPlateCamera> rdf:type owl:Class ;
+                                      owl:equivalentClass [ owl:intersectionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel>
+                                                                                 [ rdf:type owl:Restriction ;
+                                                                                   owl:onProperty <https://mdaquin.github.io/o/sw-lab7-camera#compatibleWith> ;
+                                                                                   owl:someValuesFrom <https://mdaquin.github.io/o/sw-lab7-camera#GlassMedium>
+                                                                                 ]
+                                                                               ) ;
+                                                            rdf:type owl:Class
+                                                          ] ;
+                                      rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#AnalogCamera> ;
+                                      owbo:x 1133 ;
+                                      owbo:y 532.6666564941406 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#InformationStorageMedium
+<https://mdaquin.github.io/o/sw-lab7-camera#InformationStorageMedium> rdf:type owl:Class ;
+                                              owbo:x 481.33331298828125 ;
+                                              owbo:y 215.66665649414062 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#InterchangeableLensCamera
+<https://mdaquin.github.io/o/sw-lab7-camera#InterchangeableLensCamera> rdf:type owl:Class ;
+                                               owl:equivalentClass [ owl:intersectionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel>
+                                                                                          [ rdf:type owl:Class ;
+                                                                                            owl:complementOf <https://mdaquin.github.io/o/sw-lab7-camera#FixedLensCamera>
+                                                                                          ]
+                                                                                        ) ;
+                                                                     rdf:type owl:Class
+                                                                   ] ;
+                                               rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel> ;
+                                               owbo:x 727 ;
+                                               owbo:y 428.6666259765625 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#Lens
+<https://mdaquin.github.io/o/sw-lab7-camera#Lens> rdf:type owl:Class ;
+                          rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#Device> ;
+                          owbo:x 67.33332824707031 ;
+                          owbo:y 120.66665649414062 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#LensModel
+<https://mdaquin.github.io/o/sw-lab7-camera#LensModel> rdf:type owl:Class ;
+                               rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#Product> ;
+                               owbo:x 1130.3333129882812 ;
+                               owbo:y 257.3333282470703 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#Organisation
+<https://mdaquin.github.io/o/sw-lab7-camera#Organisation> rdf:type owl:Class ;
+                                  owbo:x 1132 ;
+                                  owbo:y 51.33331298828125 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#PhotoCamera
+<https://mdaquin.github.io/o/sw-lab7-camera#PhotoCamera> rdf:type owl:Class ;
+                                 rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#Device> ;
+                                 owbo:x 141.3333282470703 ;
+                                 owbo:y 345.33331298828125 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#Product
+<https://mdaquin.github.io/o/sw-lab7-camera#Product> rdf:type owl:Class ;
+                             owbo:x 841.3333129882812 ;
+                             owbo:y 48.33332824707031 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#ReflexCamera
+<https://mdaquin.github.io/o/sw-lab7-camera#ReflexCamera> rdf:type owl:Class ;
+                                  owl:equivalentClass [ owl:intersectionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel>
+                                                                             [ rdf:type owl:Class ;
+                                                                               owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                                               owl:onProperty <https://mdaquin.github.io/o/sw-lab7-camera#attachedTo> ;
+                                                                                               owl:someValuesFrom :ThroughTheLensViewfinder
+                                                                                             ]
+                                                                                             [ rdf:type owl:Restriction ;
+                                                                                               owl:onProperty <https://mdaquin.github.io/o/sw-lab7-camera#compatibleWith> ;
+                                                                                               owl:someValuesFrom :ThroughTheLensViewfinder
+                                                                                             ]
+                                                                                           )
+                                                                             ]
+                                                                           ) ;
+                                                        rdf:type owl:Class
+                                                      ] ;
+                                  rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel> ;
+                                  owbo:x 892.6666259765625 ;
+                                  owbo:y 409.33331298828125 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#SLR
+<https://mdaquin.github.io/o/sw-lab7-camera#SLR> rdf:type owl:Class ;
+                         owl:equivalentClass [ owl:intersectionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#ReflexCamera>
+                                                                    [ rdf:type owl:Class ;
+                                                                      owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                                      owl:onProperty :numberOfLensAttachment ;
+                                                                                      owl:hasValue 1
+                                                                                    ]
+                                                                                    [ rdf:type owl:Restriction ;
+                                                                                      owl:onProperty :numberOfLenses ;
+                                                                                      owl:hasValue 1
+                                                                                    ]
+                                                                                  )
+                                                                    ]
+                                                                  ) ;
+                                               rdf:type owl:Class
+                                             ] ;
+                         rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#ReflexCamera> ;
+                         owbo:x 858.3333129882812 ;
+                         owbo:y 490.33331298828125 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#TwinLensReflex
+<https://mdaquin.github.io/o/sw-lab7-camera#TwinLensReflex> rdf:type owl:Class ;
+                                    owl:equivalentClass [ owl:intersectionOf ( <https://mdaquin.github.io/o/sw-lab7-camera#ReflexCamera>
+                                                                               [ rdf:type owl:Class ;
+                                                                                 owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                                                 owl:onProperty :numberOfLensAttachment ;
+                                                                                                 owl:hasValue 2
+                                                                                               ]
+                                                                                               [ rdf:type owl:Restriction ;
+                                                                                                 owl:onProperty :numberOfLenses ;
+                                                                                                 owl:hasValue 2
+                                                                                               ]
+                                                                                             )
+                                                                               ]
+                                                                             ) ;
+                                                          rdf:type owl:Class
+                                                        ] ;
+                                    rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#ReflexCamera> ;
+                                    owbo:x 758.3333129882812 ;
+                                    owbo:y 488 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#ViewFinder
+<https://mdaquin.github.io/o/sw-lab7-camera#ViewFinder> rdf:type owl:Class ;
+                                rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#Device> ;
+                                owbo:x 258.6666564941406 ;
+                                owbo:y 194.3333282470703 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#ViewFinderModel
+<https://mdaquin.github.io/o/sw-lab7-camera#ViewFinderModel> rdf:type owl:Class ;
+                                     rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#Product> ;
+                                     owbo:x 902.6666259765625 ;
+                                     owbo:y 150 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#TelemetricViewfinder
+:TelemetricViewfinder rdf:type owl:Class ;
+                      rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#ViewFinderModel> .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#ThroughTheLensViewfinder
+:ThroughTheLensViewfinder rdf:type owl:Class ;
+                          rdfs:subClassOf <https://mdaquin.github.io/o/sw-lab7-camera#ViewFinderModel> .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#GV1000CVF
+:GV1000CVF rdf:type owl:NamedIndividual ,
+                    :ThroughTheLensViewfinder .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#Nikon
+:Nikon rdf:type owl:NamedIndividual ,
+                <https://mdaquin.github.io/o/sw-lab7-camera#Brand> .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#NikonQV-1000C
+:NikonQV-1000C rdf:type owl:NamedIndividual ,
+                        <https://mdaquin.github.io/o/sw-lab7-camera#CameraModel> ;
+               <https://mdaquin.github.io/o/sw-lab7-camera#attachedTo> :GV1000CVF ;
+               <https://mdaquin.github.io/o/sw-lab7-camera#compatibleWith> :SVNikkor50 ,
+                                                   :VideoFloppyDisk ;
+               <https://mdaquin.github.io/o/sw-lab7-camera#hasBrand> :Nikon ;
+               <https://mdaquin.github.io/o/sw-lab7-camera#price> 15000 ;
+               <https://mdaquin.github.io/o/sw-lab7-camera#yearProductionStart> 1988 ;
+               :numberOfLensAttachment 1 .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#NipponKogakuKK.
+<https://mdaquin.github.io/o/sw-lab7-camera#NipponKogakuKK.> rdf:type owl:NamedIndividual ;
+                                                             <https://mdaquin.github.io/o/sw-lab7-camera#manufacturerOf> :NikonQV-1000C .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#SVNikkor50
+:SVNikkor50 rdf:type owl:NamedIndividual ,
+                     <https://mdaquin.github.io/o/sw-lab7-camera#LensModel> .
+
+
+###  https://mdaquin.github.io/o/sw-lab7-camera#VideoFloppyDisk
+:VideoFloppyDisk rdf:type owl:NamedIndividual ,
+                          <https://mdaquin.github.io/o/sw-lab7-camera#DigitalStorageMedium> .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
