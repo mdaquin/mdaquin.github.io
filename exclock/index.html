@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <title>exam clock</title>
+    <style>
+      * {font-family: Helvetica, Sans;}
+      #time{font-size: 20vw; width: 100%; text-align: center}
+      #duration{display: block; width:30%; margin-left: auto; margin-right: auto}
+      #durationlabel{font-size: 2vw}
+      #durhour{font-size: 2vw; width: 10%}
+      #hourlabel{font-size: 2vw; margin-right: 1%}
+      #durminutes{font-size: 2vw; width: 15%}      
+      #minuteslabel{font-size: 2vw}
+      #start{display: block; width: 20%; margin-left: auto; margin-right: auto; margin-top: 3%}
+      #startbutton{font-size: 2vw; padding-left: 5%; padding-right: 5%; background: #494; padding-top: 10px; padding-bottom: 10px; color: white; text-decoration: none; border-radius: 5px}
+      #starttime{margin-left: 5%; font-size: 2vw}
+      #finishing{font-size: 3vw; widh: 100%; text-align: center; margin-top: 5%}
+      #remaining{font-size: 4vw; width: 100%; text-align: center; margin-right: auto; margin-top: 3%}
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <div id="time">
+      </div>
+      <div id="duration">
+	<span id="durationlabel">Duration:</span> <input type="number" id="durhour" value="1"> <span id="hourlabel">hour</span> <input type="number" id="durminutes" value="30"> <span id="minuteslabel">minutes</span>
+      </div>
+      <div id="start">      
+	<a id="startbutton" href="javascript:setStartTime()">Start time:</a> <span id="starttime">__:__</span> 
+      </div>
+      <div id="finishing">
+      </div>
+      <div id="remaining">
+      </div>
+    </div>
+  </body>
+  <script>
+
+    setTimeout(update, 1000)
+
+    var starttime = ""
+    var finishtime = ""
+    
+    function setStartTime(){
+
+	starttime = new Date()
+	var hours = ""+starttime.getHours()
+	var minutes = ""+starttime.getMinutes()
+	if (minutes.length == 1) minutes = "0"+minutes
+	document.getElementById("starttime").innerHTML = hours+":"+minutes
+
+	const dhours = document.getElementById("durhour").value
+	const dmins = document.getElementById("durminutes").value
+
+	finishtime = starttime.getTime()+(dhours*60*60*1000)+(dmins*60*1000)
+	finishtime = new Date(finishtime)
+
+	const fhours = finishtime.getHours()
+	var fminutes = finishtime.getMinutes()
+	if ((""+fminutes).length == 1) fminutes="0"+fminutes
+	document.getElementById("finishing").innerHTML="finishing at "+fhours+":"+fminutes
+    }
+    
+    function update(){
+	const d = new Date()
+	var hours = ""+d.getHours()
+	var minutes = ""+d.getMinutes()
+	if (minutes.length == 1) minutes = "0"+minutes
+	document.getElementById("time").innerHTML = hours+":"+minutes
+
+	if (finishtime != "") {	
+	    const rtime = finishtime - d
+	    var rminutes = parseInt(rtime/(60*1000))
+	    const rhours = parseInt(rminutes/60)
+	    rminutes = rminutes%60
+	    var mt = "minutes"
+	    if (rminutes <= 1) mt = "minute"
+	    var ht = "hours"
+	    if (rhours <= 1) ht = "hour"
+	    document.getElementById("remaining").innerHTML=rhours+" "+ht+" "+rminutes+" "+mt+" remaining"
+	}
+
+	setTimeout(update, 1000)
+    }
+    
+  </script>
+</html>
