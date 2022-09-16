@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>
+      Labyrinth
+    </title>
+    <link type="text/css" href="style.css" rel="stylesheet">
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <div id="menubar">
+      <span>Open:</span>
+      <input type="file" id="file-input">
+      <a class="button" href="javascript:save();">save</a>
+      <a class="button" href="javascript:newl();">new</a>            
+	<select id="algo">
+	  <option value="bfs">Breadth First Search</option>
+	  <option value="dfs">Depth First Search</option>
+	  <option value="gr">Greedy</option>
+	  <option value="as">A*</option>	  	  
+        </select>	
+	<a class="button" id="solve" href="javascript:solve();">solve</a>	
+    </div>	
+    <div id="main">
+      <div id="edittools">
+	<a class="button etool" id="select" href="javascript:select();">select</a>
+	<a class="button etool" id="path" href="javascript:path();">path</a>
+	<a class="button" id="vless" href="javascript:change(-1,0);">L</a>
+	<a class="button" id="vmore" href="javascript:change(1,0);">M</a>		
+      </div>
+      <div id="grid">_
+      </div>
+      <div id="bottom">
+	<a class="button" id="hmore" href="javascript:change(0, 1);">M</a>			
+	<a class="button" id="hless" href="javascript:change(0, -1);">L</a>
+      </div> <!-- bottom -- >
+    </div> <!-- main -->
+  </body>
+</html>

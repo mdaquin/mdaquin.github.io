@@ -1,0 +1,56 @@
+
+* {
+    box-sizing: border-box;
+    font-family: helvetica, sans;
+    padding: 0px;
+    margin: 0px;
+}
+
+#menubar {
+    width: 100%;
+    padding: 10px;
+    height: 5%;
+}
+
+.button {
+    padding: 5px;
+    border-radius: 5px;
+    background: #44AAAA;
+    color: white;
+    text-decoration: none;
+    margin:1vh;
+    text-align: center
+}
+
+#main{height: 95%}
+
+.etool{display: block;}
+
+#edittools{
+    width: 10%;
+    position: relative;
+    height: 100%;
+    float:left;
+}
+
+#vless{position: absolute; bottom: 10%; right: 0px;}
+#vmore{position: absolute; bottom: 5%; right: 0px;}
+
+#hless{float: right;}
+#hmore{float: right;}
+
+#grid{
+    width: 89%;
+    height: 95%;
+    float: left;
+}
+
+#bottom {
+    float:left;
+    height: 5%;
+    width: 89%;
+}
+
+#algo {display: inline; font-size: 100%; margin-left: 2%}
+
+#solve{margin: 0px; font-size: 120%;}
