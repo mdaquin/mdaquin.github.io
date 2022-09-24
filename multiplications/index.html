@@ -7,15 +7,20 @@
       #drawing{float: left; width: 80%; height: 100%;}
       #controls{float:right; width: 20%; height: 100%;}
       #svg{width: 100%; height: 100%;}
-      .button{background: #885588; color: white; display: block; width: 90%; margin-top: 10px; text-align: center; padding: 5px; border-radius: 5px; margin-left: 5%}
+      .button{background: #885588; color: white; display: block; width: 90%; margin-top: 10px; text-align: center; padding: 5px; border-radius: 5px; margin-left: 5%; text-decoration: none}
+      #colordialog{position: fixed; top: 10%; left: 10%; width: 60%; background: white; border: 1px solid black; border-radius: 5px; padding: 10px;display: none}
+      #colorsliders{float:left; width: 70%}
+      #colorpreview{float:right; height: 100px; width: 29%; background: grey}
     </style>
     <script>
       const svgns = "http://www.w3.org/2000/svg"
-      function drawSVGCircle(x,y,r,f,s){
+      function drawSVGCircle(x,y,r,f,s,o){
 	  var circle = document.createElementNS(svgns, 'circle')
+	  circle.setAttribute("class", "elwithtxtcolor")
 	  circle.setAttribute('cx', x);
           circle.setAttribute('cy', y);
           circle.setAttribute('r', r);
+          circle.setAttribute('fill-opacity', o);	  
           circle.setAttribute('style', 'fill: '+f+'; stroke: '+s+'; stroke-width: 1px;');
           svg.appendChild(circle);	  
       }
@@ -30,6 +35,7 @@
       }      
       function drawSVGText(x,y,t,s,c){
 	  var number = document.createElementNS(svgns,"text");
+	  number.setAttribute("class", "elwithtxtcolor")
 	  number.setAttribute("x",x);     
 	  number.setAttribute("y",y); 
 	  number.setAttribute("font-size",s);
@@ -46,10 +52,10 @@
       </svg>
     </div>
     <div id="controls">
-      <span class="Label">Table :</span>
-      <input type="number" id="table" value="2">
-      <span class="Label">Modulo :</span>      
-      <input type="number" id="modulo" value="10" onchange="init()">
+      <span class="Label">Table :</span><br/>
+      <input type="number" id="table" value="2"><br/>
+      <span class="Label">Modulo :</span><br/>      
+      <input type="number" id="modulo" value="10" onchange="init()"></br>
       <a class="button" href="javascript:drawLines();" id="goBut">Go</a><br/>
       <span class="Label">Début :</span>    <br/>  
       <input type="number" id="start" value="2">  <br/>  
@@ -59,7 +65,7 @@
       <input type="number" id="step" value="0.1">  <br/>  
       <!-- s'assurer qu'on ne peut pas aller à plus que 20 -->
       <span class="Label">Vitesse :</span>       <br/>  
-      <input type="number" id="speed" value="3">  <br/>  
+      <input type="number" id="speed" value="3" onchange="checkspeed('')">  <br/>  
       <a class="button" href="javascript:animate();" id="goanimate">Animation table</a> <br/>
       <span class="Label">Début :</span>    <br/>  
       <input type="number" id="start2" value="10">  <br/>  
@@ -69,9 +75,25 @@
       <input type="number" id="step2" value="1">  <br/>  
       <!-- s'assurer qu'on ne peut pas aller à plus que 20 -->
       <span class="Label">Vitesse :</span>       <br/>  
-      <input type="number" id="speed2" value="3">  <br/>  
-      <a class="button" href="javascript:animate2();" id="goanimate">Animation modulo</a>      
-    </div>    
+      <input type="number" id="speed2" value="3" onchange="checkspeed(2)">  <br/>  
+      <a class="button" href="javascript:animate2();" id="goanimate">Animation modulo</a><br/><br!/>
+      <a class="button" href="javascript:changeColor('bgcolor');" id="bbgcolor" style="background: white; color: black; border: 1px solid black">Couleur de fond</a>
+      <a class="button" href="javascript:changeColor('txtcolor');" id="btxtcolor" style="background: #888; color: white; border: 1px solid white">Couleur de text</a>
+      <a class="button" href="javascript:changeColor('color1');" id="bcolor1" style="background: black; color: white; border: 1px solid white">Couleur de ligne 1</a>
+      <a class="button" href="javascript:changeColor('color2');" id="bcolor2" style="background: rgb(160,80,0); color: white; border: 1px solid white">Couleur de ligne 2</a>
+      <a class="button" href="javascript:changeColor('color3');" id="bcolor3" style="background: black; color: white; border: 1px solid white">Couleur de ligne 3</a>      
+    </div>
+    <div id="colordialog">
+      <div id="colorsliders">
+	<span class="label" style="float: left;">Rouge</span><input type="range" id="cred" value="128" max=255 style="width: 60%; float:right" onchange="updatecolor()"/><br/>
+	<span class="label" style="float: left;">Vert</span><input type="range" id="cgreen" value="128" max=255 style="width: 60%; float:right" onchange="updatecolor()"/><br/>
+	<span class="label" style="float: left;">Bleu</span><input type="range" id="cblue" value="128" max=255 style="width: 60%; float:right" onchange="updatecolor()"/><br/>
+	<a class="button" href="javascript:backFromColorDialog();">Done</a>
+      </div>
+      <div id="colorpreview">
+	&nbsp;
+      </div>
+    </div>
   </body>
   <script>
     window.addEventListener('load', function () {
@@ -81,21 +103,38 @@
     var centerx = 0
     var centery = 0
     var r = 0
+
+    var bgcolor  = "rgb(255,255,255)"
+    var txtcolor = "rgb(120,120,120)"
+    var color1   = "rgb(0,0,0)"
+    var color2   = "rgb(160,80,0)"
+    var color3   = "rgb(0,0,0)"
+
+    var colorcomp = {
+	bgcolor: [255,255,255],
+	txtcolor: [120,120,120],
+	color1:    [0,0,0],
+	color2: [160,80,0],
+	color3: [0,0,0]
+    }
+    
     function init(){
 	svg = document.getElementById("svg")
-	svg.innerHTML = ""	
+	svg.setAttribute("style", "background: "+bgcolor)
+	svg.innerHTML = '<linearGradient id="linegradient"><stop id="color1" offset="0%" stop-color="'+color1+'" /><stop id = "color2" offset="50%" stop-color="'+color2+'"/><stop id="color3" offset="100%" stop-color="'+color3+'" /></linearGradient>'
 	centerx = svg.getBoundingClientRect().width/2
 	centery = svg.getBoundingClientRect().height/2
 	// drawing the center, just to be sure
-	drawSVGCircle(centerx, centery, 2, "black", "none")
+	drawSVGCircle(centerx, centery, 2, txtcolor, "none", 1.0)
 	if (centerx > centery)
 	    r = centery*0.8
 	else
 	    r = centerx*0.8	    
 	// draw circle to test
-	drawSVGCircle(centerx, centery, r, "none", "#ddd")
+	drawSVGCircle(centerx, centery, r, "none", txtcolor, 0.0)
 	drawCircle()
     }
+    
     function drawCircle(){
 	const modulo = document.getElementById("modulo").value
 	const angle = (2*Math.PI)/modulo
@@ -105,12 +144,13 @@
 	    if (cangle < 0) cangle = (2*Math.PI)+cangle
 	    const x = centerx + (Math.cos(cangle)*r)
 	    const y = centery - (Math.sin(cangle)*r)
-	    drawSVGCircle(x,y,2,"black","none")
+	    drawSVGCircle(x,y,2,txtcolor,"none", 1.0)
 	    const xt = centerx + (Math.cos(cangle)*(r+50))
 	    const yt = centery - (Math.sin(cangle)*(r+50))
-	    drawSVGText(xt, yt, ""+i, "16", "black")
+	    drawSVGText(xt, yt, ""+i, "16", txtcolor)
 	}
     }
+    
     function calculPoint(n){
 	const modulo = document.getElementById("modulo").value
 	const angle = (2*Math.PI)/modulo
@@ -121,18 +161,17 @@
 	const y = centery - (Math.sin(cangle)*r)
 	return {x:x,y:y}
     }
+    
     function drawLines(){
 	init()
 	const modulo = document.getElementById("modulo").value
 	const table = document.getElementById("table").value
-	console.log("modulo"+modulo)
-	console.log("table"+table)
 	for(var i = 0; i < modulo; i++){
 	    var resultat = i*table
 	    resultat = resultat % modulo
 	    const po = calculPoint(i)
 	    const pd = calculPoint(resultat)
-	    drawSVGLine(po.x, po.y, pd.x, pd.y, "black")
+	    drawSVGLine(po.x, po.y, pd.x, pd.y, "url(#linegradient)")
 	}
     }
 
@@ -153,7 +192,8 @@
 	drawLines()	
 	var ct = parseFloat(document.getElementById("table").value)
 	ct = ct+step
-	if (ct > end) return
+	if (step > 0 && ct > end) return
+	if (step < 0 && ct < end) return 
 	document.getElementById("table").value = ct
 	speed = parseFloat(document.getElementById("speed").value)
 	setTimeout(animateStep, ((21-speed)/2)*100)
@@ -175,6 +215,79 @@
 	document.getElementById("modulo").value = ct
 	speed = parseFloat(document.getElementById("speed2").value)
 	setTimeout(animateStep2, ((21-speed)/2)*100)
+    }
+
+    var colortochange = ""
+    
+    function changeColor(col){
+	colortochange = col
+	document.getElementById("cred").value = colorcomp[col][0]
+	document.getElementById("cgreen").value = colorcomp[col][1]
+	document.getElementById("cblue").value = colorcomp[col][2]	
+	document.getElementById("colorpreview").style.background = 'rgb('+colorcomp[col][0]+','+colorcomp[col][1]+','+colorcomp[col][2]+')'
+	document.getElementById("colordialog").style.display = "block"
+    }
+
+    function updatecolor(){
+	document.getElementById("colorpreview").style.background='rgb('+
+	    document.getElementById("cred").value+','+
+	    document.getElementById("cgreen").value+','+
+	    document.getElementById("cblue").value+')'
+    }
+
+    function backFromColorDialog(){
+	document.getElementById("colordialog").style.display="none"
+	colorcomp[colortochange][0] = document.getElementById("cred").value
+	colorcomp[colortochange][1] = document.getElementById("cgreen").value
+	colorcomp[colortochange][2] = document.getElementById("cblue").value
+
+	bgcolor = 'rgb('+colorcomp.bgcolor[0]+','+colorcomp.bgcolor[1]+','+colorcomp.bgcolor[2]+')'
+	svg.style.background='rgb('+colorcomp.bgcolor[0]+','+colorcomp.bgcolor[1]+','+colorcomp.bgcolor[2]+')'
+	document.getElementById("bbgcolor").style.background='rgb('+colorcomp.bgcolor[0]+','+colorcomp.bgcolor[1]+','+colorcomp.bgcolor[2]+')'
+	document.getElementById("btxtcolor").style.color='rgb('+colorcomp.bgcolor[0]+','+colorcomp.bgcolor[1]+','+colorcomp.bgcolor[2]+')'	
+	document.getElementById("bcolor1").style.color='rgb('+colorcomp.bgcolor[0]+','+colorcomp.bgcolor[1]+','+colorcomp.bgcolor[2]+')'
+	document.getElementById("bcolor2").style.color='rgb('+colorcomp.bgcolor[0]+','+colorcomp.bgcolor[1]+','+colorcomp.bgcolor[2]+')'
+	document.getElementById("bcolor3").style.color='rgb('+colorcomp.bgcolor[0]+','+colorcomp.bgcolor[1]+','+colorcomp.bgcolor[2]+')'	
+	document.getElementById("btxtcolor").style.borderColor='rgb('+colorcomp.bgcolor[0]+','+colorcomp.bgcolor[1]+','+colorcomp.bgcolor[2]+')'	
+	document.getElementById("bcolor1").style.borderColor='rgb('+colorcomp.bgcolor[0]+','+colorcomp.bgcolor[1]+','+colorcomp.bgcolor[2]+')'
+	document.getElementById("bcolor2").style.borderColor='rgb('+colorcomp.bgcolor[0]+','+colorcomp.bgcolor[1]+','+colorcomp.bgcolor[2]+')'
+	document.getElementById("bcolor3").style.borderColor='rgb('+colorcomp.bgcolor[0]+','+colorcomp.bgcolor[1]+','+colorcomp.bgcolor[2]+')'
+
+	txtcolor = 'rgb('+colorcomp.txtcolor[0]+','+colorcomp.txtcolor[1]+','+colorcomp.txtcolor[2]+')'
+	document.getElementById("btxtcolor").style.background= 'rgb('+colorcomp.txtcolor[0]+','+colorcomp.txtcolor[1]+','+colorcomp.txtcolor[2]+')'
+	const els = document.getElementsByClassName("elwithtxtcolor")
+	for (var el in els){
+	    if (els[el].setAttribute){
+		els[el].setAttribute("stroke", 'rgb('+colorcomp.txtcolor[0]+','+colorcomp.txtcolor[1]+','+colorcomp.txtcolor[2]+')')
+		els[el].setAttribute("fill", 'rgb('+colorcomp.txtcolor[0]+','+colorcomp.txtcolor[1]+','+colorcomp.txtcolor[2]+')')
+		els[el].style.stroke = 'rgb('+colorcomp.txtcolor[0]+','+colorcomp.txtcolor[1]+','+colorcomp.txtcolor[2]+')'
+		els[el].style.fill = 'rgb('+colorcomp.txtcolor[0]+','+colorcomp.txtcolor[1]+','+colorcomp.txtcolor[2]+')'				
+	    }	    
+	}
+
+	color1 = 'rgb('+colorcomp.color1[0]+','+colorcomp.color1[1]+','+colorcomp.color1[2]+')'
+	document.getElementById("bcolor1").style.background= 'rgb('+colorcomp.color1[0]+','+colorcomp.color1[1]+','+colorcomp.color1[2]+')'
+	document.getElementById("color1").setAttribute("stop-color",  'rgb('+colorcomp.color1[0]+','+colorcomp.color1[1]+','+colorcomp.color1[2]+')')
+
+	color2 = 'rgb('+colorcomp.color2[0]+','+colorcomp.color2[1]+','+colorcomp.color2[2]+')'
+	document.getElementById("bcolor2").style.background= 'rgb('+colorcomp.color2[0]+','+colorcomp.color2[1]+','+colorcomp.color2[2]+')'
+	document.getElementById("color2").setAttribute("stop-color",  'rgb('+colorcomp.color2[0]+','+colorcomp.color2[1]+','+colorcomp.color2[2]+')')
+
+	color3 = 'rgb('+colorcomp.color3[0]+','+colorcomp.color3[1]+','+colorcomp.color3[2]+')'
+	document.getElementById("bcolor3").style.background= 'rgb('+colorcomp.color3[0]+','+colorcomp.color3[1]+','+colorcomp.color3[2]+')'
+	document.getElementById("color3").setAttribute("stop-color",  'rgb('+colorcomp.color3[0]+','+colorcomp.color3[1]+','+colorcomp.color3[2]+')')
+    }
+    
+    function checkspeed(i){
+	el = document.getElementById("speed"+i)
+	if (el.value > 20){
+	    alert("La vitesse ne peut pas être supérieure à 20")
+	    el.value = 20
+	}
+	if (el.value < 1){
+	    alert("La vitesse ne peut pas être inférieure à 1")
+	    el.value = 1
+	}
     }
     
   </script>
