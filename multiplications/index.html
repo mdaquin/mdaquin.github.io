@@ -1,0 +1,152 @@
+<html>
+  <head>
+    <title>Dessiner les multiplications</title>
+    <meta charset="UTF-8">
+    <style>
+      .{box-sizing : border-box; font-family: Helvetica, Sans; margin: 0px; padding: 0px}
+      #drawing{float: left; width: 80%; height: 100%;}
+      #controls{float:right; width: 20%; height: 100%;}
+      #svg{width: 100%; height: 100%;}
+      .button{background: #885588; color: white; display: block; width: 90%; margin-top: 10px; text-align: center; padding: 5px; border-radius: 5px; margin-left: 5%}
+    </style>
+    <script>
+      const svgns = "http://www.w3.org/2000/svg"
+      function drawSVGCircle(x,y,r,f,s){
+	  var circle = document.createElementNS(svgns, 'circle')
+	  circle.setAttribute('cx', x);
+          circle.setAttribute('cy', y);
+          circle.setAttribute('r', r);
+          circle.setAttribute('style', 'fill: '+f+'; stroke: '+s+'; stroke-width: 1px;');
+          svg.appendChild(circle);	  
+      }
+      function drawSVGLine(x1,y1,x2,y2,s){
+	  var line = document.createElementNS(svgns, 'line')
+	  line.setAttribute('x1', x1);
+          line.setAttribute('y1', y1);
+	  line.setAttribute('x2', x2);
+          line.setAttribute('y2', y2);
+          line.setAttribute('stroke', s);	  
+          svg.appendChild(line);	  
+      }      
+      function drawSVGText(x,y,t,s,c){
+	  var number = document.createElementNS(svgns,"text");
+	  number.setAttribute("x",x);     
+	  number.setAttribute("y",y); 
+	  number.setAttribute("font-size",s);
+	  number.setAttribute("fill", c)
+	  var numberNode = document.createTextNode(t);
+	  number.appendChild(numberNode);
+	  svg.appendChild(number);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="drawing">
+      <svg id="svg">
+      </svg>
+    </div>
+    <div id="controls">
+      <span class="Label">Table :</span>
+      <input type="number" id="table" value="2">
+      <span class="Label">Modulo :</span>      
+      <input type="number" id="modulo" value="10" onchange="init()">
+      <a class="button" href="javascript:drawLines();" id="goBut">Go</a><br/>
+      <span class="Label">Début :</span>    <br/>  
+      <input type="number" id="start" value="2">  <br/>  
+      <span class="Label">Fin :</span>       <br/>  
+      <input type="number" id="end" value="10">  <br/>  
+      <span class="Label">Etape :</span>       <br/>  
+      <input type="number" id="step" value="0.1">  <br/>  
+      <!-- s'assurer qu'on ne peut pas aller à plus que 20 -->
+      <span class="Label">Vitesse :</span>       <br/>  
+      <input type="number" id="speed" value="3">  <br/>  
+      <a class="button" href="javascript:animate();" id="goanimate">Animation</a      
+    </div>    
+  </body>
+  <script>
+    window.addEventListener('load', function () {
+	init()
+    })
+    var svg = ""
+    var centerx = 0
+    var centery = 0
+    var r = 0
+    function init(){
+	svg = document.getElementById("svg")
+	svg.innerHTML = ""	
+	centerx = svg.getBoundingClientRect().width/2
+	centery = svg.getBoundingClientRect().height/2
+	// drawing the center, just to be sure
+	drawSVGCircle(centerx, centery, 2, "black", "none")
+	if (centerx > centery)
+	    r = centery*0.8
+	else
+	    r = centerx*0.8	    
+	// draw circle to test
+	drawSVGCircle(centerx, centery, r, "none", "#ddd")
+	drawCircle()
+    }
+    function drawCircle(){
+	const modulo = document.getElementById("modulo").value
+	const angle = (2*Math.PI)/modulo
+	const initAngle = Math.PI/2
+	for (var i = 0; i < modulo; i++){
+	    var cangle = initAngle - (i*angle)
+	    if (cangle < 0) cangle = (2*Math.PI)+cangle
+	    const x = centerx + (Math.cos(cangle)*r)
+	    const y = centery - (Math.sin(cangle)*r)
+	    drawSVGCircle(x,y,2,"black","none")
+	    const xt = centerx + (Math.cos(cangle)*(r+50))
+	    const yt = centery - (Math.sin(cangle)*(r+50))
+	    drawSVGText(xt, yt, ""+i, "16", "black")
+	}
+    }
+    function calculPoint(n){
+	const modulo = document.getElementById("modulo").value
+	const angle = (2*Math.PI)/modulo
+	const initAngle = Math.PI/2
+	var cangle = initAngle - (n*angle)
+	if (cangle < 0) cangle = (2*Math.PI)+cangle
+	const x = centerx + (Math.cos(cangle)*r)
+	const y = centery - (Math.sin(cangle)*r)
+	return {x:x,y:y}
+    }
+    function drawLines(){
+	init()
+	const modulo = document.getElementById("modulo").value
+	const table = document.getElementById("table").value
+	console.log("modulo"+modulo)
+	console.log("table"+table)
+	for(var i = 0; i < modulo; i++){
+	    var resultat = i*table
+	    resultat = resultat % modulo
+	    const po = calculPoint(i)
+	    const pd = calculPoint(resultat)
+	    drawSVGLine(po.x, po.y, pd.x, pd.y, "black")
+	}
+    }
+
+    var speed=3
+    var start=0
+    var end=0
+    var step=0    
+    function animate(){
+	start = parseFloat(document.getElementById("start").value)
+	end = parseFloat(document.getElementById("end").value)
+	step = parseFloat(document.getElementById("step").value)
+	document.getElementById("table").value = start
+	animateStep()
+    }
+
+    function animateStep(){
+	drawLines()	
+	var ct = parseFloat(document.getElementById("table").value)
+	ct = ct+step
+	if (ct > end) return
+	document.getElementById("table").value = ct
+	speed = parseFloat(document.getElementById("speed").value)
+	setTimeout(animateStep, ((21-speed)/2)*100)
+    }
+    
+  </script>
+</html>
