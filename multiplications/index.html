@@ -60,7 +60,17 @@
       <!-- s'assurer qu'on ne peut pas aller à plus que 20 -->
       <span class="Label">Vitesse :</span>       <br/>  
       <input type="number" id="speed" value="3">  <br/>  
-      <a class="button" href="javascript:animate();" id="goanimate">Animation</a      
+      <a class="button" href="javascript:animate();" id="goanimate">Animation table</a> <br/>
+      <span class="Label">Début :</span>    <br/>  
+      <input type="number" id="start2" value="10">  <br/>  
+      <span class="Label">Fin :</span>       <br/>  
+      <input type="number" id="end2" value="100">  <br/>  
+      <span class="Label">Etape :</span>       <br/>  
+      <input type="number" id="step2" value="1">  <br/>  
+      <!-- s'assurer qu'on ne peut pas aller à plus que 20 -->
+      <span class="Label">Vitesse :</span>       <br/>  
+      <input type="number" id="speed2" value="3">  <br/>  
+      <a class="button" href="javascript:animate2();" id="goanimate">Animation modulo</a>      
     </div>    
   </body>
   <script>
@@ -130,6 +140,7 @@
     var start=0
     var end=0
     var step=0    
+
     function animate(){
 	start = parseFloat(document.getElementById("start").value)
 	end = parseFloat(document.getElementById("end").value)
@@ -146,6 +157,24 @@
 	document.getElementById("table").value = ct
 	speed = parseFloat(document.getElementById("speed").value)
 	setTimeout(animateStep, ((21-speed)/2)*100)
+    }
+
+    function animate2(){
+	start = parseFloat(document.getElementById("start2").value)
+	end = parseFloat(document.getElementById("end2").value)
+	step = parseFloat(document.getElementById("step2").value)
+	document.getElementById("modulo").value = start
+	animateStep2()
+    }
+
+    function animateStep2(){
+	drawLines()	
+	var ct = parseFloat(document.getElementById("modulo").value)
+	ct = ct+step
+	if (ct > end) return
+	document.getElementById("modulo").value = ct
+	speed = parseFloat(document.getElementById("speed2").value)
+	setTimeout(animateStep2, ((21-speed)/2)*100)
     }
     
   </script>
