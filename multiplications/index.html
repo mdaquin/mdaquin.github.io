@@ -85,9 +85,9 @@
     </div>
     <div id="colordialog">
       <div id="colorsliders">
-	<span class="label" style="float: left;">Rouge</span><input type="range" id="cred" value="128" max=255 style="width: 60%; float:right" onchange="updatecolor()"/><br/>
-	<span class="label" style="float: left;">Vert</span><input type="range" id="cgreen" value="128" max=255 style="width: 60%; float:right" onchange="updatecolor()"/><br/>
-	<span class="label" style="float: left;">Bleu</span><input type="range" id="cblue" value="128" max=255 style="width: 60%; float:right" onchange="updatecolor()"/><br/>
+	<span class="label" style="float: left;">Rouge (<span id="credv">128</span>)</span><input type="range" id="cred" value="128" max=255 style="width: 60%; float:right" onchange="updatecolor()"/><br/>
+	<span class="label" style="float: left;">Vert (<span id="cgreenv">128</span>)</span><input type="range" id="cgreen" value="128" max=255 style="width: 60%; float:right" onchange="updatecolor()"/><br/>
+	<span class="label" style="float: left;">Bleu (<span id="cbluev">128</span>)</span><input type="range" id="cblue" value="128" max=255 style="width: 60%; float:right" onchange="updatecolor()"/><br/>
 	<a class="button" href="javascript:backFromColorDialog();">Done</a>
       </div>
       <div id="colorpreview">
@@ -225,6 +225,9 @@
 	document.getElementById("cgreen").value = colorcomp[col][1]
 	document.getElementById("cblue").value = colorcomp[col][2]	
 	document.getElementById("colorpreview").style.background = 'rgb('+colorcomp[col][0]+','+colorcomp[col][1]+','+colorcomp[col][2]+')'
+	document.getElementById("credv").innerHTML = document.getElementById("cred").value
+	document.getElementById("cgreenv").innerHTML = document.getElementById("cgreen").value	
+	document.getElementById("cbluev").innerHTML = document.getElementById("cblue").value		
 	document.getElementById("colordialog").style.display = "block"
     }
 
@@ -233,6 +236,9 @@
 	    document.getElementById("cred").value+','+
 	    document.getElementById("cgreen").value+','+
 	    document.getElementById("cblue").value+')'
+	document.getElementById("credv").innerHTML = document.getElementById("cred").value
+	document.getElementById("cgreenv").innerHTML = document.getElementById("cgreen").value	
+	document.getElementById("cbluev").innerHTML = document.getElementById("cblue").value	
     }
 
     function backFromColorDialog(){
