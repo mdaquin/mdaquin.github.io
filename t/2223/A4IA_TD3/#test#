@@ -1,0 +1,50 @@
+% \begin{center}
+% 
+%     \begin{tabular}{| c | c | c | *{6}{c} |}
+%         \hline
+%         \rowcolor{HeaderTable}
+%             \textbf{Task}
+%             & \textbf{Name}
+%             & \textbf{Confidence}
+%             & \textbf{S1}
+%             & \textbf{S2}
+%             & \textbf{S3}
+%             & \textbf{S4}
+%             & \textbf{S5}
+%             & \textbf{S6}
+% %           & \textbf{S7}
+% %           & \textbf{S8}
+%         \\
+%         \hline
+%             0 & xxx & -- & \cellcolor{red!50} & \cellcolor{red!50}
+%                 & \cellcolor{red!50} & \cellcolor{red!50}
+%                 & \cellcolor{red!50} & \cellcolor{red!50}
+% %               & \cellcolor{red!50} & \cellcolor{red!50}
+% \\
+%         \hline
+%             1 & xxxx & {}
+%                 & \cellcolor{green!50} & \cellcolor{green!50}
+%                 & \cellcolor{green!50} &
+% %               & &
+%                 & & \\
+%         \hline
+%             2 & xxxx & {}
+%                 & & \cellcolor{orange!50}
+%                 & \cellcolor{orange!50} & \cellcolor{orange!50}
+%                 & \cellcolor{orange!50} &
+% %               & &
+% \\
+%         \hline
+%             3 & xxxx & {}
+%                 & &
+%                 &\cellcolor{blue!50} & \cellcolor{blue!50}
+%                 & \cellcolor{blue!50} & \cellcolor{blue!50}
+%             \\
+%         \hline
+% \end{tabular}
+% 
+% \end{center}
+% 
+% 
+% TODO: manpower + justification of budget
+% 

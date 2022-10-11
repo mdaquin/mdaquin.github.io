@@ -1,0 +1,13 @@
+Nom & Fatigué & Neige & Accident & Passager & Réparable \\ \hline
+Arsène & V & V & V & F & F \\ \hline
+Barnabé & F & V & F & V & V \\ \hline
+Charles & F & V & V & F & V \\ \hline
+Davis & F & F & F & F & V \\ \hline
+Edgar & F & F & V & F & F \\ \hline
+Ferdinand & V & F & V & V & F \\ \hline
+Gaston & F & F & F & F & V \\ \hline
+Henri & F & V & F & V & V \\ \hline
+Igor & F & V & V & V & V \\ \hline
+Jason & F & F & V & V & F \\ \hline
+Kevin & F & V & F & V & V \\ \hline
+Léonard & F & V & V & F & F \\ \hline
