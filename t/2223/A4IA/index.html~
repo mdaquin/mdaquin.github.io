@@ -1,0 +1,36 @@
+<html>
+  <head><title>Algo pour l'IA</title></head>
+  <body>
+
+    <h1>Algos pour l'IA - M1 MIAGE</h1>
+    
+    <h2>Algorithmes de recherche</h2>
+
+<ul>
+  <li><a href="https://mdaquin.github.io/t/2223/A4IA_CM1">
+      CM1 : Algorithmes de recherche</a></li>
+  <li><a href="https://mdaquin.github.io/t/2223/A4IA_TD1">
+      CTD1 : algorithmes de recherche</a></li>
+  <li><a href="https://mdaquin.github.io/t/2223/A4IA_TD1/sol.pdf">
+    TD1 solutions</li>
+
+    <h2>Recherche pour des applications spécifiques</h2>
+    
+CM2 : jeux, minimax, alpha-betaFichier
+CM3 - Problèmes de satisfaction de contraintesFichier
+TD2 - Minimax AlphaBeta et Problèmes de satisfaction de contraintesFichier
+TD2 solutionsFichier
+
+    <h2>Apprentissage automatique</h2>
+    
+CM4 - Partitionnement (apprentissage non-supervisé)Fichier
+CM5 - quelques méthodes d'apprentissage automatique supervisé (corrigé)Fichier
+TD3 - ApprentissageFichier
+TD3 solutionsFichier
+CM6 - Perceptron et backpropagationFichier
+TD4 - perceptronsFichier
+
+    
+  </body>
+</html>
+    
