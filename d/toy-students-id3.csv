@@ -1,0 +1,17 @@
+,Doublant, Série, Mention, Admis?
+1, Non, Maths, ABien, Admis
+2, Non, Techniques, ABien, Admis
+3, Oui, Sciences, ABien, Non Admis 
+4, Oui, Sciences, Bien, Admis
+5, Non, Maths, Bien, Admis
+6, Non, Techniques, Bien, Admis
+7, Oui, Sciences, Passable, Non Admis 
+8, Oui, Maths, Passable, Non Admis 
+9, Oui, Techniques, Passable, Non Admis 
+10, Oui, Maths, TBien, Admis
+11, Oui, Techniques, TBien, Admis
+12, Non, Sciences, TBien, Admis
+13, Oui, Maths, Bien, Admis
+14, Non, Sciences, ABien, Non Admis 
+15, Non, Maths, TBien, Admis
+16, Non, Maths, Passable, Non Admis 
