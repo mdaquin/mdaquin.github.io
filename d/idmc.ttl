@@ -1,0 +1,29 @@
+@base <https://idmc.univ-lorraine.fr/data/> .
+@prefix i: <https://idmc.univ-lorraine.fr/ontology/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+
+<mathieu> i:responsibleFor <SemanticWeb> ;
+	  rdfs:label "Mathieu d'Aquin" ;
+	  i:gives <SWLecture1>, <SWLecture2>, <SWLecture3>, <SWLecture4>, <SWLecture5> ;
+	  i:conducts <SWLab1Grp2>, <SWLab2Grp2>, <SWLab3Grp2>, <SWLab4Grp2>, <SWLab5Grp2> .
+
+
+<SemanticWeb> rdfs:label "Semantic Web Course";
+	      i:partOf <S8SemesterSC> , <S8SemesterNLP> .
+
+<S8SemesterNLP> rdf:type i:NLPSemester .
+
+<S8SemesterSC> rdf:type i:SCSemester .
+
+<PrDA> rdfs:label "Prof. d'Aquin"; i:gives <SWLecture3> .
+
+<dominic> rdfs:label "Dominic Example" ;
+      i:enrolledIn <S8SemesterNLP> ;
+      i:attends <SWLecture5> .
+
+<frederic> rdfs:label "Frederic Example" ;
+      i:enrolledIn <S8SemesterSC> ;
+      i:attends <SWLecture5> .	   
+

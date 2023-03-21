@@ -1,0 +1,71 @@
+@base <https://idmc.univ-lorraine.fr/ontology/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<SCLectureInEnglish> rdfs:subClassOf <LectureInEnglish> ;
+		     rdfs:subClassOf <SCLecture> . 
+
+<SCLecture> rdfs:subClassOf <Lecture> . 
+
+<NLPLecture> rdfs:subClassOf <Lecture> . 
+
+<hasLanguage> rdfs:domain <Course> ;
+	      rdfs:range <Language> .
+	      
+<inLanguage> rdfs:domain <Lecture> ;
+	     rdfs:range <Language> . 
+
+<conducts> rdfs:domain <Person> ;
+	   rdfs:range <Lab> .
+	   
+<participatesIn> rdfs:domain <Person> ;
+		 rdfs:range <Lab> . 
+
+
+<includes> rdfs:domain <Course> ; rdfs:range rdfs:Resource.
+
+<includedIn> rdfs:domain <Lecture> ;
+	     rdfs:range <Course> . 
+
+<givenBy> rdfs:domain <Lecture> ;
+	rdfs:range <Person> .
+
+<gives> rdfs:domain <Person> ;
+	rdfs:range <Lecture> .
+
+<attends> rdfs:domain <Person> ;
+	  rdfs:range <Lecture> . 
+
+<LectureInEnglish> rdfs:subClassOf <Lecture> . 
+
+<LectureInFrench> rdfs:subClassOf <Lecture> . 
+
+<partOf> rdfs:domain <Course> ;
+	 rdfs:range <TeachingSemester> . 
+
+<responsibleFor> rdfs:domain <Person> ;
+		 rdfs:range <Course> . 
+
+<involvedIn> rdfs:domain <Person> ; rdfs:range rdfs:Resource.
+
+<responsibleFor> rdfs:subPropertyOf <involvedIn> .
+<gives> rdfs:subPropertyOf <involvedIn> .
+<conducts> rdfs:subPropertyOf <involvedIn> .
+
+<NLPSemester> rdfs:subClassOf <TeachingSemester> .
+<SCSemester> rdfs:subClassOf <TeachingSemester> . 
+
+<ia> rdfs:domain <NLPSemester> ;
+     rdfs:range <TeachingSemester> . 
+
+<enrolledIn> rdfs:domain <Person> ;
+	     rdfs:range <TeachingSemester> . 
+
+<hasRole> rdfs:domain <Person> ;
+	  rdfs:range <Role> . 
+
+<student> rdf:type <Role> .
+<lecturer> rdf:type <Role> .
+
+<english> rdf:type <Language> .
+<french> rdf:type <Language> .
