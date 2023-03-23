@@ -90,12 +90,6 @@
                                                  rdfs:range <https://idmc.univ-lorraine.fr/ontology/Role> .
 
 
-###  https://idmc.univ-lorraine.fr/ontology/ia
-<https://idmc.univ-lorraine.fr/ontology/ia> rdf:type owl:ObjectProperty ;
-                                            rdfs:domain <https://idmc.univ-lorraine.fr/ontology/NLPSemester> ;
-                                            rdfs:range <https://idmc.univ-lorraine.fr/ontology/TeachingSemester> .
-
-
 ###  https://idmc.univ-lorraine.fr/ontology/inLanguage
 <https://idmc.univ-lorraine.fr/ontology/inLanguage> rdf:type owl:ObjectProperty ;
                                                     rdfs:domain <https://idmc.univ-lorraine.fr/ontology/Lecture> ;

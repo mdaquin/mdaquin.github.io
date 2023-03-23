@@ -55,9 +55,6 @@
 <NLPSemester> rdfs:subClassOf <TeachingSemester> .
 <SCSemester> rdfs:subClassOf <TeachingSemester> . 
 
-<ia> rdfs:domain <NLPSemester> ;
-     rdfs:range <TeachingSemester> . 
-
 <enrolledIn> rdfs:domain <Person> ;
 	     rdfs:range <TeachingSemester> . 
 
