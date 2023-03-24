@@ -22,7 +22,7 @@
       <div id="time">
       </div>
       <div id="duration">
-	<span id="durationlabel">Duration:</span> <input type="number" id="durhour" value="1"> <span id="hourlabel">hour</span> <input type="number" id="durminutes" value="30"> <span id="minuteslabel">minutes</span>
+	<span id="durationlabel">Duration:</span> <input type="number" id="durhour" value="1" min="0" onchange="hoursChanged()"> <span id="hourlabel">hour</span> <input type="number" id="durminutes" value="30" min="0" max="59" onchange="minutesChanged()"> <span id="minuteslabel">minutes</span>
       </div>
       <div id="start">      
 	<a id="startbutton" href="javascript:setStartTime()">Start time:</a> <span id="starttime">__:__</span> 
@@ -39,9 +39,20 @@
 
     var starttime = ""
     var finishtime = ""
+
+    function hoursChanged(){
+	const hours = document.getElementById("durhour").value
+	if (hours == 1) document.getElementById("hourlabel").innerHTML = "hour"
+	else document.getElementById("hourlabel").innerHTML = "hours"
+    }
+
+    function minutesChanged(){
+	const minutes = document.getElementById("durminutes").value
+	if (minutes == 1) document.getElementById("minuteslabel").innerHTML = "minute"
+	else document.getElementById("minuteslabel").innerHTML = "minutes"
+    }
     
     function setStartTime(){
-
 	starttime = new Date()
 	var hours = ""+starttime.getHours()
 	var minutes = ""+starttime.getMinutes()
@@ -66,16 +77,15 @@
 	var minutes = ""+d.getMinutes()
 	if (minutes.length == 1) minutes = "0"+minutes
 	document.getElementById("time").innerHTML = hours+":"+minutes
-
 	if (finishtime != "") {	
 	    const rtime = finishtime - d
 	    var rminutes = parseInt(rtime/(60*1000))
 	    const rhours = parseInt(rminutes/60)
 	    rminutes = rminutes%60
 	    var mt = "minutes"
-	    if (rminutes <= 1) mt = "minute"
+	    if (rminutes == 1) mt = "minute"
 	    var ht = "hours"
-	    if (rhours <= 1) ht = "hour"
+	    if (rhours == 1) ht = "hour"
 	    document.getElementById("remaining").innerHTML=rhours+" "+ht+" "+rminutes+" "+mt+" remaining"
 	}
 
