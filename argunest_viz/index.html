@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/tooltips.css">    -->
+    <title>ArguNest - Graph</title>
+    <script src="jquery.js"></script>
+<!--    <script type="text/javascript" src="https://mbostock.github.com/d3/d3.js?2.6.0"></script> -->
+    <script src="https://d3js.org/d3.v2.js"></script>
+    <!--    <script src="js/main.js"></script> -->
+    <script src="nodes.js"></script>
+    <style>
+      .label_concept {font-weight: bold; color: #555; font-size: 1.5vh;}
+      .label_proposition {font-weight: bold; color: #7474be; font-size: 1.5vh;}
+      .label_argument {font-weight: bold; color: #74be74; font-size: 1.5vh;}
+      .text_concept {color: #555; font-size: 2.5vh;}
+      .text_proposition {color: #555; font-size: 2.5vh;}
+      .text_argument {color: #555; font-size: 2.5vh;}      
+    </style>
+</head>
+<body>
+
+  <div style="z-index: -1000; color: #aaa; width: 33vw; text-align: center; padding-top: 13.5vh; font-size: 6vh; position: fixed; top: 0; left: 0;">Norris</div>
+  <div style="z-index: -1000; color: #aaa; width: 33vw; text-align: center; padding-top: 13.5vh; font-size: 6vh; position: fixed; top: 0; right: 0;">Masham</div>
+  <div style="z-index: -1000; color: #aaa; width: 100vw; text-align: center; padding-bottom: 13.5vh; font-size: 6vh; position: fixed; bottom: 0; right: 0;">Astell</div>
+
+  <div id="detail_panel" style="display: block; max-width: 25vh; height: 33vh; position: fixed; left: 0; top: 66vh; padding: 10px;"></div>
+
+  <div id="al_l_graph_panel" style="width: 100%; height: 100vh">
+&nbsp;
+  </div>
+
+  <script>
+
+// based on http://bl.ocks.org/MoritzStefaner/raw/1377729/
+function visGraph(){
+    $("#al_large_graph").remove()
+    var w = $("#al_l_graph_panel").width(), h = $("#al_l_graph_panel").height()-30
+    var labelDistance = 0;    
+    var vis = d3.select("#al_l_graph_panel").append("svg:svg").attr("width", w).attr("height", h).attr("id","al_large_graph");
+    var labelAnchors = [];
+    var labelAnchorLinks = [];
+    var links = [];
+    var nodes = [];
+    console.log(tnodes)
+    for(var i in tnodes){
+	nodes.push(tnodes[i])
+	labelAnchors.push({
+	    node : nodes[i]
+	});
+	labelAnchors.push({
+	    node : nodes[i]
+	});	
+    }
+    topics = {}
+    for(var i = 0; i < nodes.length; i++) {
+	if (nodes[i].type=="concept") topics[nodes[i].id] = 0
+    }
+    props = []
+    for(var i = 0; i < nodes.length; i++) {
+	if (nodes[i].type=="proposition") props.push(nodes[i].id)
+    }    
+    for(var i = 0; i < nodes.length; i++) {	
+	for(var j = 0; j < i; j++) {
+	    if (!nodes[i].supports) nodes[i].supports = []
+	    if (!nodes[i].contradicts) nodes[i].contradicts = []
+	    if (!nodes[i].same) nodes[i].same = []
+	    if (!nodes[j].supports) nodes[j].supports = []
+	    if (!nodes[j].contradicts) nodes[j].contradicts = []
+	    if (!nodes[j].same) nodes[j].same = []				    
+	    if (nodes[i].linkto.includes(nodes[j].id)){
+		links.push({
+		    source : i,
+		    target : j,
+		    weight : 1,
+		    type   : "topic"
+		});
+		topics[nodes[j].id]++
+	    }
+	    if (nodes[j].linkto.includes(nodes[i].id)){
+		links.push({
+		    source : j,
+		    target : i,
+		    weight : 1,
+		    type   : "topic"				
+		});
+		topics[nodes[i].id]++		
+	    }
+	    if (nodes[i].supports.includes(nodes[j].id)){
+		links.push({
+		    source : i,
+		    target : j,
+		    weight : 1,
+		    type   : "supports"
+		});
+	    }
+	    if (nodes[j].supports.includes(nodes[i].id)){
+		links.push({
+		    source : j,
+		    target : i,
+		    weight : 1,
+		    type   : "supports"				
+		});
+	    }
+	    if (nodes[i].contradicts.includes(nodes[j].id)){
+		links.push({
+		    source : i,
+		    target : j,
+		    weight : 1,
+		    type   : "contradicts"
+		});
+	    }
+	    if (nodes[j].contradicts.includes(nodes[i].id)){
+		links.push({
+		    source : j,
+		    target : i,
+		    weight : 1,
+		    type   : "contradicts"				
+		});
+	    }
+	    if (nodes[i].same.includes(nodes[j].id)){
+		links.push({
+		    source : i,
+		    target : j,
+		    weight : 1,
+		    type   : "same"
+		});
+	    }
+	    if (nodes[j].same.includes(nodes[i].id)){
+		links.push({
+		    source : j,
+		    target : i,
+		    weight : 1,
+		    type   : "same"				
+		});
+	    }			
+	}
+	labelAnchorLinks.push({
+	    source : i * 2,
+	    target : i * 2 + 1,
+	    weight : 1
+	});
+    }
+    var items = Object.keys(topics).map(function(key) {
+	return [key, topics[key]];
+    });
+    items.sort(function(first, second) {
+	return second[1] - first[1];
+    });
+    console.log(items)
+    var nitems = []
+    for(var i = 0; i < items.length; i++){
+	if (i%2==0) nitems.push(items[i][0])
+	else nitems.unshift(items[i][0])
+    }
+    console.log(nitems);
+    count=0
+    /*
+    for(var i = 0; i < nodes.length; i++) {
+	if (nodes[i].type=="concept") {
+	    nodes[i].fixed=true;
+	    nodes[i].x = w-100
+	    console.log(nitems.indexOf(nodes[i].id))
+	    nodes[i].y = (nitems.indexOf(nodes[i].id)*(h/nitems.length))+(h/(2*nitems.length))
+	    console.log(h)
+	}
+	if (nodes[i].type=="proposition") {
+	    nodes[i].fixed=true;
+	    nodes[i].x = w/3
+	    nodes[i].y = ((props.indexOf(nodes[i].id))*(h/props.length))+(h/(2*props.length))
+	    count++
+	}	
+    }    */
+    console.log(nodes)
+    console.log(links)
+    var force = d3.layout.force().size([w, h]).nodes(nodes).links(links).gravity(10).linkDistance(100).charge(-12000).linkStrength(function(x) {
+		    return x.weight * 5
+    });
+		force.start();
+		var force2 = d3.layout.force().nodes(labelAnchors).links(labelAnchorLinks).gravity(0).linkDistance(0).linkStrength(5).charge(-50).size([w, h]);
+		force2.start();
+    var link = vis.selectAll("line.link").data(links).enter().append("svg:line").attr("class", "link").style("stroke", function (l){
+	if (l.target.label == "none") return "#fff"
+	if (l.type=="same") return "#000"
+	if (l.type=="supports") return "#5a5"
+	if (l.type=="contradicts") return "#a55"	    
+	return "#ddd"
+    }).style("stroke-width", function (l){
+	if (l.type=="same") return "1"
+	if (l.type=="supports") return "1"
+	if (l.type=="contradicts") return "1"	    
+	return "1"
+    });
+    var node = vis.selectAll("g.node").data(force.nodes()).enter().append("svg:g").attr("class", "node");
+    node.append("svg:circle").attr("r", 6).style("fill",
+						  function(d){
+						      if (d.label == "none")
+							  return "#fff"
+						      if (d.type=="argument")
+							  return "#74be74"
+						      if (d.type=="proposition")
+							  return "#7474be"
+						      return "#555"
+						  }).style("stroke", "#FFF").style("stroke-width", 3).on("click", function(d){
+						      if (d.type!="concept")
+							  selectInGraphClick(d.id);
+						  });
+    node.call(force.drag);
+    node.on('mouseover', function (d, i) {
+	var s = '<div class="label_'+d.type+'">'+d.type+'</div>'+
+	    '<div class="text_'+d.type+'">'+d.label+'</div>'
+	if (d.person){
+	let uperson = d.person.filter((element, index) => {return d.person.indexOf(element) === index;});
+	if (uperson.length!=0){
+	    s+='<div class="people">('
+	    for(var i=0; i < uperson.length; i++){
+		if (i!=0) s+=", "
+		s+=uperson[i].replace("_", " ")
+	    }
+	    s+=')</div>'
+	}
+	}
+	$("#detail_panel").html(s)
+
+    })
+//	.on('mouseout', function (d, i)  {console.log("out");console.log(d);console.log(i)});
+    var anchorLink = vis.selectAll("line.anchorLink").data(labelAnchorLinks)//.enter().append("svg:line").attr("class", "anchorLink").style("stroke", "#999");
+    var anchorNode = vis.selectAll("g.anchorNode").data(force2.nodes()).enter().append("svg:g").attr("class", "anchorNode");
+    anchorNode.append("svg:circle").attr("r", 0).style("fill", "#FFF");
+    anchorNode.append("svg:text").text(function(d, i) {
+	if (!d.node || !d.node.label) return ""
+	if (d.node.label == "none") return ""
+	return i % 2 == 0 ? "" : "" // d.node.label
+    }).style("fill", "#555").style("font-family", "Arial").style("font-size", 12);
+		
+		var updateLink = function() {
+		    this.attr("x1", function(d) {
+			return d.source.x;
+		    }).attr("y1", function(d) {
+			return d.source.y;
+		    }).attr("x2", function(d) {
+			return d.target.x;
+		    }).attr("y2", function(d) {
+			return d.target.y;
+		    });
+		    
+		}
+		
+		var updateNode = function() {
+		    this.attr("transform", function(d) {
+			if (d.y < 10) d.y = 10
+			if (d.x < 10) d.x = 10
+			if (d.y > h-10) d.y = h-10
+			if (d.x > w-10) d.x = w-10			
+			if (d.person && d.person.length==1 && d.person[0] == "John_Norris") {
+			    if (d.y > h/3) d.y = h/6
+			    if (d.x > w/3) d.x = w/6		
+			}
+			if (d.person && d.person.length==1 && d.person[0] == "Damaris_Masham") {
+			    if (d.y > h/3) d.y = h/6
+			    if (d.x < 2*w/3) d.x = 5*w/6		
+			}			
+			if (d.person && d.person.length==1 && d.person[0] == "Mary_Astell") {
+			    if (d.y < 2*h/3) d.y = 5*h/6
+			    if (d.x < w/4 || d.x > 3*w/4) d.x = w/2
+			}			
+			return "translate(" + d.x + "," + d.y + ")";
+		    });
+		    
+		}
+		
+		force.on("tick", function() {	
+		    force2.start();	
+		    node.call(updateNode);    
+		    anchorNode.each(function(d, i) {
+			if(i % 2 == 0) {
+			    d.x = d.node.x;
+			    d.y = d.node.y;
+			} else {
+			    var b = this.childNodes[1].getBBox();		
+			    var diffX = d.x - d.node.x;
+			    var diffY = d.y - d.node.y;		
+			    var dist = Math.sqrt(diffX * diffX + diffY * diffY);		
+			    var shiftX = b.width * (diffX - dist) / (dist * 2);
+			    shiftX = Math.max(-b.width, Math.min(0, shiftX));
+			    var shiftY = 5;
+			    this.childNodes[1].setAttribute("transform", "translate(" + shiftX + "," + shiftY + ")");
+			}
+		    });		    
+		    anchorNode.call(updateNode);		    
+		    link.call(updateLink);
+		    anchorLink.call(updateLink);
+		    
+		});
+}
+
+    visGraph()
+  </script>
+  
+</body>
+</html>
