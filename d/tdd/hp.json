@@ -1,0 +1,56 @@
+[
+   {
+      "firstname": "Harry",
+      "lastname": "Potter",
+      "marks potion": 12,
+      "marks def. ATDA": 14,
+      "house": "Gryffindor"
+   },
+   {
+      "firstname": "Hermione",
+      "lastname": "Granger",
+      "marks potion": 18,
+      "marks def. ATDA": 18,
+      "house": "Gryffindor"
+   },
+   {
+      "firstname": "Ron",
+      "lastname": "Weasley",
+      "marks def. ATDA": 12,
+      "house": "Gryffindor"
+   },
+   {
+      "firstname": "Draco",
+      "lastname": "Malfoy",
+      "marks potion": 11,
+      "marks def. ATDA": 12,
+      "house": "Slytherin"
+   },
+   {
+      "firstname": "Luna",
+      "lastname": "Lovegood",
+      "marks potion": 14,
+      "house": "Ravenclaw"
+   },
+   {
+      "firstname": "Vincent",
+      "lastname": "Crabbe",
+      "marks potion": 8,
+      "marks def. ATDA": 6,
+      "house": "Slytherin"
+   },
+   {
+      "firstname": "Gregory",
+      "lastname": "Goyle",
+      "marks potion": 7,
+      "marks def. ATDA": 7,
+      "house": "Slytherin"
+   },
+   {
+      "firstname": "Parvati",
+      "lastname": "Patil",
+      "marks potion": 13,
+      "marks def. ATDA": 14,
+      "house": "Ravenclaw"
+   }
+]    
