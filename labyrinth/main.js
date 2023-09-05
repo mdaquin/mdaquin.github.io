@@ -177,7 +177,10 @@ function solve(){
     console.log("solve")
     if (method=="bfs") bfs()
     if (method=="dfs") dfs()
-    if (method=="gr") gr()
+    if (method=="gr") {
+	gr()
+	console.log("gr")
+    }
     if (method=="as") as()                
 }
 
