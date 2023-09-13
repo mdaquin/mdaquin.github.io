@@ -1,8 +1,0 @@
-pere(marie, carolle).
-mere(marie, frank).
-pere(marc, carolle).
-mere(marc, frank).
-pere(frank,dominique).
-mere(frank,pascal).
-pere(marie, marc).
-mere(marc, marie).
