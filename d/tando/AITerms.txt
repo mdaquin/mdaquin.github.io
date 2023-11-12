@@ -1,0 +1,52 @@
+adversarial machine learning
+autonomy 
+big data
+classifier
+data poisoning
+deep learning
+differential privacy
+input data
+machine learning
+model training
+model validation
+natural language processing
+predictive analysis
+profiling
+reinforcement learning
+structured data
+unstructured data
+synthetic data
+transfer learning
+supervised learning
+unsupervised learning
+adaptive learning
+algorithm
+classification
+federated learning
+generative adversarial network
+human values for AI
+human-centric AI
+language model
+large language model
+model
+neural network
+scalability
+socio-technical system
+technical interoperability
+value sensitive design
+artificial general intelligence
+artificial intelligence
+biometric categorisation system
+biometric data
+data governance
+data quality
+deepfake
+emotion recognition system
+foundation models
+generative artificial intelligence
+model risk management
+pseudo-anonymization
+remote biometric identification system
+sensitive data
+testing data
+training data
