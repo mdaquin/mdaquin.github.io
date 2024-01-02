@@ -1,0 +1,1279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+	xmlns:dogs="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:sesame="http://www.openrdf.org/schema/sesame#"
+	xmlns:owl="http://www.w3.org/2002/07/owl#"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions#"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:hint="http://www.bigdata.com/queryHints#"
+	xmlns:bd="http://www.bigdata.com/rdf#"
+	xmlns:bds="http://www.bigdata.com/rdf/search#"
+	xmlns:psn="http://www.wikidata.org/prop/statement/value-normalized/"
+	xmlns:pqn="http://www.wikidata.org/prop/qualifier/value-normalized/"
+	xmlns:prn="http://www.wikidata.org/prop/reference/value-normalized/"
+	xmlns:mwapi="https://www.mediawiki.org/ontology#API/"
+	xmlns:gas="http://www.bigdata.com/rdf/gas#"
+	xmlns:wdt="http://www.wikidata.org/prop/direct/"
+	xmlns:wdtn="http://www.wikidata.org/prop/direct-normalized/"
+	xmlns:psv="http://www.wikidata.org/prop/statement/value/"
+	xmlns:ps="http://www.wikidata.org/prop/statement/"
+	xmlns:pqv="http://www.wikidata.org/prop/qualifier/value/"
+	xmlns:pq="http://www.wikidata.org/prop/qualifier/"
+	xmlns:prv="http://www.wikidata.org/prop/reference/value/"
+	xmlns:pr="http://www.wikidata.org/prop/reference/"
+	xmlns:wdno="http://www.wikidata.org/prop/novalue/"
+	xmlns:p="http://www.wikidata.org/prop/"
+	xmlns:wikibase="http://wikiba.se/ontology#"
+	xmlns:wd="http://www.wikidata.org/entity/"
+	xmlns:wdata="http://www.wikidata.org/wiki/Special:EntityData/"
+	xmlns:wds="http://www.wikidata.org/entity/statement/"
+	xmlns:wdv="http://www.wikidata.org/value/"
+	xmlns:wdref="http://www.wikidata.org/reference/"
+	xmlns:schema="http://schema.org/"
+	xmlns:prov="http://www.w3.org/ns/prov#"
+	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+	xmlns:geo="http://www.opengis.net/ont/geosparql#"
+	xmlns:geof="http://www.opengis.net/def/geosparql/function/"
+	xmlns:mediawiki="https://www.mediawiki.org/ontology#"
+	xmlns:ontolex="http://www.w3.org/ns/lemon/ontolex#"
+	xmlns:dct="http://purl.org/dc/terms/">
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Staffordshire Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">American Staffordshire Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chinese Chongqing Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Chinese Chongqing Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alano Español">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Alano Español</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chihuahua">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Chihuahua</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Great Dane">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Great Dane</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Bully">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">American Bully</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Affenpinscher">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Affenpinscher</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Leopard Tree Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Leopard Tree Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Cocker Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">American Cocker Spaniel</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cardigan Welsh Corgi">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Cardigan Welsh Corgi</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chesapeake Bay Retriever">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Chesapeake Bay Retriever</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/border collie">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">border collie</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Eskimo Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">American Eskimo Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rottweiler">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Rottweiler</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Swedish Vallhund">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Swedish Vallhund</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bullmastiff">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Bullmastiff</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Mastiff">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">American Mastiff</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">German Shepherd</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/beagle">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">beagle</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/hunting dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Wire Fox Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Wire Fox Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Fox Terrier"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Standard Schnauzer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Standard Schnauzer</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Schnauzer"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Xarnego Valenciano">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Xarnego Valenciano</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Podenco"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Nova Scotia Duck Tolling Retriever">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Nova Scotia Duck Tolling Retriever</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/gun dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ca de Conills">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Ca de Conills</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Greenland Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Greenland Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/inuit sledge dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Appenzeller Sennenhund">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Appenzeller Sennenhund</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Swiss mountain dogs"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American English Coonhound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">American English Coonhound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Anatolian Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Anatolian Shepherd</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Toy Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">English Toy Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Campeiro Bulldog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Campeiro Bulldog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bull and Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Bull and Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Boxer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Boxer</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Burgos Retriever">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Burgos Retriever</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Partridge Dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kai Ken">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Kai Ken</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Japanese dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/poodle">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">poodle</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Golden retriever">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Golden retriever</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/gun dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/dachshund">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">dachshund</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Samoyed">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Samoyed</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Double Coat"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Smooth Fox Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Smooth Fox Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Fox Terrier"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Nova Scotia Duck Tolling Retriever">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/retriever"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chesapeake Bay Retriever">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/gun dog"/>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/retriever"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Maltese">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Maltese</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cairn Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Cairn Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Terrier"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chinese Crested Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Chinese Crested Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/toy dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Groenendael">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Groenendael</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Belgian Shepherd"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Maremma Sheepdog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Maremma Sheepdog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dalmatian">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Dalmatian</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Austrian Black and Tan Hound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Austrian Black and Tan Hound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Redbone Coonhound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Redbone Coonhound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Griffon Belge">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Griffon Belge</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Belgian Griffons"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese Podengo">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Portuguese Podengo</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Podenco"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cairn Terrier">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Manchester Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Manchester Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Terrier"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Borzoi">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Borzoi</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">English Shepherd</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dogue de Bordeaux">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Dogue de Bordeaux</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Landseer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Landseer</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Presa Canario">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Presa Canario</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Braque d'Auvergne">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Braque d'Auvergne</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Black and Tan Coonhound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Black and Tan Coonhound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Coonhound"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Golden retriever">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/retriever"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bluetick Coonhound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Bluetick Coonhound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Coonhound"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Setter">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">English Setter</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Black Norwegian Elkhound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Black Norwegian Elkhound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Norwegian Elkhound"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Tosa">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Tosa</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Japanese dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Working Red">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">American Working Red</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Working Pit Bulldog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Working Pit Bulldog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Original Fila Brasileiro">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Original Fila Brasileiro</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pit Monster">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Pit Monster</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bullbras">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Bullbras</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pshdar dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Pshdar dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alabai">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Alabai</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Olde english bulldogge brasileiro">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Olde english bulldogge brasileiro</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Frenchton">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Frenchton</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ibizan Hound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Ibizan Hound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Podenco"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Miniature Schnauzer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Miniature Schnauzer</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Schnauzer"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/New Guinea singing dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">New Guinea singing dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog breed"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Fox Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Fox Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Terrier"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Stabijhoun">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Stabijhoun</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Partridge Dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rhodesian Ridgeback">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Rhodesian Ridgeback</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Scottish Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Scottish Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Shetland Sheepdog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Shetland Sheepdog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Greater Swiss Mountain Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Greater Swiss Mountain Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Swiss mountain dogs"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Setter">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/gun dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Brazilian Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Brazilian Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Central Asian Shepherd Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Central Asian Shepherd Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Murray River Curly Coated Retriever">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Murray River Curly Coated Retriever</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Curly Coated Retriever"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Golden retriever">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Fox Terrier">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Shikoku">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Shikoku</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Estrela Mountain Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Estrela Mountain Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/St. Bernard">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">St. Bernard</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Catalan Sheepdog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Catalan Sheepdog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Combai">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Combai</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cantabrian Water Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Cantabrian Water Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Akbash">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Akbash</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Australian Cattle Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Australian Cattle Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Pinscher">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">German Pinscher</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/King Charles Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">King Charles Spaniel</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Foxhound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">English Foxhound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alaskan Klee Kai">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Alaskan Klee Kai</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Olde English Bulldogge">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Olde English Bulldogge</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Bulldog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">American Bulldog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/English bull terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">English bull terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Bull Terrier"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/westiepoo">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">westiepoo</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog crossbreed"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Black Russian Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Black Russian Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Schnauzer"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rough Collie">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Rough Collie</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/collie"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Staffordshire Bull Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Staffordshire Bull Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Welsh Sheepdog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Welsh Sheepdog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Staffordshire Bull Terrier">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Terrier"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kishu">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Kishu</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Japanese dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Finnish Spitz">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Finnish Spitz</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Flat-Coated Retriever">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Flat-Coated Retriever</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Formosan Mountain Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Formosan Mountain Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bull Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Bull Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dobermann">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Dobermann</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Griffon Bruxellois">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Griffon Bruxellois</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Griffon Bruxellois"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Buckhound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Buckhound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/scent hound"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Staghound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Staghound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/scent hound"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kars dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Kars dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/livestock guardian dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chien Blanc du Roi">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Chien Blanc du Roi</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/scent hound"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Norman Hound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Norman Hound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/scent hound"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/West Country Harrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">West Country Harrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/scent hound"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/French Bulldog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">French Bulldog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dutch Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Dutch Shepherd</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Danish Swedish Farmdog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Danish Swedish Farmdog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/East Siberian Laika">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">East Siberian Laika</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Havanese">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Havanese</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dogo Sardesco">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Dogo Sardesco</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Mastiff">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">English Mastiff</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Akita">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Akita</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Japanese dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Entlebucher Mountain Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Entlebucher Mountain Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Swiss mountain dogs"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dutch Smoushond">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Dutch Smoushond</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Schnauzer"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bedlington Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Bedlington Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Terrier"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Laekenois">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Laekenois</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Belgian Shepherd"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Australian Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Australian Shepherd</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bakharwal Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Bakharwal Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bearded Collie">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Bearded Collie</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Airedale Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Airedale Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Belgian Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Belgian Shepherd</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Russo-European Laika">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Russo-European Laika</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Staghound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">American Staghound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/West Siberian Laika">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">West Siberian Laika</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Akita">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">American Akita</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Hairless Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">American Hairless Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pachón Navarro">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Pachón Navarro</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alapaha Blue Blood Bulldog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Alapaha Blue Blood Bulldog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Australian Stumpy Tail Cattle Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Australian Stumpy Tail Cattle Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Shiloh Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Shiloh Shepherd</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Drentse Patrijshond">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Drentse Patrijshond</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Partridge Dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Calupoh">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Calupoh</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/wolfdog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Spitz">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">German Spitz</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Spitz"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Tervuren">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Tervuren</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Belgian Shepherd"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Yorkshire Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Yorkshire Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Andalusian Hound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Andalusian Hound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Podenco"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Phalène">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Phalène</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Papillon"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Spitz">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Aidi">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Aidi</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Shiba Inu">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Shiba Inu</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Japanese dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Pit Bull Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">American Pit Bull Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Terrier"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Canadian Eskimo Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Canadian Eskimo Dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/inuit sledge dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bernese mountain dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Bernese mountain dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Swiss mountain dogs"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Jack Russell Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Jack Russell Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Afghan Hound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Afghan Hound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/bloodhound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">bloodhound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/hunting dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Africanis">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Africanis</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Double-nosed Andean tiger hound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Double-nosed Andean tiger hound</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Can de Palleiro">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Can de Palleiro</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Morkie">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Morkie</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Abyssinian Sand Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Abyssinian Sand Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/nureongi">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">nureongi</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/collie">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">collie</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/West Siberian Laika">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Laika"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pachón Navarro">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Partridge Dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chow Chow">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Chow Chow</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Springer Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">English Springer Spaniel</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Belgian Malinois">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Belgian Malinois</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Belgian Shepherd"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Field Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Field Spaniel</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Finnish Lapphund">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Finnish Lapphund</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Hokkaido inu">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Hokkaido inu</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Japanese dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bulldog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Bulldog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Cocker Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">English Cocker Spaniel</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Curly Coated Retriever">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Curly Coated Retriever</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/retriever"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Spitz Mittel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">German Spitz Mittel</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Mantiqueira Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Mantiqueira Shepherd</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Labrador retriever">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Labrador retriever</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese water dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Portuguese water dog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Fédération Cynologique Internationale Groups"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Großspitz">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Großspitz</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Belgian Griffons">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Belgian Griffons</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dogo español">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Dogo español</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Molossus of Epirus">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Molossus of Epirus</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sarabi Mastiff">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Sarabi Mastiff</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chamuco">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Chamuco</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bone-mouth">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Bone-mouth</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Labrador retriever">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/gun dog"/>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/retriever"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Giant Schnauzer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Giant Schnauzer</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Schnauzer"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/mongrel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">mongrel</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Norwich Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Norwich Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Terrier"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Norfolk Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Norfolk Terrier</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Terrier"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/mongrel">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/mixed breed"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Podenco Canario">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Podenco Canario</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Podenco"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/miniature dachshund">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">miniature dachshund</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/dachshund"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Leavitt Bulldog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Leavitt Bulldog</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Olde English Bulldogge"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Toy Poodle">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Toy Poodle</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/poodle"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/West Country Harrier">
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/hound"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ryukyu Inu">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Ryukyu Inu</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Japanese dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kawakami Ken">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Kawakami Ken</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Japanese dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Yakushima Inu">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Yakushima Inu</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Japanese dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Koshi">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Koshi</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Japanese dog"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Daitō Inu">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/DogBreed"/>
+	<rdfs:label xml:lang="en">Daitō Inu</rdfs:label>
+	<dogs:subBreedOf rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Japanese dog"/>
+</rdf:Description>
+
+</rdf:RDF>

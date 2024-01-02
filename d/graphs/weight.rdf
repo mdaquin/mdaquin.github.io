@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+	xmlns:dogs="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:sesame="http://www.openrdf.org/schema/sesame#"
+	xmlns:owl="http://www.w3.org/2002/07/owl#"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions#"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:hint="http://www.bigdata.com/queryHints#"
+	xmlns:bd="http://www.bigdata.com/rdf#"
+	xmlns:bds="http://www.bigdata.com/rdf/search#"
+	xmlns:psn="http://www.wikidata.org/prop/statement/value-normalized/"
+	xmlns:pqn="http://www.wikidata.org/prop/qualifier/value-normalized/"
+	xmlns:prn="http://www.wikidata.org/prop/reference/value-normalized/"
+	xmlns:mwapi="https://www.mediawiki.org/ontology#API/"
+	xmlns:gas="http://www.bigdata.com/rdf/gas#"
+	xmlns:wdt="http://www.wikidata.org/prop/direct/"
+	xmlns:wdtn="http://www.wikidata.org/prop/direct-normalized/"
+	xmlns:psv="http://www.wikidata.org/prop/statement/value/"
+	xmlns:ps="http://www.wikidata.org/prop/statement/"
+	xmlns:pqv="http://www.wikidata.org/prop/qualifier/value/"
+	xmlns:pq="http://www.wikidata.org/prop/qualifier/"
+	xmlns:prv="http://www.wikidata.org/prop/reference/value/"
+	xmlns:pr="http://www.wikidata.org/prop/reference/"
+	xmlns:wdno="http://www.wikidata.org/prop/novalue/"
+	xmlns:p="http://www.wikidata.org/prop/"
+	xmlns:wikibase="http://wikiba.se/ontology#"
+	xmlns:wd="http://www.wikidata.org/entity/"
+	xmlns:wdata="http://www.wikidata.org/wiki/Special:EntityData/"
+	xmlns:wds="http://www.wikidata.org/entity/statement/"
+	xmlns:wdv="http://www.wikidata.org/value/"
+	xmlns:wdref="http://www.wikidata.org/reference/"
+	xmlns:schema="http://schema.org/"
+	xmlns:prov="http://www.w3.org/ns/prov#"
+	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+	xmlns:geo="http://www.opengis.net/ont/geosparql#"
+	xmlns:geof="http://www.opengis.net/def/geosparql/function/"
+	xmlns:mediawiki="https://www.mediawiki.org/ontology#"
+	xmlns:ontolex="http://www.w3.org/ns/lemon/ontolex#"
+	xmlns:dct="http://purl.org/dc/terms/">
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chihuahua">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Chihuahua</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Löwchen">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Löwchen</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kerry Blue Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Kerry Blue Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">18</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cesky Fousek">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Cesky Fousek</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">34</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Mudhol Hound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Mudhol Hound</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Perro de Presa Mallorquin">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Perro de Presa Mallorquin</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">38</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chippiparai">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Chippiparai</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">17.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chinese Chongqing Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Chinese Chongqing Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">22.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pekingese">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Pekingese</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5.4</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Italian Greyhound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Italian Greyhound</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Boxer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Boxer</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/bloodhound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">bloodhound</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">54</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Broholmer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Broholmer</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">70</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese Sheepdog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Portuguese Sheepdog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">27</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Azores Cattle Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Azores Cattle Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bullmastiff">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Bullmastiff</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">59</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Welsh Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Welsh Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">9.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Scottish Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Scottish Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rhodesian Ridgeback">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Rhodesian Ridgeback</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">36.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/French Bulldog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">French Bulldog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">14</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Barak hound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Barak hound</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Miniature Pinscher">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Miniature Pinscher</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Brazilian Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Brazilian Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Canaan Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Canaan Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Caucasian Shepherd Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Caucasian Shepherd Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">50</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Czechoslovakian Wolfdog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Czechoslovakian Wolfdog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">26</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ukrainian Vivcharka">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Ukrainian Vivcharka</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese water dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Portuguese water dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Papillon">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Papillon</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Affenpinscher">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Affenpinscher</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Artois Hound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Artois Hound</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bouvier des Ardennes">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Bouvier des Ardennes</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Presa Canario">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Presa Canario</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">65</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cavalier King Charles Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Cavalier King Charles Spaniel</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6.7</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Schipperke">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Schipperke</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Hanover Hound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Hanover Hound</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Soft-coated Wheaten Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Soft-coated Wheaten Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sealyham Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Sealyham Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">9</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rafeiro do Alentejo">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Rafeiro do Alentejo</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">60</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese Podengo">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Portuguese Podengo</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Slovenský kopov">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Slovenský kopov</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lakeland Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Lakeland Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7.7</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alaskan Malamute">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Alaskan Malamute</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">38</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Maremma Sheepdog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Maremma Sheepdog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">52</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Irish wolfhound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Irish wolfhound</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">54.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Komondor">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Komondor</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">60</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chesapeake Bay Retriever">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Chesapeake Bay Retriever</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">36.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Slovak Cuvac">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Slovak Cuvac</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">44</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Weimaraner">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Weimaraner</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Irish Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Irish Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">27</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Black Russian Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Black Russian Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">60</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cesky Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Cesky Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Korean Jindo Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Korean Jindo Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">23</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rottweiler">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Rottweiler</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">50</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Estrela Mountain Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Estrela Mountain Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">60</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese Cattle Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Portuguese Cattle Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Central Asian Shepherd Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Central Asian Shepherd Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">50</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Toy Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">English Toy Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.6</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Miniature Schnauzer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Miniature Schnauzer</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Neapolitan Mastiff">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Neapolitan Mastiff</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">70</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Cocker Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">English Cocker Spaniel</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">14.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Old Danish Pointer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Old Danish Pointer</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bracco Italiano">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Bracco Italiano</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cirneco dell'Etna">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Cirneco dell'Etna</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">13</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Spanish Water Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Spanish Water Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">22</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Field Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Field Spaniel</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Anatolian Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Anatolian Shepherd</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">65</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Boston Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Boston Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">11.3</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bavarian Mountain Hound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Bavarian Mountain Hound</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Large Münsterländer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Large Münsterländer</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bichon Frisé">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Bichon Frisé</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pug">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Pug</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8.1</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Newfoundland dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Newfoundland dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">68</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/King Charles Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">King Charles Spaniel</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6.3</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Borzoi">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Borzoi</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">100</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Basenji">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Basenji</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">11</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Glen of Imaal Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Glen of Imaal Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">16</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bedlington Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Bedlington Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Jack Russell Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Jack Russell Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">German Shepherd</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sussex Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Sussex Spaniel</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">23</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Longhaired Pointer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">German Longhaired Pointer</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Spinone Italiano">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Spinone Italiano</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">37</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Australian Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Australian Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Fila Brasileiro">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Fila Brasileiro</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Pinscher">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">German Pinscher</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">German Spaniel</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Drentse Patrijshond">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Drentse Patrijshond</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Staffordshire Bull Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Staffordshire Bull Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">17</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Italian rough-haired Segugio">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Italian rough-haired Segugio</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">28</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Nova Scotia Duck Tolling Retriever">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Nova Scotia Duck Tolling Retriever</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">23</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Basset Artésien Normand">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Basset Artésien Normand</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bolognese">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Bolognese</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Border Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Border Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Water Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">American Water Spaniel</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Clumber Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Clumber Spaniel</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">34</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Azawakh">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Azawakh</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Flat-Coated Retriever">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Flat-Coated Retriever</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">36</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Formosan Mountain Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Formosan Mountain Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">18</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Maltese">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Maltese</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Mudi">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Mudi</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">13</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Giant Schnauzer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Giant Schnauzer</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">47</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Smooth Collie">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Smooth Collie</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">29.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Smooth Fox Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Smooth Fox Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pembroke Welsh Corgi">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Pembroke Welsh Corgi</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bouvier des Flandres">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Bouvier des Flandres</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Gordon Setter">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Gordon Setter</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">29.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Coton de Tulear">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Coton de Tulear</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Tibetan Spaniel">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Tibetan Spaniel</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6.8</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Russkiy Toy">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Russkiy Toy</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Stabijhoun">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Stabijhoun</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">27</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Puli">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Puli</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese Pointer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Portuguese Pointer</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">27</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bergamasco Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Bergamasco Shepherd</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">38</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Greek Harehound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Greek Harehound</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Griffon Bruxellois">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Griffon Bruxellois</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Norwegian Buhund">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Norwegian Buhund</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">18</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/White Swiss Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">White Swiss Shepherd</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Scottish Deerhound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Scottish Deerhound</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cairn Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Cairn Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7.5</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dogue de Bordeaux">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Dogue de Bordeaux</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">50</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dogo Argentino">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Dogo Argentino</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Shih Tzu">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Shih Tzu</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Peruvian Hairless Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Peruvian Hairless Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Norwegian Lundehund">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Norwegian Lundehund</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Belgian Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Belgian Shepherd</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Siberian Husky">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Siberian Husky</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">28</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Yorkshire Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Yorkshire Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.2</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dandie Dinmont Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Dandie Dinmont Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">11</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Karelian Bear Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Karelian Bear Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">28</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Eurasier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Eurasier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Karst Shepherd">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Karst Shepherd</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">42</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ariege Pointer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Ariege Pointer</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kuvasz">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Kuvasz</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">62</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bulldog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Bulldog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dobermann">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Dobermann</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Yugoslavian Shepherd Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Yugoslavian Shepherd Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Transylvanian hound">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Transylvanian hound</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Majorca Shepherd Dog">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Majorca Shepherd Dog</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">40</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cimarrón Uruguayo">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Cimarrón Uruguayo</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kromfohrländer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Kromfohrländer</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">16</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Mastiff">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">English Mastiff</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">230</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pumi">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Pumi</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">13</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lagotto Romagnolo">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Lagotto Romagnolo</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">16</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Wire Fox Terrier">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Wire Fox Terrier</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8.25</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Standard Schnauzer">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Standard Schnauzer</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dutch Smoushond">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Dutch Smoushond</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">11</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Italian Short-Haired Segugio">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Italian Short-Haired Segugio</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">28</dogs:weight>
+</rdf:Description>
+
+<rdf:Description rdf:about="https://idmc.uiv-lorraine.fr/graphs/data/dogs/Frenchton">
+	<rdf:type rdf:resource="https://idmc.uiv-lorraine.fr/graphs/schema/dogs/Dog"/>
+	<rdfs:label xml:lang="en">Frenchton</rdfs:label>
+	<dogs:weight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6</dogs:weight>
+</rdf:Description>
+
+</rdf:RDF>

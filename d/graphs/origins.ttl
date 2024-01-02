@@ -1,0 +1,2527 @@
+@prefix dogs: <https://idmc.uiv-lorraine.fr/graphs/schema/dogs/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix hint: <http://www.bigdata.com/queryHints#> .
+@prefix bd: <http://www.bigdata.com/rdf#> .
+@prefix bds: <http://www.bigdata.com/rdf/search#> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
+@prefix gas: <http://www.bigdata.com/rdf/gas#> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix wdata: <http://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix wds: <http://www.wikidata.org/entity/statement/> .
+@prefix wdv: <http://www.wikidata.org/value/> .
+@prefix wdref: <http://www.wikidata.org/reference/> .
+@prefix schema: <http://schema.org/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix geof: <http://www.opengis.net/def/geosparql/function/> .
+@prefix mediawiki: <https://www.mediawiki.org/ontology#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Bully> a dogs:DogBreed ;
+	rdfs:label "American Bully"@en .
+
+wd:Q30 a dogs:Country ;
+	rdfs:label "United States of America"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Bully> dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/West Highland White Terrier> a dogs:DogBreed ;
+	rdfs:label "West Highland White Terrier"@en .
+
+wd:Q22 a dogs:Country ;
+	rdfs:label "Scotland"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/West Highland White Terrier> dogs:origin wd:Q22 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Austrian Black and Tan Hound> a dogs:DogBreed ;
+	rdfs:label "Austrian Black and Tan Hound"@en .
+
+wd:Q40 a dogs:Country ;
+	rdfs:label "Austria"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Austrian Black and Tan Hound> dogs:origin wd:Q40 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chihuahua> a dogs:DogBreed ;
+	rdfs:label "Chihuahua"@en .
+
+wd:Q96 a dogs:Country ;
+	rdfs:label "Mexico"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chihuahua> dogs:origin wd:Q96 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Great Dane> a dogs:DogBreed ;
+	rdfs:label "Great Dane"@en .
+
+wd:Q183 a dogs:Country ;
+	rdfs:label "Germany"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Great Dane> dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Polish Greyhound> a dogs:DogBreed ;
+	rdfs:label "Polish Greyhound"@en .
+
+wd:Q36 a dogs:Country ;
+	rdfs:label "Poland"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Polish Greyhound> dogs:origin wd:Q36 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Affenpinscher> a dogs:DogBreed ;
+	rdfs:label "Affenpinscher"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Maremma Sheepdog> a dogs:DogBreed ;
+	rdfs:label "Maremma Sheepdog"@en .
+
+wd:Q38 a dogs:Country ;
+	rdfs:label "Italy"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Maremma Sheepdog> dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pekingese> a dogs:DogBreed ;
+	rdfs:label "Pekingese"@en .
+
+wd:Q148 a dogs:Country ;
+	rdfs:label "People's Republic of China"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pekingese> dogs:origin wd:Q148 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kunming wolfdog> a dogs:DogBreed ;
+	rdfs:label "Kunming wolfdog"@en ;
+	dogs:origin wd:Q148 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Black Norwegian Elkhound> a dogs:DogBreed ;
+	rdfs:label "Black Norwegian Elkhound"@en .
+
+wd:Q20 a dogs:Country ;
+	rdfs:label "Norway"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Black Norwegian Elkhound> dogs:origin wd:Q20 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dalmatian> a dogs:DogBreed ;
+	rdfs:label "Dalmatian"@en .
+
+wd:Q224 a dogs:Country ;
+	rdfs:label "Croatia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dalmatian> dogs:origin wd:Q224 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Wetterhoun> a dogs:DogBreed ;
+	rdfs:label "Wetterhoun"@en .
+
+wd:Q55 a dogs:Country ;
+	rdfs:label "Netherlands"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Wetterhoun> dogs:origin wd:Q55 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kangal Shepherd Dog> a dogs:DogBreed ;
+	rdfs:label "Kangal Shepherd Dog"@en .
+
+wd:Q43 a dogs:Country ;
+	rdfs:label "Turkey"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kangal Shepherd Dog> dogs:origin wd:Q43 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Saint-Usuge Spaniel> a dogs:DogBreed ;
+	rdfs:label "Saint-Usuge Spaniel"@en .
+
+wd:Q142 a dogs:Country ;
+	rdfs:label "France"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Saint-Usuge Spaniel> dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Afghan Hound> a dogs:DogBreed ;
+	rdfs:label "Afghan Hound"@en .
+
+wd:Q889 a dogs:Country ;
+	rdfs:label "Afghanistan"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Afghan Hound> dogs:origin wd:Q889 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/bloodhound> a dogs:DogBreed ;
+	rdfs:label "bloodhound"@en .
+
+wd:Q31 a dogs:Country ;
+	rdfs:label "Belgium"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/bloodhound> dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/French Bulldog> a dogs:DogBreed ;
+	rdfs:label "French Bulldog"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lupo Italiano> a dogs:DogBreed ;
+	rdfs:label "Lupo Italiano"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Akita> a dogs:DogBreed ;
+	rdfs:label "Akita"@en .
+
+wd:Q17 a dogs:Country ;
+	rdfs:label "Japan"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Akita> dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Schipperke> a dogs:DogBreed ;
+	rdfs:label "Schipperke"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Greenland Dog> a dogs:DogBreed ;
+	rdfs:label "Greenland Dog"@en .
+
+wd:Q223 a dogs:Country ;
+	rdfs:label "Greenland"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Greenland Dog> dogs:origin wd:Q223 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Campeiro Bulldog> a dogs:DogBreed ;
+	rdfs:label "Campeiro Bulldog"@en .
+
+wd:Q155 a dogs:Country ;
+	rdfs:label "Brazil"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Campeiro Bulldog> dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Picardy Spaniel> a dogs:DogBreed ;
+	rdfs:label "Picardy Spaniel"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Miniature Schnauzer> a dogs:DogBreed ;
+	rdfs:label "Miniature Schnauzer"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Moscow Watchdog> a dogs:DogBreed ;
+	rdfs:label "Moscow Watchdog"@en .
+
+wd:Q15180 a dogs:Country ;
+	rdfs:label "Soviet Union"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Moscow Watchdog> dogs:origin wd:Q15180 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bruno Jura Hound> a dogs:DogBreed ;
+	rdfs:label "Bruno Jura Hound"@en .
+
+wd:Q39 a dogs:Country ;
+	rdfs:label "Switzerland"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bruno Jura Hound> dogs:origin wd:Q39 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Field Spaniel> a dogs:DogBreed ;
+	rdfs:label "Field Spaniel"@en .
+
+wd:Q21 a dogs:Country ;
+	rdfs:label "England"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Field Spaniel> dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cardigan Welsh Corgi> a dogs:DogBreed ;
+	rdfs:label "Cardigan Welsh Corgi"@en .
+
+wd:Q25 a dogs:Country ;
+	rdfs:label "Wales"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cardigan Welsh Corgi> dogs:origin wd:Q25 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Koolie> a dogs:DogBreed ;
+	rdfs:label "Koolie"@en .
+
+wd:Q408 a dogs:Country ;
+	rdfs:label "Australia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Koolie> dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kanni> a dogs:DogBreed ;
+	rdfs:label "Kanni"@en .
+
+wd:Q668 a dogs:Country ;
+	rdfs:label "India"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kanni> dogs:origin wd:Q668 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bull and Terrier> a dogs:DogBreed ;
+	rdfs:label "Bull and Terrier"@en .
+
+wd:Q38272 a dogs:Country ;
+	rdfs:label "British Isles"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bull and Terrier> dogs:origin wd:Q38272 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dutch Shepherd> a dogs:DogBreed ;
+	rdfs:label "Dutch Shepherd"@en ;
+	dogs:origin wd:Q55 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/beagle> a dogs:DogBreed ;
+	rdfs:label "beagle"@en .
+
+wd:Q145 a dogs:Country ;
+	rdfs:label "United Kingdom"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/beagle> dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Canadian Eskimo Dog> a dogs:DogBreed ;
+	rdfs:label "Canadian Eskimo Dog"@en .
+
+wd:Q16 a dogs:Country ;
+	rdfs:label "Canada"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Canadian Eskimo Dog> dogs:origin wd:Q16 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Scottish Terrier> a dogs:DogBreed ;
+	rdfs:label "Scottish Terrier"@en ;
+	dogs:origin wd:Q22 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chow Chow> a dogs:DogBreed ;
+	rdfs:label "Chow Chow"@en ;
+	dogs:origin wd:Q148 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Clumber Spaniel> a dogs:DogBreed ;
+	rdfs:label "Clumber Spaniel"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Hokkaido inu> a dogs:DogBreed ;
+	rdfs:label "Hokkaido inu"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Small Münsterländer> a dogs:DogBreed ;
+	rdfs:label "Small Münsterländer"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Hanover Hound> a dogs:DogBreed ;
+	rdfs:label "Hanover Hound"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Löwchen> a dogs:DogBreed ;
+	rdfs:label "Löwchen"@en .
+
+wd:Q46 a dogs:Country ;
+	rdfs:label "Europe"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Löwchen> dogs:origin wd:Q46 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Barbet> a dogs:DogBreed ;
+	rdfs:label "Barbet"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bedlington Terrier> a dogs:DogBreed ;
+	rdfs:label "Bedlington Terrier"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Papillon> a dogs:DogBreed ;
+	rdfs:label "Papillon"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sealyham Terrier> a dogs:DogBreed ;
+	rdfs:label "Sealyham Terrier"@en ;
+	dogs:origin wd:Q25 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lakeland Terrier> a dogs:DogBreed ;
+	rdfs:label "Lakeland Terrier"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Finnish Spitz> a dogs:DogBreed ;
+	rdfs:label "Finnish Spitz"@en .
+
+wd:Q33 a dogs:Country ;
+	rdfs:label "Finland"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Finnish Spitz> dogs:origin wd:Q33 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Finnish Lapphund> a dogs:DogBreed ;
+	rdfs:label "Finnish Lapphund"@en ;
+	dogs:origin wd:Q33 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Greater Swiss Mountain Dog> a dogs:DogBreed ;
+	rdfs:label "Greater Swiss Mountain Dog"@en ;
+	dogs:origin wd:Q39 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Boykin Spaniel> a dogs:DogBreed ;
+	rdfs:label "Boykin Spaniel"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Welsh Terrier> a dogs:DogBreed ;
+	rdfs:label "Welsh Terrier"@en ;
+	dogs:origin wd:Q25 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese Podengo> a dogs:DogBreed ;
+	rdfs:label "Portuguese Podengo"@en .
+
+wd:Q45 a dogs:Country ;
+	rdfs:label "Portugal"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese Podengo> dogs:origin wd:Q45 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rafeiro do Alentejo> a dogs:DogBreed ;
+	rdfs:label "Rafeiro do Alentejo"@en ;
+	dogs:origin wd:Q45 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sapsali> a dogs:DogBreed ;
+	rdfs:label "Sapsali"@en .
+
+wd:Q884 a dogs:Country ;
+	rdfs:label "South Korea"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sapsali> dogs:origin wd:Q884 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Finnish Hound> a dogs:DogBreed ;
+	rdfs:label "Finnish Hound"@en ;
+	dogs:origin wd:Q33 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Boerboel> a dogs:DogBreed ;
+	rdfs:label "Boerboel"@en .
+
+wd:Q258 a dogs:Country ;
+	rdfs:label "South Africa"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Boerboel> dogs:origin wd:Q258 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Combai> a dogs:DogBreed ;
+	rdfs:label "Combai"@en ;
+	dogs:origin wd:Q668 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alaskan Malamute> a dogs:DogBreed ;
+	rdfs:label "Alaskan Malamute"@en .
+
+wd:Q797 a dogs:Country ;
+	rdfs:label "Alaska"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alaskan Malamute> dogs:origin wd:Q797 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kishu> a dogs:DogBreed ;
+	rdfs:label "Kishu"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Schweizer Laufhund> a dogs:DogBreed ;
+	rdfs:label "Schweizer Laufhund"@en ;
+	dogs:origin wd:Q39 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Korean Jindo Dog> a dogs:DogBreed ;
+	rdfs:label "Korean Jindo Dog"@en ;
+	dogs:origin wd:Q884 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Tosa> a dogs:DogBreed ;
+	rdfs:label "Tosa"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Swedish Vallhund> a dogs:DogBreed ;
+	rdfs:label "Swedish Vallhund"@en .
+
+wd:Q34 a dogs:Country ;
+	rdfs:label "Sweden"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Swedish Vallhund> dogs:origin wd:Q34 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pont-Audemer Spaniel> a dogs:DogBreed ;
+	rdfs:label "Pont-Audemer Spaniel"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dandie Dinmont Terrier> a dogs:DogBreed ;
+	rdfs:label "Dandie Dinmont Terrier"@en ;
+	dogs:origin wd:Q22 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Staffordshire Terrier> a dogs:DogBreed ;
+	rdfs:label "American Staffordshire Terrier"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Deutsche Bracke> a dogs:DogBreed ;
+	rdfs:label "Deutsche Bracke"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dunker> a dogs:DogBreed ;
+	rdfs:label "Dunker"@en ;
+	dogs:origin wd:Q20 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Old English sheepdog> a dogs:DogBreed ;
+	rdfs:label "Old English sheepdog"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/border collie> a dogs:DogBreed ;
+	rdfs:label "border collie"@en ;
+	dogs:origin wd:Q22 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Appenzeller Sennenhund> a dogs:DogBreed ;
+	rdfs:label "Appenzeller Sennenhund"@en ;
+	dogs:origin wd:Q39 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Barak hound> a dogs:DogBreed ;
+	rdfs:label "Barak hound"@en .
+
+wd:Q225 a dogs:Country ;
+	rdfs:label "Bosnia and Herzegovina"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Barak hound> dogs:origin wd:Q225 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alano Español> a dogs:DogBreed ;
+	rdfs:label "Alano Español"@en .
+
+wd:Q29 a dogs:Country ;
+	rdfs:label "Spain"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alano Español> dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/border collie> dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Estrela Mountain Dog> a dogs:DogBreed ;
+	rdfs:label "Estrela Mountain Dog"@en ;
+	dogs:origin wd:Q45 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese Cattle Dog> a dogs:DogBreed ;
+	rdfs:label "Portuguese Cattle Dog"@en ;
+	dogs:origin wd:Q45 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Paisley Terrier> a dogs:DogBreed ;
+	rdfs:label "Paisley Terrier"@en ;
+	dogs:origin wd:Q22 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rhodesian Ridgeback> a dogs:DogBreed ;
+	rdfs:label "Rhodesian Ridgeback"@en .
+
+wd:Q217169 a dogs:Country ;
+	rdfs:label "Rhodesia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rhodesian Ridgeback> dogs:origin wd:Q217169 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pungsan> a dogs:DogBreed ;
+	rdfs:label "Pungsan"@en .
+
+wd:Q423 a dogs:Country ;
+	rdfs:label "North Korea"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pungsan> dogs:origin wd:Q423 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Miniature Pinscher> a dogs:DogBreed ;
+	rdfs:label "Miniature Pinscher"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bouvier des Ardennes> a dogs:DogBreed ;
+	rdfs:label "Bouvier des Ardennes"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Vizsla> a dogs:DogBreed ;
+	rdfs:label "Vizsla"@en .
+
+wd:Q28 a dogs:Country ;
+	rdfs:label "Hungary"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Vizsla> dogs:origin wd:Q28 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bull Terrier> a dogs:DogBreed ;
+	rdfs:label "Bull Terrier"@en .
+
+wd:Q27 a dogs:Country ;
+	rdfs:label "Republic of Ireland"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bull Terrier> dogs:origin wd:Q27 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Braque du Puy> a dogs:DogBreed ;
+	rdfs:label "Braque du Puy"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Braque Saint-Germain> a dogs:DogBreed ;
+	rdfs:label "Braque Saint-Germain"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/border collie> dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Villano de las Encartaciones> a dogs:DogBreed ;
+	rdfs:label "Villano de las Encartaciones"@en ;
+	dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pharaoh Hound> a dogs:DogBreed ;
+	rdfs:label "Pharaoh Hound"@en .
+
+wd:Q79 a dogs:Country ;
+	rdfs:label "Egypt"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pharaoh Hound> dogs:origin wd:Q79 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Artois Hound> a dogs:DogBreed ;
+	rdfs:label "Artois Hound"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Japanese Spitz> a dogs:DogBreed ;
+	rdfs:label "Japanese Spitz"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Japanese Chin> a dogs:DogBreed ;
+	rdfs:label "Japanese Chin"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sussex Spaniel> a dogs:DogBreed ;
+	rdfs:label "Sussex Spaniel"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Toy Terrier> a dogs:DogBreed ;
+	rdfs:label "English Toy Terrier"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Foxhound> a dogs:DogBreed ;
+	rdfs:label "English Foxhound"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alaskan Klee Kai> a dogs:DogBreed ;
+	rdfs:label "Alaskan Klee Kai"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alapaha Blue Blood Bulldog> a dogs:DogBreed ;
+	rdfs:label "Alapaha Blue Blood Bulldog"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bakharwal Dog> a dogs:DogBreed ;
+	rdfs:label "Bakharwal Dog"@en ;
+	dogs:origin wd:Q668 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Jämthund> a dogs:DogBreed ;
+	rdfs:label "Jämthund"@en ;
+	dogs:origin wd:Q34 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Harrier> a dogs:DogBreed ;
+	rdfs:label "Harrier"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bohemian Shepherd> a dogs:DogBreed ;
+	rdfs:label "Bohemian Shepherd"@en .
+
+wd:Q213 a dogs:Country ;
+	rdfs:label "Czech Republic"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bohemian Shepherd> dogs:origin wd:Q213 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Yakutian Laika> a dogs:DogBreed ;
+	rdfs:label "Yakutian Laika"@en .
+
+wd:Q6605 a dogs:Country ;
+	rdfs:label "Sakha"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Yakutian Laika> dogs:origin wd:Q6605 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Majorca Shepherd Dog> a dogs:DogBreed ;
+	rdfs:label "Majorca Shepherd Dog"@en .
+
+wd:Q8828 a dogs:Country ;
+	rdfs:label "Mallorca"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Majorca Shepherd Dog> dogs:origin wd:Q8828 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dutch Tulip Dog> a dogs:DogBreed ;
+	rdfs:label "Dutch Tulip Dog"@en ;
+	dogs:origin wd:Q55 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Old Danish Pointer> a dogs:DogBreed ;
+	rdfs:label "Old Danish Pointer"@en .
+
+wd:Q35 a dogs:Country ;
+	rdfs:label "Denmark"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Old Danish Pointer> dogs:origin wd:Q35 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Hygenhund> a dogs:DogBreed ;
+	rdfs:label "Hygenhund"@en ;
+	dogs:origin wd:Q20 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Brittany> a dogs:DogBreed ;
+	rdfs:label "Brittany"@en .
+
+wd:Q327 a dogs:Country ;
+	rdfs:label "Brittany"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Brittany> dogs:origin wd:Q327 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alpine Dachsbracke> a dogs:DogBreed ;
+	rdfs:label "Alpine Dachsbracke"@en ;
+	dogs:origin wd:Q40 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Shar Pei> a dogs:DogBreed ;
+	rdfs:label "Shar Pei"@en ;
+	dogs:origin wd:Q148 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ariégeois> a dogs:DogBreed ;
+	rdfs:label "Ariégeois"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Medium-sized Anglo-French Hound> a dogs:DogBreed ;
+	rdfs:label "Medium-sized Anglo-French Hound"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pug> a dogs:DogBreed ;
+	rdfs:label "Pug"@en .
+
+wd:Q29520 a dogs:Country ;
+	rdfs:label "China"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pug> dogs:origin wd:Q29520 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ibizan Hound> a dogs:DogBreed ;
+	rdfs:label "Ibizan Hound"@en .
+
+wd:Q52631 a dogs:Country ;
+	rdfs:label "Ibiza"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ibizan Hound> dogs:origin wd:Q52631 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Slovak Cuvac> a dogs:DogBreed ;
+	rdfs:label "Slovak Cuvac"@en .
+
+wd:Q33946 a dogs:Country ;
+	rdfs:label "Czechoslovakia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Slovak Cuvac> dogs:origin wd:Q33946 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Skye Terrier> a dogs:DogBreed ;
+	rdfs:label "Skye Terrier"@en ;
+	dogs:origin wd:Q22 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pembroke Welsh Corgi> a dogs:DogBreed ;
+	rdfs:label "Pembroke Welsh Corgi"@en ;
+	dogs:origin wd:Q25 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kai Ken> a dogs:DogBreed ;
+	rdfs:label "Kai Ken"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Akita> a dogs:DogBreed ;
+	rdfs:label "American Akita"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Welsh Springer Spaniel> a dogs:DogBreed ;
+	rdfs:label "Welsh Springer Spaniel"@en ;
+	dogs:origin wd:Q25 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Brazilian Terrier> a dogs:DogBreed ;
+	rdfs:label "Brazilian Terrier"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Slovenský kopov> a dogs:DogBreed ;
+	rdfs:label "Slovenský kopov"@en .
+
+wd:Q214 a dogs:Country ;
+	rdfs:label "Slovakia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Slovenský kopov> dogs:origin wd:Q214 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Glen of Imaal Terrier> a dogs:DogBreed ;
+	rdfs:label "Glen of Imaal Terrier"@en ;
+	dogs:origin wd:Q27 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Hairless Terrier> a dogs:DogBreed ;
+	rdfs:label "American Hairless Terrier"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Boston Terrier> a dogs:DogBreed ;
+	rdfs:label "Boston Terrier"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Olde English Bulldogge> a dogs:DogBreed ;
+	rdfs:label "Olde English Bulldogge"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Foxhound> a dogs:DogBreed ;
+	rdfs:label "American Foxhound"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bluetick Coonhound> a dogs:DogBreed ;
+	rdfs:label "Bluetick Coonhound"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Stephens Cur> a dogs:DogBreed ;
+	rdfs:label "Stephens Cur"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/American English Coonhound> a dogs:DogBreed ;
+	rdfs:label "American English Coonhound"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Shiloh Shepherd> a dogs:DogBreed ;
+	rdfs:label "Shiloh Shepherd"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Treeing Walker Coonhound> a dogs:DogBreed ;
+	rdfs:label "Treeing Walker Coonhound"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Blue Lacy> a dogs:DogBreed ;
+	rdfs:label "Blue Lacy"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Toy Fox Terrier> a dogs:DogBreed ;
+	rdfs:label "Toy Fox Terrier"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Black and Tan Coonhound> a dogs:DogBreed ;
+	rdfs:label "Black and Tan Coonhound"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Australian Kelpie> a dogs:DogBreed ;
+	rdfs:label "Australian Kelpie"@en ;
+	dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Australian Terrier> a dogs:DogBreed ;
+	rdfs:label "Australian Terrier"@en ;
+	dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Black Russian Terrier> a dogs:DogBreed ;
+	rdfs:label "Black Russian Terrier"@en .
+
+wd:Q159 a dogs:Country ;
+	rdfs:label "Russia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Black Russian Terrier> dogs:origin wd:Q159 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Gos Rater Valencià> a dogs:DogBreed ;
+	rdfs:label "Gos Rater Valencià"@en ;
+	dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Shetland Sheepdog> a dogs:DogBreed ;
+	rdfs:label "Shetland Sheepdog"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Weimaraner> a dogs:DogBreed ;
+	rdfs:label "Weimaraner"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Montenegrin Mountain Hound> a dogs:DogBreed ;
+	rdfs:label "Montenegrin Mountain Hound"@en .
+
+wd:Q236 a dogs:Country ;
+	rdfs:label "Montenegro"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Montenegrin Mountain Hound> dogs:origin wd:Q236 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Murray River Curly Coated Retriever> a dogs:DogBreed ;
+	rdfs:label "Murray River Curly Coated Retriever"@en ;
+	dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Jack Russell Terrier> a dogs:DogBreed ;
+	rdfs:label "Jack Russell Terrier"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Georgian Shepherd> a dogs:DogBreed ;
+	rdfs:label "Georgian Shepherd"@en .
+
+wd:Q230 a dogs:Country ;
+	rdfs:label "Georgia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Georgian Shepherd> dogs:origin wd:Q230 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Drever> a dogs:DogBreed ;
+	rdfs:label "Drever"@en ;
+	dogs:origin wd:Q34 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Shepherd> a dogs:DogBreed ;
+	rdfs:label "German Shepherd"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Pit Bull Terrier> a dogs:DogBreed ;
+	rdfs:label "American Pit Bull Terrier"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Mudi> a dogs:DogBreed ;
+	rdfs:label "Mudi"@en ;
+	dogs:origin wd:Q28 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chesapeake Bay Retriever> a dogs:DogBreed ;
+	rdfs:label "Chesapeake Bay Retriever"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Canaan Dog> a dogs:DogBreed ;
+	rdfs:label "Canaan Dog"@en .
+
+wd:Q23792 a dogs:Country ;
+	rdfs:label "Palestine"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Canaan Dog> dogs:origin wd:Q23792 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Jack Russell Terrier> dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Polish Hound> a dogs:DogBreed ;
+	rdfs:label "Polish Hound"@en ;
+	dogs:origin wd:Q36 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bergamasco Shepherd> a dogs:DogBreed ;
+	rdfs:label "Bergamasco Shepherd"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Volpino Italiano> a dogs:DogBreed ;
+	rdfs:label "Volpino Italiano"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ukrainian Vivcharka> a dogs:DogBreed ;
+	rdfs:label "Ukrainian Vivcharka"@en .
+
+wd:Q212 a dogs:Country ;
+	rdfs:label "Ukraine"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ukrainian Vivcharka> dogs:origin wd:Q212 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Black Slovakian Shepherd> a dogs:DogBreed ;
+	rdfs:label "Black Slovakian Shepherd"@en ;
+	dogs:origin wd:Q214 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Smaland Hound> a dogs:DogBreed ;
+	rdfs:label "Smaland Hound"@en ;
+	dogs:origin wd:Q34 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Schweizerischer Niederlaufhund> a dogs:DogBreed ;
+	rdfs:label "Schweizerischer Niederlaufhund"@en ;
+	dogs:origin wd:Q39 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Briquet Griffon Vendéen> a dogs:DogBreed ;
+	rdfs:label "Briquet Griffon Vendéen"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Billy> a dogs:DogBreed ;
+	rdfs:label "Billy"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Braque du Bourbonnais> a dogs:DogBreed ;
+	rdfs:label "Braque du Bourbonnais"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Picardy Shepherd> a dogs:DogBreed ;
+	rdfs:label "Picardy Shepherd"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Airedale Terrier> a dogs:DogBreed ;
+	rdfs:label "Airedale Terrier"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Tervuren> a dogs:DogBreed ;
+	rdfs:label "Tervuren"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Croatian Sheepdog> a dogs:DogBreed ;
+	rdfs:label "Croatian Sheepdog"@en ;
+	dogs:origin wd:Q224 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Neapolitan Mastiff> a dogs:DogBreed ;
+	rdfs:label "Neapolitan Mastiff"@en .
+
+wd:Q1747689 a dogs:Country ;
+	rdfs:label "Ancient Rome"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Neapolitan Mastiff> dogs:origin wd:Q1747689 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Great Anglo-French White and Orange Hound> a dogs:DogBreed ;
+	rdfs:label "Great Anglo-French White and Orange Hound"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cimarrón Uruguayo> a dogs:DogBreed ;
+	rdfs:label "Cimarrón Uruguayo"@en .
+
+wd:Q77 a dogs:Country ;
+	rdfs:label "Uruguay"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cimarrón Uruguayo> dogs:origin wd:Q77 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/continental bulldog> a dogs:DogBreed ;
+	rdfs:label "continental bulldog"@en ;
+	dogs:origin wd:Q39 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Estonian Hound> a dogs:DogBreed ;
+	rdfs:label "Estonian Hound"@en .
+
+wd:Q191 a dogs:Country ;
+	rdfs:label "Estonia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Estonian Hound> dogs:origin wd:Q191 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Komondor> a dogs:DogBreed ;
+	rdfs:label "Komondor"@en ;
+	dogs:origin wd:Q28 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Gull Terr> a dogs:DogBreed ;
+	rdfs:label "Gull Terr"@en .
+
+wd:Q843 a dogs:Country ;
+	rdfs:label "Pakistan"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Gull Terr> dogs:origin wd:Q843 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Gull Dong> a dogs:DogBreed ;
+	rdfs:label "Gull Dong"@en ;
+	dogs:origin wd:Q843 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Beagle-Harrier> a dogs:DogBreed ;
+	rdfs:label "Beagle-Harrier"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Great Gascony Blue> a dogs:DogBreed ;
+	rdfs:label "Great Gascony Blue"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Poitevin hound> a dogs:DogBreed ;
+	rdfs:label "Poitevin hound"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese water dog> a dogs:DogBreed ;
+	rdfs:label "Portuguese water dog"@en ;
+	dogs:origin wd:Q45 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Laekenois> a dogs:DogBreed ;
+	rdfs:label "Laekenois"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Cocker Spaniel> a dogs:DogBreed ;
+	rdfs:label "American Cocker Spaniel"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Polish Hunting Dog> a dogs:DogBreed ;
+	rdfs:label "Polish Hunting Dog"@en ;
+	dogs:origin wd:Q36 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Schillerstövare> a dogs:DogBreed ;
+	rdfs:label "Schillerstövare"@en ;
+	dogs:origin wd:Q34 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lapponian Herder> a dogs:DogBreed ;
+	rdfs:label "Lapponian Herder"@en ;
+	dogs:origin wd:Q33 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Gran Mastín de Borínquen> a dogs:DogBreed ;
+	rdfs:label "Gran Mastín de Borínquen"@en .
+
+wd:Q1183 a dogs:Country ;
+	rdfs:label "Puerto Rico"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Gran Mastín de Borínquen> dogs:origin wd:Q1183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Irish Setter> a dogs:DogBreed ;
+	rdfs:label "Irish Setter"@en .
+
+wd:Q22890 a dogs:Country ;
+	rdfs:label "Ireland"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Irish Setter> dogs:origin wd:Q22890 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Swedish Lapphund> a dogs:DogBreed ;
+	rdfs:label "Swedish Lapphund"@en ;
+	dogs:origin wd:Q34 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Broholmer> a dogs:DogBreed ;
+	rdfs:label "Broholmer"@en ;
+	dogs:origin wd:Q35 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cavalier King Charles Spaniel> a dogs:DogBreed ;
+	rdfs:label "Cavalier King Charles Spaniel"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Boxer> a dogs:DogBreed ;
+	rdfs:label "Boxer"@en .
+
+wd:Q43287 a dogs:Country ;
+	rdfs:label "German Empire"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Boxer> dogs:origin wd:Q43287 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Great Anglo-French White and Black Hound> a dogs:DogBreed ;
+	rdfs:label "Great Anglo-French White and Black Hound"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Great Anglo-French Tricolour Hound> a dogs:DogBreed ;
+	rdfs:label "Great Anglo-French Tricolour Hound"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chinook> a dogs:DogBreed ;
+	rdfs:label "Chinook"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Carolina Dog> a dogs:DogBreed ;
+	rdfs:label "Carolina Dog"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bracco Italiano> a dogs:DogBreed ;
+	rdfs:label "Bracco Italiano"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cirneco dell'Etna> a dogs:DogBreed ;
+	rdfs:label "Cirneco dell'Etna"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kooikerhondje> a dogs:DogBreed ;
+	rdfs:label "Kooikerhondje"@en ;
+	dogs:origin wd:Q55 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bullmastiff> a dogs:DogBreed ;
+	rdfs:label "Bullmastiff"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Water Spaniel> a dogs:DogBreed ;
+	rdfs:label "English Water Spaniel"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Russkaya tsvetnaya bolonka> a dogs:DogBreed ;
+	rdfs:label "Russkaya tsvetnaya bolonka"@en ;
+	dogs:origin wd:Q159 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Golden retriever> a dogs:DogBreed ;
+	rdfs:label "Golden retriever"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Flat-Coated Retriever> a dogs:DogBreed ;
+	rdfs:label "Flat-Coated Retriever"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Smooth Fox Terrier> a dogs:DogBreed ;
+	rdfs:label "Smooth Fox Terrier"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Italian Greyhound> a dogs:DogBreed ;
+	rdfs:label "Italian Greyhound"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sabueso Español> a dogs:DogBreed ;
+	rdfs:label "Sabueso Español"@en ;
+	dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Beauceron> a dogs:DogBreed ;
+	rdfs:label "Beauceron"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Anatolian Shepherd> a dogs:DogBreed ;
+	rdfs:label "Anatolian Shepherd"@en ;
+	dogs:origin wd:Q43 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Akbash> a dogs:DogBreed ;
+	rdfs:label "Akbash"@en ;
+	dogs:origin wd:Q43 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rough Collie> a dogs:DogBreed ;
+	rdfs:label "Rough Collie"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Icelandic Sheepdog> a dogs:DogBreed ;
+	rdfs:label "Icelandic Sheepdog"@en .
+
+wd:Q189 a dogs:Country ;
+	rdfs:label "Iceland"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Icelandic Sheepdog> dogs:origin wd:Q189 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Whippet> a dogs:DogBreed ;
+	rdfs:label "Whippet"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Azores Cattle Dog> a dogs:DogBreed ;
+	rdfs:label "Azores Cattle Dog"@en ;
+	dogs:origin wd:Q45 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese Pointer> a dogs:DogBreed ;
+	rdfs:label "Portuguese Pointer"@en ;
+	dogs:origin wd:Q45 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Portuguese Sheepdog> a dogs:DogBreed ;
+	rdfs:label "Portuguese Sheepdog"@en ;
+	dogs:origin wd:Q45 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Tyrolean Hound> a dogs:DogBreed ;
+	rdfs:label "Tyrolean Hound"@en ;
+	dogs:origin wd:Q40 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Petit Basset Griffon Vendéen> a dogs:DogBreed ;
+	rdfs:label "Petit Basset Griffon Vendéen"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Porcelaine> a dogs:DogBreed ;
+	rdfs:label "Porcelaine"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Phu Quoc ridgeback dog> a dogs:DogBreed ;
+	rdfs:label "Phu Quoc ridgeback dog"@en .
+
+wd:Q881 a dogs:Country ;
+	rdfs:label "Vietnam"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Phu Quoc ridgeback dog> dogs:origin wd:Q881 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Istrian Shorthaired Hound> a dogs:DogBreed ;
+	rdfs:label "Istrian Shorthaired Hound"@en ;
+	dogs:origin wd:Q224 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cesky Terrier> a dogs:DogBreed ;
+	rdfs:label "Cesky Terrier"@en ;
+	dogs:origin wd:Q213 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Braque d'Auvergne> a dogs:DogBreed ;
+	rdfs:label "Braque d'Auvergne"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Braque Français> a dogs:DogBreed ;
+	rdfs:label "Braque Français"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Petit Bleu de Gascogne> a dogs:DogBreed ;
+	rdfs:label "Petit Bleu de Gascogne"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Briard> a dogs:DogBreed ;
+	rdfs:label "Briard"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Fawn Brittany Basset> a dogs:DogBreed ;
+	rdfs:label "Fawn Brittany Basset"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Basset Bleu de Gascogne> a dogs:DogBreed ;
+	rdfs:label "Basset Bleu de Gascogne"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pyrenean Shepherd> a dogs:DogBreed ;
+	rdfs:label "Pyrenean Shepherd"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Setter> a dogs:DogBreed ;
+	rdfs:label "English Setter"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Czechoslovakian Wolfdog> a dogs:DogBreed ;
+	rdfs:label "Czechoslovakian Wolfdog"@en ;
+	dogs:origin wd:Q33946 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Saluki> a dogs:DogBreed ;
+	rdfs:label "Saluki"@en .
+
+wd:Q48214 a dogs:Country ;
+	rdfs:label "Near East"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Saluki> dogs:origin wd:Q48214 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Gordon Setter> a dogs:DogBreed ;
+	rdfs:label "Gordon Setter"@en ;
+	dogs:origin wd:Q22 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chinese Chongqing Dog> a dogs:DogBreed ;
+	rdfs:label "Chinese Chongqing Dog"@en ;
+	dogs:origin wd:Q148 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Spanish Mastiff> a dogs:DogBreed ;
+	rdfs:label "Spanish Mastiff"@en ;
+	dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rottweiler> a dogs:DogBreed ;
+	rdfs:label "Rottweiler"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/White Swiss Shepherd> a dogs:DogBreed ;
+	rdfs:label "White Swiss Shepherd"@en ;
+	dogs:origin wd:Q39 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Posavac Hound> a dogs:DogBreed ;
+	rdfs:label "Posavac Hound"@en ;
+	dogs:origin wd:Q224 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Belgian Malinois> a dogs:DogBreed ;
+	rdfs:label "Belgian Malinois"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Grand Griffon Vendéen> a dogs:DogBreed ;
+	rdfs:label "Grand Griffon Vendéen"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ariege Pointer> a dogs:DogBreed ;
+	rdfs:label "Ariege Pointer"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Stichelhaar> a dogs:DogBreed ;
+	rdfs:label "Stichelhaar"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Giant Schnauzer> a dogs:DogBreed ;
+	rdfs:label "Giant Schnauzer"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Large Münsterländer> a dogs:DogBreed ;
+	rdfs:label "Large Münsterländer"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Shorthaired Pointer> a dogs:DogBreed ;
+	rdfs:label "German Shorthaired Pointer"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kleinspitz> a dogs:DogBreed ;
+	rdfs:label "Kleinspitz"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Teddy Roosevelt Terrier> a dogs:DogBreed ;
+	rdfs:label "Teddy Roosevelt Terrier"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Toy Manchester Terrier> a dogs:DogBreed ;
+	rdfs:label "Toy Manchester Terrier"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/White English Bulldog> a dogs:DogBreed ;
+	rdfs:label "White English Bulldog"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rastreador Brasileiro> a dogs:DogBreed ;
+	rdfs:label "Rastreador Brasileiro"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rajapalayam> a dogs:DogBreed ;
+	rdfs:label "Rajapalayam"@en ;
+	dogs:origin wd:Q668 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Japanese Terrier> a dogs:DogBreed ;
+	rdfs:label "Japanese Terrier"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/West Country Harrier> a dogs:DogBreed ;
+	rdfs:label "West Country Harrier"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Mallorcan ratter> a dogs:DogBreed ;
+	rdfs:label "Mallorcan ratter"@en ;
+	dogs:origin wd:Q8828 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lancashire Heeler> a dogs:DogBreed ;
+	rdfs:label "Lancashire Heeler"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Miniature Bull Terrier> a dogs:DogBreed ;
+	rdfs:label "Miniature Bull Terrier"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Fox Terrier> a dogs:DogBreed ;
+	rdfs:label "Fox Terrier"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bulldog> a dogs:DogBreed ;
+	rdfs:label "Bulldog"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ratonero Palmero> a dogs:DogBreed ;
+	rdfs:label "Ratonero Palmero"@en ;
+	dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dogo español> a dogs:DogBreed ;
+	rdfs:label "Dogo español"@en ;
+	dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Hamiltonstövare> a dogs:DogBreed ;
+	rdfs:label "Hamiltonstövare"@en ;
+	dogs:origin wd:Q34 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Hortaya borzaya> a dogs:DogBreed ;
+	rdfs:label "Hortaya borzaya"@en ;
+	dogs:origin wd:Q212 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cesky Fousek> a dogs:DogBreed ;
+	rdfs:label "Cesky Fousek"@en ;
+	dogs:origin wd:Q213 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Yugoslavian Shepherd Dog> a dogs:DogBreed ;
+	rdfs:label "Yugoslavian Shepherd Dog"@en .
+
+wd:Q221 a dogs:Country ;
+	rdfs:label "North Macedonia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Yugoslavian Shepherd Dog> dogs:origin wd:Q221 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dutch Smoushond> a dogs:DogBreed ;
+	rdfs:label "Dutch Smoushond"@en ;
+	dogs:origin wd:Q55 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/West Siberian Laika> a dogs:DogBreed ;
+	rdfs:label "West Siberian Laika"@en ;
+	dogs:origin wd:Q159 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Shikoku> a dogs:DogBreed ;
+	rdfs:label "Shikoku"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Shiba Inu> a dogs:DogBreed ;
+	rdfs:label "Shiba Inu"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Frenchton> a dogs:DogBreed ;
+	rdfs:label "Frenchton"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Working Pit Bulldog> a dogs:DogBreed ;
+	rdfs:label "Working Pit Bulldog"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lagorai and Lessinia Shepherd Dog> a dogs:DogBreed ;
+	rdfs:label "Lagorai and Lessinia Shepherd Dog"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cane Pecoraio Varbutu> a dogs:DogBreed ;
+	rdfs:label "Cane Pecoraio Varbutu"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lottatore Brindisino> a dogs:DogBreed ;
+	rdfs:label "Lottatore Brindisino"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Istrian Coarse-haired Hound> a dogs:DogBreed ;
+	rdfs:label "Istrian Coarse-haired Hound"@en ;
+	dogs:origin wd:Q224 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Wirehaired Pointer> a dogs:DogBreed ;
+	rdfs:label "German Wirehaired Pointer"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Pinscher> a dogs:DogBreed ;
+	rdfs:label "German Pinscher"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Hovawart> a dogs:DogBreed ;
+	rdfs:label "Hovawart"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Norwegian Elkhound> a dogs:DogBreed ;
+	rdfs:label "Norwegian Elkhound"@en ;
+	dogs:origin wd:Q20 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Tornjak> a dogs:DogBreed ;
+	rdfs:label "Tornjak"@en ;
+	dogs:origin wd:Q225 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Central Asian Tazi> a dogs:DogBreed ;
+	rdfs:label "Central Asian Tazi"@en .
+
+wd:Q232 a dogs:Country ;
+	rdfs:label "Kazakhstan"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Central Asian Tazi> dogs:origin wd:Q232 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Manchester Terrier> a dogs:DogBreed ;
+	rdfs:label "Manchester Terrier"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Yorkshire Terrier> a dogs:DogBreed ;
+	rdfs:label "Yorkshire Terrier"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Patterdale Terrier> a dogs:DogBreed ;
+	rdfs:label "Patterdale Terrier"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Serbian Hound> a dogs:DogBreed ;
+	rdfs:label "Serbian Hound"@en .
+
+wd:Q403 a dogs:Country ;
+	rdfs:label "Serbia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Serbian Hound> dogs:origin wd:Q403 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chilean Fox Terrier> a dogs:DogBreed ;
+	rdfs:label "Chilean Fox Terrier"@en .
+
+wd:Q298 a dogs:Country ;
+	rdfs:label "Chile"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chilean Fox Terrier> dogs:origin wd:Q298 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Australian Stumpy Tail Cattle Dog> a dogs:DogBreed ;
+	rdfs:label "Australian Stumpy Tail Cattle Dog"@en ;
+	dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sporting Lucas Terrier> a dogs:DogBreed ;
+	rdfs:label "Sporting Lucas Terrier"@en ;
+	dogs:origin wd:Q22 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Smooth Collie> a dogs:DogBreed ;
+	rdfs:label "Smooth Collie"@en ;
+	dogs:origin wd:Q22 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Taigan> a dogs:DogBreed ;
+	rdfs:label "Taigan"@en .
+
+wd:Q813 a dogs:Country ;
+	rdfs:label "Kyrgyzstan"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Taigan> dogs:origin wd:Q813 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kars dog> a dogs:DogBreed ;
+	rdfs:label "Kars dog"@en ;
+	dogs:origin wd:Q43 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Armenian Gampr dog> a dogs:DogBreed ;
+	rdfs:label "Armenian Gampr dog"@en .
+
+wd:Q399 a dogs:Country ;
+	rdfs:label "Armenia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Armenian Gampr dog> dogs:origin wd:Q399 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cairn Terrier> a dogs:DogBreed ;
+	rdfs:label "Cairn Terrier"@en ;
+	dogs:origin wd:Q22 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Perro majorero> a dogs:DogBreed ;
+	rdfs:label "Perro majorero"@en .
+
+wd:Q5813 a dogs:Country ;
+	rdfs:label "Canary Islands"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Perro majorero> dogs:origin wd:Q5813 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Calupoh> a dogs:DogBreed ;
+	rdfs:label "Calupoh"@en ;
+	dogs:origin wd:Q96 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chamuco> a dogs:DogBreed ;
+	rdfs:label "Chamuco"@en ;
+	dogs:origin wd:Q96 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Serbian Tricolour Hound> a dogs:DogBreed ;
+	rdfs:label "Serbian Tricolour Hound"@en ;
+	dogs:origin wd:Q403 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Transylvanian hound> a dogs:DogBreed ;
+	rdfs:label "Transylvanian hound"@en ;
+	dogs:origin wd:Q28 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chippiparai> a dogs:DogBreed ;
+	rdfs:label "Chippiparai"@en ;
+	dogs:origin wd:Q668 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rampur Greyhound> a dogs:DogBreed ;
+	rdfs:label "Rampur Greyhound"@en ;
+	dogs:origin wd:Q668 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Mudhol Hound> a dogs:DogBreed ;
+	rdfs:label "Mudhol Hound"@en ;
+	dogs:origin wd:Q668 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cordoba Fighting Dog> a dogs:DogBreed ;
+	rdfs:label "Cordoba Fighting Dog"@en .
+
+wd:Q414 a dogs:Country ;
+	rdfs:label "Argentina"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cordoba Fighting Dog> dogs:origin wd:Q414 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pachón Navarro> a dogs:DogBreed ;
+	rdfs:label "Pachón Navarro"@en ;
+	dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chinese Crested Dog> a dogs:DogBreed ;
+	rdfs:label "Chinese Crested Dog"@en ;
+	dogs:origin wd:Q148 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Thai Bangkaew Dog> a dogs:DogBreed ;
+	rdfs:label "Thai Bangkaew Dog"@en .
+
+wd:Q869 a dogs:Country ;
+	rdfs:label "Thailand"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Thai Bangkaew Dog> dogs:origin wd:Q869 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Norman Hound> a dogs:DogBreed ;
+	rdfs:label "Norman Hound"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/French Pointing Dog Gascogne Type> a dogs:DogBreed ;
+	rdfs:label "French Pointing Dog Gascogne Type"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chien Blanc du Roi> a dogs:DogBreed ;
+	rdfs:label "Chien Blanc du Roi"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Treeing Cur> a dogs:DogBreed ;
+	rdfs:label "Treeing Cur"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Redbone Coonhound> a dogs:DogBreed ;
+	rdfs:label "Redbone Coonhound"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Miniature American Shepherd> a dogs:DogBreed ;
+	rdfs:label "Miniature American Shepherd"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Staffordshire Bull Terrier> a dogs:DogBreed ;
+	rdfs:label "Staffordshire Bull Terrier"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Welsh Sheepdog> a dogs:DogBreed ;
+	rdfs:label "Welsh Sheepdog"@en ;
+	dogs:origin wd:Q25 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Telomian> a dogs:DogBreed ;
+	rdfs:label "Telomian"@en .
+
+wd:Q833 a dogs:Country ;
+	rdfs:label "Malaysia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Telomian> dogs:origin wd:Q833 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Phalène> a dogs:DogBreed ;
+	rdfs:label "Phalène"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bully Kutta> a dogs:DogBreed ;
+	rdfs:label "Bully Kutta"@en ;
+	dogs:origin wd:Q843 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/West Country Harrier> dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Italian rough-haired Segugio> a dogs:DogBreed ;
+	rdfs:label "Italian rough-haired Segugio"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Groenendael> a dogs:DogBreed ;
+	rdfs:label "Groenendael"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/dachshund> a dogs:DogBreed ;
+	rdfs:label "dachshund"@en .
+
+wd:Q12548 a dogs:Country ;
+	rdfs:label "Holy Roman Empire"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/dachshund> dogs:origin wd:Q12548 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pyrenean Mountain Dog> a dogs:DogBreed ;
+	rdfs:label "Pyrenean Mountain Dog"@en ;
+	dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Brazilian Bull-mastiff> a dogs:DogBreed ;
+	rdfs:label "Brazilian Bull-mastiff"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pit Monster> a dogs:DogBreed ;
+	rdfs:label "Pit Monster"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bullbras> a dogs:DogBreed ;
+	rdfs:label "Bullbras"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Original Fila Brasileiro> a dogs:DogBreed ;
+	rdfs:label "Original Fila Brasileiro"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Polish Lowland Sheepdog> a dogs:DogBreed ;
+	rdfs:label "Polish Lowland Sheepdog"@en ;
+	dogs:origin wd:Q36 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Formosan Mountain Dog> a dogs:DogBreed ;
+	rdfs:label "Formosan Mountain Dog"@en .
+
+wd:Q22502 a dogs:Country ;
+	rdfs:label "Taiwan"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Formosan Mountain Dog> dogs:origin wd:Q22502 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bolognese> a dogs:DogBreed ;
+	rdfs:label "Bolognese"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Central Asian Shepherd Dog> a dogs:DogBreed ;
+	rdfs:label "Central Asian Shepherd Dog"@en .
+
+wd:Q1211919 a dogs:Country ;
+	rdfs:label "Soviet Central Asia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Central Asian Shepherd Dog> dogs:origin wd:Q1211919 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Blue Picardy Spaniel> a dogs:DogBreed ;
+	rdfs:label "Blue Picardy Spaniel"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Spinone Italiano> a dogs:DogBreed ;
+	rdfs:label "Spinone Italiano"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Basset Artésien Normand> a dogs:DogBreed ;
+	rdfs:label "Basset Artésien Normand"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Fila Brasileiro> a dogs:DogBreed ;
+	rdfs:label "Fila Brasileiro"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Tatra Shepherd Dog> a dogs:DogBreed ;
+	rdfs:label "Tatra Shepherd Dog"@en ;
+	dogs:origin wd:Q36 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Border Terrier> a dogs:DogBreed ;
+	rdfs:label "Border Terrier"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Greek Shepherd> a dogs:DogBreed ;
+	rdfs:label "Greek Shepherd"@en .
+
+wd:Q41 a dogs:Country ;
+	rdfs:label "Greece"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Greek Shepherd> dogs:origin wd:Q41 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Barrocal Algarvio> a dogs:DogBreed ;
+	rdfs:label "Barrocal Algarvio"@en ;
+	dogs:origin wd:Q45 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sarabi Mastiff> a dogs:DogBreed ;
+	rdfs:label "Sarabi Mastiff"@en .
+
+wd:Q794 a dogs:Country ;
+	rdfs:label "Iran"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sarabi Mastiff> dogs:origin wd:Q794 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Romanian Raven Shepherd Dog> a dogs:DogBreed ;
+	rdfs:label "Romanian Raven Shepherd Dog"@en .
+
+wd:Q218 a dogs:Country ;
+	rdfs:label "Romania"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Romanian Raven Shepherd Dog> dogs:origin wd:Q218 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Armant> a dogs:DogBreed ;
+	rdfs:label "Armant"@en ;
+	dogs:origin wd:Q79 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Faroese Sheepdog> a dogs:DogBreed ;
+	rdfs:label "Faroese Sheepdog"@en .
+
+wd:Q4628 a dogs:Country ;
+	rdfs:label "Faroe Islands"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Faroese Sheepdog> dogs:origin wd:Q4628 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Westphalian Dachsbracke> a dogs:DogBreed ;
+	rdfs:label "Westphalian Dachsbracke"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Keeshond> a dogs:DogBreed ;
+	rdfs:label "Keeshond"@en ;
+	dogs:origin wd:Q55 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Schapendoes> a dogs:DogBreed ;
+	rdfs:label "Schapendoes"@en ;
+	dogs:origin wd:Q55 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Saarloos wolfdog> a dogs:DogBreed ;
+	rdfs:label "Saarloos wolfdog"@en ;
+	dogs:origin wd:Q55 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dogue de Bordeaux> a dogs:DogBreed ;
+	rdfs:label "Dogue de Bordeaux"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Russian Spaniel> a dogs:DogBreed ;
+	rdfs:label "Russian Spaniel"@en ;
+	dogs:origin wd:Q15180 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pshdar dog> a dogs:DogBreed ;
+	rdfs:label "Pshdar dog"@en .
+
+wd:Q41470 a dogs:Country ;
+	rdfs:label "Kurdistan"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pshdar dog> dogs:origin wd:Q41470 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Valdueza> a dogs:DogBreed ;
+	rdfs:label "Valdueza"@en ;
+	dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sarail hound> a dogs:DogBreed ;
+	rdfs:label "Sarail hound"@en .
+
+wd:Q3348614 a dogs:Country ;
+	rdfs:label "Sarail Upazila"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sarail hound> dogs:origin wd:Q3348614 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Spino siciliano> a dogs:DogBreed ;
+	rdfs:label "Spino siciliano"@en .
+
+wd:Q4951156 a dogs:Country ;
+	rdfs:label "Sicily"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Spino siciliano> dogs:origin wd:Q4951156 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Basenji> a dogs:DogBreed ;
+	rdfs:label "Basenji"@en .
+
+wd:Q974 a dogs:Country ;
+	rdfs:label "Democratic Republic of the Congo"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Basenji> dogs:origin wd:Q974 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Native Irish Pedigree Dog Breeds> a dogs:DogBreed ;
+	rdfs:label "Native Irish Pedigree Dog Breeds"@en ;
+	dogs:origin wd:Q27 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Shepherd> a dogs:DogBreed ;
+	rdfs:label "English Shepherd"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Drentse Patrijshond> a dogs:DogBreed ;
+	rdfs:label "Drentse Patrijshond"@en ;
+	dogs:origin wd:Q55 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Italian Short-Haired Segugio> a dogs:DogBreed ;
+	rdfs:label "Italian Short-Haired Segugio"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Wirehaired Vizsla> a dogs:DogBreed ;
+	rdfs:label "Wirehaired Vizsla"@en ;
+	dogs:origin wd:Q28 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Wire Fox Terrier> a dogs:DogBreed ;
+	rdfs:label "Wire Fox Terrier"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Griffon Nivernais> a dogs:DogBreed ;
+	rdfs:label "Griffon Nivernais"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Petit Gascon Saintongeois> a dogs:DogBreed ;
+	rdfs:label "Petit Gascon Saintongeois"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pyrenean Sheepdog Long-haired> a dogs:DogBreed ;
+	rdfs:label "Pyrenean Sheepdog Long-haired"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Turkish Greyhound> a dogs:DogBreed ;
+	rdfs:label "Turkish Greyhound"@en ;
+	dogs:origin wd:Q43 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Spaniel> a dogs:DogBreed ;
+	rdfs:label "German Spaniel"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Longhaired Pointer> a dogs:DogBreed ;
+	rdfs:label "German Longhaired Pointer"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Barbado da Terceira> a dogs:DogBreed ;
+	rdfs:label "Barbado da Terceira"@en ;
+	dogs:origin wd:Q45 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chien pluricolore à poil frisé> a dogs:DogBreed ;
+	rdfs:label "Chien pluricolore à poil frisé"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Mioritic> a dogs:DogBreed ;
+	rdfs:label "Mioritic"@en ;
+	dogs:origin wd:Q218 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Standard Schnauzer> a dogs:DogBreed ;
+	rdfs:label "Standard Schnauzer"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Shih Tzu> a dogs:DogBreed ;
+	rdfs:label "Shih Tzu"@en ;
+	dogs:origin wd:Q148 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Black and Tan Virginia Foxhound> a dogs:DogBreed ;
+	rdfs:label "Black and Tan Virginia Foxhound"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ca Mè Mallorquí> a dogs:DogBreed ;
+	rdfs:label "Ca Mè Mallorquí"@en ;
+	dogs:origin wd:Q8828 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Olde english bulldogge brasileiro> a dogs:DogBreed ;
+	rdfs:label "Olde english bulldogge brasileiro"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Xarnego Valenciano> a dogs:DogBreed ;
+	rdfs:label "Xarnego Valenciano"@en .
+
+wd:Q5720 a dogs:Country ;
+	rdfs:label "Valencian Community"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Xarnego Valenciano> dogs:origin wd:Q5720 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ca de Conills> a dogs:DogBreed ;
+	rdfs:label "Ca de Conills"@en .
+
+wd:Q52636 a dogs:Country ;
+	rdfs:label "Menorca"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ca de Conills> dogs:origin wd:Q52636 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Serrano Bulldog> a dogs:DogBreed ;
+	rdfs:label "Serrano Bulldog"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pampas Deerhound> a dogs:DogBreed ;
+	rdfs:label "Pampas Deerhound"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Mantiqueira Shepherd> a dogs:DogBreed ;
+	rdfs:label "Mantiqueira Shepherd"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dobermann> a dogs:DogBreed ;
+	rdfs:label "Dobermann"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bearded Collie> a dogs:DogBreed ;
+	rdfs:label "Bearded Collie"@en ;
+	dogs:origin wd:Q22 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Scottish Deerhound> a dogs:DogBreed ;
+	rdfs:label "Scottish Deerhound"@en ;
+	dogs:origin wd:Q22 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lhasa Apso> a dogs:DogBreed ;
+	rdfs:label "Lhasa Apso"@en .
+
+wd:Q17252 a dogs:Country ;
+	rdfs:label "Tibet"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lhasa Apso> dogs:origin wd:Q17252 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alabai> a dogs:DogBreed ;
+	rdfs:label "Alabai"@en .
+
+wd:Q874 a dogs:Country ;
+	rdfs:label "Turkmenistan"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alabai> dogs:origin wd:Q874 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bắc Hà dog> a dogs:DogBreed ;
+	rdfs:label "Bắc Hà dog"@en ;
+	dogs:origin wd:Q881 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Bulldog> a dogs:DogBreed ;
+	rdfs:label "American Bulldog"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Russkiy Toy> a dogs:DogBreed ;
+	rdfs:label "Russkiy Toy"@en ;
+	dogs:origin wd:Q159 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/East Siberian Laika> a dogs:DogBreed ;
+	rdfs:label "East Siberian Laika"@en ;
+	dogs:origin wd:Q159 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Moscow Water Dog> a dogs:DogBreed ;
+	rdfs:label "Moscow Water Dog"@en ;
+	dogs:origin wd:Q159 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Galgo Español> a dogs:DogBreed ;
+	rdfs:label "Galgo Español"@en ;
+	dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bernese mountain dog> a dogs:DogBreed ;
+	rdfs:label "Bernese mountain dog"@en ;
+	dogs:origin wd:Q39 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Siberian Husky> a dogs:DogBreed ;
+	rdfs:label "Siberian Husky"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Water Spaniel> a dogs:DogBreed ;
+	rdfs:label "American Water Spaniel"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Australian Shepherd> a dogs:DogBreed ;
+	rdfs:label "Australian Shepherd"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Australian Cattle Dog> a dogs:DogBreed ;
+	rdfs:label "Australian Cattle Dog"@en ;
+	dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kromfohrländer> a dogs:DogBreed ;
+	rdfs:label "Kromfohrländer"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Keeshond> dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Norwegian Lundehund> a dogs:DogBreed ;
+	rdfs:label "Norwegian Lundehund"@en ;
+	dogs:origin wd:Q20 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Belgian Shepherd> a dogs:DogBreed ;
+	rdfs:label "Belgian Shepherd"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Patagonian Sheepdog> a dogs:DogBreed ;
+	rdfs:label "Patagonian Sheepdog"@en ;
+	dogs:origin wd:Q298 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Mountain Cur> a dogs:DogBreed ;
+	rdfs:label "Mountain Cur"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/King Shepherd> a dogs:DogBreed ;
+	rdfs:label "King Shepherd"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Borzoi> a dogs:DogBreed ;
+	rdfs:label "Borzoi"@en ;
+	dogs:origin wd:Q159 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Siberian Husky> dogs:origin wd:Q159 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Miniature Fox Terrier> a dogs:DogBreed ;
+	rdfs:label "Miniature Fox Terrier"@en ;
+	dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Thai Ridgeback> a dogs:DogBreed ;
+	rdfs:label "Thai Ridgeback"@en ;
+	dogs:origin wd:Q869 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lithuanian Hound> a dogs:DogBreed ;
+	rdfs:label "Lithuanian Hound"@en .
+
+wd:Q37 a dogs:Country ;
+	rdfs:label "Lithuania"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lithuanian Hound> dogs:origin wd:Q37 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Spitz> a dogs:DogBreed ;
+	rdfs:label "German Spitz"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lagotto Romagnolo> a dogs:DogBreed ;
+	rdfs:label "Lagotto Romagnolo"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Tibetan Terrier> a dogs:DogBreed ;
+	rdfs:label "Tibetan Terrier"@en ;
+	dogs:origin wd:Q17252 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dogo Argentino> a dogs:DogBreed ;
+	rdfs:label "Dogo Argentino"@en ;
+	dogs:origin wd:Q414 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pražský Krysařík> a dogs:DogBreed ;
+	rdfs:label "Pražský Krysařík"@en ;
+	dogs:origin wd:Q213 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Coton de Tulear> a dogs:DogBreed ;
+	rdfs:label "Coton de Tulear"@en .
+
+wd:Q1019 a dogs:Country ;
+	rdfs:label "Madagascar"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Coton de Tulear> dogs:origin wd:Q1019 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kumiş> a dogs:DogBreed ;
+	rdfs:label "Kumiş"@en ;
+	dogs:origin wd:Q41470 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Mastiff> a dogs:DogBreed ;
+	rdfs:label "English Mastiff"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Azawakh> a dogs:DogBreed ;
+	rdfs:label "Azawakh"@en .
+
+wd:Q912 a dogs:Country ;
+	rdfs:label "Mali"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Azawakh> dogs:origin wd:Q912 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Rat Terrier> a dogs:DogBreed ;
+	rdfs:label "Rat Terrier"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Austrian Pinscher> a dogs:DogBreed ;
+	rdfs:label "Austrian Pinscher"@en ;
+	dogs:origin wd:Q40 .
+
+wd:Q5428 a dogs:Country ;
+	rdfs:label "Siberia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Siberian Husky> dogs:origin wd:Q5428 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chukotka sled dog> a dogs:DogBreed ;
+	rdfs:label "Chukotka sled dog"@en ;
+	dogs:origin wd:Q159 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Irish wolfhound> a dogs:DogBreed ;
+	rdfs:label "Irish wolfhound"@en ;
+	dogs:origin wd:Q22890 .
+
+wd:Q8060 a dogs:Country ;
+	rdfs:label "Romani people"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Siberian Husky> dogs:origin wd:Q8060 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sloughi> a dogs:DogBreed ;
+	rdfs:label "Sloughi"@en .
+
+wd:Q27381 a dogs:Country ;
+	rdfs:label "North Africa"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sloughi> dogs:origin wd:Q27381 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Huntaway> a dogs:DogBreed ;
+	rdfs:label "Huntaway"@en .
+
+wd:Q664 a dogs:Country ;
+	rdfs:label "New Zealand"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Huntaway> dogs:origin wd:Q664 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Basque Shepherd Dog> a dogs:DogBreed ;
+	rdfs:label "Basque Shepherd Dog"@en .
+
+wd:Q47588 a dogs:Country ;
+	rdfs:label "Basque Country"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Basque Shepherd Dog> dogs:origin wd:Q47588 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Danish Spitz> a dogs:DogBreed ;
+	rdfs:label "Danish Spitz"@en ;
+	dogs:origin wd:Q35 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Segugio Maremmano> a dogs:DogBreed ;
+	rdfs:label "Segugio Maremmano"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Segugio dell'Appennino> a dogs:DogBreed ;
+	rdfs:label "Segugio dell'Appennino"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Guatemalan Dogo> a dogs:DogBreed ;
+	rdfs:label "Guatemalan Dogo"@en .
+
+wd:Q774 a dogs:Country ;
+	rdfs:label "Guatemala"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Guatemalan Dogo> dogs:origin wd:Q774 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Magyar agár> a dogs:DogBreed ;
+	rdfs:label "Magyar agár"@en ;
+	dogs:origin wd:Q28 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Griffon Bruxellois> a dogs:DogBreed ;
+	rdfs:label "Griffon Bruxellois"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Black and Tan Terrier> a dogs:DogBreed ;
+	rdfs:label "Black and Tan Terrier"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Parson Russell Terrier> a dogs:DogBreed ;
+	rdfs:label "Parson Russell Terrier"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dogue Brasileiro> a dogs:DogBreed ;
+	rdfs:label "Dogue Brasileiro"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Sulimov dog> a dogs:DogBreed ;
+	rdfs:label "Sulimov dog"@en ;
+	dogs:origin wd:Q159 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Peruvian Hairless Dog> a dogs:DogBreed ;
+	rdfs:label "Peruvian Hairless Dog"@en .
+
+wd:Q419 a dogs:Country ;
+	rdfs:label "Peru"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Peruvian Hairless Dog> dogs:origin wd:Q419 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kuvasz> a dogs:DogBreed ;
+	rdfs:label "Kuvasz"@en ;
+	dogs:origin wd:Q28 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kintamani> a dogs:DogBreed ;
+	rdfs:label "Kintamani"@en .
+
+wd:Q252 a dogs:Country ;
+	rdfs:label "Indonesia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Kintamani> dogs:origin wd:Q252 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Treeing Tennessee Brindle> a dogs:DogBreed ;
+	rdfs:label "Treeing Tennessee Brindle"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bull Arab> a dogs:DogBreed ;
+	rdfs:label "Bull Arab"@en ;
+	dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Dogo Sardesco> a dogs:DogBreed ;
+	rdfs:label "Dogo Sardesco"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Karakachan Dog> a dogs:DogBreed ;
+	rdfs:label "Karakachan Dog"@en ;
+	dogs:origin wd:Q41 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pandikona> a dogs:DogBreed ;
+	rdfs:label "Pandikona"@en ;
+	dogs:origin wd:Q668 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/nureongi> a dogs:DogBreed ;
+	rdfs:label "nureongi"@en ;
+	dogs:origin wd:Q884 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Havanese> a dogs:DogBreed ;
+	rdfs:label "Havanese"@en .
+
+wd:Q241 a dogs:Country ;
+	rdfs:label "Cuba"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Havanese> dogs:origin wd:Q241 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Norwegian Buhund> a dogs:DogBreed ;
+	rdfs:label "Norwegian Buhund"@en ;
+	dogs:origin wd:Q20 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Français Blanc et Orange> a dogs:DogBreed ;
+	rdfs:label "Français Blanc et Orange"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Chien Français Blanc et Noir> a dogs:DogBreed ;
+	rdfs:label "Chien Français Blanc et Noir"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/French Tricolour Hound> a dogs:DogBreed ;
+	rdfs:label "French Tricolour Hound"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Leonberger> a dogs:DogBreed ;
+	rdfs:label "Leonberger"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/American Leopard Hound> a dogs:DogBreed ;
+	rdfs:label "American Leopard Hound"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Cão de gado transmontano> a dogs:DogBreed ;
+	rdfs:label "Cão de gado transmontano"@en ;
+	dogs:origin wd:Q45 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Halden Hound> a dogs:DogBreed ;
+	rdfs:label "Halden Hound"@en ;
+	dogs:origin wd:Q20 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/English Pointer> a dogs:DogBreed ;
+	rdfs:label "English Pointer"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Norwich Terrier> a dogs:DogBreed ;
+	rdfs:label "Norwich Terrier"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Lucas Terrier> a dogs:DogBreed ;
+	rdfs:label "Lucas Terrier"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pumi> a dogs:DogBreed ;
+	rdfs:label "Pumi"@en ;
+	dogs:origin wd:Q28 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Puli> a dogs:DogBreed ;
+	rdfs:label "Puli"@en ;
+	dogs:origin wd:Q28 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Perdigueiro Galego> a dogs:DogBreed ;
+	rdfs:label "Perdigueiro Galego"@en ;
+	dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Podenco Canario> a dogs:DogBreed ;
+	rdfs:label "Podenco Canario"@en ;
+	dogs:origin wd:Q29 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Morkie> a dogs:DogBreed ;
+	rdfs:label "Morkie"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Silken Windhound> a dogs:DogBreed ;
+	rdfs:label "Silken Windhound"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Leavitt Bulldog> a dogs:DogBreed ;
+	rdfs:label "Leavitt Bulldog"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Majestic Tree Hound> a dogs:DogBreed ;
+	rdfs:label "Majestic Tree Hound"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bouvier des Flandres> a dogs:DogBreed ;
+	rdfs:label "Bouvier des Flandres"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Petit brabançon> a dogs:DogBreed ;
+	rdfs:label "Petit brabançon"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Belgian Mastiff> a dogs:DogBreed ;
+	rdfs:label "Belgian Mastiff"@en ;
+	dogs:origin wd:Q31 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Karelo-Finnish Laika> a dogs:DogBreed ;
+	rdfs:label "Karelo-Finnish Laika"@en ;
+	dogs:origin wd:Q33 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Karelian Bear Dog> a dogs:DogBreed ;
+	rdfs:label "Karelian Bear Dog"@en ;
+	dogs:origin wd:Q33 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Norrbottenspets> a dogs:DogBreed ;
+	rdfs:label "Norrbottenspets"@en ;
+	dogs:origin wd:Q34 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Hälleforshund> a dogs:DogBreed ;
+	rdfs:label "Hälleforshund"@en ;
+	dogs:origin wd:Q34 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Segugio Italiano> a dogs:DogBreed ;
+	rdfs:label "Segugio Italiano"@en ;
+	dogs:origin wd:Q38 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Entlebucher Mountain Dog> a dogs:DogBreed ;
+	rdfs:label "Entlebucher Mountain Dog"@en ;
+	dogs:origin wd:Q39 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Styrian Coarse-haired Hound> a dogs:DogBreed ;
+	rdfs:label "Styrian Coarse-haired Hound"@en ;
+	dogs:origin wd:Q40 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Alopekis> a dogs:DogBreed ;
+	rdfs:label "Alopekis"@en ;
+	dogs:origin wd:Q41 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Small Greek Domestic Dog> a dogs:DogBreed ;
+	rdfs:label "Small Greek Domestic Dog"@en ;
+	dogs:origin wd:Q41 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Terceira Mastiff> a dogs:DogBreed ;
+	rdfs:label "Terceira Mastiff"@en ;
+	dogs:origin wd:Q45 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Xoloitzcuintle> a dogs:DogBreed ;
+	rdfs:label "Xoloitzcuintle"@en ;
+	dogs:origin wd:Q96 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Gascon Saintongeois> a dogs:DogBreed ;
+	rdfs:label "Gascon Saintongeois"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pyrenean Sheepdog Smooth-faced> a dogs:DogBreed ;
+	rdfs:label "Pyrenean Sheepdog Smooth-faced"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Blue Gascony Griffon> a dogs:DogBreed ;
+	rdfs:label "Blue Gascony Griffon"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Wirehaired Pointing Griffon> a dogs:DogBreed ;
+	rdfs:label "Wirehaired Pointing Griffon"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Fawn Brittany Griffon> a dogs:DogBreed ;
+	rdfs:label "Fawn Brittany Griffon"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Large Vendeen Griffon Basset> a dogs:DogBreed ;
+	rdfs:label "Large Vendeen Griffon Basset"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Grand Gascon Saintongeois> a dogs:DogBreed ;
+	rdfs:label "Grand Gascon Saintongeois"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/French Pointing Dog - Pyrenean type> a dogs:DogBreed ;
+	rdfs:label "French Pointing Dog - Pyrenean type"@en ;
+	dogs:origin wd:Q142 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Otterhound> a dogs:DogBreed ;
+	rdfs:label "Otterhound"@en ;
+	dogs:origin wd:Q145 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Miniature Shar Pei> a dogs:DogBreed ;
+	rdfs:label "Miniature Shar Pei"@en ;
+	dogs:origin wd:Q148 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bone-mouth> a dogs:DogBreed ;
+	rdfs:label "Bone-mouth"@en ;
+	dogs:origin wd:Q148 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Xiasi Dog> a dogs:DogBreed ;
+	rdfs:label "Xiasi Dog"@en ;
+	dogs:origin wd:Q148 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Gaucho sheepdog> a dogs:DogBreed ;
+	rdfs:label "Gaucho sheepdog"@en ;
+	dogs:origin wd:Q155 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Pudelpointer> a dogs:DogBreed ;
+	rdfs:label "Pudelpointer"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Jagdterrier> a dogs:DogBreed ;
+	rdfs:label "Jagdterrier"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Eurasier> a dogs:DogBreed ;
+	rdfs:label "Eurasier"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/German Spitz Mittel> a dogs:DogBreed ;
+	rdfs:label "German Spitz Mittel"@en ;
+	dogs:origin wd:Q183 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Slovakian Rough-haired Pointer> a dogs:DogBreed ;
+	rdfs:label "Slovakian Rough-haired Pointer"@en ;
+	dogs:origin wd:Q214 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Karst Shepherd> a dogs:DogBreed ;
+	rdfs:label "Karst Shepherd"@en .
+
+wd:Q215 a dogs:Country ;
+	rdfs:label "Slovenia"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Karst Shepherd> dogs:origin wd:Q215 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Carpathian Shepherd Dog> a dogs:DogBreed ;
+	rdfs:label "Carpathian Shepherd Dog"@en ;
+	dogs:origin wd:Q218 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bulgarian Scenthound> a dogs:DogBreed ;
+	rdfs:label "Bulgarian Scenthound"@en .
+
+wd:Q219 a dogs:Country ;
+	rdfs:label "Bulgaria"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Bulgarian Scenthound> dogs:origin wd:Q219 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Tenterfield Terrier> a dogs:DogBreed ;
+	rdfs:label "Tenterfield Terrier"@en ;
+	dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Beaglier> a dogs:DogBreed ;
+	rdfs:label "Beaglier"@en ;
+	dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/New Zealand Heading Dog> a dogs:DogBreed ;
+	rdfs:label "New Zealand Heading Dog"@en ;
+	dogs:origin wd:Q664 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Indian Spitz> a dogs:DogBreed ;
+	rdfs:label "Indian Spitz"@en ;
+	dogs:origin wd:Q668 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Mucuchies> a dogs:DogBreed ;
+	rdfs:label "Mucuchies"@en .
+
+wd:Q717 a dogs:Country ;
+	rdfs:label "Venezuela"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Mucuchies> dogs:origin wd:Q717 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ecuadorian Hairless Dog> a dogs:DogBreed ;
+	rdfs:label "Ecuadorian Hairless Dog"@en .
+
+wd:Q736 a dogs:Country ;
+	rdfs:label "Ecuador"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Ecuadorian Hairless Dog> dogs:origin wd:Q736 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Seppala Siberian Sleddog> a dogs:DogBreed ;
+	rdfs:label "Seppala Siberian Sleddog"@en ;
+	dogs:origin wd:Q797 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Jeju dog> a dogs:DogBreed ;
+	rdfs:label "Jeju dog"@en ;
+	dogs:origin wd:Q884 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Tibetan kyi apso> a dogs:DogBreed ;
+	rdfs:label "Tibetan kyi apso"@en ;
+	dogs:origin wd:Q17252 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Tibetan Spaniel> a dogs:DogBreed ;
+	rdfs:label "Tibetan Spaniel"@en ;
+	dogs:origin wd:Q17252 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Aidi> a dogs:DogBreed ;
+	rdfs:label "Aidi"@en .
+
+wd:Q1028 a dogs:Country ;
+	rdfs:label "Morocco"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Aidi> dogs:origin wd:Q1028 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Jōmon Dog> a dogs:DogBreed ;
+	rdfs:label "Jōmon Dog"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Koshikiyama Inu> a dogs:DogBreed ;
+	rdfs:label "Koshikiyama Inu"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Awa Ken> a dogs:DogBreed ;
+	rdfs:label "Awa Ken"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Satsuma Dog> a dogs:DogBreed ;
+	rdfs:label "Satsuma Dog"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Yakushima Inu> a dogs:DogBreed ;
+	rdfs:label "Yakushima Inu"@en ;
+	dogs:origin wd:Q17 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Greyster> a dogs:DogBreed ;
+	rdfs:label "Greyster"@en ;
+	dogs:origin wd:Q20 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/dropper> a dogs:DogBreed ;
+	rdfs:label "dropper"@en ;
+	dogs:origin wd:Q21 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Catahoula Leopard Dog> a dogs:DogBreed ;
+	rdfs:label "Catahoula Leopard Dog"@en ;
+	dogs:origin wd:Q30 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Molossus of Epirus> a dogs:DogBreed ;
+	rdfs:label "Molossus of Epirus"@en ;
+	dogs:origin wd:Q41 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Australian Staghound> a dogs:DogBreed ;
+	rdfs:label "Australian Staghound"@en ;
+	dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Strathdoon dingo killer> a dogs:DogBreed ;
+	rdfs:label "Strathdoon dingo killer"@en ;
+	dogs:origin wd:Q408 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Russian Hound> a dogs:DogBreed ;
+	rdfs:label "Russian Hound"@en ;
+	dogs:origin wd:Q159 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Inn kwe> a dogs:DogBreed ;
+	rdfs:label "Inn kwe"@en .
+
+wd:Q836 a dogs:Country ;
+	rdfs:label "Myanmar"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Inn kwe> dogs:origin wd:Q836 .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Molossus> a dogs:DogBreed ;
+	rdfs:label "Molossus"@en .
+
+wd:Q11266977 a dogs:Country ;
+	rdfs:label "Epirus"@en .
+
+<https://idmc.uiv-lorraine.fr/graphs/data/dogs/Molossus> dogs:origin wd:Q11266977 .
