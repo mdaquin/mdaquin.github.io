@@ -1,0 +1,28 @@
+@prefix ex: <https://idmc.univ-lorraine.fr/sw/example/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:age rdfs:range xsd:integer .
+
+ex:mathieu a ex:Professor ;
+    ex:name "Mathieu"@fr ;
+    ex:owns ex:chica ;
+    ex:teaches ex:semanticweb .
+
+ex:teaches rdfs:domain ex:Person ;
+    rdfs:range ex:Course ;
+    rdfs:subPropertyOf ex:involvedIn .
+
+ex:Chihuahua rdfs:subClassOf ex:SmallDog .
+
+ex:Professor rdfs:subClassOf ex:Person .
+
+ex:SmallDog rdfs:subClassOf ex:Dog .
+
+ex:chica a ex:Chihuahua ;
+    ex:age 4 .
+
+ex:semanticweb a ex:Course .
+
+ex:Person rdfs:label "Person"@en,
+        "Personne"@fr .
