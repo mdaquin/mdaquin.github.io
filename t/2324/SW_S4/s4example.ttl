@@ -1,0 +1,144 @@
+@prefix : <https://idmc.univ-lorraine.fr/ontologies/s4example#> .
+@prefix s4: <https://idmc.univ-lorraine.fr/ontologies/s4example#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
+@base <https://idmc.univ-lorraine.fr/ontologies/s4example#> .
+
+<https://idmc.univ-lorraine.fr/ontologies/s4example> rdf:type owl:Ontology ;
+                                                      owl:imports foaf: .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#gives
+s4:gives rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf s4:involvedIn ;
+         owl:inverseOf s4:isGivenBy ;
+         rdf:type owl:InverseFunctionalProperty ;
+         rdfs:domain s4:Lecturer ;
+         rdfs:range s4:Course ;
+         rdfs:label "gives"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#involvedIn
+s4:involvedIn rdf:type owl:ObjectProperty ;
+              rdfs:label "is involved in"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#involves
+s4:involves rdf:type owl:ObjectProperty ;
+            rdfs:label "involves"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#isGivenBy
+s4:isGivenBy rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf s4:involves ;
+             rdf:type owl:FunctionalProperty ;
+             rdfs:domain s4:Course ;
+             rdfs:range s4:Lecturer ;
+             rdfs:label "is given by"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#registeredIn
+s4:registeredIn rdf:type owl:ObjectProperty ;
+                rdfs:domain foaf:Person ;
+                rdfs:range foaf:Organization ;
+                rdfs:label "is registered in"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#Course
+s4:Course rdf:type owl:Class ;
+          rdfs:label "Cours"@en ,
+                     "Course"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#GradSchool
+s4:GradSchool rdf:type owl:Class ;
+              rdfs:subClassOf s4:HigherEdInst ;
+              rdfs:label "Ecole doctorale"@fr ,
+                         "Graduate School"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#HigherEdInst
+s4:HigherEdInst rdf:type owl:Class ;
+                rdfs:subClassOf foaf:Organization ;
+                rdfs:label "Higher Education Institution"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#Lecturer
+s4:Lecturer rdf:type owl:Class ;
+            rdfs:subClassOf <http://schema.org/Person> ;
+            owl:disjointWith s4:Student ;
+            rdfs:label "Enseignant"@en ,
+                       "Lecturer"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#PhDStudent
+s4:PhDStudent rdf:type owl:Class ;
+              owl:equivalentClass [ owl:intersectionOf ( foaf:Person
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty s4:registeredIn ;
+                                                           owl:someValuesFrom s4:GradSchool
+                                                         ]
+                                                       ) ;
+                                    rdf:type owl:Class
+                                  ] ;
+              rdfs:subClassOf <http://schema.org/Person> ;
+              rdfs:label "Doctorant"@fr ,
+                         "PhD Student"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#Student
+s4:Student rdf:type owl:Class ;
+           owl:equivalentClass [ owl:intersectionOf ( foaf:Person
+                                                      [ rdf:type owl:Restriction ;
+                                                        owl:onProperty s4:registeredIn ;
+                                                        owl:someValuesFrom s4:HigherEdInst
+                                                      ]
+                                                    ) ;
+                                 rdf:type owl:Class
+                               ] ;
+           rdfs:subClassOf <http://schema.org/Person> ,
+                           foaf:Person ;
+           rdfs:label "Etudiant"@fr ,
+                      "Student"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#IAEM
+s4:IAEM rdf:type owl:NamedIndividual ,
+                 s4:GradSchool ;
+        rdfs:label "Ecole Doctorale IAEM"@fr ,
+                   "IAEM graduate school"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#Nicolas
+s4:Nicolas rdf:type owl:NamedIndividual ,
+                    foaf:Person ;
+           s4:gives s4:SW ;
+           s4:registeredIn s4:IAEM ;
+           rdfs:label "Nicola"@fr ,
+                      "Nicolas"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/s4example#SW
+s4:SW rdf:type owl:NamedIndividual ,
+               s4:Course ;
+      rdfs:label "Cours de Web Sémantique"@en ,
+                 "Semantic Web Course"@en .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
