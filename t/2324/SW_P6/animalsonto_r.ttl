@@ -1,0 +1,339 @@
+@prefix : <https://idmc.univ-lorraine.fr/ontologies/p4#> .
+@prefix p2: <https://idmc.univ-lorraine.fr/sw/p2#> .
+@prefix p3: <https://idmc.univ-lorraine.fr/sw/p3#> .
+@prefix p4: <https://idmc.univ-lorraine.fr/ontologies/p4#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://idmc.univ-lorraine.fr/ontologies/p4#> .
+
+<https://idmc.univ-lorraine.fr/ontologies/p4> rdf:type owl:Ontology ;
+                                               rdfs:comment "A small ontology for animal adoptions, with two example animals"@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/sw/p2#animalInvolved
+p2:animalInvolved rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf p3:involved ;
+                  rdfs:domain p2:Event ;
+                  rdfs:range p2:Animal .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#breed
+p2:breed rdf:type owl:ObjectProperty ;
+         owl:inverseOf p3:breedOf ;
+         rdf:type owl:FunctionalProperty ;
+         rdfs:domain p2:Animal ;
+         rdfs:range p2:Breed .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#gender
+p2:gender rdf:type owl:ObjectProperty ,
+                   owl:FunctionalProperty ;
+          rdfs:domain p2:Animal ;
+          rdfs:range p2:Gender .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#agentInvolved
+p3:agentInvolved rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf p3:involved ;
+                 rdfs:domain p2:Event ;
+                 rdfs:range p3:Agent .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#ancestorOf
+p3:ancestorOf rdf:type owl:ObjectProperty ,
+                       owl:TransitiveProperty ;
+              rdfs:domain p2:Animal ;
+              rdfs:range p2:Animal .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#breedOf
+p3:breedOf rdf:type owl:ObjectProperty ;
+           rdfs:domain p2:Breed ;
+           rdfs:range p2:Animal .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#healthCondition
+p3:healthCondition rdf:type owl:ObjectProperty ,
+                            owl:FunctionalProperty ;
+                   rdfs:domain p2:Animal ;
+                   rdfs:range p3:HealthCondition .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#involved
+p3:involved rdf:type owl:ObjectProperty ;
+            owl:inverseOf p3:wasInvolvedIn ;
+            rdfs:domain p2:Event ;
+            rdfs:range [ rdf:type owl:Class ;
+                         owl:unionOf ( p2:Animal
+                                       p3:Agent
+                                     )
+                       ] .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#offspringOf
+p3:offspringOf rdf:type owl:ObjectProperty ;
+               owl:inverseOf p3:parentOf ;
+               rdfs:domain p2:Animal ;
+               rdfs:range p2:Animal .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#parentOf
+p3:parentOf rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf p3:ancestorOf ;
+            rdfs:domain p2:Animal ;
+            rdfs:range p2:Animal .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#wasInvolvedIn
+p3:wasInvolvedIn rdf:type owl:ObjectProperty ;
+                 rdfs:domain [ rdf:type owl:Class ;
+                               owl:unionOf ( p2:Animal
+                                             p3:Agent
+                                           )
+                             ] ;
+                 rdfs:range p2:Event .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/sw/p2#age
+p2:age rdf:type owl:DatatypeProperty ,
+                owl:FunctionalProperty ;
+       rdfs:domain p2:Animal ;
+       rdfs:range xsd:integer .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#date
+p2:date rdf:type owl:DatatypeProperty ,
+                 owl:FunctionalProperty ;
+        rdfs:domain p2:Event ;
+        rdfs:range xsd:dateTime .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#name
+p2:name rdf:type owl:DatatypeProperty ;
+        rdfs:domain [ rdf:type owl:Class ;
+                      owl:unionOf ( p2:Animal
+                                    p3:Agent
+                                  )
+                    ] ;
+        rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/sw/p2#AdoptionEvent
+p2:AdoptionEvent rdf:type owl:Class ;
+                 rdfs:subClassOf p2:Event .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#Animal
+p2:Animal rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#ArrivalEvent
+p2:ArrivalEvent rdf:type owl:Class ;
+                rdfs:subClassOf p2:Event .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#Breed
+p2:Breed rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#Cat
+p2:Cat rdf:type owl:Class ;
+       rdfs:subClassOf p2:Animal .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#CatBreed
+p2:CatBreed rdf:type owl:Class ;
+            rdfs:subClassOf p2:Breed .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#Dog
+p2:Dog rdf:type owl:Class ;
+       rdfs:subClassOf p2:Animal .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#DogBreed
+p2:DogBreed rdf:type owl:Class ;
+            rdfs:subClassOf p2:Breed .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#EuthanasiaEvent
+p2:EuthanasiaEvent rdf:type owl:Class ;
+                   rdfs:subClassOf p2:Event .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#Event
+p2:Event rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#Gender
+p2:Gender rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p2#Person
+p2:Person rdf:type owl:Class ;
+          rdfs:subClassOf p2:Animal ,
+                          p3:Agent .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#AdoptableDog
+p3:AdoptableDog rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( p2:Dog
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty p2:age ;
+                                                             owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                  owl:onDatatype xsd:integer ;
+                                                                                  owl:withRestrictions ( [ xsd:minInclusive 1
+                                                                                                         ]
+                                                                                                       )
+                                                                                ]
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:comment "An AdoptableDog is a dog older than 1 year"@en .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#AdoptedDog
+p3:AdoptedDog rdf:type owl:Class ;
+              owl:equivalentClass [ owl:intersectionOf ( p2:Dog
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty p3:wasInvolvedIn ;
+                                                           owl:someValuesFrom p2:AdoptionEvent
+                                                         ]
+                                                       ) ;
+                                    rdf:type owl:Class
+                                  ] ;
+              rdfs:comment "An AdoptedDog is a dog who has been part of an adoption event."@en .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#Agent
+p3:Agent rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#AnimalCenter
+p3:AnimalCenter rdf:type owl:Class ;
+                rdfs:subClassOf p3:Organisation .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#DogOwner
+p3:DogOwner rdf:type owl:Class ;
+            owl:equivalentClass [ owl:intersectionOf ( p2:Person
+                                                       [ rdf:type owl:Restriction ;
+                                                         owl:onProperty p3:wasInvolvedIn ;
+                                                         owl:someValuesFrom [ owl:intersectionOf ( p2:AdoptionEvent
+                                                                                                   [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty p2:animalInvolved ;
+                                                                                                     owl:someValuesFrom p2:Dog
+                                                                                                   ]
+                                                                                                 ) ;
+                                                                              rdf:type owl:Class
+                                                                            ]
+                                                       ]
+                                                     ) ;
+                                  rdf:type owl:Class
+                                ] ;
+            rdfs:comment "A DogOwner is a person who has adopted at least one dog."@en .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#HealthCondition
+p3:HealthCondition rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#HealthyAnimal
+p3:HealthyAnimal rdf:type owl:Class ;
+                 rdfs:subClassOf p3:LiveAnimal ;
+                 owl:disjointWith p3:SickAnimal .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#LiveAnimal
+p3:LiveAnimal rdf:type owl:Class ;
+              rdfs:subClassOf p2:Animal .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#Organisation
+p3:Organisation rdf:type owl:Class ;
+                rdfs:subClassOf p3:Agent .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#PopularDogBreed
+p3:PopularDogBreed rdf:type owl:Class ;
+                   owl:equivalentClass [ owl:intersectionOf ( p2:DogBreed
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty p3:breedOf ;
+                                                                owl:minQualifiedCardinality "10"^^xsd:nonNegativeInteger ;
+                                                                owl:onClass [ rdf:type owl:Restriction ;
+                                                                              owl:onProperty p3:wasInvolvedIn ;
+                                                                              owl:someValuesFrom p2:AdoptionEvent
+                                                                            ]
+                                                              ]
+                                                            ) ;
+                                         rdf:type owl:Class
+                                       ] ;
+                   rdfs:comment "A popular breed of dogs is one for which there are at least 10 adoptions."@en .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#SickAnimal
+p3:SickAnimal rdf:type owl:Class ;
+              rdfs:subClassOf p2:Animal .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#SickDog
+p3:SickDog rdf:type owl:Class ;
+           rdfs:comment "A SickDog is a Dog whose health condition is poor."@en .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p3#UnpopularCatBreed
+p3:UnpopularCatBreed rdf:type owl:Class ;
+                     owl:equivalentClass [ owl:intersectionOf ( p2:CatBreed
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty p3:breedOf ;
+                                                                  owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                                  owl:onClass [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty p3:wasInvolvedIn ;
+                                                                                owl:someValuesFrom p2:AdoptionEvent
+                                                                              ]
+                                                                ]
+                                                              ) ;
+                                           rdf:type owl:Class
+                                         ] ;
+                     rdfs:comment "An unpopular breed of cats is one for which there has been no adoption for 2 years prior to 2024."@en ,
+                                  """Cannot make it work as reasoners have different ways of dealing with dates.
+
+p2:CatBreed
+ and (p3:breedOf exactly 0 (p3:wasInvolvedIn some 
+    (p2:AdoptionEvent
+     and (p2:date some xsd:dateTime[>= \"2022-01-01T00:00:00\" , <= \"2024-01-01T00:00:00\"]))))""" .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ owl:intersectionOf ( p2:Cat
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty p3:wasInvolvedIn ;
+                         owl:someValuesFrom p2:EuthanasiaEvent
+                       ]
+                     ) ;
+  rdf:type owl:Class ;
+  rdfs:subClassOf [ rdf:type owl:Class ;
+                    owl:complementOf p3:LiveAnimal
+                  ]
+] .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
