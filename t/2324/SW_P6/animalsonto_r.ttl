@@ -288,6 +288,14 @@ p3:PopularDogBreed rdf:type owl:Class ;
 
 ###  https://idmc.univ-lorraine.fr/sw/p3#SickAnimal
 p3:SickAnimal rdf:type owl:Class ;
+              owl:equivalentClass [ owl:intersectionOf ( p2:Animal
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty p3:healthCondition ;
+                                                           owl:hasValue p4:Sick
+                                                         ]
+                                                       ) ;
+                                    rdf:type owl:Class
+                                  ] ;
               rdfs:subClassOf p2:Animal .
 
 
@@ -317,6 +325,15 @@ p2:CatBreed
  and (p3:breedOf exactly 0 (p3:wasInvolvedIn some 
     (p2:AdoptionEvent
      and (p2:date some xsd:dateTime[>= \"2022-01-01T00:00:00\" , <= \"2024-01-01T00:00:00\"]))))""" .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/ontologies/p4#Sick
+p4:Sick rdf:type owl:NamedIndividual ,
+                 p3:HealthCondition .
 
 
 #################################################################
