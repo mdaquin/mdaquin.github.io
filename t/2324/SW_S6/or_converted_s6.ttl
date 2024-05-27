@@ -1,0 +1,102 @@
+@base <http://example.com/base/> .
+@prefix s6: <https://idmc.univ-lorraine.fr/ontologies/sws6#> .
+@prefix s6d: <https://idmc.univ-lorraine.fr/graph/sws6/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+s6d:SW a s6:Course;
+  rdfs:label "Semantic Web"@en;
+  s6:hasPrimaryTopic s6:Artificial%20Intelligence;
+  s6:hasSecondaryTopic s6:Knowledge%20graphs .
+
+s6d:Mathieu a s6:Lecturer;
+  rdfs:label "Mathieu";
+  s6:isFirstLecturerOn s6d:SW, s6d:DP .
+
+s6d:Nicolas a s6:Lecturer;
+  rdfs:label "Nicolas";
+  s6:isSecondLercturerOn s6d:SW .
+
+s6d:ML a s6:Course;
+  rdfs:label "Machine Learning"@en;
+  s6:hasPrimaryTopic s6:Artificial%20Intelligence;
+  s6:hasSecondaryTopic s6:Neural%20Networks .
+
+s6d:Marianne a s6:Lecturer;
+  rdfs:label "Marianne";
+  s6:isFirstLecturerOn s6d:ML .
+
+s6d:Mostafa a s6:Lecturer;
+  rdfs:label "Mostafa";
+  s6:isSecondLercturerOn s6d:ML .
+
+s6d:DP a s6:Course;
+  rdfs:label "Data Processing"@en;
+  s6:hasPrimaryTopic s6:Data%20Science;
+  s6:hasSecondaryTopic s6:Pandas .
+
+s6d:Guillaume a s6:Lecturer;
+  rdfs:label "Guillaume";
+  s6:isSecondLercturerOn s6d:DP .
+
+s6d:MV a s6:Course;
+  rdfs:label "Machine Vision"@en;
+  s6:hasPrimaryTopic s6:Visual%20Data;
+  s6:hasSecondaryTopic s6:openCV .
+
+s6d:Antoine a s6:Lecturer;
+  rdfs:label "Antoine";
+  s6:isFirstLecturerOn s6d:MV;
+  s6:isSecondLercturerOn s6d:MV .
+
+s6d:SR a s6:Course;
+  rdfs:label "Social Robotics"@en;
+  s6:hasPrimaryTopic s6:Robotics;
+  s6:hasSecondaryTopic s6:ROS .
+
+s6d:Sylvain a s6:Lecturer;
+  rdfs:label "Sylvain";
+  s6:isFirstLecturerOn s6d:SR .
+
+s6d:Hendry a s6:Lecturer;
+  rdfs:label "Hendry";
+  s6:isSecondLercturerOn s6d:SR .
+
+s6d:IA a s6:Course;
+  rdfs:label "Intelligent Agents"@en;
+  s6:hasPrimaryTopic s6:Artificial%20Intelligence;
+  s6:hasSecondaryTopic s6:multi-agent%20systems .
+
+s6d:Alain a s6:Lecturer;
+  rdfs:label "Alain";
+  s6:isFirstLecturerOn s6d:IA .
+
+s6d:Vincent a s6:Lecturer;
+  rdfs:label "Vincent";
+  s6:isSecondLercturerOn s6d:IA .
+
+s6d:DL a s6:Course;
+  rdfs:label "Deep Learning"@en;
+  s6:hasPrimaryTopic s6:Artificial%20Intelligence;
+  s6:hasSecondaryTopic s6:pytorch .
+
+s6d:Emmanuel a s6:Lecturer;
+  rdfs:label "Emmanuel";
+  s6:isFirstLecturerOn s6d:DL .
+
+s6d:Paul a s6:Lecturer;
+  rdfs:label "Paul";
+  s6:isSecondLercturerOn s6d:DL .
+
+s6d:NS a s6:Course;
+  rdfs:label "Neuroscience and AI"@en;
+  s6:hasPrimaryTopic s6:Neuroscience;
+  s6:hasSecondaryTopic s6:Artificial%20Intelligence .
+
+s6d:Tal a s6:Lecturer;
+  rdfs:label "Tal";
+  s6:isFirstLecturerOn s6d:NS .
+
+s6d:Armelle a s6:Lecturer;
+  rdfs:label "Armelle";
+  s6:isSecondLercturerOn s6d:NS .

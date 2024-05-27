@@ -1,0 +1,149 @@
+@prefix : <https://idmc.univ-lorraine.fr/ontologies/sws6#> .
+@prefix s6: <https://idmc.univ-lorraine.fr/ontologies/sws6#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://idmc.univ-lorraine.fr/ontologies/sws6#> .
+
+<https://idmc.univ-lorraine.fr/ontologies/sws6> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#gives
+s6:gives rdf:type owl:ObjectProperty ;
+         owl:inverseOf s6:isGivenBy ;
+         rdfs:domain s6:Lecturer ;
+         rdfs:range s6:Course .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#hasPrimaryTopic
+s6:hasPrimaryTopic rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf s6:onTopic .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#hasSecondaryTopic
+s6:hasSecondaryTopic rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf s6:onTopic .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#isFirstLecturerOn
+s6:isFirstLecturerOn rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf s6:gives .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#isGivenBy
+s6:isGivenBy rdf:type owl:ObjectProperty .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#isSecondLecturerOn
+s6:isSecondLecturerOn rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf s6:gives .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#onTopic
+s6:onTopic rdf:type owl:ObjectProperty ;
+           rdfs:domain s6:Course ;
+           rdfs:range s6:Topic .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#nbCredits
+s6:nbCredits rdf:type owl:DatatypeProperty ;
+             rdfs:domain s6:Course ;
+             rdfs:range xsd:integer .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#AICourse
+s6:AICourse rdf:type owl:Class ;
+            owl:equivalentClass [ owl:intersectionOf ( s6:Course
+                                                       [ rdf:type owl:Restriction ;
+                                                         owl:onProperty s6:onTopic ;
+                                                         owl:hasValue s6:Artificial_Intelligence
+                                                       ]
+                                                     ) ;
+                                  rdf:type owl:Class
+                                ] ;
+            rdfs:subClassOf s6:Course ;
+            rdfs:comment "a course on a topic related to artificial intelligence"@en ;
+            rdfs:label "artificial intelligence course"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#CSCourse
+s6:CSCourse rdf:type owl:Class ;
+            rdfs:subClassOf s6:Course ;
+            rdfs:comment "a course on a topic related to computer science"@en ;
+            rdfs:label "computer science course"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#Course
+s6:Course rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#Lecturer
+s6:Lecturer rdf:type owl:Class .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#NSCourse
+s6:NSCourse rdf:type owl:Class ;
+            rdfs:subClassOf s6:Course ;
+            rdfs:comment "a course on a topic related to neuroscience"@en ;
+            rdfs:label "neuroscience course"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#TemporaryLecturer
+s6:TemporaryLecturer rdf:type owl:Class ;
+                     rdfs:subClassOf s6:Lecturer ,
+                                     [ rdf:type owl:Class ;
+                                       owl:complementOf [ rdf:type owl:Restriction ;
+                                                          owl:onProperty s6:isFirstLecturerOn ;
+                                                          owl:someValuesFrom s6:Course
+                                                        ]
+                                     ] ;
+                     rdfs:comment "a lecturer who is not permanent in the institution. temporary lecturers cannot be first lecturer on courses."@en ;
+                     rdfs:label "temporary lecturer"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#TenuredLecturer
+s6:TenuredLecturer rdf:type owl:Class ;
+                   rdfs:subClassOf s6:Lecturer ;
+                   rdfs:comment "a lecturer who is permanent in the institution. Only tenured lecturer can be first lecturer on courses."@en ;
+                   rdfs:label "lecturer with tenure"@en .
+
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#Topic
+s6:Topic rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://idmc.univ-lorraine.fr/ontologies/sws6#Artificial_Intelligence
+s6:Artificial_Intelligence rdf:type owl:NamedIndividual ,
+                                    s6:Topic ;
+                           rdfs:label "Artificial Intelligence"@en .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty s6:isFirstLecturerOn ;
+  owl:someValuesFrom s6:Course ;
+  rdfs:subClassOf s6:TenuredLecturer
+] .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
