@@ -1,6 +1,6 @@
 @base <http://example.com/base/> .
 @prefix p6: <https://idmc.univ-lorraine.fr/data/p6/> .
-@prefix p2: <https://idmc.univ-lorraine.fr/sw/p2#> .
+@prefix p2: <https://idmc.univ-lorraine.fr/ontologies/p2#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 p6:A786884 a p2:Dog;
