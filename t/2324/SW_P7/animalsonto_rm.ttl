@@ -200,8 +200,8 @@ p3:AdoptableDog rdf:type owl:Class ;
                                                            [ rdf:type owl:Restriction ;
                                                              owl:onProperty p2:age ;
                                                              owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                                                                                  owl:onDatatype xsd:integer ;
-                                                                                  owl:withRestrictions ( [ xsd:minInclusive 12
+                                                                                  owl:onDatatype xsd:decimal ;
+                                                                                  owl:withRestrictions ( [ xsd:minInclusive 12.0
                                                                                                          ]
                                                                                                        )
                                                                                 ]
