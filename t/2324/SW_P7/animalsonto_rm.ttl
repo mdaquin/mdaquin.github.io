@@ -196,16 +196,7 @@ p2:Person rdf:type owl:Class ;
 
 ###  https://idmc.univ-lorraine.fr/sw/p3#AdoptableDog
 p3:AdoptableDog rdf:type owl:Class ;
-                owl:equivalentClass [ owl:intersectionOf ( p2:Dog
-                                                           [ rdf:type owl:Restriction ;
-                                                             owl:onProperty p2:age ;
-                                                             owl:someValuesFrom [ rdf:type rdfs:Datatype ;
-                                                                                  owl:onDatatype xsd:decimal ;
-                                                                                  owl:withRestrictions ( [ xsd:minInclusive 12.0
-                                                                                                         ]
-                                                                                                       )
-                                                                                ]
-                                                           ]
+                owl:equivalentClass [ owl:intersectionOf ( p7:AdultDog
                                                            [ rdf:type owl:Restriction ;
                                                              owl:onProperty p7:isSpayedOrNeutered ;
                                                              owl:hasValue "true"^^xsd:boolean
@@ -334,6 +325,24 @@ p2:CatBreed
  and (p3:breedOf exactly 0 (p3:wasInvolvedIn some 
     (p2:AdoptionEvent
      and (p2:date some xsd:dateTime[>= \"2022-01-01T00:00:00\" , <= \"2024-01-01T00:00:00\"]))))""" .
+
+
+###  https://idmc.univ-lorraine.fr/sw/p7#AdultDog
+p7:AdultDog rdf:type owl:Class ;
+            owl:equivalentClass [ owl:intersectionOf ( p2:Dog
+                                                       [ rdf:type owl:Restriction ;
+                                                         owl:onProperty p2:age ;
+                                                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                              owl:onDatatype xsd:decimal ;
+                                                                              owl:withRestrictions ( [ xsd:minInclusive 12
+                                                                                                     ]
+                                                                                                   )
+                                                                            ]
+                                                       ]
+                                                     ) ;
+                                  rdf:type owl:Class
+                                ] ;
+            rdfs:subClassOf p2:Dog .
 
 
 #################################################################
