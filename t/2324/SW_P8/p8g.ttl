@@ -1,0 +1,40 @@
+@prefix p2: <https://idmc.univ-lorraine.fr/sw/practical2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+p2:female rdf:type p2:Gender .
+p2:male rdf:type p2:Gender .
+
+p2:beagle rdf:type p2:DogBreed .
+p2:chihuahua rdf:type p2:DogBreed .
+p2:domesticShorthair rdf:type p2:CatBreed .
+
+p2:brock rdf:type p2:Dog ;
+         p2:breed p2:beagle ;
+         p2:breed p2:chihuahua ;
+         p2:name "Brock" ;
+         p2:age 2 .
+
+p2:honey rdf:type p2:Cat ;
+         p2:breed p2:domesticShorthair ;
+         p2:name "Honey" ;
+         p2:age -5 .
+
+p2:brockArr rdf:type p2:ArrivalEvent ;
+            p2:date 19 ;
+            p2:animalInvolved p2:brock, p2:Honey .
+
+p2:honeyArr rdf:type p2:ArrivalEvent ;
+            p2:date 2018 ;
+            p2:animalInvolved p2:honey .
+
+p2:DanCushion rdf:type p2:Person .
+
+p2:brockAdo rdf:type p2:AdoptionEvent ;
+            p2:date 2019 ;
+            p2:animalInvolved p2:brock ;
+            p2:personInvolved p2:DanCushion.
+
+p2:honeyEuth rdf:type p2:EuthanasiaEvent ;
+            p2:date 2017 ;
+            p2:animalInvolved p2:honey .
