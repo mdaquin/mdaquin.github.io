@@ -1,0 +1,7 @@
+<https://mdaquin.github.io/kg/ex1#chica> <https://mdaquin.github.io/onto/ex1#age> "5" .
+<https://mdaquin.github.io/kg/ex1#chica> <https://mdaquin.github.io/onto/ex1#name> "Chica" .
+<https://mdaquin.github.io/kg/ex1#chica> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://mdaquin.github.io/onto/ex1#Dog> .
+<https://mdaquin.github.io/kg/ex1#mathieu> <https://mdaquin.github.io/onto/ex1#likes> <https://dbpedia.org/resource/Music> .
+<https://mdaquin.github.io/kg/ex1#symbolicAI> <https://mdaquin.github.io/onto/ex1#isAbout> <https://dbpedia.org/resource/Artificial_intelligence> .
+<https://mdaquin.github.io/kg/ex1#mathieu> <https://mdaquin.github.io/onto/ex1#teaches> <https://mdaquin.github.io/kg/ex1#symbolicAI> .
+<https://mdaquin.github.io/kg/ex1#mathieu> <https://mdaquin.github.io/onto/ex1#owns> <https://mdaquin.github.io/kg/ex1#chica> .

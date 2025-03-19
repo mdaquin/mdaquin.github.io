@@ -1,0 +1,14 @@
+@prefix ex2: <https://mdaquin.github.io/kg/ex2#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dbp: <http://xmlns.com/foaf/0.1/> .
+ex2:Course rdfs:subClassOf ex2:Activity .
+ex2:Mammal rdfs:subClassOf ex2:Animal .
+ex2:Dog rdfs:subClassOf ex2:Mammal .
+ex2:Person rdfs:subClassOf ex2:Mammal .
+ex2:age rdfs:domain ex2:Animal ; rdfs:range xsd:int .
+ex2:name rdfs:domain ex2:Animal ; rdfs:range xsd:string .
+ex2:teaches rdfs:domain ex2:Person ; rdfs:range ex2:Course .
+ex2:Chica rdf:type ex2:Dog ; ex2:name "Chica The Dog" ; ex2:age "5" .
+ex2:Mathieu ex2:teaches ex2:SymbolicAI ; ex2:owns ex2:chica .
