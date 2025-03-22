@@ -1,0 +1,16 @@
+@prefix ex3:  <https://mdaquin.github.io/kg/ex2#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex3:ArtificialIntelligence rdf:type ex3:Topic .
+ex3:SemanticWeb rdf:type ex3:Topic .
+ex3:Mathieu rdf:type foaf:Person ;
+        ex3:teaches ex3:SymbolicAI , ex3:ML ;
+        ex3:age 45 .
+ex3:Fatou rdf:type foaf:Person ;
+        ex3:teaches ex3:SymbolicAI ;
+        ex3:age 25 .
+ex3:SymbolicAI rdf:type ex3:Course ;
+        foaf:title  "Symbolic AI" ;
+        ex3:on ex3:ArtificialIntelligence , ex3:SemanticWeb .
