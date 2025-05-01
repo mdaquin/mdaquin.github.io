@@ -35,4 +35,4 @@ print(len(nrecipes), "recipes")
 with open("recipes_ing.csv", "w") as f:
     f.write("recipe," + ",".join(inglist) + "\n")
     for recipe in nrecipes:
-        f.write(recipe.replace(",", "\,") + "," + ",".join([str(i) for i in nrecipes[recipe]]) + "\n")
+        f.write(recipe.replace(",", "") + "," + ",".join([str(i) for i in nrecipes[recipe]]) + "\n")
