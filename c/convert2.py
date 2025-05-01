@@ -31,6 +31,14 @@ for index,recipe in enumerate(df.iloc):
             if "vinegar" in ingredient: ingredient = "vinegar"
             if "cream" in ingredient: ingredient = "cream"
             if "cheese" in ingredient: ingredient = "cheese"
+            if "onion" in ingredient: ingredient = "onion"
+            if "garlic" in ingredient: ingredient = "garlic"
+            if "tomato" in ingredient: ingredient = "tomato"
+            if "potato" in ingredient: ingredient = "potato"
+            if "carrot" in ingredient: ingredient = "carrot"
+            if "broccoli" in ingredient: ingredient = "broccoli"
+            if "spinach" in ingredient: ingredient = "spinach"
+            if "apple" in ingredient: ingredient = "apple"
             if not ingredient.strip().isdecimal() and len(ingredient.split(" ")) <= 3: 
                 recipes[recipe.recipe_name].append(ingredient)
                 if ingredient not in ingredients: ingredients[ingredient] = 0
