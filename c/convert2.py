@@ -12,8 +12,25 @@ for index,recipe in enumerate(df.iloc):
     for ingredient in recipe.ingredients.split(","):
         ingredient = ingredient.strip() 
         if ingredient[0].isdigit() or ingredient[0] == '¾' or ingredient[0] == '½' or ingredient[0] == '¼' or ingredient[0] == '⅓' or ingredient[0] == '⅔' or ingredient[0] == '⅛' or ingredient[0] == '⅜' or ingredient[0] == '⅝' or ingredient[0] == '⅞':
-            ingredient = " ".join(ingredient.split(" ")[2:])
+            ingredient = " ".join(ingredient.split(" ")[2:]).lower()
             ingredient = ingredient.replace("%", "percent")
+            if "sugar" in ingredient: ingredient = "sugar"
+            if "nut" in ingredient: ingredient = "nut"
+            if "flour" in ingredient: ingredient = "flour"
+            if "butter" in ingredient: ingredient = "butter"
+            if "milk" in ingredient: ingredient = "milk"
+            if "egg" in ingredient: ingredient = "egg"
+            if "chicken" in ingredient: ingredient = "chicken"
+            if "beef" in ingredient: ingredient = "beef"
+            if "pork" in ingredient: ingredient = "pork"
+            if "fish" in ingredient: ingredient = "fish"
+            if "salt" in ingredient: ingredient = "salt"
+            if "pepper" in ingredient: ingredient = "pepper"
+            if "water" in ingredient: ingredient = "water"
+            if "oil" in ingredient: ingredient = "oil"
+            if "vinegar" in ingredient: ingredient = "vinegar"
+            if "cream" in ingredient: ingredient = "cream"
+            if "cheese" in ingredient: ingredient = "cheese"
             if not ingredient.strip().isdecimal() and len(ingredient.split(" ")) <= 3: 
                 recipes[recipe.recipe_name].append(ingredient)
                 if ingredient not in ingredients: ingredients[ingredient] = 0
@@ -22,7 +39,7 @@ for index,recipe in enumerate(df.iloc):
 print(len(ingredients), "ingredients in", len(recipes), "recipes")
 inglist = []
 for ingredient in ingredients:
-    if ingredients[ingredient] > 10: inglist.append(ingredient)
+    if ingredients[ingredient] > 15: inglist.append(ingredient)
 print("reduced to", len(inglist), "ingredients") 
 nrecipes = {}
 for recipe in recipes:
