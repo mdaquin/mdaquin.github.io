@@ -47,7 +47,7 @@ for index,recipe in enumerate(df.iloc):
 print(len(ingredients), "ingredients in", len(recipes), "recipes")
 inglist = []
 for ingredient in ingredients:
-    if ingredients[ingredient] > 15: inglist.append(ingredient)
+    if ingredients[ingredient] > 30: inglist.append(ingredient)
 print("reduced to", len(inglist), "ingredients") 
 nrecipes = {}
 for recipe in recipes:
