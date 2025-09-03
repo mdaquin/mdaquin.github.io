@@ -1,6 +1,68 @@
 
-## claude (1)
 
+# AI Model Selection Guide by Gemeni (2.5 pro, 03/09/2025)
+
+This guide is structured to help you navigate from your data type to the most suitable model, considering your specific task and constraints like data size, the need for explicability, and speed requirements.
+
+## **1\. Tabular Data**
+
+This is the most common type of data, found in spreadsheets and databases, with rows representing observations and columns representing features.
+
+| Output Type | Data Size | Explicability/Speed | Recommended Models | Notes |
+| :---- | :---- | :---- | :---- | :---- |
+| **Value Prediction (Regression)** or **Classification** | Small to Medium | High Explicability & Speed | **Linear/Logistic Regression**, **Decision Trees** | Great starting points. Very interpretable and fast to train. |
+| **Value Prediction (Regression)** or **Classification** | Small to Medium | Medium Explicability & Speed | **Random Forest**, **Gradient Boosting (XGBoost, LightGBM)** | Often provide the best performance for most tabular data problems. Less interpretable than single trees but more powerful. |
+| **Value Prediction (Regression)** or **Classification** | Large | Low Explicability | **Deep Learning (Tabular Neural Networks)** | Use when you have a very large dataset and suspect complex, non-linear relationships that other models can't capture. |
+| **Generation** | Any | Low Explicability | **Generative Adversarial Networks (GANs) for Tabular Data (e.g., TGAN)** | Used for creating synthetic tabular data. This is a more advanced and less common use case. |
+
+## **2\. Image Data**
+
+This includes any form of visual information like photos, medical scans, or satellite imagery.
+
+| Output Type | Data Size | Explicability/Speed | Recommended Models | Notes |
+| :---- | :---- | :---- | :---- | :---- |
+| **Classification** | Small | High Speed | **Transfer Learning with pre-trained CNNs (e.g., VGG, ResNet, MobileNet)** | The best approach for small image datasets. Fine-tuning a model already trained on a large dataset is highly effective. |
+| **Classification** | Large | Medium Speed | **Custom Convolutional Neural Networks (CNNs)** | If you have a very large and specific dataset, you can train a CNN from scratch for the best performance. |
+| **Object Detection / Segmentation** | Any | Medium Speed | **Specialized CNN Architectures (e.g., YOLO, R-CNN, U-Net)** | These models not only classify but also locate objects or segment pixels within an image. |
+| **Generation** | Any | Low Explicability | **Generative Adversarial Networks (GANs)**, **Diffusion Models (e.g., DALL-E, Stable Diffusion)** | State-of-the-art for creating new, realistic images from text prompts or other images. |
+
+## **3\. Text Data**
+
+This includes any textual information like documents, reviews, social media posts, or chat logs.
+
+| Output Type | Data Size | Explicability/Speed | Recommended Models | Notes |
+| :---- | :---- | :---- | :---- | :---- |
+| **Classification** | Small | High Explicability & Speed | **Naive Bayes**, **Logistic Regression with TF-IDF** | Fast, simple, and surprisingly effective baselines for text classification. |
+| **Classification** | Medium to Large | Medium Explicability & Speed | **Recurrent Neural Networks (RNNs), LSTMs, GRUs** | Good for capturing sequential information in text, but largely superseded by Transformers. |
+| **Classification** | Medium to Large | Low Explicability | **Transformers (e.g., BERT, RoBERTa)** | State-of-the-art for almost all text understanding tasks. Use pre-trained models and fine-tune them on your specific task. |
+| **Generation** | Any | Low Explicability | **Transformers (e.g., GPT family)** | The dominant architecture for generating coherent and contextually relevant text. |
+
+## **4\. Sequence & Temporal Data**
+
+This refers to any data where the order is important, such as time series (stock prices, sensor readings) or sequential data (DNA sequences).
+
+| Output Type | Data Size | Explicability/Speed | Recommended Models | Notes |
+| :---- | :---- | :---- | :---- | :---- |
+| **Value Prediction (Forecasting)** or **Classification** | Small | High Explicability & Speed | **Classical Time Series Models (ARIMA, SARIMA)** | Best for univariate time series with clear trends and seasonality. Very interpretable. |
+| **Value Prediction (Forecasting)** or **Classification** | Any | Medium Explicability & Speed | **Recurrent Neural Networks (RNNs), LSTMs, GRUs** | Standard deep learning choices for time series forecasting and sequence classification. Can handle multiple input variables (multivariate). |
+| **Value Prediction (Forecasting)** or **Classification** | Large | Low Explicability | **Transformers for Time Series** | An emerging and powerful approach for capturing long-range dependencies in very long sequences. |
+
+## **How to Use This Guide**
+
+You can use this document as a reference or a decision-making flowchart:
+
+1. **Start:** Identify your primary **Input Data Type** (e.g., Tabular, Image).  
+2. **Next:** Determine your desired **Output Task** (e.g., Classification, Generation).  
+3. **Finally:** Consider your project's constraints:  
+   * **Data Size:** Is your dataset small, medium, or large?  
+   * **Explicability:** How important is it to understand the model's reasoning?  
+   * **Speed:** Are training and inference times critical?
+
+Following this path will lead you to a set of recommended models that are a great starting point for your specific problem.
+
+# AI model selection guide (visual) by Claude (Sonnet 4, 03/09/2025) 
+
+## large version 
 
 ```mermaid
 
@@ -131,7 +193,7 @@ graph TD
     class REC1,REC2,REC3,REC4,REC5 recStyle
 ```
 
-## claude 2 (more compact)
+## More compact version 
 
 ```mermaid
 
