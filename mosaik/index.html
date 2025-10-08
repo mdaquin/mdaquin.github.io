@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Image Grid</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            padding: 40px 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .grid-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .image-container {
+            width: 100%;
+            padding-bottom: 100%; /* Creates a square aspect ratio */
+            position: relative;
+            overflow: hidden;
+            background-color: #e0e0e0;
+        }
+
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .caption {
+            padding: 20px;
+            line-height: 1.6;
+            color: #555;
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MosAIk visualisations</h1>
+        <p class="intro">
+            The following are a collection of (kind of interactive) graphs that are extracted from the 
+            publication records of members of the MosAIk team. Those publication records are obtained from the OpenAlex system and only include publications that 
+            are explicitly affiliated to LORIA. (so this is not complete!) <br/> In all graphs, thikness of links correspond to number 
+            of connections, and size of nodes to the total (sum) number of connections for the node.
+        </p>
+        <div class="grid">
+            <a href="graphvisu/co-authors.html" class="grid-item">
+                <div class="image-container">
+                    <img src="imgs/co-authors.png" alt="Co-authors">
+                </div>
+                <div class="caption">
+                    Co-author network (nodes are authors and links are papers co-written). Orange nodes are members of MosAIk.
+                </div>
+            </a>
+
+            <a href="graphvisu/co-authors_2019-.html" class="grid-item">
+                <div class="image-container">
+                    <img src="imgs/co-authors_2019-.png" alt="Co-authors since 2019">
+                </div>
+                <div class="caption">
+                    The same co-author network, but only for papers published since 2019.
+                </div>
+            </a>
+
+            <a href="graphvisu/co-authors_only_mosaik.html" class="grid-item">
+                <div class="image-container">
+                    <img src="imgs/co-authors_mosaik.png" alt="Co-authors MosAIk only">
+                </div>
+                <div class="caption">
+                    The same co-author network but only including MosAIk members (so this is who works with whom within the team).
+                </div>
+            </a>
+
+            <a href="graphvisu/cites_all.html" class="grid-item">
+                <div class="image-container">
+                    <img src="imgs/cites.png" alt="Citations">
+                </div>
+                <div class="caption">
+                    A citation network (nodes are authors, and links are citations between papers of which they are authors). Orange nodes are members of MosAIk.
+                </div>
+            </a>
+
+            <a href="graphvisu/authors_topics.html" class="grid-item">
+                <div class="image-container">
+                    <img src="imgs/topics.png" alt="Topics">
+                </div>
+                <div class="caption">
+                    Connections between MosAIk authors (orange) and topics (dark grey). Topics are obtained from OpenAlex and are not very good... 
+                    This is filtered to topics of at least 2 papers of MosAIk members.
+                </div>
+            </a>
+
+            <a href="graphvisu/authors_topics_2019-.html" class="grid-item">
+                <div class="image-container">
+                    <img src="imgs/topics_2019-.png" alt="Topics since 2019">
+                </div>
+                <div class="caption">
+                    Connections between MosAIk authors (orange) and topics (dark grey) for papers published since 2019. No filtering is applied in this case.
+                </div>
+            </a>
+
+              <a href="graphvisu/sources.html" class="grid-item">
+                <div class="image-container">
+                    <img src="imgs/sources.png" alt="Sources">
+                </div>
+                <div class="caption">
+                    Connections between MosAIk authors (orange) and the sources of the publications (grey). Sources are journals, conferences or repositories.
+                </div>
+            </a>
+
+              <a href="graphvisu/countries.html" class="grid-item">
+                <div class="image-container">
+                    <img src="imgs/countries.png" alt="Countries">
+                </div>
+                <div class="caption">
+                    Countries of affiliation (except France) of co-authors (grey) of MosAIk authors (orange). 
+                </div>
+            </a>
+
+            <a href="graphvisu/institutions.html" class="grid-item">
+                <div class="image-container">
+                    <img src="imgs/institutions.png" alt="Institutions">
+                </div>
+                <div class="caption">
+                    Affiliations (except LORIA-related) of co-authors (dark purple) of MosAIk authors (orange).
+                </div>
+            </a>
+
+
+        </div>
+    </div>
+</body>
+</html>

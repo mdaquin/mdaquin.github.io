@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-authorship Network</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force-limit@1"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            /* box-shadow: 0 20px 40px rgba(0,0,0,0.1); */
+            /* backdrop-filter: blur(10px); */
+        }
+        #graph-container {
+            /* border: 2px solid #e9ecef; */
+            border-radius: 10px;
+            background: white;
+            margin-top: 20px;
+            /* overflow: hidden; */
+        }
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .legend {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }        
+        .legend-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+        .legend-item {
+            font-size: 14px;
+            color: #6c757d;
+            margin: 3px 0;
+        }
+        .node-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            fill: #333;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">        
+        <div id="graph-container"></div>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        let svg, simulation, nodes, links;
+        let width = 800; // MDA
+        let height = 600; // MDA
+
+        function parseData(csvText) {
+            const lines = csvText.trim().split('\n');
+            const data = [];            
+            for (let i = 1; i < lines.length; i++) {
+                const parts = lines[i].split(',');
+                if (parts.length >= 3) {
+                    // MDA filter out unique papers
+                    if (parseInt(parts[2].trim()) > 0.0) 
+                        data.push({
+                            author1: parts[0].trim(),
+                            author2: parts[1].trim(),
+                            papers: parseInt(parts[2].trim()) || 1
+                        });
+                }
+            }
+            return data;
+        }
+
+        function processGraphData(data) {
+            const nodeMap = new Map();
+            const links = [];
+
+            // Process each collaboration
+            data.forEach(d => {
+                // Add to node map and track total collaborations
+                if (!nodeMap.has(d.author1)) {
+                    nodeMap.set(d.author1, { id: d.author1, totalPapers: 0 }); 
+                }
+                if (!nodeMap.has(d.author2)) {
+                    nodeMap.set(d.author2, { id: d.author2, totalPapers: 0 });
+                }
+                
+                // Add papers to both authors' totals
+                nodeMap.get(d.author1).totalPapers += d.papers;
+                nodeMap.get(d.author2).totalPapers += d.papers;
+                nodeMap.get(d.author1).mosaik = 1; // MDA
+                
+                // Create link
+                links.push({
+                    source: d.author1,
+                    target: d.author2,
+                    papers: d.papers
+                });
+            });
+
+            return {
+                nodes: Array.from(nodeMap.values()),
+                links: links
+            };
+        }
+
+        function generateGraph(csvText) {
+            if (!csvText) {
+                alert('Please enter some data first!');
+                return;
+            }
+
+                const rawData = parseData(csvText);
+                if (rawData.length === 0) {
+                    alert('No valid data found. Please check your format.');
+                    return;
+                }
+                const graphData = processGraphData(rawData);
+                createVisualization(graphData);
+        }
+
+        function createVisualization(data) {
+            // Clear previous visualization
+            d3.select('#graph-container').selectAll('*').remove();
+
+            // Create SVG
+            svg = d3.select('#graph-container')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Define scales
+            const maxPapers = d3.max(data.links, d => d.papers);
+            const maxTotalPapers = d3.max(data.nodes, d => d.totalPapers);
+
+            const linkWidthScale = d3.scaleLinear()
+                .domain([1, maxPapers])
+                .range([1, 8]);
+                
+            const nodeRadiusScale = d3.scaleLinear()
+                .domain([1, maxTotalPapers])
+                .range([8, 25]);
+
+            wallForce = d3.forceLimit() // MDA
+                // .radius(node => node.r) // this leads to NaNs...
+                .x0(0)
+                .x1(width-30)
+                .y0(0)
+                .y1(height-30);
+
+            wallForce // MDA
+                .cushionWidth(25)
+                .cushionStrength(0.26);
+
+            // Create force simulation
+            simulation = d3.forceSimulation(data.nodes)
+                .force('link', d3.forceLink(data.links).id(d => d.id).distance(100))
+                .force('charge', d3.forceManyBody().strength(-10))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(d => nodeRadiusScale(d.totalPapers) + 5))
+                .force('walls', wallForce); // MDA
+            
+                // Create links
+            const link = svg.append('g')
+                .selectAll('line')
+                .data(data.links)
+                .enter()
+                .append('line')
+                .attr('stroke', '#999')
+                .attr('stroke-opacity', 0.6)
+                .attr('stroke-width', d => linkWidthScale(d.papers));
+
+            // Create nodes
+            const node = svg.append('g')
+                .selectAll('circle')
+                .data(data.nodes)
+                .enter()
+                .append('circle')
+                .attr('r', d => nodeRadiusScale(d.totalPapers))
+                .attr('fill', d => {
+                    // MDA color based on membership in mosaik
+                    if ("mosaik" in d && d.mosaik == 1) return '#FF8500'; // orange for mosaik members
+                    return '#9D4EDD'; // blue for others
+                })
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 2)
+                .style('cursor', 'grab')
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+
+            // Create labels
+            const labels = svg.append('g')
+                .selectAll('text')
+                .data(data.nodes)
+                .enter()
+                .append('text')
+                .attr('class', 'node-label')
+                .text(d => d.id)
+                .attr('dy', d => nodeRadiusScale(d.totalPapers) + 15);
+
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+
+            // Add hover effects
+            node
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.id}</strong><br>Total Connections: ${d.totalPapers}`);
+                    
+                    d3.select(this).attr('stroke-width', 4);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function(event, d) {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-width', 2);
+                });
+
+            link
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.source.id} ↔ ${d.target.id}</strong><br>Connections: ${d.papers}`);
+                    
+                    d3.select(this).attr('stroke-opacity', 1);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function() {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-opacity', 0.6);
+                });
+
+            // Update positions on simulation tick
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                node
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                labels
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y);
+            });
+
+            // Drag functions
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+        }
+
+        // Load sample data on page load
+        window.onload = function() {
+            width = window.innerWidth - 60;
+            height = window.innerHeight - 100;
+            generateGraph(csvtext);
+        };
+
+    const csvtext = `
+an,bn,nb
+Bart Lamiroy,Pascal Pierrot,2
+Bart Lamiroy,Tao Sun,8
+Bart Lamiroy,Daniel Lopresti,11
+Bart Lamiroy,Ernest Valveny,5
+Bart Lamiroy,Sérgio Escalera,2
+Bart Lamiroy,Philippe Dosch,11
+Bart Lamiroy,Alícia Fornés,2
+Bart Lamiroy,Jean-Marc Ogier,4
+Bart Lamiroy,Mathieu Delalandre,4
+Bart Lamiroy,Sébastien Adam,4
+Bart Lamiroy,Éric Trupin,4
+Bart Lamiroy,Zhou Yu,4
+Bart Lamiroy,Wenyin Liu,4
+Bart Lamiroy,Adam C. Winstanley,4
+Bart Lamiroy,Luo Yan,4
+Bart Lamiroy,Dave Elliman,4
+Bart Lamiroy,Su Yang,4
+Bart Lamiroy,KC Santosh,7
+Bart Lamiroy,Laurent Wendling,8
+Bart Lamiroy,Jeff Heflin,5
+Bart Lamiroy,Henry F. Korth,5
+Bart Lamiroy,Karl Tombre,10
+Bart Lamiroy,Gérald Masini,5
+Bart Lamiroy,Jan Rendek,5
+Bart Lamiroy,Jean-Philippe Ropers,4
+Bart Lamiroy,Salvatore Tabbone,9
+Bart Lamiroy,Jean-Pierre Salmon,4
+Bart Lamiroy,Yassine Guebbas,2
+Bart Lamiroy,Christian Ah-Soon,3
+Bart Lamiroy,Gemma Sánchez,3
+Bart Lamiroy,Josep Lladós,3
+Bart Lamiroy,Jordi Mas,1
+Bart Lamiroy,Pascal Matsakis,1
+Bart Lamiroy,Thai V. Hoang,1
+Bart Lamiroy,Djemel Ziou,1
+Bart Lamiroy,Nafaâ Nacereddine,1
+Bart Lamiroy,Latifa Hamami,1
+Bart Lamiroy,Salavatore Tabbone,1
+Bart Lamiroy,Santosh K.C.,1
+Bart Lamiroy,Oriol Ramos Terrades,1
+Bart Lamiroy,Sabine Barrat,2
+Bart Lamiroy,Makoto Hasegawa,1
+Bart Lamiroy,Loïc Pélissier,2
+Bart Lamiroy,Xavier Hilaire,1
+Bart Lamiroy,Laurent Najman,2
+Bart Lamiroy,Joan Mas Romeu,2
+Fabien Lauer,Gérard Bloch,6
+Fabien Lauer,Van Luong Le,4
+Fabien Lauer,Tamás Illés,1
+Fabien Lauer,Jean Dubousset,1
+Fabien Lauer,Máté Burkus,1
+Fabien Lauer,Szabolcs Somoskeöy,1
+Fabien Lauer,François Lavaste,1
+Fabien Lauer,Louis Massucci,2
+Fabien Lauer,Marion Gilson,2
+Fabien Lauer,Yann Guermeur,1
+Fabien Lauer,Hélène Paugam‐Moisy,1
+Fabien Lauer,Pierre Baldi,1
+Fabien Lauer,Gianluca Pollastri,1
+Fabien Lauer,Dominique Zelus,1
+Fabien Lauer,André Elisseeff,1
+Fabien Lauer,Fabienne Thomarat,1
+Jean Lieber,Emmanuel Nauer,22
+Jean Lieber,Mathieu d’Aquin,17
+Jean Lieber,Henri Prade,5
+Jean Lieber,Gilles Richard,5
+Jean Lieber,Amedeo Napoli,37
+Jean Lieber,Laura Infante-Blanco,12
+Jean Lieber,Valmi Dufour-Lussier,16
+Jean Lieber,Emmanuelle Gaillard,13
+Jean Lieber,Amélie Cordier,17
+Jean Lieber,Fadi Badra,22
+Jean Lieber,Hala Skaf‐Molli,13
+Jean Lieber,Pascal Molli,13
+Jean Lieber,Julien Cojan,19
+Jean Lieber,Yannick Toussaint,5
+Jean Lieber,László Szathmáry,9
+Jean Lieber,Sandrine Lafrogne,9
+Jean Lieber,Éric Astier,1
+Jean Lieber,Ludovic Yvoz,1
+Jean Lieber,Hugo Iopeti,1
+Jean Lieber,Hugo Mathieu Steinbach,1
+Jean Lieber,Miguel Couceiro,3
+Jean Lieber,Nicolas Hug,3
+Jean Lieber,Florence Le Ber,4
+Jean Lieber,Laura Martin,4
+Jean Lieber,Gabin Personeni,2
+Jean Lieber,Alice Hermann,2
+Jean Lieber,Erica Melis⋆,10
+Jean Lieber,Pierre Marquis,1
+Jean Lieber,Samira Sadaoui,1
+Jean Lieber,Marie‐Dominique Devignes,2
+Jean Lieber,Malika Smaïl‐Tabbone,2
+Jean Lieber,Nizar Messaï,2
+Jean Lieber,Béatrice Fuchs,6
+Jean Lieber,Alain Mille,6
+Jean Lieber,Léonardo Lana de Carvalho,3
+Jean Lieber,Rokia Bendaoud,1
+Jean Lieber,Yves Lepage,1
+Jean Lieber,Olivier Bruneau,4
+Jean Lieber,Serge Garlatti,2
+Jean Lieber,Muriel Guedj,2
+Jean Lieber,Sylvain Laubé,2
+Jean Lieber,Nicolas Lasolle,3
+Jean Lieber,Justine Reynaud,3
+Jean Lieber,Siyana Pavlova,1
+Jean Lieber,Laurent Rollet,1
+Jean Lieber,Nadia Kiani,1
+Jean Lieber,Jordan Schneider,1
+Jean Lieber,Nicolas Jay,1
+Jean Lieber,M. Schnell,1
+Jean Lieber,Stéphanie Saleh,1
+Jean Lieber,Sophie Couffignal,1
+Jean Lieber,Gérôme Canals,1
+Jean Lieber,Emmanuel Desmontils,1
+Jean Lieber,Marie Lefèvre,1
+Jean Lieber,Yannick Naudet,1
+Jean Lieber,Benoît Bresson,3
+Jean Lieber,Thomas Meilender,1
+Jean Lieber,Sébastien Brachais,5
+Jean Lieber,Christophe Bouthier,2
+Jean Lieber,Pierre Bey,2
+Jean Lieber,Catherine Sauvagnac,2
+Jean Lieber,M.T. Vargas Rios,2
+Anna Liednikova,Philippe Jolivet,1
+Anna Liednikova,Farnaz Ghassemi Toudeshki,1
+Anna Liednikova,Alexandre Durand-Salmon,1
+Mathieu d’Aquin,Jean Lieber,7
+Mathieu d’Aquin,Emmanuel Nauer,2
+Mathieu d’Aquin,Henri Prade,1
+Mathieu d’Aquin,Gilles Richard,1
+Mathieu d’Aquin,Amedeo Napoli,6
+Mathieu d’Aquin,Laura Infante-Blanco,1
+Mathieu d’Aquin,Valmi Dufour-Lussier,1
+Mathieu d’Aquin,Emmanuelle Gaillard,1
+Mathieu d’Aquin,Amélie Cordier,1
+Mathieu d’Aquin,Fadi Badra,1
+Mathieu d’Aquin,Hala Skaf‐Molli,1
+Mathieu d’Aquin,Pascal Molli,1
+Mathieu d’Aquin,Julien Cojan,1
+Mathieu d’Aquin,Sébastien Brachais,3
+Mathieu d’Aquin,Christophe Bouthier,2
+Mathieu d’Aquin,Erica Melis⋆,3
+Mathieu d’Aquin,Béatrice Fuchs,1
+Mathieu d’Aquin,Alain Mille,1
+Mathieu d’Aquin,Benoît Bresson,2
+Mathieu d’Aquin,Pierre Bey,2
+Mathieu d’Aquin,Catherine Sauvagnac,2
+Mathieu d’Aquin,M.T. Vargas Rios,2
+Nicolas Jay,Amedeo Napoli,3
+Nicolas Jay,François Kohler,2
+Nicolas Jay,Petko Valtchev,1
+Nicolas Jay,László Szathmáry,2
+Nicolas Jay,Sergei O. Kuznetsov,1
+Nicolas Jay,Mehdi Kaytoue,1
+Nicolas Jay,Sébastien Duplessis,1
+Nicolas Jay,Jean Lieber,1
+Nicolas Jay,Mathieu d’Aquin,1
+Nicolas Jay,Fadi Badra,1
+Nicolas Jay,Thomas Meilender,1
+Nicolas Jay,Sébastien Brachais,1
+Christophe Cerisara,Alaaeddine Chaoub,2
+Christophe Cerisara,Alexandre Voisin,2
+Christophe Cerisara,Benoît Iung,2
+Christophe Cerisara,Guillaume Le Berre,1
+Christophe Cerisara,Paul Caillon,1
+Christophe Cerisara,Pavel Král,8
+Christophe Cerisara,Ladislav Lenc,1
+Christophe Cerisara,Tomáš Pavelka,3
+Christophe Cerisara,Jana Klečková,5
+Christophe Cerisara,Claire Gardent,1
+Christophe Cerisara,Bikash Gyawali,1
+Christophe Cerisara,Jana Klecckova,1
+Christophe Cerisara,Jean‐Paul Haton,4
+Christophe Cerisara,João Fernando Mari,2
+Christophe Cerisara,Abdelaziz Kriouile,2
+Christophe Cerisara,J.-C. Junqua,1
+Christophe Cerisara,Luca Rigazio,1
+Christophe Cerisara,Robert Boman,1
+Christophe Cerisara,Jean-Claude Junqua,1
+Christophe Cerisara,Cerisara,1
+Christophe Cerisara,Rigazio,1
+Christophe Cerisara,Junqua,1
+Christophe Cerisara,Sébastien Demange,2
+Sabeur Aridhi,David W. Ritchie,2
+Sabeur Aridhi,Bishnu Sarker,2
+Sabeur Aridhi,Marie‐Dominique Devignes,3
+Sabeur Aridhi,Seyed Ziaeddin Alborzi,2
+Sabeur Aridhi,Naihui Zhou,1
+Sabeur Aridhi,Alfonso E. Romero,1
+Sabeur Aridhi,Huy Nguyen,1
+Sabeur Aridhi,Tunca Doğan,1
+Sabeur Aridhi,Prajwal Bhat,1
+Sabeur Aridhi,Alan Medlar,1
+Sabeur Aridhi,Rui Fa,1
+Sabeur Aridhi,Magdalena Antczak,1
+Sabeur Aridhi,Indika Kahanda,1
+Sabeur Aridhi,Fábio Fabris,1
+Sabeur Aridhi,Nevena Veljković,1
+Sabeur Aridhi,Ehsaneddin Asgari,1
+Sabeur Aridhi,Hai Fang,1
+Sabeur Aridhi,Itamar Borukhov,1
+Sabeur Aridhi,Florian Boecker,1
+Sabeur Aridhi,Alexandra Lee,1
+Sabeur Aridhi,Enrico Lavezzo,1
+Sabeur Aridhi,Jie Hou,1
+Sabeur Aridhi,Olivier Lichtarge,1
+Sabeur Aridhi,Fran Supek,1
+Sabeur Aridhi,Yuxiang Jiang,1
+Sabeur Aridhi,Jonathan Lees,1
+Sabeur Aridhi,Alberto Paccanaro,1
+Sabeur Aridhi,Petri Törönen,1
+Sabeur Aridhi,Rabie Saidi,1
+Sabeur Aridhi,George P. Georghiou,1
+Sabeur Aridhi,Ian Sillitoe,1
+Sabeur Aridhi,Rengül Çetin-Atalay,1
+Sabeur Aridhi,Giuliano Grossi,1
+Sabeur Aridhi,Radoslav Davidović,1
+Sabeur Aridhi,Alessandro Petrini,1
+Sabeur Aridhi,Volkan Atalay,1
+Sabeur Aridhi,Jonas Reeb,1
+Sabeur Aridhi,Vedrana Vidulin,1
+Sabeur Aridhi,Jianlin Cheng,1
+Sabeur Aridhi,Pier Luigi Martelli,1
+Sabeur Aridhi,Branislava Gemović,1
+Sabeur Aridhi,Angela D. Wilkins,1
+Sabeur Aridhi,Alex W. Crocker,1
+Sabeur Aridhi,Vladimir Perović,1
+Sabeur Aridhi,Matteo Ré,1
+Sabeur Aridhi,Christophe Dessimoz,1
+Sabeur Aridhi,Sayoni Das,1
+Sabeur Aridhi,Rita Casadio,1
+Sabeur Aridhi,Meet Barot,1
+Sabeur Aridhi,Mark N. Wass,1
+Sabeur Aridhi,Richard Bonneau,1
+Sabeur Aridhi,L. Taylor Davis,1
+Sabeur Aridhi,Cen Wan,1
+Sabeur Aridhi,Ilya B. Novikov,1
+Sabeur Aridhi,Vladimir Gligorijević,1
+Sabeur Aridhi,Daniel B. Roche,1
+Sabeur Aridhi,Julian Gough,1
+Sabeur Aridhi,Elaine Zosa,1
+Sabeur Aridhi,Liisa Holm,1
+Sabeur Aridhi,Sašo Džeroski,1
+Sabeur Aridhi,Giuseppe Profiti,1
+Sabeur Aridhi,Balint Z Kacsoh,1
+Sabeur Aridhi,David T. Jones,1
+Sabeur Aridhi,Po-Han Chi,1
+Sabeur Aridhi,Castrense Savojardo,1
+Sabeur Aridhi,Mateo Torres,1
+Sabeur Aridhi,Peter W. Rose,1
+Sabeur Aridhi,Giorgio Valentini,1
+Sabeur Aridhi,Neven Šumonja,1
+Sabeur Aridhi,Stefano Toppo,1
+Sabeur Aridhi,Rebecca L. Hurto,1
+Sabeur Aridhi,Alperen Dalkıran,1
+Sabeur Aridhi,Marco Notaro,1
+Sabeur Aridhi,Marco Frasca,1
+Sabeur Aridhi,José M. Fernández,1
+Sabeur Aridhi,Wei-Cheng Tseng,1
+Sabeur Aridhi,Domenico Cozzetto,1
+Sabeur Aridhi,Alice C. McHardy,1
+Sabeur Aridhi,Alexandre Renaux,1
+Sabeur Aridhi,Kimberley A. Lewis,1
+Sabeur Aridhi,Ahmet Süreyya Rifaioğlu,1
+Sabeur Aridhi,Da Chen Emily Koo,1
+Sabeur Aridhi,Michal Linial,1
+Sabeur Aridhi,Alex A. Freitas,1
+Sabeur Aridhi,Michael L. Tress,1
+Sabeur Aridhi,Timothy Bergquist,1
+Sabeur Aridhi,Marco Mesiti,1
+Sabeur Aridhi,Haixuan Yang,1
+Sabeur Aridhi,Md-Nafiz Hamid,1
+Sabeur Aridhi,Yang Zhang,1
+Sabeur Aridhi,Zheng Wang,1
+Sabeur Aridhi,José Manuel Rodrı́guez,1
+Sabeur Aridhi,Chengxin Zhang,1
+Sabeur Aridhi,Chenguang Zhao,1
+Sabeur Aridhi,Peter L. Freddolino,1
+Sabeur Aridhi,Tatyana Goldberg,1
+Sabeur Aridhi,Natalie Thurlby,1
+Sabeur Aridhi,Alex Warwick Vesztrocy,1
+Sabeur Aridhi,Mohammad R. K. Mofrad,1
+Sabeur Aridhi,Heiko Schoof,1
+Sabeur Aridhi,Wajdi Dhifli,2
+Sabeur Aridhi,Nour El Islem Karabadji,2
+Sabeur Aridhi,Hassina Seridi,2
+Sabeur Aridhi,Fouad Bousetouane,2
+Sabeur Aridhi,Malika Smaïl‐Tabbone,4
+Sabeur Aridhi,Kamrul Islam,3
+Sabeur Aridhi,Akrem Sellami,1
+Sabeur Aridhi,Imed Riadh Farah,1
+Sabeur Aridhi,Refka Hanachi,1
+Sabeur Aridhi,Engelbert Mephu Nguifo,1
+Sabeur Aridhi,João P. P. Gomes,1
+Sabeur Aridhi,Marcelo B. A. Veras,1
+Sabeur Aridhi,José Antônio Fernandes de Macêdo,1
+Sabeur Aridhi,Salvatore Tabbone,1
+David Langlois,Kamel Smaı̈li,6
+David Langlois,Mohamed Amine Menacer,2
+David Langlois,Dominique Fohr,2
+David Langlois,Denis Jouvet,3
+David Langlois,Odile Mella,2
+David Langlois,Motaz Saad,3
+David Langlois,Begonya García-Zapirain,1
+David Langlois,Amaia Méndez Zorrilla,1
+David Langlois,Carlos-Emiliano González-Gallardo,1
+David Langlois,Arian Koźbiał,1
+David Langlois,Mikołaj Leszczuk,1
+David Langlois,Lucjan Janowski,1
+David Langlois,Elvys Linhares Pontes,1
+David Langlois,Michał Grega,1
+David Langlois,Damian Świst,1
+David Langlois,Artur Komorowski,1
+David Langlois,Juan‐Manuel Torres‐Moreno,1
+David Langlois,Éric SanJuan,1
+David Langlois,Cristián Castillo-Olea,1
+David Langlois,Juan-Manuel Torres,1
+David Langlois,Sofia Zahia,1
+David Langlois,Aritz Badiola,1
+David Langlois,Salma Jamoussi,1
+David Langlois,Jean-Paul Haton,1
+David Langlois,Frédéric Bimbot,1
+David Langlois,Imed Zitouni,1
+David Langlois,M. Jardino,1
+David Langlois,Stéphane Igounet,1
+David Langlois,Marc El-Bèze,1
+David Langlois,Sylvain Raybaud,1
+David Langlois,Caroline Lavecchia,1
+David Langlois,Kamel Sma,1
+Sylvain Castagnos,Florian Marchal,2
+Sylvain Castagnos,Anne Boyer,11
+Sylvain Castagnos,Maël Beuget,1
+Sylvain Castagnos,Christophe Luxembourger,1
+Sylvain Castagnos,Geoffray Bonnin,2
+Sylvain Castagnos,Guilherme Medeiros Machado,1
+Sylvain Castagnos,Youssef Tazouti,1
+Sylvain Castagnos,Aude Thomas,1
+Sylvain Castagnos,Lara Hoareau,1
+Sylvain Castagnos,Pierre-Edouard Osche,1
+Sylvain Castagnos,Amedeo Napoli,1
+Sylvain Castagnos,Yannick Naudet,1
+Sylvain Castagnos,Armelle Brun,1
+Lydia Boudjeloud-Assala,Laure Crochepierre,1
+Lydia Boudjeloud-Assala,Benjamin Donnot,1
+Lydia Boudjeloud-Assala,Antoine Marot,1
+Lydia Boudjeloud-Assala,Antoine Rosin,1
+Lydia Boudjeloud-Assala,Pierre Pinson,1
+Pavel Král,Christophe Cerisara,8
+Pavel Král,Ladislav Lenc,1
+Pavel Král,Tomáš Pavelka,3
+Pavel Král,Jana Klečková,5
+Pavel Král,Jana Klecckova,1
+Miguel Couceiro,Pierre Monnin,2
+Miguel Couceiro,Adrien Coulet,1
+Miguel Couceiro,Amedeo Napoli,9
+Miguel Couceiro,Joël Legrand,1
+Miguel Couceiro,Patrice Ringot,1
+Miguel Couceiro,Clément Jonquet,1
+Miguel Couceiro,Andon Tchechmedjiev,1
+Miguel Couceiro,Graziella Husson,1
+Miguel Couceiro,Victor Lagerkvist,1
+Miguel Couceiro,Lucien Haddad,2
+Miguel Couceiro,Biman Kumar Saha Roy,1
+Miguel Couceiro,Victor Lagerqvist,1
+Miguel Couceiro,Nicolas Jay,2
+Miguel Couceiro,Chedy Raïssi,2
+Miguel Couceiro,Sergei O. Kuznetsov,4
+Miguel Couceiro,Aleksey Buzmakov,3
+Miguel Couceiro,Elias Egho,2
+Miguel Couceiro,Erkko Lehtonen,2
+Miguel Couceiro,Pierre-Alexandre Murena,5
+Miguel Couceiro,Esteban Marquer,5
+Miguel Couceiro,Amandine Decker,5
+Miguel Couceiro,Puthineath Lay,5
+Miguel Couceiro,Safa Alsaidi,5
+Miguel Couceiro,Henri Prade,7
+Miguel Couceiro,Gilles Richard,5
+Miguel Couceiro,Nicolas Hug,5
+Miguel Couceiro,Vaishnavi Bhargava,3
+Miguel Couceiro,Maxime Amblard,1
+Miguel Couceiro,Guilherme Alves,1
+Miguel Couceiro,Fabien Bernier,1
+Miguel Couceiro,Guilherme Dean Pelegrina,1
+Miguel Couceiro,Leonardo Tomazeli Duarte,1
+Miguel Couceiro,Lucas Jarnac,1
+Miguel Couceiro,Emmanuel Vincent,2
+Miguel Couceiro,Marc Schoenauer,2
+Miguel Couceiro,Georgios Zervakis,2
+Miguel Couceiro,Toon Calders,1
+Miguel Couceiro,Víctor Codocedo,3
+Miguel Couceiro,Mehdi Kaytoue,4
+Miguel Couceiro,Guillaume Bosc,2
+Miguel Couceiro,Jean-François Boulicaut,2
+Miguel Couceiro,Sébastien Duplessis,2
+Miguel Couceiro,Jaume Baixeries,1
+Miguel Couceiro,Peter Eklund,1
+Miguel Couceiro,Jean Villerd,1
+Miguel Couceiro,Juraj Macko,1
+Miguel Couceiro,Dhouha Grissa,1
+Miguel Couceiro,Estelle Pujos‐Guillot,1
+Miguel Couceiro,Blandine Comte,1
+Miguel Couceiro,Romain Péchoux,1
+Miguel Couceiro,Abdallah Saffidine,1
+Miguel Couceiro,Pierre Mercuriali,1
+Miguel Couceiro,Agnès Rico,2
+Miguel Couceiro,Didier Dubois,2
+Miguel Couceiro,Quentin Brabant,1
+Miguel Couceiro,Malika Smaïl‐Tabbone,2
+Miguel Couceiro,Kévin Dalleau,2
+Miguel Couceiro,Jimmy Devillet,1
+Alexandre Blansché,Amedeo Napoli,1
+Alexandre Blansché,Marianne Huchard,1
+Alexandre Blansché,Petko Valtchev,1
+Alexandre Blansché,Mohamed H. Rouane,1
+Azim Roussanaly,Chahrazed Labba,1
+Azim Roussanaly,Anne Boyer,3
+Azim Roussanaly,Amal Ben Soussia,2
+Azim Roussanaly,L ê Hông Phuong,2
+Azim Roussanaly,Hồ Tường Vinh,2
+Azim Roussanaly,Nguyễn Thị Minh Huyền,2
+Azim Roussanaly,Sonia Ben Ticha,1
+Azim Roussanaly,Khaled Bsaïes,1
+Yannick Parmentier,Benoît Crabbé,3
+Yannick Parmentier,Denys Duchier,4
+Yannick Parmentier,Joseph Le Roux,3
+Yannick Parmentier,Claire Gardent,4
+Yannick Parmentier,Guy Perrier,4
+Yannick Parmentier,Shashi Narayan,1
+Yannick Parmentier,Bruno Guillaume,3
+Yannick Parmentier,Kristina Striegnitz,1
+Yannick Parmentier,Iryna Gurevych,1
+Yannick Parmentier,Yevgeniy Puzikov,1
+Yannick Parmentier,Ido Dagan,1
+Yannick Parmentier,Guillaume Bonfante,2
+Yannick Parmentier,Mathieu Morey,1
+Geoffray Bonnin,Sylvain Castagnos,1
+Geoffray Bonnin,Florian Marchal,1
+Geoffray Bonnin,Anne Boyer,4
+Geoffray Bonnin,Maël Beuget,1
+Geoffray Bonnin,Christophe Luxembourger,1
+Geoffray Bonnin,Guilherme Medeiros Machado,1
+Geoffray Bonnin,Youssef Tazouti,1
+Geoffray Bonnin,Aude Thomas,1
+Geoffray Bonnin,Lara Hoareau,1
+Geoffray Bonnin,Armelle Brun,3
+Egor Dudyrev,Amedeo Napoli,1
+Egor Dudyrev,Sergei O. Kuznetsov,1
+Egor Dudyrev,Aleksey Buzmakov,1
+Egor Dudyrev,Tatiana Makhalova,1
+Egor Dudyrev,Gerd Stumme,1
+Egor Dudyrev,Lotfi Lakhal,1
+Egor Dudyrev,Rafik Taouil,1
+Egor Dudyrev,Yves Bastide,1
+Egor Dudyrev,Nicolas Pasquier,1
+Jean-Charles Lamirel,Pascal Cuxac,16
+Jean-Charles Lamirel,Kafil Hajlaoui,13
+Jean-Charles Lamirel,Aneesh Sreevallabh Chivukula,10
+Jean-Charles Lamirel,Randa Kassab,11
+Jean-Charles Lamirel,Nicolas Dugué,3
+Jean-Charles Lamirel,Yue Chen,1
+Jean-Charles Lamirel,Claire François,23
+Jean-Charles Lamirel,Shadi Al Shehabi,25
+Jean-Charles Lamirel,Martial Hoffmann,21
+Jean-Charles Lamirel,Erwan Schild,1
+Jean-Charles Lamirel,Mohammed Attik,9
+Jean-Charles Lamirel,Anh Phuong Ta,6
+Jean-Charles Lamirel,Xavier Polanco,7
+Jean-Charles Lamirel,David Reymond,2
+Jean-Charles Lamirel,Jean Charles Lamirel,1
+Jean-Charles Lamirel,Mahmoud Zennaki,1
+Jean-Charles Lamirel,Ahmed Ech-Cherif,1
+Jean-Charles Lamirel,Claire Gardent,2
+Jean-Charles Lamirel,Ingrid Falk,2
+Jean-Charles Lamirel,Maha Ghribi,2
+Jean-Charles Lamirel,Zied Boulila,2
+Jean-Charles Lamirel,Abdel Belaı̈d,2
+Jean-Charles Lamirel,Hatem Hamza,2
+Jean-Charles Lamirel,B.B. Chaudhuri,2
+Jean-Charles Lamirel,Yolande Belaïd,2
+Jean-Charles Lamirel,Gérald Oster,5
+Jean-Charles Lamirel,Jacques Ducloy,5
+Jean-Charles Lamirel,Yannick Toussaint,1
+Jean-Charles Lamirel,Gérald Duffing,3
+Claire Gardent,Anna Liednikova,1
+Claire Gardent,Philippe Jolivet,1
+Claire Gardent,Farnaz Ghassemi Toudeshki,1
+Claire Gardent,Alexandre Durand-Salmon,1
+Claire Gardent,Anastasia Shimorina,6
+Claire Gardent,Shashi Narayan,7
+Claire Gardent,Laura Perez-Beltrachini,5
+Claire Gardent,Bikash Gyawali,3
+Claire Gardent,Samuel Cruz‐Lara,1
+Claire Gardent,Mariem Mahfoudh,1
+Claire Gardent,Benoît Crabbé,6
+Claire Gardent,Yannick Parmentier,5
+Claire Gardent,Denys Duchier,9
+Claire Gardent,Joseph Le Roux,4
+Claire Gardent,Guy Perrier,3
+Claire Gardent,Bruno Guillaume,3
+Claire Gardent,Shay B. Cohen,2
+Claire Gardent,Leonardo F. R. Ribeiro,1
+Claire Gardent,Iryna Gurevych,2
+Claire Gardent,Yue Zhang,1
+Claire Gardent,Angela Fan,2
+Claire Gardent,Mike Lewis,2
+Claire Gardent,Yann Dauphin,2
+Claire Gardent,Kristina Striegnitz,1
+Claire Gardent,Yevgeniy Puzikov,1
+Claire Gardent,Ido Dagan,1
+Claire Gardent,Guillaume Bonfante,2
+Claire Gardent,Mathieu Morey,1
+Claire Gardent,Nicolas Jay,1
+Claire Gardent,Amedeo Napoli,1
+Claire Gardent,François Kohler,1
+Claire Gardent,Jean-Charles Lamirel,2
+Claire Gardent,Shadi Al Shehabi,2
+Claire Gardent,Mohammed Attik,2
+Claire Gardent,Randa Kassab,1
+Claire Gardent,Anh Phuong Ta,1
+Claire Gardent,Pascal Cuxac,1
+Claire Gardent,Kafil Hajlaoui,1
+Claire Gardent,Aneesh Sreevallabh Chivukula,1
+Claire Gardent,David Reymond,1
+Claire Gardent,Ingrid Falk,1
+Claire Gardent,Yassine Mrabet,2
+Claire Gardent,Eric Ras,1
+Claire Gardent,Elena Simperl,2
+Claire Gardent,Muriel Foulonneau,1
+Claire Gardent,Halil Kilicoglu,1
+Claire Gardent,Dina Demner‐Fushman,1
+Claire Gardent,Pavlos Vougiouklis,1
+Claire Gardent,Jonathon Hare,1
+Claire Gardent,Rania Salih,1
+Claire Gardent,Ralph Debusmann,1
+Claire Gardent,Stefan Thater,1
+Claire Gardent,Marco Kuhlmann,1
+Claire Gardent,Gert Smolka,1
+Claire Gardent,Alexander Koller,1
+Claire Gardent,Paul Bédaride,1
+Claire Gardent,Eric Kow,2
+Emmanuel Nauer,Jean Lieber,19
+Emmanuel Nauer,Mathieu d’Aquin,6
+Emmanuel Nauer,Henri Prade,3
+Emmanuel Nauer,Gilles Richard,3
+Emmanuel Nauer,Amedeo Napoli,17
+Emmanuel Nauer,Laura Infante-Blanco,10
+Emmanuel Nauer,Valmi Dufour-Lussier,13
+Emmanuel Nauer,Emmanuelle Gaillard,10
+Emmanuel Nauer,Amélie Cordier,14
+Emmanuel Nauer,Fadi Badra,15
+Emmanuel Nauer,Hala Skaf‐Molli,13
+Emmanuel Nauer,Pascal Molli,13
+Emmanuel Nauer,Julien Cojan,11
+Emmanuel Nauer,Yannick Toussaint,6
+Emmanuel Nauer,László Szathmáry,4
+Emmanuel Nauer,Sandrine Lafrogne,4
+Emmanuel Nauer,Miguel Couceiro,2
+Emmanuel Nauer,Nicolas Hug,2
+Emmanuel Nauer,Florence Le Ber,2
+Emmanuel Nauer,Laura Martin,2
+Emmanuel Nauer,Gabin Personeni,1
+Emmanuel Nauer,Alice Hermann,1
+Emmanuel Nauer,Marie‐Dominique Devignes,2
+Emmanuel Nauer,Malika Smaïl‐Tabbone,2
+Emmanuel Nauer,Nizar Messaï,2
+Emmanuel Nauer,Rokia Bendaoud,2
+Emmanuel Nauer,Olivier Bruneau,3
+Emmanuel Nauer,Serge Garlatti,2
+Emmanuel Nauer,Muriel Guedj,2
+Emmanuel Nauer,Sylvain Laubé,2
+Emmanuel Nauer,Nicolas Lasolle,2
+Emmanuel Nauer,Justine Reynaud,2
+Emmanuel Nauer,Siyana Pavlova,1
+Emmanuel Nauer,Laurent Rollet,1
+Emmanuel Nauer,Nadia Kiani,1
+Emmanuel Nauer,Jordan Schneider,1
+Emmanuel Nauer,Gérôme Canals,3
+Emmanuel Nauer,Emmanuel Desmontils,2
+Emmanuel Nauer,Marie Lefèvre,2
+Emmanuel Nauer,Béatrice Fuchs,1
+Emmanuel Nauer,Alain Mille,1
+Emmanuel Nauer,Léonardo Lana de Carvalho,1
+Emmanuel Nauer,Yannick Naudet,1
+Emmanuel Nauer,Erica Melis⋆,1
+Yan Kabrit,Jean Lieber,1
+Yan Kabrit,Mathieu d’Aquin,1
+Yan Kabrit,Emmanuel Nauer,1
+Yan Kabrit,Julien Cojan,1
+Yan Kabrit,Florence Le Ber,1
+Yan Kabrit,Valmi Dufour-Lussier,1
+Yan Kabrit,Laura Martin,1
+Yan Kabrit,Gabin Personeni,1
+Yan Kabrit,Alice Hermann,1
+Yan Kabrit,Amedeo Napoli,1
+Yan Kabrit,Laura Infante-Blanco,1
+Yan Kabrit,Emmanuelle Gaillard,1
+Yan Kabrit,Amélie Cordier,1
+Yan Kabrit,Fadi Badra,1
+Yan Kabrit,Hala Skaf‐Molli,1
+Yan Kabrit,Pascal Molli,1
+Armelle Brun,Pierre Monnin,3
+Armelle Brun,Adrien Coulet,1
+Armelle Brun,Amedeo Napoli,2
+Armelle Brun,Chedy Raïssi,2
+Armelle Brun,Nicolas Hubert,3
+Armelle Brun,Davy Monticolo,3
+Armelle Brun,Anne Boyer,16
+Armelle Brun,Marharyta Aleksandrova,2
+Armelle Brun,Оleg Chertov,1
+Armelle Brun,Nicolas Jay,1
+Armelle Brun,Elias Egho,1
+Armelle Brun,Catherine Quantin,1
+Armelle Brun,Maguelonne Teisseire,1
+Armelle Brun,Pascal Poncelet,1
+Armelle Brun,Dino Ienco,1
+Armelle Brun,Sylvain Castagnos,4
+Armelle Brun,Anne E. Boyer,1
+Armelle Brun,Ilham Esslimani,5
+Armelle Brun,Yacine Abbound,1
+Armelle Brun,Nicolas Jones,1
+Armelle Brun,Geoffray Bonnin,4
+Armelle Brun,Olivier Buffet,1
+Armelle Brun,Ahmad Hamad,1
+Samuel Nowakowski,Mourad Rabah,1
+Samuel Nowakowski,Hoang Nam Ho,1
+Samuel Nowakowski,Pascal Estraillier,1
+Samuel Nowakowski,Monique Grandbastien,1
+Samuel Nowakowski,Jelena Jovanović,1
+Samuel Nowakowski,Suzana Loškovska,1
+Joël Legrand,Pierre Monnin,2
+Joël Legrand,Adrien Coulet,4
+Joël Legrand,Amedeo Napoli,3
+Joël Legrand,Clément Jonquet,2
+Joël Legrand,Nigam H. Shah,2
+Joël Legrand,Mark A. Musen,2
+Joël Legrand,Yael Garten,2
+Joël Legrand,Michel Dumontier,2
+Joël Legrand,Russ B. Altman,2
+Joël Legrand,Claire Gardent,1
+Joël Legrand,Anastasia Shimorina,1
+Joël Legrand,Shashi Narayan,1
+Joël Legrand,Shay B. Cohen,1
+Joël Legrand,Marie‐Dominique Devignes,2
+Joël Legrand,Malika Smaïl‐Tabbone,2
+Joël Legrand,Yannick Toussaint,2
+Joël Legrand,Chedy Raïssi,2
+Joël Legrand,Patrice Ringot,1
+Joël Legrand,Andon Tchechmedjiev,1
+Joël Legrand,Graziella Husson,1
+Joël Legrand,Nadine Petitpain,1
+Joël Legrand,Cédric Bousquet,1
+Joël Legrand,Kévin Dalleau,1
+Joël Legrand,William Digan,1
+Joël Legrand,Chia‐Ju Lee,1
+Joël Legrand,Romain Gogdemir,1
+Joël Legrand,Ndeye-Coumba Ndiaye,1
+Samuel Cruz‐Lara,Nasredine Semmar,1
+Samuel Cruz‐Lara,Laurent Romary,1
+Samuel Cruz‐Lara,Gil Francopoulo,1
+Samuel Cruz‐Lara,Lotfi Bellalem,2
+Samuel Cruz‐Lara,Nadia Bellalem,2
+Samuel Cruz‐Lara,Tarik Osswald,2
+Samuel Cruz‐Lara,Jean-Pierre Camal,2
+Samuel Cruz‐Lara,Jordan Guinaud,2
+Samuel Cruz‐Lara,Treveur Brétaudière,1
+Samuel Cruz‐Lara,Lina M. Rojas Barahona,1
+Jean Charles Lamirel,Jean-Charles Lamirel,1
+Jean Charles Lamirel,Mahmoud Zennaki,1
+Jean Charles Lamirel,Ahmed Ech-Cherif,1
+
+    `;
+
+
+    </script>
+</body>
+</html>

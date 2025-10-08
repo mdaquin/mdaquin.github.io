@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-authorship Network</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force-limit@1"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            /* box-shadow: 0 20px 40px rgba(0,0,0,0.1); */
+            /* backdrop-filter: blur(10px); */
+        }
+        #graph-container {
+            /* border: 2px solid #e9ecef; */
+            border-radius: 10px;
+            background: white;
+            margin-top: 20px;
+            /* overflow: hidden; */
+        }
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .legend {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }        
+        .legend-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+        .legend-item {
+            font-size: 14px;
+            color: #6c757d;
+            margin: 3px 0;
+        }
+        .node-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            fill: #333;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">        
+        <div id="graph-container"></div>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        let svg, simulation, nodes, links;
+        let width = 800; // MDA
+        let height = 600; // MDA
+
+        function parseData(csvText) {
+            const lines = csvText.trim().split('\n');
+            const data = [];            
+            for (let i = 1; i < lines.length; i++) {
+                const parts = lines[i].split(',');
+                if (parts.length >= 3) {
+                    // MDA filter out unique papers
+                    if (parseInt(parts[2].trim()) > 0) 
+                        data.push({
+                            author1: parts[0].trim(),
+                            author2: parts[1].trim(),
+                            papers: parseInt(parts[2].trim()) || 1
+                        });
+                }
+            }
+            return data;
+        }
+
+        function processGraphData(data) {
+            const nodeMap = new Map();
+            const links = [];
+
+            // Process each collaboration
+            data.forEach(d => {
+                // Add to node map and track total collaborations
+                if (!nodeMap.has(d.author1)) {
+                    nodeMap.set(d.author1, { id: d.author1, totalPapers: 0 }); 
+                }
+                if (!nodeMap.has(d.author2)) {
+                    nodeMap.set(d.author2, { id: d.author2, totalPapers: 0 });
+                }
+                
+                // Add papers to both authors' totals
+                nodeMap.get(d.author1).totalPapers += d.papers;
+                nodeMap.get(d.author2).totalPapers += d.papers;
+                nodeMap.get(d.author1).mosaik = 1; // MDA
+                
+                // Create link
+                links.push({
+                    source: d.author1,
+                    target: d.author2,
+                    papers: d.papers
+                });
+            });
+
+            return {
+                nodes: Array.from(nodeMap.values()),
+                links: links
+            };
+        }
+
+        function generateGraph(csvText) {
+            if (!csvText) {
+                alert('Please enter some data first!');
+                return;
+            }
+
+                const rawData = parseData(csvText);
+                if (rawData.length === 0) {
+                    alert('No valid data found. Please check your format.');
+                    return;
+                }
+                const graphData = processGraphData(rawData);
+                createVisualization(graphData);
+        }
+
+        function createVisualization(data) {
+            // Clear previous visualization
+            d3.select('#graph-container').selectAll('*').remove();
+
+            // Create SVG
+            svg = d3.select('#graph-container')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Define scales
+            const maxPapers = d3.max(data.links, d => d.papers);
+            const maxTotalPapers = d3.max(data.nodes, d => d.totalPapers);
+
+            const linkWidthScale = d3.scaleLinear()
+                .domain([1, maxPapers])
+                .range([1, 8]);
+                
+            const nodeRadiusScale = d3.scaleLinear()
+                .domain([1, maxTotalPapers])
+                .range([8, 25]);
+
+            wallForce = d3.forceLimit() // MDA
+                // .radius(node => node.r) // this leads to NaNs...
+                .x0(0)
+                .x1(width-30)
+                .y0(0)
+                .y1(height-30);
+
+            wallForce // MDA
+                .cushionWidth(25)
+                .cushionStrength(0.26);
+
+            // Create force simulation
+            simulation = d3.forceSimulation(data.nodes)
+                .force('link', d3.forceLink(data.links).id(d => d.id).distance(300))
+                .force('charge', d3.forceManyBody().strength(-100))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(d => nodeRadiusScale(d.totalPapers) + 5))
+                .force('walls', wallForce); // MDA
+            
+                // Create links
+            const link = svg.append('g')
+                .selectAll('line')
+                .data(data.links)
+                .enter()
+                .append('line')
+                .attr('stroke', '#999')
+                .attr('stroke-opacity', 0.6)
+                .attr('stroke-width', d => linkWidthScale(d.papers));
+
+            // Create nodes
+            const node = svg.append('g')
+                .selectAll('circle')
+                .data(data.nodes)
+                .enter()
+                .append('circle')
+                .attr('r', d => nodeRadiusScale(d.totalPapers))
+                .attr('fill', d => {
+                    // MDA color based on membership in mosaik
+                    if ("mosaik" in d && d.mosaik == 1) return '#ff7f0e'; // orange for mosaik members
+                    return '#1f77b4'; // blue for others
+                })
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 2)
+                .style('cursor', 'grab')
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+
+            // Create labels
+            const labels = svg.append('g')
+                .selectAll('text')
+                .data(data.nodes)
+                .enter()
+                .append('text')
+                .attr('class', 'node-label')
+                .text(d => d.id)
+                .attr('dy', d => nodeRadiusScale(d.totalPapers) + 15);
+
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+
+            // Add hover effects
+            node
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.id}</strong><br>Total Connections: ${d.totalPapers}`);
+                    
+                    d3.select(this).attr('stroke-width', 4);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function(event, d) {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-width', 2);
+                });
+
+            link
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.source.id} ↔ ${d.target.id}</strong><br>Connections: ${d.papers}`);
+                    
+                    d3.select(this).attr('stroke-opacity', 1);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function() {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-opacity', 0.6);
+                });
+
+            // Update positions on simulation tick
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                node
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                labels
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y);
+            });
+
+            // Drag functions
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+        }
+
+        // Load sample data on page load
+        window.onload = function() {
+            width = window.innerWidth - 60;
+            height = window.innerHeight - 100;
+            generateGraph(csvtext);
+        };
+
+    const csvtext = `
+n1,n2,nbp
+Jean Lieber,Emmanuel Nauer,23
+Emmanuel Nauer,Jean Lieber,23
+Jean Lieber,Mathieu d’Aquin,13
+Mathieu d’Aquin,Jean Lieber,13
+Christophe Cerisara,Pavel Král,9
+Pavel Král,Christophe Cerisara,9
+Yannick Parmentier,Claire Gardent,6
+Geoffray Bonnin,Armelle Brun,6
+Claire Gardent,Yannick Parmentier,6
+Armelle Brun,Geoffray Bonnin,6
+Sylvain Castagnos,Armelle Brun,5
+Gaël Guibon,Barbara Gendron,5
+Parisa Rastin,Guénaël Cabanès,5
+Armelle Brun,Sylvain Castagnos,5
+Barbara Gendron,Gaël Guibon,5
+Guénaël Cabanès,Parisa Rastin,5
+Jean Lieber,Nicolas Jay,4
+Mathieu d’Aquin,Emmanuel Nauer,4
+Nicolas Jay,Jean Lieber,4
+Emmanuel Nauer,Mathieu d’Aquin,4
+Christophe Cerisara,Claire Gardent,3
+Chahrazed Labba,Azim Roussanaly,3
+Frédéric Pennerath,Miguel Couceiro,3
+Frédéric Pennerath,Brieuc Conan‐Guez,3
+Miguel Couceiro,Alain Gély,3
+Miguel Couceiro,Frédéric Pennerath,3
+Miguel Couceiro,Brieuc Conan‐Guez,3
+Azim Roussanaly,Chahrazed Labba,3
+Claire Gardent,Christophe Cerisara,3
+Alain Gély,Miguel Couceiro,3
+Brieuc Conan‐Guez,Frédéric Pennerath,3
+Brieuc Conan‐Guez,Miguel Couceiro,3
+Bart Lamiroy,Jean-Charles Lamirel,2
+Mathieu d’Aquin,Nicolas Jay,2
+Nicolas Jay,Mathieu d’Aquin,2
+Sylvain Castagnos,Geoffray Bonnin,2
+Lydia Boudjeloud-Assala,Alexandre Blansché,2
+Gaël Guibon,Miguel Couceiro,2
+Miguel Couceiro,Gaël Guibon,2
+Alexandre Blansché,Lydia Boudjeloud-Assala,2
+Geoffray Bonnin,Sylvain Castagnos,2
+Jean-Charles Lamirel,Bart Lamiroy,2
+Jean-Charles Lamirel,Claire Gardent,2
+Claire Gardent,Jean-Charles Lamirel,2
+Jean Lieber,Prunelle D. Treuil,1
+Jean Lieber,Yan Kabrit,1
+Anna Liednikova,Claire Gardent,1
+Mathieu d’Aquin,Armelle Brun,1
+Mathieu d’Aquin,Prunelle D. Treuil,1
+Mathieu d’Aquin,Gaël Guibon,1
+Mathieu d’Aquin,Barbara Gendron,1
+Nicolas Jay,Emmanuel Nauer,1
+Christophe Cerisara,Gaspard Michel,1
+Christophe Cerisara,Samuel Cruz‐Lara,1
+Sabeur Aridhi,Mohammed Khatbane,1
+Frédéric Pennerath,Mohammed Fellaji,1
+Parisa Rastin,Barbara Gendron,1
+Lydia Boudjeloud-Assala,Alain Gély,1
+Lydia Boudjeloud-Assala,Brieuc Conan‐Guez,1
+Gaël Guibon,Christophe Cerisara,1
+Gaël Guibon,Mathieu d’Aquin,1
+Miguel Couceiro,Mohammed Fellaji,1
+Alexandre Blansché,Alain Gély,1
+Alexandre Blansché,Brieuc Conan‐Guez,1
+Azim Roussanaly,Geoffray Bonnin,1
+Azim Roussanaly,Armelle Brun,1
+Geoffray Bonnin,Azim Roussanaly,1
+Claire Gardent,Anna Liednikova,1
+Claire Gardent,Samuel Cruz‐Lara,1
+Claire Gardent,Joël Legrand,1
+Emmanuel Nauer,Prunelle D. Treuil,1
+Emmanuel Nauer,Yan Kabrit,1
+Emmanuel Nauer,Nicolas Jay,1
+Yan Kabrit,Jean Lieber,1
+Yan Kabrit,Emmanuel Nauer,1
+Christophe Cerisara,Gaël Guibon,1
+Christophe Cerisara,Barbara Gendron,1
+Mohammed Fellaji,Frédéric Pennerath,1
+Mohammed Fellaji,Miguel Couceiro,1
+Mohammed Fellaji,Brieuc Conan‐Guez,1
+Armelle Brun,Mathieu d’Aquin,1
+Armelle Brun,Azim Roussanaly,1
+Barbara Gendron,Parisa Rastin,1
+Barbara Gendron,Christophe Cerisara,1
+Barbara Gendron,Mathieu d’Aquin,1
+Gaspard Michel,Christophe Cerisara,1
+Mohammed Khatbane,Sabeur Aridhi,1
+Prunelle D. Treuil,Jean Lieber,1
+Prunelle D. Treuil,Mathieu d’Aquin,1
+Prunelle D. Treuil,Emmanuel Nauer,1
+Alain Gély,Lydia Boudjeloud-Assala,1
+Alain Gély,Alexandre Blansché,1
+Alain Gély,Brieuc Conan‐Guez,1
+Brieuc Conan‐Guez,Mohammed Fellaji,1
+Brieuc Conan‐Guez,Lydia Boudjeloud-Assala,1
+Brieuc Conan‐Guez,Alexandre Blansché,1
+Brieuc Conan‐Guez,Alain Gély,1
+Joël Legrand,Claire Gardent,1
+Samuel Cruz‐Lara,Claire Gardent,1
+Samuel Cruz‐Lara,Christophe Cerisara,1
+
+    `;
+
+
+    </script>
+</body>
+</html>

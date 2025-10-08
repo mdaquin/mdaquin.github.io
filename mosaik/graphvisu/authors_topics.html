@@ -1,0 +1,4353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-authorship Network</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force-limit@1"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            /* box-shadow: 0 20px 40px rgba(0,0,0,0.1); */
+            /* backdrop-filter: blur(10px); */
+        }
+        #graph-container {
+            /* border: 2px solid #e9ecef; */
+            border-radius: 10px;
+            background: white;
+            margin-top: 20px;
+            /* overflow: hidden; */
+        }
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .legend {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }        
+        .legend-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+        .legend-item {
+            font-size: 14px;
+            color: #6c757d;
+            margin: 3px 0;
+        }
+        .node-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            fill: #333;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">        
+        <div id="graph-container"></div>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        let svg, simulation, nodes, links;
+        let width = 800; // MDA
+        let height = 600; // MDA
+
+        function parseData(csvText) {
+            const lines = csvText.trim().split('\n');
+            const data = [];            
+            for (let i = 1; i < lines.length; i++) {
+                const parts = lines[i].split(',');
+                if (parts.length >= 3) {
+                    // MDA filter out unique papers
+                    if (parseInt(parts[2].trim()) > 1.0) 
+                        data.push({
+                            author1: parts[0].trim(),
+                            author2: parts[1].trim(),
+                            papers: parseInt(parts[2].trim()) || 1
+                        });
+                }
+            }
+            return data;
+        }
+
+        function processGraphData(data) {
+            const nodeMap = new Map();
+            const links = [];
+
+            // Process each collaboration
+            data.forEach(d => {
+                // Add to node map and track total collaborations
+                if (!nodeMap.has(d.author1)) {
+                    nodeMap.set(d.author1, { id: d.author1, totalPapers: 0 }); 
+                }
+                if (!nodeMap.has(d.author2)) {
+                    nodeMap.set(d.author2, { id: d.author2, totalPapers: 0 });
+                }
+                
+                // Add papers to both authors' totals
+                nodeMap.get(d.author1).totalPapers += d.papers;
+                nodeMap.get(d.author2).totalPapers += d.papers;
+                nodeMap.get(d.author1).mosaik = 1; // MDA
+                
+                // Create link
+                links.push({
+                    source: d.author1,
+                    target: d.author2,
+                    papers: d.papers
+                });
+            });
+
+            return {
+                nodes: Array.from(nodeMap.values()),
+                links: links
+            };
+        }
+
+        function generateGraph(csvText) {
+            if (!csvText) {
+                alert('Please enter some data first!');
+                return;
+            }
+
+                const rawData = parseData(csvText);
+                if (rawData.length === 0) {
+                    alert('No valid data found. Please check your format.');
+                    return;
+                }
+                const graphData = processGraphData(rawData);
+                createVisualization(graphData);
+        }
+
+        function createVisualization(data) {
+            // Clear previous visualization
+            d3.select('#graph-container').selectAll('*').remove();
+
+            // Create SVG
+            svg = d3.select('#graph-container')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Define scales
+            const maxPapers = d3.max(data.links, d => d.papers);
+            const maxTotalPapers = d3.max(data.nodes, d => d.totalPapers);
+
+            const linkWidthScale = d3.scaleLinear()
+                .domain([1, maxPapers])
+                .range([1, 8]);
+                
+            const nodeRadiusScale = d3.scaleLinear()
+                .domain([1, maxTotalPapers])
+                .range([8, 25]);
+
+            wallForce = d3.forceLimit() // MDA
+                // .radius(node => node.r) // this leads to NaNs...
+                .x0(0)
+                .x1(width-30)
+                .y0(0)
+                .y1(height-30);
+
+            wallForce // MDA
+                .cushionWidth(25)
+                .cushionStrength(0.26);
+
+            // Create force simulation
+            simulation = d3.forceSimulation(data.nodes)
+                .force('link', d3.forceLink(data.links).id(d => d.id).distance(100))
+                .force('charge', d3.forceManyBody().strength(-200))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(d => nodeRadiusScale(d.totalPapers) + 5))
+                .force('walls', wallForce); // MDA
+            
+                // Create links
+            const link = svg.append('g')
+                .selectAll('line')
+                .data(data.links)
+                .enter()
+                .append('line')
+                .attr('stroke', '#999')
+                .attr('stroke-opacity', 0.6)
+                .attr('stroke-width', d => linkWidthScale(d.papers));
+
+            // Create nodes
+            const node = svg.append('g')
+                .selectAll('circle')
+                .data(data.nodes)
+                .enter()
+                .append('circle')
+                .attr('r', d => nodeRadiusScale(d.totalPapers))
+                .attr('fill', d => {
+                    // MDA color based on membership in mosaik
+                    if ("mosaik" in d && d.mosaik == 1) return '#FF8500'; // orange for mosaik members
+                    return '#444444'; // blue for others
+                })
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 2)
+                .style('cursor', 'grab')
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+
+            // Create labels
+            const labels = svg.append('g')
+                .selectAll('text')
+                .data(data.nodes)
+                .enter()
+                .append('text')
+                .attr('class', 'node-label')
+                .text(d => d.id)
+                .attr('dy', d => nodeRadiusScale(d.totalPapers) + 15);
+
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+
+            // Add hover effects
+            node
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.id}</strong><br>Total Connections: ${d.totalPapers}`);
+                    
+                    d3.select(this).attr('stroke-width', 4);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function(event, d) {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-width', 2);
+                });
+
+            link
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.source.id} ↔ ${d.target.id}</strong><br>Connections: ${d.papers}`);
+                    
+                    d3.select(this).attr('stroke-opacity', 1);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function() {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-opacity', 0.6);
+                });
+
+            // Update positions on simulation tick
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                node
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                labels
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y);
+            });
+
+            // Drag functions
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+        }
+
+        // Load sample data on page load
+        window.onload = function() {
+            width = window.innerWidth - 60;
+            height = window.innerHeight - 100;
+            generateGraph(csvtext);
+        };
+
+    const csvtext = `
+author,concept,nbp
+Bart Lamiroy,Computer science,37
+Bart Lamiroy,Image (mathematics),10
+Bart Lamiroy,Artificial intelligence,28
+Bart Lamiroy,Pattern recognition (psychology),12
+Bart Lamiroy,Noise (video),2
+Bart Lamiroy,Agronomy,1
+Bart Lamiroy,Biology,3
+Bart Lamiroy,Convolutional neural network,1
+Bart Lamiroy,Machine learning,5
+Bart Lamiroy,Data mining,8
+Bart Lamiroy,Algorithm,9
+Bart Lamiroy,Function (biology),1
+Bart Lamiroy,Evolutionary biology,1
+Bart Lamiroy,Pruning,1
+Bart Lamiroy,Philosophy,15
+Bart Lamiroy,Natural language processing,8
+Bart Lamiroy,Mathematics,18
+Bart Lamiroy,Data science,8
+Bart Lamiroy,Mathematical analysis,4
+Bart Lamiroy,Linguistics,9
+Bart Lamiroy,Paleontology,2
+Bart Lamiroy,Context (archaeology),4
+Bart Lamiroy,Resolution (logic),1
+Bart Lamiroy,Domain (mathematical analysis),3
+Bart Lamiroy,Face (sociological concept),1
+Bart Lamiroy,World Wide Web,7
+Bart Lamiroy,Theoretical computer science,9
+Bart Lamiroy,Theology,1
+Bart Lamiroy,Graph,3
+Bart Lamiroy,Cluster analysis,2
+Bart Lamiroy,Social media,1
+Bart Lamiroy,Mainstream,1
+Bart Lamiroy,Clustering coefficient,1
+Bart Lamiroy,Social network (sociolinguistics),1
+Bart Lamiroy,Programming language,26
+Bart Lamiroy,Statistics,6
+Bart Lamiroy,Training set,1
+Bart Lamiroy,Arithmetic,1
+Bart Lamiroy,Binary number,1
+Bart Lamiroy,Support vector machine,1
+Bart Lamiroy,Classifier (UML),1
+Bart Lamiroy,Test data,1
+Bart Lamiroy,Ground truth,3
+Bart Lamiroy,Binary classification,1
+Bart Lamiroy,McNemar's test,1
+Bart Lamiroy,Operating system,5
+Bart Lamiroy,Epistemology,5
+Bart Lamiroy,Physics,4
+Bart Lamiroy,Process (computing),4
+Bart Lamiroy,Quality (philosophy),1
+Bart Lamiroy,Leverage (statistics),1
+Bart Lamiroy,Astronomy,1
+Bart Lamiroy,Image retrieval,3
+Bart Lamiroy,Perception,1
+Bart Lamiroy,Semantic interpretation,1
+Bart Lamiroy,Interpretation (philosophy),4
+Bart Lamiroy,Sight,1
+Bart Lamiroy,Semantic gap,1
+Bart Lamiroy,Business,7
+Bart Lamiroy,Marketing,7
+Bart Lamiroy,Benchmarking,7
+Bart Lamiroy,Test (biology),1
+Bart Lamiroy,Ranking (information retrieval),1
+Bart Lamiroy,Statistical hypothesis testing,1
+Bart Lamiroy,Psychology,2
+Bart Lamiroy,Social psychology,1
+Bart Lamiroy,Stability (learning theory),1
+Bart Lamiroy,Probabilistic logic,1
+Bart Lamiroy,Measure (data warehouse),1
+Bart Lamiroy,Cognitive psychology,1
+Bart Lamiroy,Precision and recall,1
+Bart Lamiroy,Common ground,1
+Bart Lamiroy,Coherence (philosophical gambling strategy),1
+Bart Lamiroy,Recall,1
+Bart Lamiroy,Information retrieval,10
+Bart Lamiroy,Computer vision,5
+Bart Lamiroy,Annotation,1
+Bart Lamiroy,Open data,2
+Bart Lamiroy,Automatic image annotation,1
+Bart Lamiroy,Distributed computing,1
+Bart Lamiroy,Software engineering,4
+Bart Lamiroy,Pipeline (software),2
+Bart Lamiroy,Art,1
+Bart Lamiroy,Visual arts,1
+Bart Lamiroy,State (computer science),2
+Bart Lamiroy,Architecture,1
+Bart Lamiroy,Software,4
+Bart Lamiroy,End-to-end principle,2
+Bart Lamiroy,Compiler,1
+Bart Lamiroy,Scalability,1
+Bart Lamiroy,Computer architecture,1
+Bart Lamiroy,Software architecture,1
+Bart Lamiroy,Plug-in,1
+Bart Lamiroy,Engineering,2
+Bart Lamiroy,Metric (unit),1
+Bart Lamiroy,Operations management,1
+Bart Lamiroy,Political science,8
+Bart Lamiroy,Law,8
+Bart Lamiroy,Telecommunications,1
+Bart Lamiroy,Computer engineering,1
+Bart Lamiroy,Skew,1
+Bart Lamiroy,CONTEST,3
+Bart Lamiroy,Set (abstract data type),5
+Bart Lamiroy,Computer network,4
+Bart Lamiroy,Database,1
+Bart Lamiroy,Resource (disambiguation),2
+Bart Lamiroy,Implementation,1
+Bart Lamiroy,Track (disk drive),1
+Bart Lamiroy,Computer security,4
+Bart Lamiroy,Key (lock),4
+Bart Lamiroy,Geography,2
+Bart Lamiroy,Archaeology,3
+Bart Lamiroy,Computer graphics (images),3
+Bart Lamiroy,Library science,1
+Bart Lamiroy,Index (typography),1
+Bart Lamiroy,Graphics,3
+Bart Lamiroy,Matching (statistics),2
+Bart Lamiroy,Relation (database),1
+Bart Lamiroy,Feature (linguistics),4
+Bart Lamiroy,Visualization,1
+Bart Lamiroy,Symbol (formal),12
+Bart Lamiroy,Spatial relation,3
+Bart Lamiroy,Geometry,8
+Bart Lamiroy,Basis (linear algebra),2
+Bart Lamiroy,Vocabulary,2
+Bart Lamiroy,Representation (politics),4
+Bart Lamiroy,Politics,4
+Bart Lamiroy,Solver,1
+Bart Lamiroy,Logic programming,1
+Bart Lamiroy,Inductive logic programming,1
+Bart Lamiroy,Pure mathematics,1
+Bart Lamiroy,Boundary (topology),1
+Bart Lamiroy,Property (philosophy),1
+Bart Lamiroy,Distortion (music),2
+Bart Lamiroy,Amplifier,2
+Bart Lamiroy,Bandwidth (computing),2
+Bart Lamiroy,Affine transformation,1
+Bart Lamiroy,Histogram,1
+Bart Lamiroy,Pattern matching,1
+Bart Lamiroy,Dynamic time warping,3
+Bart Lamiroy,Sociology,1
+Bart Lamiroy,Normalization (sociology),1
+Bart Lamiroy,Anthropology,1
+Bart Lamiroy,Feature extraction,1
+Bart Lamiroy,Orientation (vector space),1
+Bart Lamiroy,Dynamic programming,1
+Bart Lamiroy,Image warping,1
+Bart Lamiroy,Similarity (geometry),1
+Bart Lamiroy,Speech recognition,2
+Bart Lamiroy,String (physics),1
+Bart Lamiroy,Mathematical physics,1
+Bart Lamiroy,Character (mathematics),1
+Bart Lamiroy,Devanagari,1
+Bart Lamiroy,Character recognition,1
+Bart Lamiroy,Ontology,1
+Bart Lamiroy,Variety (cybernetics),1
+Bart Lamiroy,Semantics (computer science),3
+Bart Lamiroy,Optics,1
+Bart Lamiroy,Focus (optics),1
+Bart Lamiroy,Parallel computing,1
+Bart Lamiroy,Vectorization (mathematics),1
+Bart Lamiroy,Mechanism (biology),1
+Bart Lamiroy,Human–computer interaction,1
+Bart Lamiroy,Relevance (law),1
+Bart Lamiroy,On the fly,1
+Bart Lamiroy,Relevance feedback,1
+Bart Lamiroy,History,1
+Bart Lamiroy,Spotting,1
+Bart Lamiroy,Arc (geometry),2
+Bart Lamiroy,Thermodynamics,2
+Bart Lamiroy,Pedagogy,1
+Bart Lamiroy,Tracking (education),1
+Bart Lamiroy,Sample (material),1
+Bart Lamiroy,Minification,1
+Bart Lamiroy,Object detection,1
+Bart Lamiroy,Line (geometry),2
+Bart Lamiroy,Spurious relationship,1
+Bart Lamiroy,Segmentation,1
+Bart Lamiroy,Computer graphics,1
+Bart Lamiroy,Mechanical engineering,1
+Bart Lamiroy,Cover (algebra),1
+Bart Lamiroy,Open research,1
+Bart Lamiroy,Shared resource,1
+Bart Lamiroy,SPARK (programming language),1
+Bart Lamiroy,Topology (electrical circuits),2
+Bart Lamiroy,Combinatorics,2
+Bart Lamiroy,Point (geometry),1
+Bart Lamiroy,Pairwise comparison,1
+Bart Lamiroy,Grammar,3
+Bart Lamiroy,Parsing,1
+Bart Lamiroy,Adjacency list,3
+Bart Lamiroy,Simple (philosophy),1
+Bart Lamiroy,Component (thermodynamics),1
+Bart Lamiroy,Realization (probability),1
+Bart Lamiroy,Scripting language,1
+Bart Lamiroy,Syntax,1
+Bart Lamiroy,XML,2
+Bart Lamiroy,Document Structure Description,2
+Bart Lamiroy,Document type definition,2
+Bart Lamiroy,XML validation,2
+Bart Lamiroy,Well-formed document,2
+Bart Lamiroy,XML Signature,1
+Bart Lamiroy,Simple API for XML,1
+Bart Lamiroy,XML framework,1
+Bart Lamiroy,Rule-based machine translation,2
+Fabien Lauer,Computer science,29
+Fabien Lauer,Mathematics,27
+Fabien Lauer,Gene,1
+Fabien Lauer,Chemistry,4
+Fabien Lauer,Biochemistry,1
+Fabien Lauer,Machine learning,13
+Fabien Lauer,Pure mathematics,8
+Fabien Lauer,Mathematical optimization,19
+Fabien Lauer,Dimension (graph theory),2
+Fabien Lauer,Robustness (evolution),1
+Fabien Lauer,Margin (machine learning),2
+Fabien Lauer,Artificial intelligence,17
+Fabien Lauer,Geometry,11
+Fabien Lauer,Biology,18
+Fabien Lauer,Mathematical analysis,17
+Fabien Lauer,Algorithm,20
+Fabien Lauer,Database,7
+Fabien Lauer,Botany,18
+Fabien Lauer,Identification (biology),18
+Fabien Lauer,Heuristics,3
+Fabien Lauer,Scalability,2
+Fabien Lauer,Bounded function,4
+Fabien Lauer,Optimization problem,2
+Fabien Lauer,Global optimization,2
+Fabien Lauer,Regular polygon,6
+Fabien Lauer,Outlier,2
+Fabien Lauer,Convex optimization,5
+Fabien Lauer,Programming language,5
+Fabien Lauer,Statistics,7
+Fabien Lauer,Epistemology,6
+Fabien Lauer,Philosophy,6
+Fabien Lauer,Simple (philosophy),3
+Fabien Lauer,Physics,10
+Fabien Lauer,Optics,4
+Fabien Lauer,Focus (optics),4
+Fabien Lauer,Chromatography,1
+Fabien Lauer,Sample (material),1
+Fabien Lauer,Regression,3
+Fabien Lauer,Simplicity,1
+Fabien Lauer,Linear regression,3
+Fabien Lauer,Initialization,1
+Fabien Lauer,Quantum mechanics,9
+Fabien Lauer,Control (management),3
+Fabien Lauer,Control theory (sociology),3
+Fabien Lauer,Econometrics,2
+Fabien Lauer,Discrete mathematics,2
+Fabien Lauer,Applied mathematics,8
+Fabien Lauer,Nonlinear system,6
+Fabien Lauer,Support vector machine,5
+Fabien Lauer,Data modeling,5
+Fabien Lauer,Kernel (algebra),3
+Fabien Lauer,Star (game theory),1
+Fabien Lauer,Nonparametric statistics,3
+Fabien Lauer,System identification,13
+Fabien Lauer,Kernel method,3
+Fabien Lauer,Nonlinear system identification,3
+Fabien Lauer,Nonparametric regression,2
+Fabien Lauer,Hilbert space,1
+Fabien Lauer,Reproducing kernel Hilbert space,1
+Fabien Lauer,Piecewise,5
+Fabien Lauer,Kernel embedding of distributions,1
+Fabien Lauer,Representer theorem,1
+Fabien Lauer,Data mining,8
+Fabien Lauer,Combinatorics,3
+Fabien Lauer,Measure (data warehouse),8
+Fabien Lauer,Principal component analysis,2
+Fabien Lauer,Principal component regression,2
+Fabien Lauer,Least squares support vector machine,1
+Fabien Lauer,Kernel principal component analysis,1
+Fabien Lauer,Metric (unit),1
+Fabien Lauer,Operations management,1
+Fabien Lauer,Economics,2
+Fabien Lauer,Generalization,2
+Fabien Lauer,Upper and lower bounds,3
+Fabien Lauer,Infimum and supremum,1
+Fabien Lauer,Dependency (UML),1
+Fabien Lauer,Entropy (arrow of time),1
+Fabien Lauer,Learnability,1
+Fabien Lauer,Engineering,6
+Fabien Lauer,Medicine,3
+Fabien Lauer,Dentistry,1
+Fabien Lauer,Calculus (dental),1
+Fabien Lauer,Field (mathematics),3
+Fabien Lauer,Control engineering,2
+Fabien Lauer,Industrial engineering,1
+Fabien Lauer,Pattern recognition (psychology),1
+Fabien Lauer,Art,1
+Fabien Lauer,Literature,1
+Fabien Lauer,Cluster analysis,1
+Fabien Lauer,Class (philosophy),2
+Fabien Lauer,Exposition (narrative),1
+Fabien Lauer,Geodesy,1
+Fabien Lauer,Geology,1
+Fabien Lauer,Surgery,2
+Fabien Lauer,Anatomy,2
+Fabien Lauer,Plane (geometry),2
+Fabien Lauer,Medical physics,1
+Fabien Lauer,Horizontal plane,1
+Fabien Lauer,Orthopedic surgery,1
+Fabien Lauer,Scoliosis,2
+Fabien Lauer,Orthodontics,2
+Fabien Lauer,Idiopathic scoliosis,2
+Fabien Lauer,Radiology,1
+Fabien Lauer,Neurosurgery,1
+Fabien Lauer,Model parameter,1
+Fabien Lauer,Parameter identification problem,1
+Fabien Lauer,Hybrid system,3
+Fabien Lauer,Dynamical systems theory,2
+Fabien Lauer,Affine transformation,3
+Fabien Lauer,State (computer science),2
+Fabien Lauer,Perspective (graphical),2
+Fabien Lauer,State space,3
+Fabien Lauer,Piecewise linear function,4
+Fabien Lauer,Linear system,4
+Fabien Lauer,A priori and a posteriori,2
+Fabien Lauer,Parametric statistics,1
+Fabien Lauer,Estimation theory,1
+Fabien Lauer,Aerospace engineering,1
+Fabien Lauer,Algebraic number,2
+Fabien Lauer,Minification,2
+Fabien Lauer,Block (permutation group theory),1
+Fabien Lauer,Coordinate descent,1
+Fabien Lauer,Descent (aeronautics),1
+Fabien Lauer,Set (abstract data type),2
+Fabien Lauer,Image (mathematics),2
+Fabien Lauer,Noise (video),2
+Fabien Lauer,Selection (genetic algorithm),1
+Fabien Lauer,Strengths and weaknesses,1
+Fabien Lauer,Artificial neural network,1
+Fabien Lauer,Astronomy,1
+Fabien Lauer,Trajectory,1
+Fabien Lauer,Markov chain,2
+Fabien Lauer,Parameterized complexity,1
+Fabien Lauer,Markov model,2
+Fabien Lauer,Uniformization (probability theory),1
+Fabien Lauer,Structural risk minimization,1
+Fabien Lauer,Balance equation,1
+Fabien Lauer,Model selection,1
+Fabien Lauer,Statistical learning,1
+Fabien Lauer,Psychology,3
+Fabien Lauer,Psychotherapist,1
+Fabien Lauer,Chaining,1
+Fabien Lauer,Polynomial regression,2
+Fabien Lauer,Segmented regression,1
+Fabien Lauer,Time complexity,3
+Fabien Lauer,Polynomial,3
+Fabien Lauer,Computational complexity theory,1
+Fabien Lauer,Proper linear model,1
+Fabien Lauer,Task (project management),2
+Fabien Lauer,Systems engineering,1
+Fabien Lauer,Software,1
+Fabien Lauer,Quadratic equation,1
+Fabien Lauer,Solver,1
+Fabien Lauer,Quadratic programming,1
+Fabien Lauer,Social psychology,2
+Fabien Lauer,Greedy algorithm,2
+Fabien Lauer,Organic chemistry,2
+Fabien Lauer,Group (periodic table),2
+Fabien Lauer,Sparse approximation,2
+Fabien Lauer,Relaxation (psychology),2
+Fabien Lauer,System of linear equations,2
+Fabien Lauer,Operating system,1
+Fabien Lauer,Telecommunications,1
+Fabien Lauer,Channel (broadcasting),1
+Fabien Lauer,Realization (probability),1
+Fabien Lauer,Mode (computer interface),1
+Fabien Lauer,Input/output,1
+Fabien Lauer,MIMO,1
+Fabien Lauer,State-space representation,1
+Fabien Lauer,Discrete time and continuous time,1
+Fabien Lauer,Hypersphere,1
+Fabien Lauer,Generative model,1
+Fabien Lauer,Hidden Markov model,1
+Fabien Lauer,Generative grammar,1
+Fabien Lauer,Management,1
+Fabien Lauer,Linear discriminant analysis,1
+Fabien Lauer,Discriminant,1
+Jean Lieber,Computer science,66
+Jean Lieber,Artificial intelligence,54
+Jean Lieber,Data science,5
+Jean Lieber,Knowledge graph,1
+Jean Lieber,Philosophy,23
+Jean Lieber,Humanities,8
+Jean Lieber,Set (abstract data type),5
+Jean Lieber,Programming language,22
+Jean Lieber,Statistics,8
+Jean Lieber,Mathematics,34
+Jean Lieber,Machine learning,8
+Jean Lieber,Mathematical analysis,25
+Jean Lieber,Artificial neural network,1
+Jean Lieber,Value (mathematics),1
+Jean Lieber,Test set,1
+Jean Lieber,Regression,1
+Jean Lieber,Factorial experiment,1
+Jean Lieber,Factorial,1
+Jean Lieber,Physics,28
+Jean Lieber,Optics,22
+Jean Lieber,Process (computing),13
+Jean Lieber,Base (topology),2
+Jean Lieber,Adaptation (eye),32
+Jean Lieber,Knowledge base,10
+Jean Lieber,Computer security,3
+Jean Lieber,Filter (signal processing),1
+Jean Lieber,Computer vision,1
+Jean Lieber,Theoretical computer science,9
+Jean Lieber,Data mining,10
+Jean Lieber,Exploit,3
+Jean Lieber,Knowledge extraction,5
+Jean Lieber,Boolean data type,1
+Jean Lieber,World Wide Web,10
+Jean Lieber,Similarity (geometry),6
+Jean Lieber,Image (mathematics),6
+Jean Lieber,Natural language processing,12
+Jean Lieber,Information retrieval,12
+Jean Lieber,Index (typography),1
+Jean Lieber,Extrapolation,3
+Jean Lieber,Readability,1
+Jean Lieber,Epistemology,12
+Jean Lieber,Psychology,14
+Jean Lieber,Engineering,6
+Jean Lieber,Task (project management),5
+Jean Lieber,Systems engineering,4
+Jean Lieber,Cognitive science,4
+Jean Lieber,Stupidity,1
+Jean Lieber,Geometry,7
+Jean Lieber,Algorithm,9
+Jean Lieber,Mathematical optimization,2
+Jean Lieber,Basis (linear algebra),1
+Jean Lieber,Applied mathematics,1
+Jean Lieber,Interpolation (computer graphics),1
+Jean Lieber,Bilinear interpolation,1
+Jean Lieber,Multivariate interpolation,1
+Jean Lieber,Human–computer interaction,5
+Jean Lieber,Neuroscience,10
+Jean Lieber,Gene,5
+Jean Lieber,Chemistry,9
+Jean Lieber,Biochemistry,5
+Jean Lieber,Repressor,2
+Jean Lieber,Operator (biology),2
+Jean Lieber,Transcription factor,2
+Jean Lieber,Domain (mathematical analysis),18
+Jean Lieber,Rotation formalisms in three dimensions,3
+Jean Lieber,Classifier (UML),11
+Jean Lieber,Domain adaptation,11
+Jean Lieber,Case-based reasoning,17
+Jean Lieber,Belief revision,2
+Jean Lieber,Operating system,7
+Jean Lieber,Quantum mechanics,4
+Jean Lieber,Pure mathematics,3
+Jean Lieber,Algebra over a field,2
+Jean Lieber,Space (punctuation),1
+Jean Lieber,Substitution (logic),1
+Jean Lieber,Spacetime,1
+Jean Lieber,Metric (unit),1
+Jean Lieber,Operations management,1
+Jean Lieber,Economics,8
+Jean Lieber,Art,5
+Jean Lieber,Visual arts,4
+Jean Lieber,Musical,3
+Jean Lieber,Political science,11
+Jean Lieber,Law,11
+Jean Lieber,Representation (politics),5
+Jean Lieber,Politics,5
+Jean Lieber,Discrete mathematics,1
+Jean Lieber,Formalism (music),3
+Jean Lieber,Propositional calculus,3
+Jean Lieber,Metric space,1
+Jean Lieber,Focus (optics),1
+Jean Lieber,CONTEST,4
+Jean Lieber,Knowledge representation and reasoning,7
+Jean Lieber,Food science,3
+Jean Lieber,Recipe,4
+Jean Lieber,Domain knowledge,8
+Jean Lieber,Knowledge acquisition,8
+Jean Lieber,Knowledge engineering,2
+Jean Lieber,Social psychology,1
+Jean Lieber,Acoustics,1
+Jean Lieber,Analogy,4
+Jean Lieber,Preprocessor,1
+Jean Lieber,Permutation (music),1
+Jean Lieber,Analogical reasoning,3
+Jean Lieber,Competence (human resources),1
+Jean Lieber,Biology,7
+Jean Lieber,Linguistics,3
+Jean Lieber,Ecology,2
+Jean Lieber,Library science,3
+Jean Lieber,Operations research,1
+Jean Lieber,Session (web analytics),1
+Jean Lieber,Competition (biology),1
+Jean Lieber,Ontology,7
+Jean Lieber,Process ontology,1
+Jean Lieber,Ontology-based data integration,1
+Jean Lieber,Upper ontology,1
+Jean Lieber,Formal ontology,1
+Jean Lieber,Suggested Upper Merged Ontology,1
+Jean Lieber,Knowledge management,9
+Jean Lieber,AKA,2
+Jean Lieber,Knowledge-based systems,4
+Jean Lieber,Relation (database),2
+Jean Lieber,Sentence,1
+Jean Lieber,Messenger RNA,2
+Jean Lieber,Translation (biology),2
+Jean Lieber,Machine translation,1
+Jean Lieber,String (physics),1
+Jean Lieber,Mathematical physics,1
+Jean Lieber,State (computer science),2
+Jean Lieber,Astrophysics,1
+Jean Lieber,Variation (astronomy),1
+Jean Lieber,Semantic Web,12
+Jean Lieber,Annotation,2
+Jean Lieber,RDF,5
+Jean Lieber,SPARQL,4
+Jean Lieber,Publication,2
+Jean Lieber,RDF Schema,4
+Jean Lieber,Paleontology,4
+Jean Lieber,Context (archaeology),4
+Jean Lieber,Computer network,1
+Jean Lieber,Resource (disambiguation),1
+Jean Lieber,Linked data,2
+Jean Lieber,Semantic annotation,1
+Jean Lieber,Field (mathematics),1
+Jean Lieber,Grid,1
+Jean Lieber,Point (geometry),2
+Jean Lieber,e-Science,1
+Jean Lieber,Semantic technology,1
+Jean Lieber,Social Semantic Web,4
+Jean Lieber,Web query classification,1
+Jean Lieber,Web search query,1
+Jean Lieber,Query language,1
+Jean Lieber,Search engine,1
+Jean Lieber,RDF query language,1
+Jean Lieber,Named graph,1
+Jean Lieber,Transformation (genetics),1
+Jean Lieber,Internal medicine,3
+Jean Lieber,Medicine,7
+Jean Lieber,Decision support system,5
+Jean Lieber,Missing data,1
+Jean Lieber,Pulmonary disease,1
+Jean Lieber,Intuition,1
+Jean Lieber,Spatial intelligence,1
+Jean Lieber,Qualitative reasoning,1
+Jean Lieber,Closure (psychology),1
+Jean Lieber,Generalization,2
+Jean Lieber,Combinatorics,4
+Jean Lieber,Class (philosophy),1
+Jean Lieber,Partition (number theory),1
+Jean Lieber,Management,2
+Jean Lieber,Data collection,1
+Jean Lieber,Nursing,1
+Jean Lieber,Coding (social sciences),1
+Jean Lieber,Interpretation (philosophy),1
+Jean Lieber,Medical classification,1
+Jean Lieber,Best practice,1
+Jean Lieber,Management science,3
+Jean Lieber,Development (topology),1
+Jean Lieber,Natural language,1
+Jean Lieber,Database,1
+Jean Lieber,Workflow,1
+Jean Lieber,Geography,1
+Jean Lieber,Quality (philosophy),2
+Jean Lieber,Archaeology,2
+Jean Lieber,Variety (cybernetics),1
+Jean Lieber,Action (physics),1
+Jean Lieber,Formal concept analysis,1
+Jean Lieber,Sociology,2
+Jean Lieber,Social science,2
+Jean Lieber,Power (physics),2
+Jean Lieber,Rank (graph theory),2
+Jean Lieber,Reliability (semiconductor),2
+Jean Lieber,Reputation,2
+Jean Lieber,Procedural knowledge,1
+Jean Lieber,Inference,4
+Jean Lieber,Software engineering,6
+Jean Lieber,Oracle,1
+Jean Lieber,Expert system,1
+Jean Lieber,Creativity,1
+Jean Lieber,Originality,1
+Jean Lieber,Ingredient,1
+Jean Lieber,Realization (probability),1
+Jean Lieber,Reasoning system,2
+Jean Lieber,Extension (predicate logic),2
+Jean Lieber,Rule of inference,1
+Jean Lieber,Conservative extension,2
+Jean Lieber,Simple Knowledge Organization System,1
+Jean Lieber,Cwm,1
+Jean Lieber,Semantic reasoner,2
+Jean Lieber,Graph,1
+Jean Lieber,Dependency (UML),1
+Jean Lieber,Reuse,1
+Jean Lieber,Logical consequence,1
+Jean Lieber,Deductive reasoning,1
+Jean Lieber,Psychotherapist,1
+Jean Lieber,Measure (data warehouse),1
+Jean Lieber,Fuzzy logic,3
+Jean Lieber,Market economy,2
+Jean Lieber,Generality,1
+Jean Lieber,Hierarchy,2
+Jean Lieber,Similarity measure,1
+Jean Lieber,Fuzzy set,1
+Jean Lieber,Fuzzy classification,1
+Jean Lieber,Pathology,4
+Jean Lieber,The Internet,2
+Jean Lieber,Multimedia,1
+Jean Lieber,Semantic Web Stack,6
+Jean Lieber,Guideline,1
+Jean Lieber,Inference engine,1
+Jean Lieber,Zoology,1
+Jean Lieber,Parallel computing,2
+Jean Lieber,Software deployment,2
+Jean Lieber,Interface (matter),2
+Jean Lieber,Maximum bubble pressure method,2
+Jean Lieber,Bubble,2
+Jean Lieber,Graphical user interface,2
+Jean Lieber,User interface,2
+Jean Lieber,OWL-S,3
+Jean Lieber,Web Ontology Language,3
+Jean Lieber,Business,1
+Jean Lieber,Semantic analytics,2
+Jean Lieber,Advertising,1
+Jean Lieber,Web page,1
+Jean Lieber,Data Web,1
+Jean Lieber,Web standards,1
+Jean Lieber,Implicit knowledge,1
+Jean Lieber,Alternative medicine,3
+Jean Lieber,Protocol (science),3
+Jean Lieber,Decision tree,2
+Jean Lieber,Risk analysis (engineering),1
+Jean Lieber,Cancer,2
+Jean Lieber,Breast cancer,2
+Jean Lieber,Viewpoints,1
+Jean Lieber,Closeness,1
+Jean Lieber,Decision analysis,1
+Jean Lieber,Matching (statistics),1
+Jean Lieber,Constraint (computer-aided design),1
+Jean Lieber,Interval (graph theory),1
+Jean Lieber,Blossom algorithm,1
+Jean Lieber,Elaboration,1
+Jean Lieber,Decision process,1
+Jean Lieber,History,1
+Jean Lieber,Plan (archaeology),1
+Jean Lieber,Finance,1
+Jean Lieber,Classical mechanics,1
+Jean Lieber,Order (exchange),1
+Jean Lieber,Casimir effect,1
+Jean Lieber,Description logic,1
+Jean Lieber,Model-based reasoning,1
+Jean Lieber,Ontology language,1
+Jean Lieber,Semantic Web Rule Language,1
+Jean Lieber,Visualization,1
+Jean Lieber,Object-oriented programming,1
+Jean Lieber,Class hierarchy,1
+Anna Liednikova,World Wide Web,1
+Anna Liednikova,Computer science,2
+Anna Liednikova,Philosophy,2
+Anna Liednikova,Artificial intelligence,2
+Anna Liednikova,Natural language processing,2
+Anna Liednikova,Information retrieval,2
+Anna Liednikova,Inference,2
+Anna Liednikova,Biology,1
+Anna Liednikova,Gene,1
+Anna Liednikova,Chemistry,2
+Anna Liednikova,Biochemistry,1
+Anna Liednikova,Economics,2
+Anna Liednikova,Management,2
+Anna Liednikova,Task (project management),2
+Anna Liednikova,Selection (genetic algorithm),1
+Anna Liednikova,Linguistics,2
+Anna Liednikova,Paleontology,1
+Anna Liednikova,Context (archaeology),1
+Anna Liednikova,Dialog box,1
+Anna Liednikova,Arabic,1
+Anna Liednikova,Transformation (genetics),1
+Anna Liednikova,Dialog system,1
+Anna Liednikova,Psychology,1
+Anna Liednikova,Engineering,1
+Anna Liednikova,Zero (linguistics),1
+Anna Liednikova,Mechanical engineering,1
+Anna Liednikova,Conversation,1
+Anna Liednikova,Communication,1
+Anna Liednikova,Organic chemistry,1
+Anna Liednikova,Shot (pellet),1
+Anna Liednikova,One shot,1
+Mathieu d’Aquin,Computer science,30
+Mathieu d’Aquin,Similarity (geometry),2
+Mathieu d’Aquin,Statistics,5
+Mathieu d’Aquin,Epistemology,7
+Mathieu d’Aquin,Image (mathematics),3
+Mathieu d’Aquin,Semantic similarity,1
+Mathieu d’Aquin,Philosophy,12
+Mathieu d’Aquin,Artificial intelligence,22
+Mathieu d’Aquin,Psychology,6
+Mathieu d’Aquin,Matching (statistics),1
+Mathieu d’Aquin,Natural language processing,5
+Mathieu d’Aquin,Information retrieval,7
+Mathieu d’Aquin,Geometry,1
+Mathieu d’Aquin,Ontology,7
+Mathieu d’Aquin,Wonder,1
+Mathieu d’Aquin,Simple (philosophy),1
+Mathieu d’Aquin,Meaning (existential),1
+Mathieu d’Aquin,Mathematics,9
+Mathieu d’Aquin,Psychotherapist,1
+Mathieu d’Aquin,Social psychology,1
+Mathieu d’Aquin,Word (group theory),1
+Mathieu d’Aquin,Physics,4
+Mathieu d’Aquin,Quantum mechanics,1
+Mathieu d’Aquin,Machine learning,7
+Mathieu d’Aquin,Deep learning,1
+Mathieu d’Aquin,Data mining,7
+Mathieu d’Aquin,Transfer of learning,1
+Mathieu d’Aquin,Composite material,1
+Mathieu d’Aquin,Materials science,1
+Mathieu d’Aquin,Acoustics,1
+Mathieu d’Aquin,Generalizability theory,1
+Mathieu d’Aquin,Quality (philosophy),1
+Mathieu d’Aquin,Lattice (music),1
+Mathieu d’Aquin,Ab initio,1
+Mathieu d’Aquin,Thermal conductivity,1
+Mathieu d’Aquin,Electrical engineering,1
+Mathieu d’Aquin,Engineering,3
+Mathieu d’Aquin,Sense (electronics),1
+Mathieu d’Aquin,Theology,1
+Mathieu d’Aquin,Christian ministry,1
+Mathieu d’Aquin,Theoretical computer science,2
+Mathieu d’Aquin,Geodesy,1
+Mathieu d’Aquin,Benchmark (surveying),1
+Mathieu d’Aquin,Geography,3
+Mathieu d’Aquin,Computer network,2
+Mathieu d’Aquin,Database,3
+Mathieu d’Aquin,Semantic Web,6
+Mathieu d’Aquin,Graph,1
+Mathieu d’Aquin,Path (computing),1
+Mathieu d’Aquin,Scalability,1
+Mathieu d’Aquin,Named graph,1
+Mathieu d’Aquin,RDF,1
+Mathieu d’Aquin,SPARQL,1
+Mathieu d’Aquin,Linked data,1
+Mathieu d’Aquin,Data science,9
+Mathieu d’Aquin,World Wide Web,4
+Mathieu d’Aquin,Set (abstract data type),3
+Mathieu d’Aquin,Programming language,13
+Mathieu d’Aquin,Management science,3
+Mathieu d’Aquin,Variety (cybernetics),2
+Mathieu d’Aquin,Workflow,1
+Mathieu d’Aquin,Social media,1
+Mathieu d’Aquin,Open research,1
+Mathieu d’Aquin,Human–computer interaction,5
+Mathieu d’Aquin,Developmental psychology,1
+Mathieu d’Aquin,Pure mathematics,1
+Mathieu d’Aquin,Field (mathematics),1
+Mathieu d’Aquin,Emotion recognition,1
+Mathieu d’Aquin,Autism,1
+Mathieu d’Aquin,Autism spectrum disorder,1
+Mathieu d’Aquin,Cognitive science,1
+Mathieu d’Aquin,Artificial neural network,2
+Mathieu d’Aquin,Self-organizing map,1
+Mathieu d’Aquin,Operating system,3
+Mathieu d’Aquin,Computer security,3
+Mathieu d’Aquin,Process (computing),4
+Mathieu d’Aquin,Linguistics,4
+Mathieu d’Aquin,Political science,1
+Mathieu d’Aquin,Law,1
+Mathieu d’Aquin,Data modeling,1
+Mathieu d’Aquin,Knowledge management,6
+Mathieu d’Aquin,Construct (python library),1
+Mathieu d’Aquin,Multidisciplinary approach,1
+Mathieu d’Aquin,Public sector,1
+Mathieu d’Aquin,Government (linguistics),1
+Mathieu d’Aquin,Speech recognition,1
+Mathieu d’Aquin,Key (lock),1
+Mathieu d’Aquin,Art,3
+Mathieu d’Aquin,Visual arts,3
+Mathieu d’Aquin,Musical,2
+Mathieu d’Aquin,Literature,1
+Mathieu d’Aquin,Class (philosophy),1
+Mathieu d’Aquin,Classifier (UML),3
+Mathieu d’Aquin,Heuristics,1
+Mathieu d’Aquin,Ensemble learning,1
+Mathieu d’Aquin,Bandwidth (computing),1
+Mathieu d’Aquin,Random forest,1
+Mathieu d’Aquin,Oversampling,1
+Mathieu d’Aquin,Histogram,1
+Mathieu d’Aquin,Dance,1
+Mathieu d’Aquin,Electronic dance music,1
+Mathieu d’Aquin,Root (linguistics),1
+Mathieu d’Aquin,Music information retrieval,1
+Mathieu d’Aquin,Melody,1
+Mathieu d’Aquin,Knowledge graph,1
+Mathieu d’Aquin,Business,1
+Mathieu d’Aquin,Marketing,1
+Mathieu d’Aquin,Benchmarking,1
+Mathieu d’Aquin,Architecture,1
+Mathieu d’Aquin,Archaeology,1
+Mathieu d’Aquin,Mathematical analysis,5
+Mathieu d’Aquin,Value (mathematics),1
+Mathieu d’Aquin,Test set,1
+Mathieu d’Aquin,Regression,1
+Mathieu d’Aquin,Factorial experiment,1
+Mathieu d’Aquin,Factorial,1
+Mathieu d’Aquin,Optics,3
+Mathieu d’Aquin,Base (topology),1
+Mathieu d’Aquin,Adaptation (eye),6
+Mathieu d’Aquin,Knowledge base,5
+Mathieu d’Aquin,Neuroscience,3
+Mathieu d’Aquin,Domain (mathematical analysis),2
+Mathieu d’Aquin,Library science,2
+Mathieu d’Aquin,Domain knowledge,2
+Mathieu d’Aquin,Domain adaptation,2
+Mathieu d’Aquin,AKA,2
+Mathieu d’Aquin,Knowledge extraction,2
+Mathieu d’Aquin,Case-based reasoning,3
+Mathieu d’Aquin,Knowledge acquisition,3
+Mathieu d’Aquin,Knowledge-based systems,2
+Mathieu d’Aquin,Medicine,4
+Mathieu d’Aquin,Pathology,4
+Mathieu d’Aquin,Interpretation (philosophy),2
+Mathieu d’Aquin,Medical diagnosis,1
+Mathieu d’Aquin,Task (project management),1
+Mathieu d’Aquin,Systems engineering,1
+Mathieu d’Aquin,Analytics,1
+Mathieu d’Aquin,Data analysis,1
+Mathieu d’Aquin,Exploit,1
+Mathieu d’Aquin,Raw data,1
+Mathieu d’Aquin,Learning analytics,1
+Mathieu d’Aquin,Semantic analytics,2
+Mathieu d’Aquin,Semantic Web Stack,5
+Mathieu d’Aquin,Cultural analytics,1
+Mathieu d’Aquin,Software engineering,5
+Mathieu d’Aquin,Parallel computing,2
+Mathieu d’Aquin,Software deployment,2
+Mathieu d’Aquin,Interface (matter),2
+Mathieu d’Aquin,Maximum bubble pressure method,2
+Mathieu d’Aquin,Bubble,2
+Mathieu d’Aquin,Graphical user interface,2
+Mathieu d’Aquin,Decision support system,4
+Mathieu d’Aquin,User interface,2
+Mathieu d’Aquin,OWL-S,3
+Mathieu d’Aquin,Web Ontology Language,3
+Mathieu d’Aquin,Alternative medicine,3
+Mathieu d’Aquin,Protocol (science),3
+Mathieu d’Aquin,Formalism (music),1
+Mathieu d’Aquin,Fuzzy logic,2
+Mathieu d’Aquin,Decision tree,2
+Mathieu d’Aquin,Knowledge representation and reasoning,3
+Mathieu d’Aquin,Semantic reasoner,1
+Mathieu d’Aquin,Risk analysis (engineering),1
+Mathieu d’Aquin,Internal medicine,1
+Mathieu d’Aquin,Economics,3
+Mathieu d’Aquin,Cancer,1
+Mathieu d’Aquin,Breast cancer,1
+Mathieu d’Aquin,Viewpoints,1
+Mathieu d’Aquin,Closeness,1
+Mathieu d’Aquin,Decision analysis,1
+Mathieu d’Aquin,Humanities,1
+Mathieu d’Aquin,Elaboration,1
+Mathieu d’Aquin,Decision process,1
+Mathieu d’Aquin,Description logic,1
+Mathieu d’Aquin,Social Semantic Web,1
+Mathieu d’Aquin,Model-based reasoning,1
+Mathieu d’Aquin,Reasoning system,1
+Mathieu d’Aquin,Ontology language,1
+Mathieu d’Aquin,Semantic Web Rule Language,1
+Mathieu d’Aquin,Visualization,1
+Mathieu d’Aquin,Market economy,1
+Mathieu d’Aquin,Object-oriented programming,1
+Mathieu d’Aquin,Hierarchy,1
+Mathieu d’Aquin,Class hierarchy,1
+Nicolas Jay,Sociology,1
+Nicolas Jay,Internal medicine,4
+Nicolas Jay,Medicine,11
+Nicolas Jay,Immunology,1
+Nicolas Jay,Virology,1
+Nicolas Jay,Neutralization,1
+Nicolas Jay,Demography,1
+Nicolas Jay,Odds ratio,2
+Nicolas Jay,Antibody,1
+Nicolas Jay,Asymptomatic,1
+Nicolas Jay,Seroprevalence,1
+Nicolas Jay,Population,1
+Nicolas Jay,Confidence interval,1
+Nicolas Jay,Serology,1
+Nicolas Jay,Environmental health,1
+Nicolas Jay,Computer science,16
+Nicolas Jay,Set (abstract data type),3
+Nicolas Jay,Programming language,7
+Nicolas Jay,Artificial intelligence,6
+Nicolas Jay,Physics,7
+Nicolas Jay,Optics,3
+Nicolas Jay,Theoretical computer science,3
+Nicolas Jay,Data mining,10
+Nicolas Jay,Algorithm,5
+Nicolas Jay,Focus (optics),3
+Nicolas Jay,Formal concept analysis,4
+Nicolas Jay,Extension (predicate logic),2
+Nicolas Jay,Emergency medicine,2
+Nicolas Jay,Cohort,1
+Nicolas Jay,Procalcitonin,1
+Nicolas Jay,Logistic regression,1
+Nicolas Jay,Retrospective cohort study,1
+Nicolas Jay,Cohort study,1
+Nicolas Jay,Sepsis,1
+Nicolas Jay,Concomitant,1
+Nicolas Jay,Philosophy,4
+Nicolas Jay,Humanities,3
+Nicolas Jay,Operating system,5
+Nicolas Jay,Similarity (geometry),1
+Nicolas Jay,Image (mathematics),1
+Nicolas Jay,Quantum mechanics,1
+Nicolas Jay,Process (computing),4
+Nicolas Jay,Computation,1
+Nicolas Jay,Scale (ratio),1
+Nicolas Jay,Measure (data warehouse),1
+Nicolas Jay,Similarity measure,1
+Nicolas Jay,Mathematics,5
+Nicolas Jay,Engineering,5
+Nicolas Jay,Thermodynamics,1
+Nicolas Jay,Mathematical analysis,2
+Nicolas Jay,Component (thermodynamics),1
+Nicolas Jay,Database,1
+Nicolas Jay,Domain (mathematical analysis),2
+Nicolas Jay,Scalability,1
+Nicolas Jay,Data set,1
+Nicolas Jay,Reuse,1
+Nicolas Jay,Waste management,1
+Nicolas Jay,Statistics,3
+Nicolas Jay,Biology,1
+Nicolas Jay,Data science,6
+Nicolas Jay,Economics,5
+Nicolas Jay,Paleontology,1
+Nicolas Jay,Context (archaeology),1
+Nicolas Jay,Flexibility (engineering),1
+Nicolas Jay,Economic growth,3
+Nicolas Jay,Astronomy,2
+Nicolas Jay,Trajectory,2
+Nicolas Jay,Granularity,1
+Nicolas Jay,Health care,3
+Nicolas Jay,Information retrieval,3
+Nicolas Jay,Pathology,3
+Nicolas Jay,Interpretation (philosophy),4
+Nicolas Jay,Medical diagnosis,2
+Nicolas Jay,Epistemology,1
+Nicolas Jay,Meaning (existential),1
+Nicolas Jay,Machine learning,2
+Nicolas Jay,Management,2
+Nicolas Jay,Task (project management),2
+Nicolas Jay,Stability (learning theory),1
+Nicolas Jay,Work (physics),1
+Nicolas Jay,Mechanical engineering,1
+Nicolas Jay,Computer security,1
+Nicolas Jay,Systems engineering,1
+Nicolas Jay,Semantic Web,3
+Nicolas Jay,Variety (cybernetics),1
+Nicolas Jay,Analytics,1
+Nicolas Jay,Data analysis,1
+Nicolas Jay,Exploit,1
+Nicolas Jay,Raw data,1
+Nicolas Jay,Learning analytics,1
+Nicolas Jay,Semantic analytics,2
+Nicolas Jay,Semantic Web Stack,3
+Nicolas Jay,Cultural analytics,1
+Nicolas Jay,Electrical engineering,1
+Nicolas Jay,Intensive care medicine,1
+Nicolas Jay,Radiology,1
+Nicolas Jay,Cluster analysis,1
+Nicolas Jay,Cancer,2
+Nicolas Jay,Breast cancer,2
+Nicolas Jay,Informatics,1
+Nicolas Jay,Nursing,3
+Nicolas Jay,Public health,2
+Nicolas Jay,Health informatics,2
+Nicolas Jay,Medical emergency,2
+Nicolas Jay,Medical physics,1
+Nicolas Jay,Palliative care,1
+Nicolas Jay,Formal description,1
+Nicolas Jay,Knowledge management,2
+Nicolas Jay,Public healthcare,1
+Nicolas Jay,Political science,1
+Nicolas Jay,Gynecology,2
+Nicolas Jay,Association rule learning,1
+Nicolas Jay,Knowledge base,1
+Nicolas Jay,Dependency (UML),1
+Nicolas Jay,Decision support system,1
+Nicolas Jay,Knowledge extraction,2
+Nicolas Jay,Lift (data mining),1
+Nicolas Jay,Clinical decision support system,1
+Nicolas Jay,Web service,1
+Nicolas Jay,K-optimal pattern discovery,1
+Nicolas Jay,Concept mining,1
+Nicolas Jay,Web mining,1
+Nicolas Jay,Data collection,2
+Nicolas Jay,Coding (social sciences),1
+Nicolas Jay,Medical classification,1
+Nicolas Jay,Best practice,1
+Nicolas Jay,Surgery,1
+Nicolas Jay,Radiological weapon,1
+Nicolas Jay,World Wide Web,2
+Nicolas Jay,The Internet,2
+Nicolas Jay,Multimedia,1
+Nicolas Jay,Social Semantic Web,2
+Nicolas Jay,Guideline,1
+Nicolas Jay,Business,2
+Nicolas Jay,Linked data,1
+Nicolas Jay,Advertising,1
+Nicolas Jay,Publication,1
+Nicolas Jay,Web page,1
+Nicolas Jay,Data Web,1
+Nicolas Jay,Web standards,1
+Nicolas Jay,Clinical trial,1
+Nicolas Jay,Operations research,1
+Nicolas Jay,Actuarial science,1
+Nicolas Jay,Observational study,1
+Christophe Cerisara,Operating system,4
+Christophe Cerisara,Computer science,39
+Christophe Cerisara,Artificial intelligence,39
+Christophe Cerisara,Information retrieval,2
+Christophe Cerisara,Mathematics,13
+Christophe Cerisara,Physics,9
+Christophe Cerisara,Engineering,6
+Christophe Cerisara,Process (computing),1
+Christophe Cerisara,Machine learning,17
+Christophe Cerisara,Data mining,7
+Christophe Cerisara,Task (project management),10
+Christophe Cerisara,Prognostics,4
+Christophe Cerisara,Mathematical analysis,9
+Christophe Cerisara,Aerospace engineering,1
+Christophe Cerisara,Meteorology,2
+Christophe Cerisara,Generalization,2
+Christophe Cerisara,Systems engineering,4
+Christophe Cerisara,Pure mathematics,2
+Christophe Cerisara,Range (aeronautics),1
+Christophe Cerisara,Regularization (linguistics),3
+Christophe Cerisara,Labeled data,1
+Christophe Cerisara,Training (meteorology),2
+Christophe Cerisara,Training set,4
+Christophe Cerisara,Computational Science and Engineering,1
+Christophe Cerisara,sort,1
+Christophe Cerisara,Field (mathematics),2
+Christophe Cerisara,Epistemology,2
+Christophe Cerisara,Philosophy,12
+Christophe Cerisara,Sociology,2
+Christophe Cerisara,Pattern recognition (psychology),14
+Christophe Cerisara,Deep learning,7
+Christophe Cerisara,Modular design,2
+Christophe Cerisara,Normalization (sociology),2
+Christophe Cerisara,Database normalization,2
+Christophe Cerisara,Anthropology,2
+Christophe Cerisara,End-to-end principle,2
+Christophe Cerisara,Simplicity,1
+Christophe Cerisara,Feature engineering,1
+Christophe Cerisara,Risk analysis (engineering),1
+Christophe Cerisara,Business,1
+Christophe Cerisara,Biology,5
+Christophe Cerisara,Data science,1
+Christophe Cerisara,Paleontology,5
+Christophe Cerisara,Context (archaeology),5
+Christophe Cerisara,Political science,2
+Christophe Cerisara,Law,1
+Christophe Cerisara,Representation (politics),1
+Christophe Cerisara,Politics,1
+Christophe Cerisara,Artificial neural network,6
+Christophe Cerisara,Perceptron,2
+Christophe Cerisara,Set (abstract data type),4
+Christophe Cerisara,Programming language,6
+Christophe Cerisara,Image (mathematics),10
+Christophe Cerisara,Semantic similarity,1
+Christophe Cerisara,Natural language processing,17
+Christophe Cerisara,Electrical engineering,1
+Christophe Cerisara,Speech recognition,19
+Christophe Cerisara,Metric (unit),2
+Christophe Cerisara,Operations management,2
+Christophe Cerisara,Geodesy,2
+Christophe Cerisara,Benchmark (surveying),2
+Christophe Cerisara,Geography,2
+Christophe Cerisara,Economics,9
+Christophe Cerisara,Linguistics,9
+Christophe Cerisara,Sentence,7
+Christophe Cerisara,Semantics (computer science),1
+Christophe Cerisara,Language model,4
+Christophe Cerisara,Interpretability,1
+Christophe Cerisara,Closed captioning,1
+Christophe Cerisara,Dependency (UML),4
+Christophe Cerisara,Fluency,1
+Christophe Cerisara,Spice,1
+Christophe Cerisara,Psychology,3
+Christophe Cerisara,Geometry,1
+Christophe Cerisara,Social psychology,1
+Christophe Cerisara,Character (mathematics),1
+Christophe Cerisara,Attribution,1
+Christophe Cerisara,Authorship attribution,1
+Christophe Cerisara,Quantum mechanics,3
+Christophe Cerisara,Classifier (UML),9
+Christophe Cerisara,Fine-tuning,1
+Christophe Cerisara,Overfitting,1
+Christophe Cerisara,Computer security,5
+Christophe Cerisara,Statistics,2
+Christophe Cerisara,Inference,2
+Christophe Cerisara,Parametric statistics,1
+Christophe Cerisara,Gene,4
+Christophe Cerisara,Chemistry,4
+Christophe Cerisara,Biochemistry,4
+Christophe Cerisara,Database,2
+Christophe Cerisara,Feature learning,2
+Christophe Cerisara,Scalability,1
+Christophe Cerisara,Information privacy,1
+Christophe Cerisara,Exploit,5
+Christophe Cerisara,Robustness (evolution),3
+Christophe Cerisara,Differential privacy,1
+Christophe Cerisara,Deep neural networks,1
+Christophe Cerisara,Mechanical engineering,1
+Christophe Cerisara,Cluster analysis,2
+Christophe Cerisara,Domain (mathematical analysis),5
+Christophe Cerisara,Data modeling,1
+Christophe Cerisara,Constraint (computer-aided design),1
+Christophe Cerisara,Reinforcement learning,3
+Christophe Cerisara,Tree (set theory),2
+Christophe Cerisara,Rewriting,1
+Christophe Cerisara,Syntax,3
+Christophe Cerisara,Automatic summarization,2
+Christophe Cerisara,Parsing,3
+Christophe Cerisara,Data structure,1
+Christophe Cerisara,Dependency grammar,2
+Christophe Cerisara,Tree structure,1
+Christophe Cerisara,Generative model,1
+Christophe Cerisara,Generative grammar,2
+Christophe Cerisara,Thermodynamics,1
+Christophe Cerisara,Component (thermodynamics),1
+Christophe Cerisara,Algorithm,7
+Christophe Cerisara,Anomaly detection,1
+Christophe Cerisara,State (computer science),1
+Christophe Cerisara,Intrusion detection system,1
+Christophe Cerisara,Leverage (statistics),1
+Christophe Cerisara,Word (group theory),2
+Christophe Cerisara,Management,7
+Christophe Cerisara,Embedding,1
+Christophe Cerisara,Principle of maximum entropy,1
+Christophe Cerisara,Word2vec,1
+Christophe Cerisara,Transfer of learning,1
+Christophe Cerisara,Parse tree,1
+Christophe Cerisara,Conditional random field,1
+Christophe Cerisara,Punctuation,1
+Christophe Cerisara,Czech,4
+Christophe Cerisara,Unsupervised learning,1
+Christophe Cerisara,Discriminative model,2
+Christophe Cerisara,Support vector machine,1
+Christophe Cerisara,Decision tree,1
+Christophe Cerisara,Linear classifier,1
+Christophe Cerisara,Bayesian probability,2
+Christophe Cerisara,Bayesian inference,2
+Christophe Cerisara,Supervised learning,1
+Christophe Cerisara,Human–computer interaction,1
+Christophe Cerisara,Geology,2
+Christophe Cerisara,Situated,1
+Christophe Cerisara,Oceanography,1
+Christophe Cerisara,Baseline (sea),1
+Christophe Cerisara,Feature (linguistics),1
+Christophe Cerisara,Computation,2
+Christophe Cerisara,Topic model,1
+Christophe Cerisara,Latent Dirichlet allocation,1
+Christophe Cerisara,Semantic feature,1
+Christophe Cerisara,World Wide Web,4
+Christophe Cerisara,Dialog box,4
+Christophe Cerisara,Transcription (linguistics),1
+Christophe Cerisara,Prosody,2
+Christophe Cerisara,Computer network,2
+Christophe Cerisara,Reservation,2
+Christophe Cerisara,Event (particle physics),1
+Christophe Cerisara,Base (topology),1
+Christophe Cerisara,Knowledge base,1
+Christophe Cerisara,Lexicon,1
+Christophe Cerisara,Phone,1
+Christophe Cerisara,Morpheme,1
+Christophe Cerisara,Noise reduction,4
+Christophe Cerisara,Noise (video),9
+Christophe Cerisara,Space (punctuation),1
+Christophe Cerisara,Mixture model,1
+Christophe Cerisara,Gaussian,1
+Christophe Cerisara,Gaussian noise,1
+Christophe Cerisara,Utterance,1
+Christophe Cerisara,n-gram,1
+Christophe Cerisara,Speech act,1
+Christophe Cerisara,Microeconomics,1
+Christophe Cerisara,Dialog system,1
+Christophe Cerisara,Maximization,1
+Christophe Cerisara,Computer vision,3
+Christophe Cerisara,Optics,3
+Christophe Cerisara,Telecommunications,5
+Christophe Cerisara,Feature extraction,1
+Christophe Cerisara,Mel-frequency cepstrum,1
+Christophe Cerisara,Cepstrum,2
+Christophe Cerisara,Channel (broadcasting),2
+Christophe Cerisara,Adaptation (eye),4
+Christophe Cerisara,Domain adaptation,1
+Christophe Cerisara,Frequency domain,2
+Christophe Cerisara,Psychoanalysis,1
+Christophe Cerisara,Compensation (psychology),1
+Christophe Cerisara,Art,5
+Christophe Cerisara,Visual arts,3
+Christophe Cerisara,Architecture,1
+Christophe Cerisara,SIGNAL (programming language),1
+Christophe Cerisara,Hidden Markov model,2
+Christophe Cerisara,Asynchronous communication,1
+Christophe Cerisara,Computational complexity theory,1
+Christophe Cerisara,Asynchrony (computer programming),1
+Christophe Cerisara,Viterbi algorithm,1
+Christophe Cerisara,Segmentation,1
+Christophe Cerisara,Recombination,1
+Christophe Cerisara,Humanities,2
+Christophe Cerisara,Filter (signal processing),1
+Christophe Cerisara,Sound (geography),1
+Christophe Cerisara,Geomorphology,1
+Christophe Cerisara,Environmental noise,1
+Christophe Cerisara,Neuroscience,1
+Christophe Cerisara,Applied mathematics,2
+Christophe Cerisara,Jacobian matrix and determinant,2
+Christophe Cerisara,Estimation,1
+Christophe Cerisara,Factor (programming language),1
+Christophe Cerisara,Software engineering,1
+Christophe Cerisara,Oracle,1
+Christophe Cerisara,Estimator,1
+Christophe Cerisara,Missing data,4
+Christophe Cerisara,Microphone,1
+Christophe Cerisara,Sound pressure,1
+Christophe Cerisara,Masking (illustration),2
+Christophe Cerisara,Imputation (statistics),1
+Christophe Cerisara,Decoding methods,1
+Christophe Cerisara,Background noise,1
+Christophe Cerisara,Pixel,1
+Christophe Cerisara,Noise measurement,1
+Christophe Cerisara,A priori and a posteriori,1
+Sabeur Aridhi,Computer science,21
+Sabeur Aridhi,Artificial intelligence,19
+Sabeur Aridhi,Physics,5
+Sabeur Aridhi,Quantum mechanics,2
+Sabeur Aridhi,Theoretical computer science,12
+Sabeur Aridhi,Distributed computing,3
+Sabeur Aridhi,Algorithm,2
+Sabeur Aridhi,Graph,12
+Sabeur Aridhi,Scale (ratio),1
+Sabeur Aridhi,Cluster analysis,1
+Sabeur Aridhi,Similarity (geometry),9
+Sabeur Aridhi,Image (mathematics),9
+Sabeur Aridhi,Semantic similarity,1
+Sabeur Aridhi,Information retrieval,3
+Sabeur Aridhi,Inference,1
+Sabeur Aridhi,Biology,10
+Sabeur Aridhi,Gene,7
+Sabeur Aridhi,Biochemistry,3
+Sabeur Aridhi,Annotation,6
+Sabeur Aridhi,UniProt,3
+Sabeur Aridhi,Biological database,1
+Sabeur Aridhi,Bioinformatics,2
+Sabeur Aridhi,Philosophy,4
+Sabeur Aridhi,Mathematics,6
+Sabeur Aridhi,Word (group theory),1
+Sabeur Aridhi,Mathematical analysis,4
+Sabeur Aridhi,Computational biology,3
+Sabeur Aridhi,Linguistics,1
+Sabeur Aridhi,Computer network,5
+Sabeur Aridhi,Genetics,6
+Sabeur Aridhi,Resource (disambiguation),1
+Sabeur Aridhi,Domain (mathematical analysis),2
+Sabeur Aridhi,Embedding,6
+Sabeur Aridhi,Word embedding,1
+Sabeur Aridhi,Peptide sequence,1
+Sabeur Aridhi,Protein sequencing,1
+Sabeur Aridhi,Function (biology),4
+Sabeur Aridhi,Genome,2
+Sabeur Aridhi,Drosophila melanogaster,2
+Sabeur Aridhi,Functional genomics,2
+Sabeur Aridhi,Genomics,2
+Sabeur Aridhi,Business,1
+Sabeur Aridhi,Machine learning,12
+Sabeur Aridhi,Data mining,13
+Sabeur Aridhi,Generalization,1
+Sabeur Aridhi,Ensemble learning,1
+Sabeur Aridhi,Accounting,1
+Sabeur Aridhi,Variance (accounting),1
+Sabeur Aridhi,Random forest,1
+Sabeur Aridhi,Decision tree,2
+Sabeur Aridhi,Operating system,4
+Sabeur Aridhi,Set (abstract data type),1
+Sabeur Aridhi,Programming language,2
+Sabeur Aridhi,Epistemology,2
+Sabeur Aridhi,Engineering,2
+Sabeur Aridhi,Process (computing),2
+Sabeur Aridhi,Geodesy,3
+Sabeur Aridhi,Benchmark (surveying),3
+Sabeur Aridhi,Geography,3
+Sabeur Aridhi,Task (project management),4
+Sabeur Aridhi,Systems engineering,2
+Sabeur Aridhi,Tree (set theory),1
+Sabeur Aridhi,Evolutionary biology,1
+Sabeur Aridhi,Support vector machine,1
+Sabeur Aridhi,Genetic algorithm,1
+Sabeur Aridhi,Heuristic,3
+Sabeur Aridhi,Simplicity,1
+Sabeur Aridhi,Evolutionary algorithm,1
+Sabeur Aridhi,Naive Bayes classifier,1
+Sabeur Aridhi,Knowledge graph,2
+Sabeur Aridhi,Graph embedding,2
+Sabeur Aridhi,Link (geometry),4
+Sabeur Aridhi,Pairwise comparison,4
+Sabeur Aridhi,Computer security,1
+Sabeur Aridhi,Key (lock),1
+Sabeur Aridhi,Structural similarity,1
+Sabeur Aridhi,Protein function prediction,2
+Sabeur Aridhi,Protein function,2
+Sabeur Aridhi,Pattern recognition (psychology),3
+Sabeur Aridhi,Deep learning,1
+Sabeur Aridhi,Feature vector,1
+Sabeur Aridhi,Simple (philosophy),1
+Sabeur Aridhi,Sociology,2
+Sabeur Aridhi,Filter (signal processing),1
+Sabeur Aridhi,Sampling (signal processing),1
+Sabeur Aridhi,Computer vision,1
+Sabeur Aridhi,Economics,2
+Sabeur Aridhi,Management,2
+Sabeur Aridhi,Demography,1
+Sabeur Aridhi,Population,1
+Sabeur Aridhi,Microeconomics,1
+Sabeur Aridhi,Simple random sample,1
+Sabeur Aridhi,Inefficiency,1
+Sabeur Aridhi,Medicine,2
+Sabeur Aridhi,Drug,1
+Sabeur Aridhi,Pharmacology,1
+Sabeur Aridhi,Ecology,1
+Sabeur Aridhi,Pathology,1
+Sabeur Aridhi,Disease,1
+Sabeur Aridhi,Coronavirus disease 2019 (COVID-19),1
+Sabeur Aridhi,Infectious disease (medical specialty),1
+Sabeur Aridhi,Drug repositioning,1
+Sabeur Aridhi,Repurposing,1
+Sabeur Aridhi,Combinatorics,1
+Sabeur Aridhi,Heuristics,2
+Sabeur Aridhi,Biological network,1
+Sabeur Aridhi,Power graph analysis,1
+Sabeur Aridhi,Graph database,1
+Sabeur Aridhi,Dynamism,1
+Sabeur Aridhi,Optics,2
+Sabeur Aridhi,Focus (optics),2
+Sabeur Aridhi,Anthropology,1
+Sabeur Aridhi,Recommender system,1
+Sabeur Aridhi,Diversity (politics),1
+Sabeur Aridhi,Collaborative filtering,1
+Sabeur Aridhi,Competitor analysis,1
+Sabeur Aridhi,MovieLens,1
+Sabeur Aridhi,World Wide Web,1
+Sabeur Aridhi,Data science,1
+Sabeur Aridhi,Variety (cybernetics),1
+Sabeur Aridhi,The Internet,1
+Sabeur Aridhi,Big data,1
+Sabeur Aridhi,Streaming data,1
+Sabeur Aridhi,Real Time Streaming Protocol,1
+Sabeur Aridhi,Protein–protein interaction,1
+Sabeur Aridhi,Humanities,1
+Sabeur Aridhi,Internal medicine,1
+Sabeur Aridhi,Gastroenterology,1
+Sabeur Aridhi,Hepatology,1
+Sabeur Aridhi,General surgery,1
+Sabeur Aridhi,Software,1
+Sabeur Aridhi,Discriminative model,2
+Sabeur Aridhi,Classifier (UML),2
+Sabeur Aridhi,Preprocessor,1
+Sabeur Aridhi,Nuclear physics,1
+Sabeur Aridhi,Irradiation,1
+Sabeur Aridhi,Ionizing radiation,1
+Sabeur Aridhi,Computational intelligence,1
+Sabeur Aridhi,Chemistry,1
+Sabeur Aridhi,Sequence (biology),1
+Sabeur Aridhi,ENCODE,1
+Sabeur Aridhi,Similarity measure,1
+Sabeur Aridhi,Artificial neural network,1
+David Langlois,Computer science,18
+David Langlois,Programming language,7
+David Langlois,Philosophy,20
+David Langlois,Artificial intelligence,18
+David Langlois,Natural language processing,17
+David Langlois,Physics,6
+David Langlois,Speech recognition,6
+David Langlois,Optics,1
+David Langlois,Economics,5
+David Langlois,Management,4
+David Langlois,Task (project management),5
+David Langlois,Linguistics,15
+David Langlois,Focus (optics),1
+David Langlois,Language model,6
+David Langlois,Modern Standard Arabic,2
+David Langlois,Word error rate,6
+David Langlois,Arabic,6
+David Langlois,Rewriting,1
+David Langlois,Speech processing,2
+David Langlois,Acoustic model,2
+David Langlois,Set (abstract data type),4
+David Langlois,Geometry,1
+David Langlois,Mathematics,5
+David Langlois,Biology,2
+David Langlois,Finance,1
+David Langlois,Genetics,1
+David Langlois,Order (exchange),1
+David Langlois,Utterance,2
+David Langlois,Sentiment analysis,1
+David Langlois,Cell,1
+David Langlois,Polarity (international relations),1
+David Langlois,Graduation (instrument),1
+David Langlois,Advice (programming),1
+David Langlois,Word (group theory),4
+David Langlois,Operating system,3
+David Langlois,Similarity (geometry),2
+David Langlois,Image (mathematics),2
+David Langlois,Semantic similarity,1
+David Langlois,Information retrieval,4
+David Langlois,Data mining,5
+David Langlois,Space (punctuation),1
+David Langlois,Measure (data warehouse),4
+David Langlois,Search engine indexing,2
+David Langlois,Similarity measure,1
+David Langlois,Natural language,1
+David Langlois,Mathematical analysis,2
+David Langlois,Selection (genetic algorithm),3
+David Langlois,Domain (mathematical analysis),1
+David Langlois,Transcription (linguistics),2
+David Langlois,Scope (computer science),1
+David Langlois,Perplexity,2
+David Langlois,Phrase,1
+David Langlois,Process (computing),3
+David Langlois,Machine learning,4
+David Langlois,Artificial neural network,1
+David Langlois,Vocabulary,2
+David Langlois,Code (set theory),1
+David Langlois,Gene,2
+David Langlois,Chemistry,2
+David Langlois,Biochemistry,2
+David Langlois,Code-switching,1
+David Langlois,Messenger RNA,2
+David Langlois,Translation (biology),2
+David Langlois,Machine translation,5
+David Langlois,Example-based machine translation,1
+David Langlois,Transfer-based machine translation,1
+David Langlois,Humanities,4
+David Langlois,Political science,1
+David Langlois,Art,1
+David Langlois,World Wide Web,1
+David Langlois,Combinatorics,1
+David Langlois,Rank (graph theory),1
+David Langlois,Comparability,1
+David Langlois,Web page,1
+David Langlois,Hyperlink,1
+David Langlois,Psychology,2
+David Langlois,Meaning (existential),1
+David Langlois,Psychotherapist,1
+David Langlois,Thermodynamics,1
+David Langlois,Segmentation,1
+David Langlois,Component (thermodynamics),1
+David Langlois,Multimedia,2
+David Langlois,Automatic summarization,2
+David Langlois,Foreign language,1
+David Langlois,Engineering,2
+David Langlois,Quantum mechanics,3
+David Langlois,Algorithm,2
+David Langlois,Perspective (graphical),1
+David Langlois,Completeness (order theory),1
+David Langlois,Correctness,2
+David Langlois,Reliability engineering,1
+David Langlois,Coherence (philosophical gambling strategy),1
+David Langlois,Evaluation methods,1
+David Langlois,Epistemology,1
+David Langlois,Quality (philosophy),1
+David Langlois,Systems engineering,1
+David Langlois,Geology,1
+David Langlois,Sentence,3
+David Langlois,Estimation,1
+David Langlois,Oceanography,1
+David Langlois,Baseline (sea),1
+David Langlois,Support vector machine,1
+David Langlois,Statistics,1
+David Langlois,Power (physics),1
+David Langlois,Confidence interval,1
+David Langlois,Reliability (semiconductor),1
+David Langlois,Feature (linguistics),1
+David Langlois,n-gram,1
+David Langlois,Paleontology,1
+David Langlois,Context (archaeology),1
+David Langlois,Entropy (arrow of time),1
+David Langlois,Principle of maximum entropy,1
+David Langlois,Trigram,1
+David Langlois,Bigram,1
+Sylvain Castagnos,Computer science,18
+Sylvain Castagnos,Artificial intelligence,12
+Sylvain Castagnos,Art,2
+Sylvain Castagnos,Aesthetics,1
+Sylvain Castagnos,Identity (music),1
+Sylvain Castagnos,Psychology,4
+Sylvain Castagnos,Sociology,5
+Sylvain Castagnos,Business,1
+Sylvain Castagnos,Biology,5
+Sylvain Castagnos,Developmental psychology,1
+Sylvain Castagnos,Economics,3
+Sylvain Castagnos,Management,2
+Sylvain Castagnos,Pedagogy,2
+Sylvain Castagnos,Task (project management),2
+Sylvain Castagnos,Paleontology,4
+Sylvain Castagnos,Demography,3
+Sylvain Castagnos,Population,3
+Sylvain Castagnos,Cognitive psychology,2
+Sylvain Castagnos,Mathematics education,2
+Sylvain Castagnos,Test (biology),1
+Sylvain Castagnos,Accounting,1
+Sylvain Castagnos,Variance (accounting),1
+Sylvain Castagnos,Socioeconomic status,1
+Sylvain Castagnos,Numeracy,2
+Sylvain Castagnos,Literacy,2
+Sylvain Castagnos,Set (abstract data type),3
+Sylvain Castagnos,Programming language,4
+Sylvain Castagnos,Medicine,1
+Sylvain Castagnos,Human–computer interaction,2
+Sylvain Castagnos,Machine learning,3
+Sylvain Castagnos,Pathology,1
+Sylvain Castagnos,Alternative medicine,1
+Sylvain Castagnos,Protocol (science),1
+Sylvain Castagnos,Path (computing),1
+Sylvain Castagnos,Gaze,3
+Sylvain Castagnos,Fixation (population genetics),2
+Sylvain Castagnos,Computer vision,1
+Sylvain Castagnos,Computer graphics (images),1
+Sylvain Castagnos,Genetics,1
+Sylvain Castagnos,Sequence (biology),1
+Sylvain Castagnos,Context (archaeology),3
+Sylvain Castagnos,Function (biology),1
+Sylvain Castagnos,Evolutionary biology,1
+Sylvain Castagnos,Operating system,2
+Sylvain Castagnos,Process (computing),2
+Sylvain Castagnos,Data science,4
+Sylvain Castagnos,World Wide Web,10
+Sylvain Castagnos,Epistemology,2
+Sylvain Castagnos,Philosophy,3
+Sylvain Castagnos,Information retrieval,6
+Sylvain Castagnos,Social science,2
+Sylvain Castagnos,Quality (philosophy),2
+Sylvain Castagnos,Recommender system,11
+Sylvain Castagnos,Face (sociological concept),1
+Sylvain Castagnos,Mathematics,2
+Sylvain Castagnos,Mathematical analysis,1
+Sylvain Castagnos,Compromise,2
+Sylvain Castagnos,Perspective (graphical),1
+Sylvain Castagnos,Theology,1
+Sylvain Castagnos,Domain (mathematical analysis),1
+Sylvain Castagnos,Economy,1
+Sylvain Castagnos,Service (business),1
+Sylvain Castagnos,Novelty,1
+Sylvain Castagnos,Visual arts,1
+Sylvain Castagnos,Painting,1
+Sylvain Castagnos,Visitor pattern,1
+Sylvain Castagnos,The arts,1
+Sylvain Castagnos,Distributed computing,2
+Sylvain Castagnos,Computer network,1
+Sylvain Castagnos,Database,3
+Sylvain Castagnos,Scalability,3
+Sylvain Castagnos,Collaborative filtering,5
+Sylvain Castagnos,Cache,1
+Sylvain Castagnos,Control (management),1
+Sylvain Castagnos,Political science,2
+Sylvain Castagnos,Law,2
+Sylvain Castagnos,Representation (politics),1
+Sylvain Castagnos,Politics,1
+Sylvain Castagnos,Computer security,3
+Sylvain Castagnos,Internet privacy,1
+Sylvain Castagnos,Information privacy,1
+Sylvain Castagnos,Privacy by Design,1
+Sylvain Castagnos,Privacy protection,1
+Sylvain Castagnos,Personally identifiable information,1
+Sylvain Castagnos,Selection (genetic algorithm),1
+Sylvain Castagnos,Geology,1
+Sylvain Castagnos,Oceanography,1
+Sylvain Castagnos,Baseline (sea),1
+Sylvain Castagnos,Algorithm,1
+Sylvain Castagnos,Computation,1
+Sylvain Castagnos,Confidentiality,2
+Sylvain Castagnos,Information filtering system,1
+Sylvain Castagnos,Social psychology,1
+Sylvain Castagnos,Reinforcement learning,1
+Sylvain Castagnos,Probabilistic logic,2
+Sylvain Castagnos,Reinforcement,1
+Sylvain Castagnos,Psychotherapist,1
+Sylvain Castagnos,Data mining,1
+Sylvain Castagnos,Association rule learning,1
+Sylvain Castagnos,Association (psychology),1
+Sylvain Castagnos,Exploit,1
+Armelle Brun,Operating system,10
+Armelle Brun,Computer science,47
+Armelle Brun,Artificial intelligence,37
+Armelle Brun,Mathematics,20
+Armelle Brun,Engineering,5
+Armelle Brun,Process (computing),7
+Armelle Brun,Machine learning,26
+Armelle Brun,Data mining,24
+Armelle Brun,Economics,8
+Armelle Brun,Task (project management),2
+Armelle Brun,Systems engineering,2
+Armelle Brun,Reinforcement learning,2
+Armelle Brun,Mathematical optimization,2
+Armelle Brun,Finance,5
+Armelle Brun,Space (punctuation),2
+Armelle Brun,Order (exchange),3
+Armelle Brun,Genetic algorithm,1
+Armelle Brun,Metaheuristic,2
+Armelle Brun,Local optimum,2
+Armelle Brun,Computer security,9
+Armelle Brun,Physics,10
+Armelle Brun,Political science,6
+Armelle Brun,Law,4
+Armelle Brun,Astrophysics,1
+Armelle Brun,Exploit,9
+Armelle Brun,Relevance (law),1
+Armelle Brun,Variation (astronomy),1
+Chahrazed Labba,Physics,2
+Chahrazed Labba,Art,2
+Chahrazed Labba,Astronomy,1
+Chahrazed Labba,Civilization,1
+Chahrazed Labba,Literature,1
+Chahrazed Labba,Archaeology,1
+Chahrazed Labba,Ancient history,1
+Chahrazed Labba,Mythology,1
+Chahrazed Labba,COSMIC cancer database,1
+Chahrazed Labba,Classics,1
+Chahrazed Labba,History,1
+Chahrazed Labba,Operating system,4
+Chahrazed Labba,World Wide Web,1
+Chahrazed Labba,Computer science,9
+Chahrazed Labba,Distributed computing,1
+Chahrazed Labba,Software engineering,2
+Chahrazed Labba,Cloud computing,3
+Chahrazed Labba,Database,2
+Chahrazed Labba,Software,3
+Chahrazed Labba,Software as a service,2
+Chahrazed Labba,Software development,2
+Chahrazed Labba,Artificial intelligence,4
+Chahrazed Labba,Mathematics,2
+Chahrazed Labba,Machine learning,4
+Chahrazed Labba,Economics,1
+Chahrazed Labba,Visual arts,1
+Chahrazed Labba,Economic growth,1
+Chahrazed Labba,Architecture,1
+Chahrazed Labba,Convergence (economics),1
+Chahrazed Labba,Edge device,1
+Chahrazed Labba,Mathematics education,1
+Chahrazed Labba,Enhanced Data Rates for GSM Evolution,1
+Chahrazed Labba,Edge computing,1
+Chahrazed Labba,Distance education,1
+Chahrazed Labba,Statistics,1
+Chahrazed Labba,Philosophy,1
+Chahrazed Labba,Biology,1
+Chahrazed Labba,Data science,1
+Chahrazed Labba,Data mining,2
+Chahrazed Labba,Linguistics,1
+Chahrazed Labba,Telecommunications,1
+Chahrazed Labba,Botany,1
+Chahrazed Labba,Identification (biology),1
+Chahrazed Labba,Classifier (UML),2
+Chahrazed Labba,Multimedia,1
+Chahrazed Labba,Streaming data,1
+Chahrazed Labba,Online model,1
+Chahrazed Labba,Data stream,1
+Chahrazed Labba,Incremental learning,1
+Chahrazed Labba,Online learning,1
+Chahrazed Labba,Concept drift,1
+Chahrazed Labba,Forgetting,1
+Chahrazed Labba,Data stream mining,1
+Chahrazed Labba,Stability (learning theory),1
+Chahrazed Labba,Business,2
+Chahrazed Labba,Process (computing),1
+Chahrazed Labba,Marketing,1
+Chahrazed Labba,Computer network,1
+Chahrazed Labba,Resource (disambiguation),1
+Chahrazed Labba,Service (business),1
+Chahrazed Labba,Service provider,1
+Chahrazed Labba,Quality of service,1
+Chahrazed Labba,Virtualization,1
+Chahrazed Labba,Work in process,1
+Chahrazed Labba,Business process,1
+Chahrazed Labba,Service level,1
+Chahrazed Labba,Service-level agreement,1
+Chahrazed Labba,Live migration,1
+Chahrazed Labba,Multitenancy,1
+Chahrazed Labba,Set (abstract data type),1
+Chahrazed Labba,Programming language,1
+Chahrazed Labba,Optics,1
+Chahrazed Labba,Focus (optics),1
+Chahrazed Labba,Scalability,1
+Chahrazed Labba,Computer hardware,1
+Chahrazed Labba,Wireless,1
+Chahrazed Labba,Visualization,1
+Chahrazed Labba,Throughput,1
+Chahrazed Labba,Interfacing,1
+Frédéric Pennerath,Computer science,5
+Frédéric Pennerath,Statistics,1
+Frédéric Pennerath,Epistemology,1
+Frédéric Pennerath,Philosophy,2
+Frédéric Pennerath,Artificial intelligence,5
+Frédéric Pennerath,Mathematics,2
+Frédéric Pennerath,Chemistry,2
+Frédéric Pennerath,Biochemistry,2
+Frédéric Pennerath,Machine learning,1
+Frédéric Pennerath,Regularization (linguistics),1
+Frédéric Pennerath,Econometrics,1
+Frédéric Pennerath,Bayesian probability,2
+Frédéric Pennerath,Variety (cybernetics),1
+Frédéric Pennerath,Calibration,1
+Frédéric Pennerath,Bayes' theorem,1
+Frédéric Pennerath,Thought experiment,1
+Frédéric Pennerath,Uncertainty quantification,1
+Frédéric Pennerath,Argument (complex analysis),1
+Frédéric Pennerath,Psychology,1
+Frédéric Pennerath,Social psychology,1
+Frédéric Pennerath,Cognitive psychology,1
+Frédéric Pennerath,Counterfactual thinking,1
+Frédéric Pennerath,CLARITY,1
+Frédéric Pennerath,Physics,2
+Frédéric Pennerath,Quantum mechanics,1
+Frédéric Pennerath,Theoretical computer science,2
+Frédéric Pennerath,Data mining,2
+Frédéric Pennerath,Algorithm,1
+Frédéric Pennerath,Linguistics,1
+Frédéric Pennerath,Database,2
+Frédéric Pennerath,Feature (linguistics),1
+Frédéric Pennerath,Scalability,2
+Frédéric Pennerath,Entropy (arrow of time),1
+Frédéric Pennerath,Principle of maximum entropy,1
+Frédéric Pennerath,Conditional entropy,1
+Frédéric Pennerath,Mutual information,1
+Frédéric Pennerath,Divide and conquer algorithms,1
+Frédéric Pennerath,Pattern recognition (psychology),1
+Frédéric Pennerath,Convolutional neural network,1
+Frédéric Pennerath,COSMIC cancer database,1
+Frédéric Pennerath,Bayesian inference,1
+Frédéric Pennerath,Astrophysics,1
+Frédéric Pennerath,Galaxy,1
+Frédéric Pennerath,Redshift,1
+Frédéric Pennerath,Weak gravitational lensing,1
+Frédéric Pennerath,Bayesian linear regression,1
+Frédéric Pennerath,Set (abstract data type),1
+Frédéric Pennerath,Programming language,1
+Frédéric Pennerath,Combinatorics,1
+Frédéric Pennerath,Graph,1
+Frédéric Pennerath,Knowledge graph,1
+Frédéric Pennerath,Knowledge extraction,1
+Frédéric Pennerath,Interval (graph theory),1
+Parisa Rastin,Operating system,2
+Parisa Rastin,Computer science,9
+Parisa Rastin,Philosophy,2
+Parisa Rastin,Artificial intelligence,9
+Parisa Rastin,Natural language processing,3
+Parisa Rastin,Word (group theory),3
+Parisa Rastin,Electrical engineering,1
+Parisa Rastin,Engineering,1
+Parisa Rastin,Speech recognition,2
+Parisa Rastin,Task (project management),1
+Parisa Rastin,Systems engineering,1
+Parisa Rastin,Linguistics,2
+Parisa Rastin,Language model,1
+Parisa Rastin,Voltage,1
+Parisa Rastin,Transformer,1
+Parisa Rastin,Encoder,1
+Parisa Rastin,Set (abstract data type),2
+Parisa Rastin,Programming language,2
+Parisa Rastin,Code (set theory),1
+Parisa Rastin,Pattern recognition (psychology),3
+Parisa Rastin,Code-switching,1
+Parisa Rastin,Unsupervised learning,2
+Parisa Rastin,Embedding,2
+Parisa Rastin,Utterance,1
+Parisa Rastin,Word embedding,1
+Parisa Rastin,SIGNAL (programming language),1
+Parisa Rastin,Geometry,3
+Parisa Rastin,Mathematics,4
+Parisa Rastin,Gene,1
+Parisa Rastin,Chemistry,1
+Parisa Rastin,Biochemistry,1
+Parisa Rastin,Mathematical analysis,1
+Parisa Rastin,Pure mathematics,2
+Parisa Rastin,Algorithm,2
+Parisa Rastin,Leverage (statistics),1
+Parisa Rastin,Embedded system,1
+Parisa Rastin,Isometry (Riemannian geometry),1
+Parisa Rastin,Domain (mathematical analysis),1
+Parisa Rastin,Messenger RNA,1
+Parisa Rastin,Translation (biology),1
+Parisa Rastin,Machine translation,1
+Parisa Rastin,Bottleneck,1
+Lydia Boudjeloud-Assala,Computer science,8
+Lydia Boudjeloud-Assala,Statistics,3
+Lydia Boudjeloud-Assala,Philosophy,5
+Lydia Boudjeloud-Assala,Artificial intelligence,7
+Lydia Boudjeloud-Assala,Information retrieval,1
+Lydia Boudjeloud-Assala,Mathematics,4
+Lydia Boudjeloud-Assala,Data mining,3
+Lydia Boudjeloud-Assala,Linguistics,3
+Lydia Boudjeloud-Assala,Feature (linguistics),2
+Lydia Boudjeloud-Assala,Feature extraction,2
+Lydia Boudjeloud-Assala,Knowledge management,1
+Lydia Boudjeloud-Assala,Expert elicitation,1
+Lydia Boudjeloud-Assala,Geodesy,1
+Lydia Boudjeloud-Assala,Benchmark (surveying),1
+Lydia Boudjeloud-Assala,Geography,1
+Lydia Boudjeloud-Assala,Machine learning,4
+Lydia Boudjeloud-Assala,Mathematical analysis,1
+Lydia Boudjeloud-Assala,Reinforcement learning,2
+Lydia Boudjeloud-Assala,Markov chain,1
+Lydia Boudjeloud-Assala,Domain (mathematical analysis),1
+Lydia Boudjeloud-Assala,Markov process,1
+Lydia Boudjeloud-Assala,Markov decision process,1
+Lydia Boudjeloud-Assala,Genetic programming,1
+Lydia Boudjeloud-Assala,Regression analysis,2
+Lydia Boudjeloud-Assala,Markov model,1
+Lydia Boudjeloud-Assala,Partially observable Markov decision process,1
+Lydia Boudjeloud-Assala,Domain knowledge,1
+Lydia Boudjeloud-Assala,Grammar,2
+Lydia Boudjeloud-Assala,Symbolic regression,1
+Lydia Boudjeloud-Assala,State space,1
+Lydia Boudjeloud-Assala,Regression,1
+Lydia Boudjeloud-Assala,Preference,1
+Lydia Boudjeloud-Assala,Political science,1
+Lydia Boudjeloud-Assala,Humanities,2
+Lydia Boudjeloud-Assala,Cluster analysis,2
+Lydia Boudjeloud-Assala,CURE data clustering algorithm,2
+Lydia Boudjeloud-Assala,Correlation clustering,2
+Lydia Boudjeloud-Assala,Biclustering,1
+Lydia Boudjeloud-Assala,Sociology,1
+Lydia Boudjeloud-Assala,Consumption (sociology),1
+Lydia Boudjeloud-Assala,Social science,1
+Lydia Boudjeloud-Assala,Programming language,2
+Lydia Boudjeloud-Assala,Physics,1
+Lydia Boudjeloud-Assala,Quantum mechanics,1
+Lydia Boudjeloud-Assala,Pattern recognition (psychology),1
+Lydia Boudjeloud-Assala,Biology,1
+Lydia Boudjeloud-Assala,Process (computing),1
+Lydia Boudjeloud-Assala,Deep learning,1
+Lydia Boudjeloud-Assala,Algorithm,1
+Lydia Boudjeloud-Assala,Paleontology,1
+Lydia Boudjeloud-Assala,Context (archaeology),1
+Lydia Boudjeloud-Assala,State (computer science),1
+Lydia Boudjeloud-Assala,Consistency (knowledge bases),1
+Lydia Boudjeloud-Assala,Rule-based machine translation,1
+Lydia Boudjeloud-Assala,Coherence (philosophical gambling strategy),1
+Lydia Boudjeloud-Assala,Feature engineering,1
+Lydia Boudjeloud-Assala,Operating system,1
+Lydia Boudjeloud-Assala,Set (abstract data type),1
+Lydia Boudjeloud-Assala,Telecommunications,1
+Lydia Boudjeloud-Assala,Data stream,1
+Lydia Boudjeloud-Assala,Data stream mining,1
+Lydia Boudjeloud-Assala,Data set,1
+Lydia Boudjeloud-Assala,Data stream clustering,1
+Lydia Boudjeloud-Assala,Sliding window protocol,1
+Lydia Boudjeloud-Assala,Window (computing),1
+Lydia Boudjeloud-Assala,Canopy clustering algorithm,1
+Pavel Král,Computer science,9
+Pavel Král,Philosophy,6
+Pavel Král,Artificial intelligence,9
+Pavel Král,Natural language processing,9
+Pavel Král,Word (group theory),2
+Pavel Král,Deep learning,1
+Pavel Král,Economics,5
+Pavel Král,Management,5
+Pavel Král,Task (project management),6
+Pavel Král,Linguistics,6
+Pavel Král,Artificial neural network,1
+Pavel Král,Language model,2
+Pavel Král,Embedding,1
+Pavel Král,Classifier (UML),2
+Pavel Král,Principle of maximum entropy,1
+Pavel Král,Word2vec,1
+Pavel Král,Computer security,2
+Pavel Král,Engineering,1
+Pavel Král,Speech recognition,7
+Pavel Král,Transfer of learning,1
+Pavel Král,Systems engineering,1
+Pavel Král,Exploit,2
+Pavel Král,Set (abstract data type),1
+Pavel Král,Programming language,1
+Pavel Král,Mathematics,1
+Pavel Král,Biology,2
+Pavel Král,Mathematical analysis,1
+Pavel Král,Paleontology,2
+Pavel Král,Context (archaeology),2
+Pavel Král,Domain (mathematical analysis),1
+Pavel Král,Syntax,1
+Pavel Král,Parsing,1
+Pavel Král,Parse tree,1
+Pavel Král,Conditional random field,1
+Pavel Král,Punctuation,1
+Pavel Král,Czech,4
+Pavel Král,Algorithm,1
+Pavel Král,Feature (linguistics),1
+Pavel Král,Computation,1
+Pavel Král,Topic model,1
+Pavel Král,Latent Dirichlet allocation,1
+Pavel Král,Semantic feature,1
+Pavel Král,World Wide Web,4
+Pavel Král,Sentence,3
+Pavel Král,Dialog box,4
+Pavel Král,Transcription (linguistics),1
+Pavel Král,Prosody,2
+Pavel Král,Computer network,2
+Pavel Král,Reservation,2
+Pavel Král,Utterance,1
+Pavel Král,n-gram,1
+Pavel Král,Speech act,1
+Pavel Král,Information retrieval,1
+Pavel Král,Machine learning,1
+Pavel Král,Training set,1
+Pavel Král,Microeconomics,1
+Pavel Král,Dialog system,1
+Pavel Král,Maximization,1
+Thamer Mecharnia,Computer science,1
+Thamer Mecharnia,Set (abstract data type),1
+Thamer Mecharnia,Programming language,1
+Thamer Mecharnia,Code (set theory),1
+Thamer Mecharnia,Artificial intelligence,1
+Thamer Mecharnia,Natural language processing,1
+Thamer Mecharnia,Information retrieval,1
+Thamer Mecharnia,Biology,1
+Thamer Mecharnia,Natural language,1
+Thamer Mecharnia,Economics,1
+Thamer Mecharnia,Management,1
+Thamer Mecharnia,Task (project management),1
+Thamer Mecharnia,Paleontology,1
+Thamer Mecharnia,Context (archaeology),1
+Thamer Mecharnia,Art,1
+Thamer Mecharnia,Visual arts,1
+Thamer Mecharnia,Architecture,1
+Thamer Mecharnia,Relation (database),1
+Thamer Mecharnia,Sentence,1
+Thamer Mecharnia,Named-entity recognition,1
+Thamer Mecharnia,Database,1
+Gaël Guibon,World Wide Web,1
+Gaël Guibon,Computer science,7
+Gaël Guibon,Artificial intelligence,3
+Gaël Guibon,Natural language processing,5
+Gaël Guibon,Dialog box,1
+Gaël Guibon,Psychology,3
+Gaël Guibon,Speech recognition,3
+Gaël Guibon,Cognitive science,1
+Gaël Guibon,Context (archaeology),2
+Gaël Guibon,Archaeology,1
+Gaël Guibon,History,1
+Gaël Guibon,Conversation,3
+Gaël Guibon,Emotion recognition,1
+Gaël Guibon,Communication,3
+Gaël Guibon,Cognitive psychology,1
+Gaël Guibon,Philosophy,2
+Gaël Guibon,Social psychology,1
+Gaël Guibon,Linguistics,2
+Gaël Guibon,Gender bias,1
+Gaël Guibon,Sociology,1
+Gaël Guibon,Art,2
+Gaël Guibon,Environmental science,1
+Gaël Guibon,Humanities,2
+Gaël Guibon,Engineering,2
+Gaël Guibon,Biology,1
+Gaël Guibon,Metric (unit),1
+Gaël Guibon,Operations management,1
+Gaël Guibon,Human–computer interaction,1
+Gaël Guibon,Paleontology,1
+Gaël Guibon,Task (project management),1
+Gaël Guibon,Systems engineering,1
+Gaël Guibon,Clef,1
+Gaël Guibon,Epistemology,1
+Gaël Guibon,Ontology,1
+Miguel Couceiro,Computer science,66
+Miguel Couceiro,Artificial intelligence,42
+Miguel Couceiro,Psychology,5
+Miguel Couceiro,Engineering,4
+Miguel Couceiro,Cognitive science,2
+Miguel Couceiro,Complex system,1
+Miguel Couceiro,Management science,3
+Miguel Couceiro,Programming language,18
+Miguel Couceiro,Statistics,5
+Miguel Couceiro,Matching (statistics),1
+Miguel Couceiro,Information retrieval,7
+Miguel Couceiro,Mathematics,48
+Miguel Couceiro,Physics,16
+Miguel Couceiro,Optics,4
+Miguel Couceiro,Data mining,18
+Miguel Couceiro,Mathematical analysis,10
+Miguel Couceiro,Semantic Web,2
+Miguel Couceiro,Focus (optics),4
+Miguel Couceiro,Discrete mathematics,20
+Miguel Couceiro,Domain (mathematical analysis),3
+Miguel Couceiro,Granularity,1
+Miguel Couceiro,Completeness (order theory),1
+Miguel Couceiro,Domain knowledge,2
+Miguel Couceiro,Knowledge base,1
+Miguel Couceiro,Knowledge extraction,2
+Miguel Couceiro,Tuple,1
+Miguel Couceiro,Theoretical computer science,18
+Miguel Couceiro,Combinatorics,22
+Miguel Couceiro,Arithmetic,5
+Miguel Couceiro,Graph,6
+Miguel Couceiro,Binary number,4
+Miguel Couceiro,Prime (order theory),1
+Miguel Couceiro,Binary relation,1
+Miguel Couceiro,Geometry,13
+Miguel Couceiro,Pure mathematics,22
+Miguel Couceiro,Algorithm,12
+Miguel Couceiro,Algebra over a field,9
+Miguel Couceiro,Probabilistic logic,2
+Miguel Couceiro,Constraint (computer-aided design),3
+Miguel Couceiro,Computational complexity theory,1
+Miguel Couceiro,Complexity of constraint satisfaction,1
+Miguel Couceiro,Local consistency,1
+Miguel Couceiro,Universal algebra,1
+Miguel Couceiro,Constraint satisfaction problem,2
+Miguel Couceiro,Constraint satisfaction,2
+Miguel Couceiro,Economics,7
+Miguel Couceiro,Art,2
+Miguel Couceiro,Visual arts,1
+Miguel Couceiro,Musical,1
+Miguel Couceiro,Formalism (music),1
+Miguel Couceiro,Formal description,1
+Miguel Couceiro,Formal methods,1
+Miguel Couceiro,Formal concept analysis,5
+Miguel Couceiro,Acoustics,9
+Miguel Couceiro,Lattice (music),8
+Miguel Couceiro,Political science,8
+Miguel Couceiro,Law,8
+Miguel Couceiro,Distributive property,4
+Miguel Couceiro,Semilattice,1
+Miguel Couceiro,Distributivity,2
+Miguel Couceiro,Distributive lattice,3
+Miguel Couceiro,Element (criminal law),4
+Miguel Couceiro,Semigroup,4
+Miguel Couceiro,Infimum and supremum,1
+Miguel Couceiro,Operating system,5
+Miguel Couceiro,Biology,12
+Miguel Couceiro,Machine learning,17
+Miguel Couceiro,Composite material,1
+Miguel Couceiro,Materials science,2
+Miguel Couceiro,Management,2
+Miguel Couceiro,Task (project management),4
+Miguel Couceiro,Paleontology,2
+Miguel Couceiro,Context (archaeology),2
+Miguel Couceiro,Database,3
+Miguel Couceiro,Variety (cybernetics),2
+Miguel Couceiro,Axiom,4
+Miguel Couceiro,Heuristics,3
+Miguel Couceiro,Scalability,2
+Miguel Couceiro,Parameterized complexity,1
+Miguel Couceiro,Mathematical economics,1
+Miguel Couceiro,Relevance (law),1
+Miguel Couceiro,Rank (graph theory),1
+Miguel Couceiro,Ranking (information retrieval),2
+Miguel Couceiro,Aggregation problem,1
+Miguel Couceiro,Aggregate (composite),1
+Miguel Couceiro,Learning to rank,1
+Miguel Couceiro,Dynamic programming,1
+Miguel Couceiro,Semiring,1
+Miguel Couceiro,World Wide Web,2
+Miguel Couceiro,Geography,5
+Miguel Couceiro,Selection (genetic algorithm),2
+Miguel Couceiro,Cartography,2
+Miguel Couceiro,Thematic map,2
+Miguel Couceiro,Astronomy,2
+Miguel Couceiro,Chain (unit),2
+Miguel Couceiro,Epistemology,7
+Miguel Couceiro,Philosophy,20
+Miguel Couceiro,Gene,4
+Miguel Couceiro,Chemistry,5
+Miguel Couceiro,Biochemistry,5
+Miguel Couceiro,Repressor,2
+Miguel Couceiro,Operator (biology),2
+Miguel Couceiro,Transcription factor,2
+Miguel Couceiro,Relation (database),3
+Miguel Couceiro,Class (philosophy),4
+Miguel Couceiro,Commutative property,1
+Miguel Couceiro,Property (philosophy),2
+Miguel Couceiro,Cardinality (data modeling),4
+Miguel Couceiro,Enumeration,4
+Miguel Couceiro,Idempotence,5
+Miguel Couceiro,Logical connective,1
+Miguel Couceiro,Natural language processing,10
+Miguel Couceiro,Social psychology,2
+Miguel Couceiro,Speech recognition,1
+Miguel Couceiro,Linguistics,13
+Miguel Couceiro,Gender bias,1
+Miguel Couceiro,Regularization (linguistics),1
+Miguel Couceiro,Econometrics,1
+Miguel Couceiro,Bayesian probability,2
+Miguel Couceiro,Calibration,1
+Miguel Couceiro,Bayes' theorem,1
+Miguel Couceiro,Thought experiment,1
+Miguel Couceiro,Uncertainty quantification,1
+Miguel Couceiro,Argument (complex analysis),1
+Miguel Couceiro,Cognitive psychology,1
+Miguel Couceiro,Counterfactual thinking,1
+Miguel Couceiro,CLARITY,1
+Miguel Couceiro,Systems engineering,2
+Miguel Couceiro,Clef,1
+Miguel Couceiro,Stability (learning theory),2
+Miguel Couceiro,Function (biology),5
+Miguel Couceiro,Evolutionary biology,4
+Miguel Couceiro,Genetics,5
+Miguel Couceiro,DNA,3
+Miguel Couceiro,Boolean function,5
+Miguel Couceiro,clone (Java method),4
+Miguel Couceiro,Maximum satisfiability problem,2
+Miguel Couceiro,Boolean network,3
+Miguel Couceiro,Boolean expression,2
+Miguel Couceiro,Filtered algebra,2
+Miguel Couceiro,Parity function,2
+Miguel Couceiro,Two-element Boolean algebra,2
+Miguel Couceiro,Boolean algebras canonically defined,1
+Miguel Couceiro,Complete Boolean algebra,1
+Miguel Couceiro,Product term,1
+Miguel Couceiro,Inference,5
+Miguel Couceiro,Analogy,8
+Miguel Couceiro,Rule of inference,1
+Miguel Couceiro,Analogical reasoning,5
+Miguel Couceiro,Unintended consequences,1
+Miguel Couceiro,Set (abstract data type),7
+Miguel Couceiro,Feature (linguistics),2
+Miguel Couceiro,Variable (mathematics),1
+Miguel Couceiro,Preprocessor,3
+Miguel Couceiro,Empirical research,1
+Miguel Couceiro,Disparate impact,1
+Miguel Couceiro,Supreme court,1
+Miguel Couceiro,Independence (probability theory),1
+Miguel Couceiro,Process (computing),2
+Miguel Couceiro,Classifier (UML),2
+Miguel Couceiro,Dropout (neural networks),1
+Miguel Couceiro,Computer security,1
+Miguel Couceiro,Transparency (behavior),1
+Miguel Couceiro,Value (mathematics),1
+Miguel Couceiro,Salient,1
+Miguel Couceiro,Botany,1
+Miguel Couceiro,The Internet,1
+Miguel Couceiro,Pruning,2
+Miguel Couceiro,Web application,1
+Miguel Couceiro,Deep Web,1
+Miguel Couceiro,Agronomy,1
+Miguel Couceiro,Generalization,3
+Miguel Couceiro,Knowledge graph,1
+Miguel Couceiro,Deep learning,1
+Miguel Couceiro,Embedding,2
+Miguel Couceiro,Georgian,1
+Miguel Couceiro,Navajo,1
+Miguel Couceiro,Word (group theory),1
+Miguel Couceiro,Artificial neural network,2
+Miguel Couceiro,Autoencoder,1
+Miguel Couceiro,Psychotherapist,1
+Miguel Couceiro,Natural language,1
+Miguel Couceiro,Semantics (computer science),1
+Miguel Couceiro,Character (mathematics),1
+Miguel Couceiro,Logit,2
+Miguel Couceiro,Generality,1
+Miguel Couceiro,Transferability,2
+Miguel Couceiro,Affine transformation,3
+Miguel Couceiro,Extension (predicate logic),2
+Miguel Couceiro,Algebraic number,3
+Miguel Couceiro,Bounded function,1
+Miguel Couceiro,Hamming distance,1
+Miguel Couceiro,Geodesy,1
+Miguel Couceiro,Benchmark (surveying),1
+Miguel Couceiro,Interpretability,2
+Miguel Couceiro,Encoding (memory),1
+Miguel Couceiro,Commonsense reasoning,1
+Miguel Couceiro,Countable set,2
+Miguel Couceiro,Closure (psychology),1
+Miguel Couceiro,Market economy,2
+Miguel Couceiro,Closure operator,1
+Miguel Couceiro,Closed set,1
+Miguel Couceiro,Uncountable set,1
+Miguel Couceiro,Motion (physics),1
+Miguel Couceiro,Mathematical optimization,3
+Miguel Couceiro,Interpolation (computer graphics),1
+Miguel Couceiro,Decision problem,1
+Miguel Couceiro,Nanotechnology,1
+Miguel Couceiro,Symmetry (geometry),1
+Miguel Couceiro,Characterization (materials science),1
+Miguel Couceiro,Partially ordered set,2
+Miguel Couceiro,Partial function,2
+Miguel Couceiro,Associative property,3
+Miguel Couceiro,Humanities,1
+Miguel Couceiro,Ecology,2
+Miguel Couceiro,Lattice Miner,1
+Miguel Couceiro,Reuse,1
+Miguel Couceiro,Congruence lattice problem,1
+Miguel Couceiro,Similarity (geometry),2
+Miguel Couceiro,Image (mathematics),2
+Miguel Couceiro,Data science,2
+Miguel Couceiro,Archaeology,1
+Miguel Couceiro,Measure (data warehouse),1
+Miguel Couceiro,Sequence (biology),1
+Miguel Couceiro,Interpretation (philosophy),1
+Miguel Couceiro,Sequential Pattern Mining,1
+Miguel Couceiro,Visitor pattern,1
+Miguel Couceiro,Cultural heritage,1
+Miguel Couceiro,Pattern recognition (psychology),4
+Miguel Couceiro,Cluster analysis,5
+Miguel Couceiro,Hierarchical clustering,1
+Miguel Couceiro,Robustness (evolution),1
+Miguel Couceiro,Constant (computer programming),4
+Miguel Couceiro,Decomposition,1
+Miguel Couceiro,Finance,2
+Miguel Couceiro,Order (exchange),2
+Miguel Couceiro,CURE data clustering algorithm,2
+Miguel Couceiro,Correlation clustering,2
+Miguel Couceiro,Row and column spaces,1
+Miguel Couceiro,Row,1
+Miguel Couceiro,Biclustering,2
+Miguel Couceiro,Integer (computer science),2
+Miguel Couceiro,Reduction (mathematics),2
+Miguel Couceiro,Multiplicative function,1
+Miguel Couceiro,Interval (graph theory),2
+Miguel Couceiro,Axiomatic system,1
+Miguel Couceiro,Hierarchy,1
+Miguel Couceiro,Algebraic structure,1
+Miguel Couceiro,Field (mathematics),1
+Miguel Couceiro,Cognition,1
+Miguel Couceiro,Neuroscience,1
+Miguel Couceiro,Product (mathematics),1
+Miguel Couceiro,Forestry,1
+Miguel Couceiro,Crop,1
+Miguel Couceiro,Convolutional neural network,1
+Miguel Couceiro,COSMIC cancer database,1
+Miguel Couceiro,Bayesian inference,1
+Miguel Couceiro,Astrophysics,1
+Miguel Couceiro,Galaxy,1
+Miguel Couceiro,Redshift,1
+Miguel Couceiro,Weak gravitational lensing,1
+Miguel Couceiro,Bayesian linear regression,1
+Miguel Couceiro,Polynomial,1
+Miguel Couceiro,Rewriting,1
+Miguel Couceiro,True quantified Boolean formula,1
+Miguel Couceiro,Monotone polygon,1
+Miguel Couceiro,Medicine,2
+Miguel Couceiro,Radiology,1
+Miguel Couceiro,Applied mathematics,2
+Miguel Couceiro,Weighting,1
+Miguel Couceiro,Maxima and minima,1
+Miguel Couceiro,Lexicographical order,1
+Miguel Couceiro,Random graph,2
+Miguel Couceiro,Surgery,1
+Miguel Couceiro,Unsupervised learning,1
+Miguel Couceiro,Randomized controlled trial,1
+Miguel Couceiro,Randomized algorithm,1
+Miguel Couceiro,Abelian group,1
+Miguel Couceiro,Exponent,1
+Miguel Couceiro,Cancellative semigroup,1
+Miguel Couceiro,Bicyclic semigroup,1
+Miguel Couceiro,Vertex (graph theory),1
+Miguel Couceiro,Pairwise comparison,1
+Miguel Couceiro,Categorical variable,1
+Miguel Couceiro,Telecommunications,1
+Miguel Couceiro,Wireless,1
+Miguel Couceiro,Throughput,1
+Miguel Couceiro,Random subspace method,1
+Miguel Couceiro,Fairness measure,1
+Miguel Couceiro,Representation (politics),2
+Miguel Couceiro,Politics,2
+Miguel Couceiro,Conjecture,1
+Miguel Couceiro,Piecewise,1
+Miguel Couceiro,Unary operation,3
+Miguel Couceiro,Decision rule,1
+Miguel Couceiro,Identity (music),1
+Miguel Couceiro,Identity function,1
+Miguel Couceiro,Ontology,1
+Miguel Couceiro,RDF,1
+Miguel Couceiro,SPARQL,1
+Miguel Couceiro,Predicate (mathematical logic),1
+Miguel Couceiro,RDF Schema,1
+Miguel Couceiro,Simple (philosophy),1
+Miguel Couceiro,Preference,1
+Alexandre Blansché,Operating system,1
+Alexandre Blansché,Computer science,3
+Alexandre Blansché,Epistemology,1
+Alexandre Blansché,Philosophy,1
+Alexandre Blansché,Artificial intelligence,2
+Alexandre Blansché,Ontology,1
+Alexandre Blansché,Mathematics,2
+Alexandre Blansché,Distributed computing,1
+Alexandre Blansché,Medicine,1
+Alexandre Blansché,Human–computer interaction,1
+Alexandre Blansché,Robot,1
+Alexandre Blansché,Pure mathematics,1
+Alexandre Blansché,Field (mathematics),1
+Alexandre Blansché,Embedded system,1
+Alexandre Blansché,Communications protocol,1
+Alexandre Blansché,Situated,1
+Alexandre Blansché,Pathology,1
+Alexandre Blansché,Middleware (distributed applications),1
+Alexandre Blansché,Alternative medicine,1
+Alexandre Blansché,Smart objects,1
+Alexandre Blansché,Protocol (science),1
+Alexandre Blansché,Object (grammar),1
+Alexandre Blansché,Computer network,1
+Alexandre Blansché,Cloud computing,1
+Alexandre Blansché,Internet of Things,1
+Alexandre Blansché,Cluster analysis,1
+Alexandre Blansché,CURE data clustering algorithm,1
+Alexandre Blansché,Correlation clustering,1
+Alexandre Blansché,Biclustering,1
+Alexandre Blansché,Information retrieval,1
+Alexandre Blansché,Operations management,1
+Alexandre Blansché,Economics,1
+Alexandre Blansché,Algorithm,1
+Alexandre Blansché,Relational database,1
+Alexandre Blansché,Formal concept analysis,1
+Alexandre Blansché,Lean manufacturing,1
+Alexandre Blansché,Business process reengineering,1
+Alexandre Blansché,Entity–relationship model,1
+Azim Roussanaly,Operating system,4
+Azim Roussanaly,Computer security,1
+Azim Roussanaly,Computer science,17
+Azim Roussanaly,Set (abstract data type),3
+Azim Roussanaly,Programming language,5
+Azim Roussanaly,Artificial intelligence,16
+Azim Roussanaly,Business,1
+Azim Roussanaly,Process (computing),4
+Azim Roussanaly,Human–computer interaction,1
+Azim Roussanaly,Software engineering,2
+Azim Roussanaly,Machine learning,6
+Azim Roussanaly,Political science,3
+Azim Roussanaly,Law,2
+Azim Roussanaly,Exploit,1
+Azim Roussanaly,Relevance (law),1
+Azim Roussanaly,Accounting,1
+Azim Roussanaly,Anonymity,1
+Azim Roussanaly,Variance (accounting),1
+Azim Roussanaly,Data set,2
+Azim Roussanaly,Behavioral modeling,1
+Azim Roussanaly,Behavioral pattern,1
+Azim Roussanaly,Psychology,6
+Azim Roussanaly,Mathematics education,3
+Azim Roussanaly,Cognitive science,1
+Azim Roussanaly,Biology,3
+Azim Roussanaly,Pedagogy,3
+Azim Roussanaly,Paleontology,3
+Azim Roussanaly,Context (archaeology),3
+Azim Roussanaly,Botany,2
+Azim Roussanaly,Identification (biology),2
+Azim Roussanaly,Dropout (neural networks),1
+Azim Roussanaly,Institution,1
+Azim Roussanaly,Educational institution,1
+Azim Roussanaly,Autonomy,1
+Azim Roussanaly,Data mining,5
+Azim Roussanaly,Stability (learning theory),1
+Azim Roussanaly,Classifier (UML),1
+Azim Roussanaly,Data science,2
+Azim Roussanaly,Tracking (education),1
+Azim Roussanaly,Telecommunications,2
+Azim Roussanaly,Multimedia,1
+Azim Roussanaly,Online learning,1
+Azim Roussanaly,Early warning system,2
+Azim Roussanaly,Warning system,2
+Azim Roussanaly,Economics,1
+Azim Roussanaly,Finance,1
+Azim Roussanaly,Order (exchange),1
+Azim Roussanaly,Art,2
+Azim Roussanaly,Humanities,1
+Azim Roussanaly,Physics,2
+Azim Roussanaly,Optics,2
+Azim Roussanaly,Database,1
+Azim Roussanaly,Software,1
+Azim Roussanaly,Focus (optics),2
+Azim Roussanaly,Scalability,1
+Azim Roussanaly,Computer hardware,1
+Azim Roussanaly,Wireless,1
+Azim Roussanaly,Visualization,1
+Azim Roussanaly,Throughput,1
+Azim Roussanaly,Interfacing,1
+Azim Roussanaly,World Wide Web,3
+Azim Roussanaly,Statistics,1
+Azim Roussanaly,Mathematics,4
+Azim Roussanaly,Data collection,1
+Azim Roussanaly,Analytics,1
+Azim Roussanaly,Data analysis,1
+Azim Roussanaly,Learning analytics,1
+Azim Roussanaly,Similarity (geometry),2
+Azim Roussanaly,Image (mathematics),2
+Azim Roussanaly,Semantic similarity,2
+Azim Roussanaly,Philosophy,4
+Azim Roussanaly,Natural language processing,4
+Azim Roussanaly,Information retrieval,3
+Azim Roussanaly,Word (group theory),2
+Azim Roussanaly,Filter (signal processing),1
+Azim Roussanaly,Computer vision,1
+Azim Roussanaly,Linguistics,4
+Azim Roussanaly,Visual arts,1
+Azim Roussanaly,Musical,1
+Azim Roussanaly,Computer network,1
+Azim Roussanaly,Resource (disambiguation),1
+Azim Roussanaly,Recommender system,3
+Azim Roussanaly,Orchestration,1
+Azim Roussanaly,Ranking (information retrieval),1
+Azim Roussanaly,Mathematical analysis,1
+Azim Roussanaly,Tree (set theory),1
+Azim Roussanaly,Annotation,1
+Azim Roussanaly,Scheme (mathematics),1
+Azim Roussanaly,Grammar,1
+Azim Roussanaly,Tree-adjoining grammar,1
+Azim Roussanaly,Rule-based machine translation,1
+Azim Roussanaly,Context-free grammar,1
+Azim Roussanaly,Dependency (UML),1
+Azim Roussanaly,Parsing,2
+Azim Roussanaly,Dependency grammar,1
+Azim Roussanaly,Vietnamese,3
+Azim Roussanaly,Treebank,1
+Azim Roussanaly,Automaton,1
+Azim Roussanaly,Segmentation,1
+Azim Roussanaly,Algorithm,2
+Azim Roussanaly,Finite-state machine,1
+Azim Roussanaly,Phrase,1
+Azim Roussanaly,Top-down parsing,1
+Azim Roussanaly,Trigram,1
+Azim Roussanaly,Bigram,1
+Azim Roussanaly,Regular expression,1
+Azim Roussanaly,LR parser,1
+Azim Roussanaly,Pure mathematics,1
+Azim Roussanaly,Dimension (graph theory),1
+Azim Roussanaly,Semantics (computer science),1
+Azim Roussanaly,Collaborative filtering,2
+Azim Roussanaly,Latent semantic analysis,1
+Azim Roussanaly,Information filtering system,1
+Azim Roussanaly,Speech recognition,1
+Azim Roussanaly,State (computer science),1
+Azim Roussanaly,Class (philosophy),1
+Azim Roussanaly,String (physics),1
+Azim Roussanaly,Mathematical physics,1
+Azim Roussanaly,French horn,1
+Azim Roussanaly,Syllabic verse,1
+Azim Roussanaly,Reduplication,1
+Yannick Parmentier,Computer science,11
+Yannick Parmentier,Programming language,10
+Yannick Parmentier,Philosophy,9
+Yannick Parmentier,Artificial intelligence,11
+Yannick Parmentier,Natural language processing,11
+Yannick Parmentier,Linguistics,9
+Yannick Parmentier,Arabic,1
+Yannick Parmentier,Parsing,7
+Yannick Parmentier,Epistemology,2
+Yannick Parmentier,Physics,2
+Yannick Parmentier,Quantum mechanics,2
+Yannick Parmentier,Computer network,2
+Yannick Parmentier,Resource (disambiguation),2
+Yannick Parmentier,Library science,1
+Yannick Parmentier,Association (psychology),1
+Yannick Parmentier,Volume (thermodynamics),1
+Yannick Parmentier,Computational linguistics,1
+Yannick Parmentier,Psychology,1
+Yannick Parmentier,Pedagogy,1
+Yannick Parmentier,Grammar,7
+Yannick Parmentier,Multimedia,1
+Yannick Parmentier,Mathematics education,1
+Yannick Parmentier,JSON,1
+Yannick Parmentier,Curriculum,1
+Yannick Parmentier,Mathematics,6
+Yannick Parmentier,Mathematical analysis,5
+Yannick Parmentier,Tree (set theory),5
+Yannick Parmentier,Scale (ratio),1
+Yannick Parmentier,Parallel computing,1
+Yannick Parmentier,Syntax,3
+Yannick Parmentier,Rule-based machine translation,5
+Yannick Parmentier,Interface (matter),1
+Yannick Parmentier,Maximum bubble pressure method,1
+Yannick Parmentier,Bubble,1
+Yannick Parmentier,Geometry,2
+Yannick Parmentier,Rotation formalisms in three dimensions,2
+Yannick Parmentier,Tree-adjoining grammar,4
+Yannick Parmentier,Context-free grammar,4
+Yannick Parmentier,L-attributed grammar,2
+Yannick Parmentier,Extensibility,1
+Yannick Parmentier,Set (abstract data type),2
+Yannick Parmentier,Statistics,1
+Yannick Parmentier,Machine learning,1
+Yannick Parmentier,Data mining,1
+Yannick Parmentier,Composite material,1
+Yannick Parmentier,Materials science,1
+Yannick Parmentier,Economics,1
+Yannick Parmentier,Management,1
+Yannick Parmentier,Task (project management),1
+Yannick Parmentier,Range (aeronautics),1
+Yannick Parmentier,Sentence,1
+Yannick Parmentier,Realization (probability),1
+Yannick Parmentier,Dependency (UML),1
+Yannick Parmentier,Biology,2
+Yannick Parmentier,Paleontology,2
+Yannick Parmentier,Context (archaeology),2
+Yannick Parmentier,Genetics,1
+Yannick Parmentier,Abstraction,1
+Yannick Parmentier,Cell,1
+Yannick Parmentier,Lexical analysis,1
+Yannick Parmentier,Polarity (international relations),1
+Yannick Parmentier,Art,4
+Yannick Parmentier,Visual arts,4
+Yannick Parmentier,Architecture,1
+Yannick Parmentier,Compiler,2
+Yannick Parmentier,Compiler correctness,1
+Yannick Parmentier,Compiler construction,1
+Yannick Parmentier,Musical,3
+Yannick Parmentier,Formalism (music),3
+Yannick Parmentier,Attribute grammar,1
+Yannick Parmentier,S-attributed grammar,2
+Yannick Parmentier,Parse tree,1
+Yannick Parmentier,Arithmetic,1
+Yannick Parmentier,Rewriting,1
+Yannick Parmentier,Extension (predicate logic),1
+Yannick Parmentier,Concatenation (mathematics),1
+Yannick Parmentier,Top-down parsing,1
+Geoffray Bonnin,Computer science,12
+Geoffray Bonnin,Artificial intelligence,7
+Geoffray Bonnin,Psychology,4
+Geoffray Bonnin,Sociology,1
+Geoffray Bonnin,Business,1
+Geoffray Bonnin,Biology,7
+Geoffray Bonnin,Developmental psychology,1
+Geoffray Bonnin,Economics,4
+Geoffray Bonnin,Management,2
+Geoffray Bonnin,Pedagogy,2
+Geoffray Bonnin,Task (project management),2
+Geoffray Bonnin,Paleontology,5
+Geoffray Bonnin,Demography,1
+Geoffray Bonnin,Population,1
+Geoffray Bonnin,Cognitive psychology,3
+Geoffray Bonnin,Mathematics education,2
+Geoffray Bonnin,Test (biology),1
+Geoffray Bonnin,Accounting,1
+Geoffray Bonnin,Variance (accounting),1
+Geoffray Bonnin,Socioeconomic status,1
+Geoffray Bonnin,Numeracy,2
+Geoffray Bonnin,Literacy,2
+Geoffray Bonnin,Context (archaeology),5
+Geoffray Bonnin,Function (biology),1
+Geoffray Bonnin,Evolutionary biology,1
+Geoffray Bonnin,Cognitive science,1
+Geoffray Bonnin,Data science,2
+Geoffray Bonnin,Human–computer interaction,2
+Geoffray Bonnin,Data mining,5
+Geoffray Bonnin,Embedded system,1
+Geoffray Bonnin,Measure (data warehouse),1
+Geoffray Bonnin,Wearable computer,1
+Geoffray Bonnin,Political science,2
+Geoffray Bonnin,World Wide Web,4
+Geoffray Bonnin,Epistemology,1
+Geoffray Bonnin,Philosophy,2
+Geoffray Bonnin,Information retrieval,7
+Geoffray Bonnin,Metric (unit),1
+Geoffray Bonnin,Operations management,1
+Geoffray Bonnin,Quality (philosophy),1
+Geoffray Bonnin,Neuroscience,1
+Geoffray Bonnin,Multimedia,2
+Geoffray Bonnin,Perception,1
+Geoffray Bonnin,Computer security,1
+Geoffray Bonnin,Speech coding,1
+Geoffray Bonnin,Speech recognition,1
+Geoffray Bonnin,Linguistics,1
+Geoffray Bonnin,Art,2
+Geoffray Bonnin,Visual arts,1
+Geoffray Bonnin,Musical,1
+Geoffray Bonnin,Archaeology,2
+Geoffray Bonnin,History,1
+Geoffray Bonnin,Botany,1
+Geoffray Bonnin,Feature (linguistics),1
+Geoffray Bonnin,Identification (biology),1
+Geoffray Bonnin,Feature extraction,1
+Geoffray Bonnin,Exploit,1
+Geoffray Bonnin,Style (visual arts),1
+Geoffray Bonnin,Audio signal,1
+Geoffray Bonnin,Music information retrieval,1
+Geoffray Bonnin,Medicine,2
+Geoffray Bonnin,Humanities,1
+Geoffray Bonnin,Gynecology,1
+Geoffray Bonnin,Natural language processing,1
+Geoffray Bonnin,Filter (signal processing),2
+Geoffray Bonnin,Computer vision,2
+Geoffray Bonnin,Natural language,1
+Geoffray Bonnin,Machine learning,4
+Geoffray Bonnin,Language model,1
+Geoffray Bonnin,The Internet,3
+Geoffray Bonnin,Recommender system,4
+Geoffray Bonnin,Collaborative filtering,3
+Geoffray Bonnin,Telecommunications,1
+Geoffray Bonnin,Frame (networking),1
+Geoffray Bonnin,Web page,1
+Geoffray Bonnin,Web browser,1
+Geoffray Bonnin,Web navigation,1
+Geoffray Bonnin,Statistics,2
+Geoffray Bonnin,Mathematics,2
+Geoffray Bonnin,Geography,1
+Geoffray Bonnin,Object (grammar),1
+Geoffray Bonnin,Finance,1
+Geoffray Bonnin,Markov chain,2
+Geoffray Bonnin,Order (exchange),1
+Geoffray Bonnin,Markov process,2
+Geoffray Bonnin,Markov model,1
+Geoffray Bonnin,Context model,1
+Geoffray Bonnin,Matching (statistics),1
+Geoffray Bonnin,Gene,1
+Geoffray Bonnin,Chemistry,1
+Geoffray Bonnin,Biochemistry,1
+Geoffray Bonnin,Algorithm,1
+Geoffray Bonnin,State (computer science),1
+Geoffray Bonnin,Robustness (evolution),1
+Geoffray Bonnin,Computer network,1
+Geoffray Bonnin,Genetics,1
+Geoffray Bonnin,Resource (disambiguation),1
+Geoffray Bonnin,Radiology,1
+Geoffray Bonnin,Sequence (biology),1
+Geoffray Bonnin,Weighting,1
+Geoffray Bonnin,Intranet,1
+Egor Dudyrev,Computer science,2
+Egor Dudyrev,Artificial intelligence,1
+Egor Dudyrev,Physics,1
+Egor Dudyrev,Theoretical computer science,2
+Egor Dudyrev,Machine learning,1
+Egor Dudyrev,Acoustics,1
+Egor Dudyrev,Lattice (music),1
+Egor Dudyrev,Political science,1
+Egor Dudyrev,Law,1
+Egor Dudyrev,Representation (politics),1
+Egor Dudyrev,Politics,1
+Egor Dudyrev,Decision tree,1
+Egor Dudyrev,Mathematics,1
+Egor Dudyrev,Data mining,1
+Egor Dudyrev,Economics,1
+Egor Dudyrev,Algorithm,1
+Egor Dudyrev,Measure (data warehouse),1
+Egor Dudyrev,Library science,1
+Egor Dudyrev,Formal concept analysis,1
+Egor Dudyrev,Closure (psychology),1
+Egor Dudyrev,Market economy,1
+Egor Dudyrev,AKA,1
+Jean-Charles Lamirel,Computer science,53
+Jean-Charles Lamirel,Library science,3
+Jean-Charles Lamirel,Philosophy,27
+Jean-Charles Lamirel,Artificial intelligence,47
+Jean-Charles Lamirel,Natural language processing,3
+Jean-Charles Lamirel,Mathematics,31
+Jean-Charles Lamirel,Biology,17
+Jean-Charles Lamirel,Data science,9
+Jean-Charles Lamirel,Mathematical analysis,12
+Jean-Charles Lamirel,Linguistics,13
+Jean-Charles Lamirel,Paleontology,14
+Jean-Charles Lamirel,Context (archaeology),18
+Jean-Charles Lamirel,Resolution (logic),1
+Jean-Charles Lamirel,Domain (mathematical analysis),4
+Jean-Charles Lamirel,Face (sociological concept),1
+Jean-Charles Lamirel,Physics,8
+Jean-Charles Lamirel,Quantum mechanics,5
+Jean-Charles Lamirel,Pattern recognition (psychology),17
+Jean-Charles Lamirel,Machine learning,23
+Jean-Charles Lamirel,Data mining,39
+Jean-Charles Lamirel,Combinatorics,7
+Jean-Charles Lamirel,Telecommunications,2
+Jean-Charles Lamirel,Cluster analysis,28
+Jean-Charles Lamirel,Partition (number theory),3
+Jean-Charles Lamirel,Entropy (arrow of time),5
+Jean-Charles Lamirel,Salience (neuroscience),1
+Jean-Charles Lamirel,Feature selection,6
+Jean-Charles Lamirel,Skew,1
+Jean-Charles Lamirel,Salient,1
+Jean-Charles Lamirel,Statistics,3
+Jean-Charles Lamirel,Geography,8
+Jean-Charles Lamirel,Composite material,2
+Jean-Charles Lamirel,Materials science,2
+Jean-Charles Lamirel,Algorithm,4
+Jean-Charles Lamirel,Artificial neural network,13
+Jean-Charles Lamirel,Econometrics,1
+Jean-Charles Lamirel,Neighbourhood (mathematics),1
+Jean-Charles Lamirel,Matrix (chemical analysis),1
+Jean-Charles Lamirel,Variable (mathematics),1
+Jean-Charles Lamirel,Spatial analysis,1
+Jean-Charles Lamirel,Distance matrix,1
+Jean-Charles Lamirel,Spatial econometrics,1
+Jean-Charles Lamirel,Similarity (geometry),6
+Jean-Charles Lamirel,Image (mathematics),7
+Jean-Charles Lamirel,Metric (unit),7
+Jean-Charles Lamirel,Operations management,7
+Jean-Charles Lamirel,Economics,4
+Jean-Charles Lamirel,Mathematical optimization,12
+Jean-Charles Lamirel,Political science,5
+Jean-Charles Lamirel,Law,5
+Jean-Charles Lamirel,Representation (politics),3
+Jean-Charles Lamirel,Politics,3
+Jean-Charles Lamirel,Feature (linguistics),12
+Jean-Charles Lamirel,Maximization,11
+Jean-Charles Lamirel,Set (abstract data type),3
+Jean-Charles Lamirel,Programming language,14
+Jean-Charles Lamirel,Botany,1
+Jean-Charles Lamirel,Identification (biology),1
+Jean-Charles Lamirel,Data set,1
+Jean-Charles Lamirel,CURE data clustering algorithm,3
+Jean-Charles Lamirel,Correlation clustering,4
+Jean-Charles Lamirel,Core (optical fiber),1
+Jean-Charles Lamirel,Cluster (spacecraft),3
+Jean-Charles Lamirel,Determining the number of clusters in a data set,1
+Jean-Charles Lamirel,Operating system,6
+Jean-Charles Lamirel,Process (computing),4
+Jean-Charles Lamirel,Human–computer interaction,1
+Jean-Charles Lamirel,Segmentation,1
+Jean-Charles Lamirel,Relevance (law),1
+Jean-Charles Lamirel,Chatbot,1
+Jean-Charles Lamirel,Usability,1
+Jean-Charles Lamirel,Object (grammar),2
+Jean-Charles Lamirel,Scale (ratio),1
+Jean-Charles Lamirel,Fingerprint (computing),1
+Jean-Charles Lamirel,Cartography,1
+Jean-Charles Lamirel,Epistemology,9
+Jean-Charles Lamirel,Quality (philosophy),6
+Jean-Charles Lamirel,Information retrieval,15
+Jean-Charles Lamirel,Pure mathematics,4
+Jean-Charles Lamirel,Field (mathematics),4
+Jean-Charles Lamirel,Function (biology),2
+Jean-Charles Lamirel,Evolutionary biology,2
+Jean-Charles Lamirel,Archaeology,5
+Jean-Charles Lamirel,Citation,1
+Jean-Charles Lamirel,Altmetrics,1
+Jean-Charles Lamirel,Informetrics,1
+Jean-Charles Lamirel,Webometrics,3
+Jean-Charles Lamirel,Scientometrics,1
+Jean-Charles Lamirel,Computer network,1
+Jean-Charles Lamirel,Resource (disambiguation),1
+Jean-Charles Lamirel,Supervised learning,1
+Jean-Charles Lamirel,Humanities,2
+Jean-Charles Lamirel,Geometry,3
+Jean-Charles Lamirel,Engineering,7
+Jean-Charles Lamirel,Selection (genetic algorithm),3
+Jean-Charles Lamirel,Feature extraction,1
+Jean-Charles Lamirel,Character (mathematics),1
+Jean-Charles Lamirel,Psychology,2
+Jean-Charles Lamirel,Neuroscience,1
+Jean-Charles Lamirel,Value (mathematics),1
+Jean-Charles Lamirel,Adaptation (eye),1
+Jean-Charles Lamirel,Theoretical computer science,4
+Jean-Charles Lamirel,Hierarchical clustering,1
+Jean-Charles Lamirel,Visualization,2
+Jean-Charles Lamirel,Scope (computer science),3
+Jean-Charles Lamirel,Hyperbolic manifold,1
+Jean-Charles Lamirel,Hyperbolic function,1
+Jean-Charles Lamirel,Hyperbolic tree,1
+Jean-Charles Lamirel,World Wide Web,7
+Jean-Charles Lamirel,Matching (statistics),1
+Jean-Charles Lamirel,Task (project management),3
+Jean-Charles Lamirel,Systems engineering,3
+Jean-Charles Lamirel,History,2
+Jean-Charles Lamirel,Theology,3
+Jean-Charles Lamirel,Index (typography),2
+Jean-Charles Lamirel,Knowledge management,1
+Jean-Charles Lamirel,Novelty,3
+Jean-Charles Lamirel,Categorization,1
+Jean-Charles Lamirel,Creativity,1
+Jean-Charles Lamirel,Plan (archaeology),1
+Jean-Charles Lamirel,Originality,1
+Jean-Charles Lamirel,Scientific literature,1
+Jean-Charles Lamirel,Precision and recall,1
+Jean-Charles Lamirel,Scheme (mathematics),1
+Jean-Charles Lamirel,Classification scheme,1
+Jean-Charles Lamirel,Optics,2
+Jean-Charles Lamirel,Point (geometry),1
+Jean-Charles Lamirel,Focus (optics),2
+Jean-Charles Lamirel,Class (philosophy),1
+Jean-Charles Lamirel,Automatic summarization,1
+Jean-Charles Lamirel,Multidimensional scaling,1
+Jean-Charles Lamirel,Web page,1
+Jean-Charles Lamirel,Multi-document summarization,1
+Jean-Charles Lamirel,Verb,2
+Jean-Charles Lamirel,Fuzzy clustering,1
+Jean-Charles Lamirel,Range (aeronautics),1
+Jean-Charles Lamirel,Measure (data warehouse),3
+Jean-Charles Lamirel,Euclidean geometry,1
+Jean-Charles Lamirel,Ground truth,3
+Jean-Charles Lamirel,Clustering high-dimensional data,3
+Jean-Charles Lamirel,Euclidean distance,4
+Jean-Charles Lamirel,k-medians clustering,1
+Jean-Charles Lamirel,Pascal (unit),2
+Jean-Charles Lamirel,Feature vector,1
+Jean-Charles Lamirel,Homogeneous,2
+Jean-Charles Lamirel,Macro,2
+Jean-Charles Lamirel,Canopy clustering algorithm,1
+Jean-Charles Lamirel,Neural gas,2
+Jean-Charles Lamirel,Time delay neural network,2
+Jean-Charles Lamirel,Electrical engineering,1
+Jean-Charles Lamirel,Current (fluid),1
+Jean-Charles Lamirel,Mechanism (biology),2
+Jean-Charles Lamirel,Generalization,5
+Jean-Charles Lamirel,Inference,1
+Jean-Charles Lamirel,Bayesian probability,1
+Jean-Charles Lamirel,Bayesian inference,1
+Jean-Charles Lamirel,Bayesian network,1
+Jean-Charles Lamirel,Probabilistic logic,1
+Jean-Charles Lamirel,Variable-order Bayesian network,1
+Jean-Charles Lamirel,Relation (database),1
+Jean-Charles Lamirel,Self-organizing map,5
+Jean-Charles Lamirel,Extension (predicate logic),4
+Jean-Charles Lamirel,Art,8
+Jean-Charles Lamirel,Visual arts,6
+Jean-Charles Lamirel,Viewpoints,6
+Jean-Charles Lamirel,Patent visualisation,1
+Jean-Charles Lamirel,Geodesy,3
+Jean-Charles Lamirel,Benchmark (surveying),3
+Jean-Charles Lamirel,Literature,3
+Jean-Charles Lamirel,Poetry,3
+Jean-Charles Lamirel,Digital library,3
+Jean-Charles Lamirel,Thermodynamics,1
+Jean-Charles Lamirel,Component (thermodynamics),1
+Jean-Charles Lamirel,Computer graphics (images),1
+Jean-Charles Lamirel,Parallel computing,3
+Jean-Charles Lamirel,Graphics,1
+Jean-Charles Lamirel,Interface (matter),3
+Jean-Charles Lamirel,Maximum bubble pressure method,3
+Jean-Charles Lamirel,Bubble,3
+Jean-Charles Lamirel,Computer security,2
+Jean-Charles Lamirel,Semantic Web,1
+Jean-Charles Lamirel,Linked data,1
+Jean-Charles Lamirel,Exploit,2
+Jean-Charles Lamirel,Fuzzy logic,1
+Jean-Charles Lamirel,Context model,1
+Jean-Charles Lamirel,Symbolic data analysis,1
+Jean-Charles Lamirel,Psychoanalysis,1
+Jean-Charles Lamirel,The Symbolic,1
+Jean-Charles Lamirel,Database,2
+Jean-Charles Lamirel,User interface,1
+Jean-Charles Lamirel,Classifier (UML),2
+Jean-Charles Lamirel,Knowledge extraction,2
+Jean-Charles Lamirel,Data modeling,1
+Jean-Charles Lamirel,Information extraction,1
+Jean-Charles Lamirel,Computation,1
+Jean-Charles Lamirel,Association rule learning,1
+Jean-Charles Lamirel,Topology (electrical circuits),1
+Jean-Charles Lamirel,Unsupervised learning,1
+Jean-Charles Lamirel,Network topology,1
+Jean-Charles Lamirel,Granularity,1
+Jean-Charles Lamirel,Abstraction,1
+Jean-Charles Lamirel,Competitive learning,1
+Jean-Charles Lamirel,Hebbian theory,1
+Jean-Charles Lamirel,Support vector machine,1
+Jean-Charles Lamirel,Heuristics,1
+Jean-Charles Lamirel,Kernel (algebra),1
+Jean-Charles Lamirel,Heuristic,1
+Jean-Charles Lamirel,Integer programming,1
+Jean-Charles Lamirel,Tabu search,1
+Jean-Charles Lamirel,Contextual image classification,1
+Jean-Charles Lamirel,Novelty detection,2
+Jean-Charles Lamirel,Information filtering system,1
+Aurélie Bannay,Internal medicine,2
+Aurélie Bannay,Medicine,2
+Aurélie Bannay,Cumulative dose,1
+Aurélie Bannay,Intensive care medicine,1
+Aurélie Bannay,Emergency medicine,1
+Aurélie Bannay,Medical record,1
+Aurélie Bannay,Adverse effect,1
+Aurélie Bannay,Hematopoietic stem cell transplantation,1
+Aurélie Bannay,Drug,1
+Aurélie Bannay,Transplantation,1
+Aurélie Bannay,Polypharmacy,1
+Aurélie Bannay,Pharmacology,1
+Aurélie Bannay,Computer science,1
+Aurélie Bannay,Engineering,1
+Aurélie Bannay,Data science,1
+Aurélie Bannay,Data mining,1
+Aurélie Bannay,Mechanical engineering,1
+Aurélie Bannay,Pathology,1
+Aurélie Bannay,Alternative medicine,1
+Aurélie Bannay,Political science,1
+Aurélie Bannay,Law,1
+Aurélie Bannay,Database,1
+Aurélie Bannay,Population,1
+Aurélie Bannay,Environmental health,1
+Aurélie Bannay,Big data,1
+Aurélie Bannay,Health care,1
+Aurélie Bannay,Data sharing,1
+Aurélie Bannay,Data warehouse,1
+Aurélie Bannay,Record linkage,1
+Aurélie Bannay,Blueprint,1
+Aurélie Bannay,Cohort,1
+Parisa Rastin,Business,1
+Parisa Rastin,Data mining,3
+Parisa Rastin,Marketing,1
+Parisa Rastin,Benchmarking,1
+Parisa Rastin,Political science,4
+Parisa Rastin,Law,4
+Parisa Rastin,Representation (politics),4
+Parisa Rastin,Politics,4
+Parisa Rastin,Telecommunications,1
+Parisa Rastin,Dimension (graph theory),1
+Parisa Rastin,Cluster analysis,5
+Parisa Rastin,Data stream,1
+Parisa Rastin,Data stream mining,1
+Parisa Rastin,Curse of dimensionality,1
+Parisa Rastin,Automatic summarization,1
+Parisa Rastin,Clustering high-dimensional data,1
+Parisa Rastin,Data stream clustering,3
+Parisa Rastin,Topological data analysis,1
+Parisa Rastin,CURE data clustering algorithm,3
+Parisa Rastin,Correlation clustering,3
+Parisa Rastin,Barycentric coordinate system,2
+Parisa Rastin,k-means clustering,1
+Parisa Rastin,Image (mathematics),2
+Parisa Rastin,Sliding window protocol,1
+Parisa Rastin,Window (computing),1
+Parisa Rastin,Histogram,2
+Parisa Rastin,Coordinate system,1
+Parisa Rastin,Generative model,1
+Parisa Rastin,Generative grammar,1
+Parisa Rastin,Machine learning,1
+Claire Gardent,Computer science,73
+Claire Gardent,Software engineering,3
+Claire Gardent,World Wide Web,7
+Claire Gardent,Philosophy,35
+Claire Gardent,Artificial intelligence,67
+Claire Gardent,Natural language processing,62
+Claire Gardent,Physics,21
+Claire Gardent,Sociology,2
+Claire Gardent,Social science,2
+Claire Gardent,Quantum mechanics,14
+Claire Gardent,Generative grammar,7
+Claire Gardent,Machine learning,6
+Claire Gardent,Linguistics,30
+Claire Gardent,Artificial neural network,5
+Claire Gardent,Dialog box,3
+Claire Gardent,Voltage,2
+Claire Gardent,Conversation,2
+Claire Gardent,Modalities,2
+Claire Gardent,Transformer,2
+Claire Gardent,Information retrieval,15
+Claire Gardent,Inference,2
+Claire Gardent,Biology,13
+Claire Gardent,Gene,5
+Claire Gardent,Chemistry,7
+Claire Gardent,Biochemistry,7
+Claire Gardent,Economics,17
+Claire Gardent,Management,8
+Claire Gardent,Task (project management),12
+Claire Gardent,Selection (genetic algorithm),5
+Claire Gardent,Paleontology,8
+Claire Gardent,Context (archaeology),6
+Claire Gardent,Arabic,1
+Claire Gardent,Transformation (genetics),1
+Claire Gardent,Dialog system,1
+Claire Gardent,Epistemology,8
+Claire Gardent,Computer network,4
+Claire Gardent,Resource (disambiguation),2
+Claire Gardent,Library science,4
+Claire Gardent,Association (psychology),2
+Claire Gardent,Volume (thermodynamics),2
+Claire Gardent,Computational linguistics,2
+Claire Gardent,Simple (philosophy),1
+Claire Gardent,Data science,2
+Claire Gardent,Question answering,1
+Claire Gardent,Geodesy,4
+Claire Gardent,Benchmark (surveying),4
+Claire Gardent,Geography,4
+Claire Gardent,Sentence,13
+Claire Gardent,Feature (linguistics),5
+Claire Gardent,Knowledge base,5
+Claire Gardent,Realisation,6
+Claire Gardent,Operating system,6
+Claire Gardent,Similarity (geometry),1
+Claire Gardent,Image (mathematics),1
+Claire Gardent,Theoretical computer science,12
+Claire Gardent,Graph,7
+Claire Gardent,Feature learning,1
+Claire Gardent,Embedding,1
+Claire Gardent,Heuristics,1
+Claire Gardent,Feature vector,1
+Claire Gardent,Noisy text analytics,1
+Claire Gardent,Text graph,1
+Claire Gardent,Text mining,1
+Claire Gardent,Programming language,31
+Claire Gardent,Software,1
+Claire Gardent,Scale (ratio),2
+Claire Gardent,Language model,1
+Claire Gardent,AKA,1
+Claire Gardent,Unified Modeling Language,1
+Claire Gardent,Model-driven architecture,1
+Claire Gardent,Natural language,10
+Claire Gardent,Pipeline (software),2
+Claire Gardent,Geology,1
+Claire Gardent,Natural language generation,7
+Claire Gardent,Natural (archaeology),2
+Claire Gardent,Engineering,7
+Claire Gardent,Aerospace engineering,1
+Claire Gardent,Recurrent neural network,1
+Claire Gardent,Parsing,13
+Claire Gardent,Intersection (aeronautics),1
+Claire Gardent,Logical form,1
+Claire Gardent,Set (abstract data type),7
+Claire Gardent,Mathematics,22
+Claire Gardent,Mathematical analysis,14
+Claire Gardent,TRACE (psycholinguistics),1
+Claire Gardent,Traceability,1
+Claire Gardent,Completeness (order theory),1
+Claire Gardent,Consistency (knowledge bases),1
+Claire Gardent,Correctness,1
+Claire Gardent,First-order logic,1
+Claire Gardent,Geometry,6
+Claire Gardent,Ontology,2
+Claire Gardent,Optics,7
+Claire Gardent,Quality (philosophy),3
+Claire Gardent,Focus (optics),7
+Claire Gardent,Description logic,1
+Claire Gardent,Axiom,1
+Claire Gardent,Domain knowledge,1
+Claire Gardent,Upper ontology,1
+Claire Gardent,Formal ontology,1
+Claire Gardent,Tree (set theory),11
+Claire Gardent,Parallel computing,1
+Claire Gardent,Syntax,7
+Claire Gardent,Rule-based machine translation,8
+Claire Gardent,Interface (matter),1
+Claire Gardent,Maximum bubble pressure method,1
+Claire Gardent,Bubble,1
+Claire Gardent,Rotation formalisms in three dimensions,1
+Claire Gardent,Grammar,10
+Claire Gardent,Tree-adjoining grammar,6
+Claire Gardent,Context-free grammar,6
+Claire Gardent,L-attributed grammar,3
+Claire Gardent,Extensibility,1
+Claire Gardent,Art,3
+Claire Gardent,Visual arts,2
+Claire Gardent,Musical,2
+Claire Gardent,Unification,2
+Claire Gardent,Semantics (computer science),8
+Claire Gardent,Formalism (music),2
+Claire Gardent,Head-driven phrase structure grammar,1
+Claire Gardent,Line graph,1
+Claire Gardent,Encoder,4
+Claire Gardent,ENCODE,4
+Claire Gardent,Dual graph,1
+Claire Gardent,Text generation,6
+Claire Gardent,Reinforcement learning,2
+Claire Gardent,Rewriting,3
+Claire Gardent,Dependency (UML),5
+Claire Gardent,Automatic summarization,3
+Claire Gardent,Data structure,1
+Claire Gardent,Dependency grammar,4
+Claire Gardent,Tree structure,1
+Claire Gardent,Genetics,4
+Claire Gardent,Sequence (biology),3
+Claire Gardent,Knowledge graph,1
+Claire Gardent,Redundancy (engineering),1
+Claire Gardent,Psychology,6
+Claire Gardent,Meaning (existential),6
+Claire Gardent,Psychotherapist,5
+Claire Gardent,Function (biology),1
+Claire Gardent,Evolutionary biology,1
+Claire Gardent,Machine translation,3
+Claire Gardent,BLEU,1
+Claire Gardent,Topology (electrical circuits),2
+Claire Gardent,Combinatorics,4
+Claire Gardent,Node (physics),2
+Claire Gardent,Structural engineering,2
+Claire Gardent,Encoding (memory),4
+Claire Gardent,Information flow,1
+Claire Gardent,Metric (unit),2
+Claire Gardent,Operations management,2
+Claire Gardent,Leverage (statistics),4
+Claire Gardent,Data mining,4
+Claire Gardent,Relation (database),1
+Claire Gardent,Basis (linear algebra),1
+Claire Gardent,Comprehension,1
+Claire Gardent,Reading (process),1
+Claire Gardent,Preprocessor,1
+Claire Gardent,Text simplification,2
+Claire Gardent,Macroeconomics,7
+Claire Gardent,Production (economics),7
+Claire Gardent,Medicine,3
+Claire Gardent,Systems engineering,4
+Claire Gardent,Process (computing),3
+Claire Gardent,Deep learning,3
+Claire Gardent,Political science,2
+Claire Gardent,Law,2
+Claire Gardent,Representation (politics),2
+Claire Gardent,Politics,2
+Claire Gardent,Deep neural networks,1
+Claire Gardent,Speech recognition,2
+Claire Gardent,Mechanism (biology),1
+Claire Gardent,Algorithm,4
+Claire Gardent,Decoding methods,1
+Claire Gardent,Cognitive science,1
+Claire Gardent,Human–computer interaction,1
+Claire Gardent,Visualization,1
+Claire Gardent,Modality (human–computer interaction),1
+Claire Gardent,Semantic similarity,1
+Claire Gardent,Semantic Web,5
+Claire Gardent,RDF,2
+Claire Gardent,Linked data,2
+Claire Gardent,Word (group theory),5
+Claire Gardent,Word order,3
+Claire Gardent,Bridging (networking),2
+Claire Gardent,Statistics,2
+Claire Gardent,Composite material,1
+Claire Gardent,Materials science,1
+Claire Gardent,Range (aeronautics),1
+Claire Gardent,Realization (probability),2
+Claire Gardent,Neuroscience,1
+Claire Gardent,Archaeology,2
+Claire Gardent,History,2
+Claire Gardent,Radiology,2
+Claire Gardent,Presentation (obstetrics),2
+Claire Gardent,Pleasure,1
+Claire Gardent,Computer security,1
+Claire Gardent,Transparency (behavior),1
+Claire Gardent,State (computer science),1
+Claire Gardent,Arithmetic,1
+Claire Gardent,Binary number,1
+Claire Gardent,Nonlinear system,1
+Claire Gardent,Linearization,1
+Claire Gardent,Merge (version control),1
+Claire Gardent,Abstraction,1
+Claire Gardent,Cell,2
+Claire Gardent,Lexical analysis,1
+Claire Gardent,Polarity (international relations),2
+Claire Gardent,Verb,5
+Claire Gardent,Polysemy,1
+Claire Gardent,Sequence learning,1
+Claire Gardent,Semantic Web Stack,1
+Claire Gardent,OWL-S,1
+Claire Gardent,Paraphrase,2
+Claire Gardent,Training set,1
+Claire Gardent,Data set,1
+Claire Gardent,Pattern recognition (psychology),2
+Claire Gardent,Mathematical optimization,1
+Claire Gardent,Cluster analysis,2
+Claire Gardent,Maximization,1
+Claire Gardent,Cluster (spacecraft),1
+Claire Gardent,Annotation,2
+Claire Gardent,Probabilistic logic,1
+Claire Gardent,Domain (mathematical analysis),2
+Claire Gardent,Rank (graph theory),1
+Claire Gardent,Contrast (vision),1
+Claire Gardent,Abstract syntax,1
+Claire Gardent,Software portability,1
+Claire Gardent,Event (particle physics),1
+Claire Gardent,Base (topology),1
+Claire Gardent,Test (biology),1
+Claire Gardent,Content (measure theory),1
+Claire Gardent,Pure mathematics,3
+Claire Gardent,Mildly context-sensitive grammar formalism,2
+Claire Gardent,Phrase structure rules,1
+Claire Gardent,Attribute grammar,3
+Claire Gardent,Semantic interpretation,1
+Claire Gardent,Interpretation (philosophy),1
+Claire Gardent,S-attributed grammar,1
+Claire Gardent,Adjunction,2
+Claire Gardent,Semantic feature,1
+Claire Gardent,Compiler,1
+Claire Gardent,Ecology,2
+Claire Gardent,Lemma (botany),2
+Claire Gardent,Poaceae,2
+Claire Gardent,Botany,2
+Claire Gardent,Genus,2
+Claire Gardent,Lexicon,2
+Claire Gardent,Lexicography,2
+Claire Gardent,WordNet,2
+Claire Gardent,Synonym (taxonomy),2
+Claire Gardent,Construct (python library),1
+Claire Gardent,Semantic role labeling,2
+Claire Gardent,Aesthetics,1
+Claire Gardent,Session (web analytics),1
+Claire Gardent,Period (music),1
+Claire Gardent,Agreement,1
+Claire Gardent,Negation,1
+Claire Gardent,Noun,1
+Claire Gardent,Logical consequence,1
+Claire Gardent,Textual entailment,1
+Claire Gardent,Argument (complex analysis),1
+Claire Gardent,Predicate (mathematical logic),1
+Claire Gardent,Dependency graph,1
+Claire Gardent,Power (physics),1
+Claire Gardent,Expressive power,1
+Claire Gardent,Algebra over a field,1
+Claire Gardent,Constraint (computer-aided design),1
+Claire Gardent,Combinatory categorial grammar,1
+Claire Gardent,Emergent grammar,1
+Claire Gardent,Link grammar,1
+Claire Gardent,Affix grammar,1
+Claire Gardent,Extended Affix Grammar,1
+Claire Gardent,Typology,1
+Claire Gardent,Spotting,1
+Claire Gardent,Keyword spotting,1
+Claire Gardent,Surface (topology),1
+Claire Gardent,Exponential function,1
+Emmanuel Nauer,Computer science,27
+Emmanuel Nauer,Similarity (geometry),2
+Emmanuel Nauer,Statistics,4
+Emmanuel Nauer,Epistemology,7
+Emmanuel Nauer,Image (mathematics),2
+Emmanuel Nauer,Semantic similarity,1
+Emmanuel Nauer,Philosophy,10
+Emmanuel Nauer,Artificial intelligence,20
+Emmanuel Nauer,Psychology,3
+Emmanuel Nauer,Matching (statistics),1
+Emmanuel Nauer,Natural language processing,7
+Emmanuel Nauer,Information retrieval,9
+Emmanuel Nauer,Geometry,3
+Emmanuel Nauer,Ontology,5
+Emmanuel Nauer,Wonder,1
+Emmanuel Nauer,Simple (philosophy),1
+Emmanuel Nauer,Meaning (existential),1
+Emmanuel Nauer,Mathematics,11
+Emmanuel Nauer,Psychotherapist,1
+Emmanuel Nauer,Social psychology,2
+Emmanuel Nauer,Word (group theory),1
+Emmanuel Nauer,Set (abstract data type),3
+Emmanuel Nauer,Programming language,9
+Emmanuel Nauer,Machine learning,3
+Emmanuel Nauer,Mathematical analysis,7
+Emmanuel Nauer,Artificial neural network,1
+Emmanuel Nauer,Value (mathematics),1
+Emmanuel Nauer,Test set,1
+Emmanuel Nauer,Regression,1
+Emmanuel Nauer,Factorial experiment,1
+Emmanuel Nauer,Factorial,1
+Emmanuel Nauer,Physics,15
+Emmanuel Nauer,Optics,10
+Emmanuel Nauer,Process (computing),9
+Emmanuel Nauer,Base (topology),1
+Emmanuel Nauer,Adaptation (eye),11
+Emmanuel Nauer,Knowledge base,2
+Emmanuel Nauer,Computer security,1
+Emmanuel Nauer,Filter (signal processing),1
+Emmanuel Nauer,Computer vision,1
+Emmanuel Nauer,Theoretical computer science,4
+Emmanuel Nauer,Data mining,3
+Emmanuel Nauer,Exploit,1
+Emmanuel Nauer,Knowledge extraction,2
+Emmanuel Nauer,Boolean data type,1
+Emmanuel Nauer,Algorithm,4
+Emmanuel Nauer,Mathematical optimization,1
+Emmanuel Nauer,Basis (linear algebra),1
+Emmanuel Nauer,Applied mathematics,1
+Emmanuel Nauer,Interpolation (computer graphics),1
+Emmanuel Nauer,Extrapolation,2
+Emmanuel Nauer,Bilinear interpolation,1
+Emmanuel Nauer,Multivariate interpolation,1
+Emmanuel Nauer,Human–computer interaction,3
+Emmanuel Nauer,Neuroscience,1
+Emmanuel Nauer,Chemistry,4
+Emmanuel Nauer,Political science,9
+Emmanuel Nauer,Law,8
+Emmanuel Nauer,Focus (optics),1
+Emmanuel Nauer,Case-based reasoning,5
+Emmanuel Nauer,CONTEST,3
+Emmanuel Nauer,Knowledge representation and reasoning,2
+Emmanuel Nauer,Food science,3
+Emmanuel Nauer,Recipe,3
+Emmanuel Nauer,Acoustics,2
+Emmanuel Nauer,Analogy,1
+Emmanuel Nauer,Preprocessor,1
+Emmanuel Nauer,Permutation (music),1
+Emmanuel Nauer,Analogical reasoning,1
+Emmanuel Nauer,Competence (human resources),1
+Emmanuel Nauer,Humanities,2
+Emmanuel Nauer,Domain (mathematical analysis),3
+Emmanuel Nauer,Process ontology,1
+Emmanuel Nauer,Ontology-based data integration,1
+Emmanuel Nauer,Upper ontology,1
+Emmanuel Nauer,Formal ontology,1
+Emmanuel Nauer,Suggested Upper Merged Ontology,1
+Emmanuel Nauer,World Wide Web,5
+Emmanuel Nauer,Semantic Web,7
+Emmanuel Nauer,Annotation,2
+Emmanuel Nauer,RDF,5
+Emmanuel Nauer,SPARQL,4
+Emmanuel Nauer,Publication,1
+Emmanuel Nauer,RDF Schema,4
+Emmanuel Nauer,Operating system,3
+Emmanuel Nauer,Biology,5
+Emmanuel Nauer,Paleontology,5
+Emmanuel Nauer,Context (archaeology),5
+Emmanuel Nauer,Computer network,1
+Emmanuel Nauer,Resource (disambiguation),1
+Emmanuel Nauer,Linked data,1
+Emmanuel Nauer,Semantic annotation,1
+Emmanuel Nauer,Gene,1
+Emmanuel Nauer,Biochemistry,1
+Emmanuel Nauer,Web query classification,1
+Emmanuel Nauer,Web search query,1
+Emmanuel Nauer,Query language,1
+Emmanuel Nauer,Search engine,2
+Emmanuel Nauer,RDF query language,1
+Emmanuel Nauer,Named graph,1
+Emmanuel Nauer,Transformation (genetics),1
+Emmanuel Nauer,Generalization,2
+Emmanuel Nauer,Combinatorics,3
+Emmanuel Nauer,Class (philosophy),1
+Emmanuel Nauer,Partition (number theory),1
+Emmanuel Nauer,Knowledge management,4
+Emmanuel Nauer,Domain knowledge,1
+Emmanuel Nauer,Semantic network,1
+Emmanuel Nauer,Knowledge-based systems,2
+Emmanuel Nauer,Data science,1
+Emmanuel Nauer,Software engineering,1
+Emmanuel Nauer,Space (punctuation),1
+Emmanuel Nauer,Knowledge space,1
+Emmanuel Nauer,Knowledge integration,1
+Emmanuel Nauer,Knowledge engineering,1
+Emmanuel Nauer,Social Semantic Web,1
+Emmanuel Nauer,Natural language,1
+Emmanuel Nauer,Economics,1
+Emmanuel Nauer,Management,1
+Emmanuel Nauer,Task (project management),1
+Emmanuel Nauer,Database,1
+Emmanuel Nauer,Representation (politics),4
+Emmanuel Nauer,Politics,4
+Emmanuel Nauer,Workflow,1
+Emmanuel Nauer,Knowledge acquisition,2
+Emmanuel Nauer,Quantum mechanics,3
+Emmanuel Nauer,Action (physics),1
+Emmanuel Nauer,Formal concept analysis,2
+Emmanuel Nauer,Lattice (music),1
+Emmanuel Nauer,Lattice Miner,1
+Emmanuel Nauer,Sociology,2
+Emmanuel Nauer,Social science,2
+Emmanuel Nauer,Quality (philosophy),1
+Emmanuel Nauer,Power (physics),2
+Emmanuel Nauer,Point (geometry),1
+Emmanuel Nauer,Rank (graph theory),2
+Emmanuel Nauer,Reliability (semiconductor),2
+Emmanuel Nauer,Reputation,2
+Emmanuel Nauer,Procedural knowledge,1
+Emmanuel Nauer,Creativity,1
+Emmanuel Nauer,Originality,1
+Emmanuel Nauer,Ingredient,1
+Emmanuel Nauer,Inference,2
+Emmanuel Nauer,Simple Knowledge Organization System,1
+Emmanuel Nauer,Cwm,1
+Emmanuel Nauer,Semantic reasoner,1
+Emmanuel Nauer,Ecology,1
+Emmanuel Nauer,Graph,1
+Emmanuel Nauer,Dependency (UML),1
+Emmanuel Nauer,Reuse,1
+Emmanuel Nauer,Logical consequence,1
+Emmanuel Nauer,Inference engine,1
+Emmanuel Nauer,Efficient XML Interchange,1
+Emmanuel Nauer,XML,1
+Emmanuel Nauer,Document Structure Description,1
+Emmanuel Nauer,XML validation,1
+Emmanuel Nauer,XML database,1
+Emmanuel Nauer,Streaming XML,1
+Emmanuel Nauer,XML Schema Editor,1
+Yan Kabrit,Computer science,1
+Yan Kabrit,Psychology,1
+Yan Kabrit,Human–computer interaction,1
+Yan Kabrit,Neuroscience,1
+Yan Kabrit,Adaptation (eye),1
+François Buet,Computer science,1
+François Buet,Political science,1
+François Buet,Law,1
+François Buet,Representation (politics),1
+François Buet,Politics,1
+Mohammed Fellaji,Computer science,1
+Mohammed Fellaji,Statistics,1
+Mohammed Fellaji,Epistemology,1
+Mohammed Fellaji,Philosophy,1
+Mohammed Fellaji,Artificial intelligence,1
+Mohammed Fellaji,Mathematics,1
+Mohammed Fellaji,Chemistry,1
+Mohammed Fellaji,Biochemistry,1
+Mohammed Fellaji,Machine learning,1
+Mohammed Fellaji,Regularization (linguistics),1
+Mohammed Fellaji,Econometrics,1
+Mohammed Fellaji,Bayesian probability,1
+Mohammed Fellaji,Variety (cybernetics),1
+Mohammed Fellaji,Calibration,1
+Mohammed Fellaji,Bayes' theorem,1
+Mohammed Fellaji,Thought experiment,1
+Mohammed Fellaji,Uncertainty quantification,1
+Mohammed Fellaji,Argument (complex analysis),1
+Armelle Brun,Natural language processing,8
+Armelle Brun,Mathematical analysis,3
+Armelle Brun,Domain (mathematical analysis),2
+Armelle Brun,Machine translation,1
+Armelle Brun,Sentiment analysis,1
+Armelle Brun,Theoretical computer science,4
+Armelle Brun,Distributed computing,1
+Armelle Brun,Execution time,1
+Armelle Brun,Biology,12
+Armelle Brun,Paleontology,7
+Armelle Brun,Econometrics,1
+Armelle Brun,Series (stratigraphy),1
+Armelle Brun,Time series,1
+Armelle Brun,Database,2
+Armelle Brun,Graph,3
+Armelle Brun,Scalability,2
+Armelle Brun,Pairwise comparison,1
+Armelle Brun,Temporal database,1
+Armelle Brun,Data science,10
+Armelle Brun,Programming language,9
+Armelle Brun,Knowledge graph,3
+Armelle Brun,Information retrieval,18
+Armelle Brun,Metric (unit),3
+Armelle Brun,Operations management,3
+Armelle Brun,Composite material,4
+Armelle Brun,Materials science,4
+Armelle Brun,Range (aeronautics),2
+Armelle Brun,Combinatorics,3
+Armelle Brun,Perspective (graphical),1
+Armelle Brun,Embedding,2
+Armelle Brun,Domain knowledge,1
+Armelle Brun,Ground truth,1
+Armelle Brun,Rank (graph theory),1
+Armelle Brun,Relation (database),1
+Armelle Brun,Graph embedding,1
+Armelle Brun,Algorithm,12
+Armelle Brun,Computer network,4
+Armelle Brun,Link (geometry),1
+Armelle Brun,Pattern recognition (psychology),3
+Armelle Brun,Botany,3
+Armelle Brun,Identification (biology),3
+Armelle Brun,Contrast (vision),1
+Armelle Brun,Knowledge extraction,1
+Armelle Brun,Lift (data mining),1
+Armelle Brun,Set (abstract data type),5
+Armelle Brun,Filter (signal processing),3
+Armelle Brun,Computer vision,3
+Armelle Brun,State (computer science),3
+Armelle Brun,Association rule learning,3
+Armelle Brun,Structuring,1
+Armelle Brun,Rule induction,1
+Armelle Brun,Image (mathematics),3
+Armelle Brun,Philosophy,7
+Armelle Brun,Speech recognition,1
+Armelle Brun,Noise (video),2
+Armelle Brun,Linguistics,2
+Armelle Brun,Genetics,4
+Armelle Brun,Sequence (biology),4
+Armelle Brun,Transcription (linguistics),1
+Armelle Brun,Search algorithm,1
+Armelle Brun,Beam search,1
+Armelle Brun,Analytics,1
+Armelle Brun,Learning analytics,1
+Armelle Brun,Epistemology,4
+Armelle Brun,Simple (philosophy),1
+Armelle Brun,Path (computing),1
+Armelle Brun,Multimedia,2
+Armelle Brun,Online learning,1
+Armelle Brun,Online and offline,1
+Armelle Brun,Offline learning,1
+Armelle Brun,Similarity (geometry),1
+Armelle Brun,Psychology,5
+Armelle Brun,Psychotherapist,2
+Armelle Brun,Software engineering,2
+Armelle Brun,Limit (mathematics),1
+Armelle Brun,Redundancy (engineering),1
+Armelle Brun,Behavioral pattern,2
+Armelle Brun,Generality,1
+Armelle Brun,Dropout (neural networks),1
+Armelle Brun,Geometry,6
+Armelle Brun,Selection (genetic algorithm),3
+Armelle Brun,Computation,2
+Armelle Brun,Cluster analysis,1
+Armelle Brun,Recommender system,19
+Armelle Brun,Reduction (mathematics),1
+Armelle Brun,Collaborative filtering,11
+Armelle Brun,Local search (optimization),1
+Armelle Brun,Evolutionary computation,1
+Armelle Brun,Event (particle physics),2
+Armelle Brun,Quantum mechanics,9
+Armelle Brun,Developmental psychology,1
+Armelle Brun,Constraint (computer-aided design),3
+Armelle Brun,Antecedent (behavioral psychology),2
+Armelle Brun,Social psychology,2
+Armelle Brun,Time constraint,1
+Armelle Brun,Quality (philosophy),3
+Armelle Brun,Point (geometry),2
+Armelle Brun,Art,1
+Armelle Brun,Humanities,2
+Armelle Brun,Library science,1
+Armelle Brun,Eigenvalues and eigenvectors,3
+Armelle Brun,Matrix decomposition,3
+Armelle Brun,Optics,1
+Armelle Brun,Medicine,2
+Armelle Brun,Radiology,2
+Armelle Brun,Focus (optics),1
+Armelle Brun,Weighting,2
+Armelle Brun,Factorization,3
+Armelle Brun,Non-negative matrix factorization,1
+Armelle Brun,Geodesy,2
+Armelle Brun,Benchmark (surveying),2
+Armelle Brun,Geography,4
+Armelle Brun,Matrix (chemical analysis),2
+Armelle Brun,Interpretation (philosophy),2
+Armelle Brun,Aerospace engineering,1
+Armelle Brun,Cold start (automotive),1
+Armelle Brun,Knowledge management,1
+Armelle Brun,Upstream (networking),1
+Armelle Brun,Seekers,1
+Armelle Brun,World Wide Web,11
+Armelle Brun,Context (archaeology),7
+Armelle Brun,Scale (ratio),2
+Armelle Brun,USable,1
+Armelle Brun,Sequential Pattern Mining,1
+Armelle Brun,Contiguity,1
+Armelle Brun,Archaeology,2
+Armelle Brun,The Internet,4
+Armelle Brun,Transitive relation,2
+Armelle Brun,Social media,3
+Armelle Brun,Social network (sociolinguistics),2
+Armelle Brun,Personalization,3
+Armelle Brun,Statistics,6
+Armelle Brun,Telecommunications,2
+Armelle Brun,Markov chain,3
+Armelle Brun,State space,1
+Armelle Brun,Frame (networking),3
+Armelle Brun,Computational complexity theory,1
+Armelle Brun,Politics,1
+Armelle Brun,Voting,1
+Armelle Brun,Natural language,1
+Armelle Brun,Language model,2
+Armelle Brun,Management,1
+Armelle Brun,Modality (human–computer interaction),1
+Armelle Brun,Adaptability,1
+Armelle Brun,Power (physics),1
+Armelle Brun,Reliability engineering,1
+Armelle Brun,Reliability (semiconductor),1
+Armelle Brun,Human–computer interaction,1
+Armelle Brun,Web page,1
+Armelle Brun,Web browser,1
+Armelle Brun,Web navigation,1
+Armelle Brun,Object (grammar),1
+Armelle Brun,Markov process,2
+Armelle Brun,Markov model,1
+Armelle Brun,Context model,1
+Armelle Brun,Behavioral modeling,1
+Armelle Brun,Geology,1
+Armelle Brun,Oceanography,1
+Armelle Brun,Baseline (sea),1
+Armelle Brun,Gene,2
+Armelle Brun,Chemistry,3
+Armelle Brun,Biochemistry,2
+Armelle Brun,Robustness (evolution),2
+Armelle Brun,Pearson product-moment correlation coefficient,1
+Armelle Brun,Internet privacy,1
+Armelle Brun,Rating scale,1
+Armelle Brun,Preference,1
+Armelle Brun,Trustworthiness,1
+Armelle Brun,Matching (statistics),1
+Armelle Brun,Resource (disambiguation),1
+Armelle Brun,Intranet,1
+Armelle Brun,Business,1
+Armelle Brun,Newspaper,1
+Armelle Brun,Test (biology),1
+Armelle Brun,Vocabulary,1
+Armelle Brun,Perplexity,1
+Armelle Brun,Topic model,1
+Armelle Brun,Advertising,1
+Armelle Brun,Probabilistic logic,2
+Armelle Brun,Reinforcement,1
+Armelle Brun,Association (psychology),1
+Samuel Nowakowski,Computer science,10
+Samuel Nowakowski,Physics,1
+Samuel Nowakowski,Art,4
+Samuel Nowakowski,Artificial intelligence,5
+Samuel Nowakowski,Engineering,1
+Samuel Nowakowski,Sociology,2
+Samuel Nowakowski,Pedagogy,2
+Samuel Nowakowski,Political science,4
+Samuel Nowakowski,Law,2
+Samuel Nowakowski,Politics,1
+Samuel Nowakowski,Variety (cybernetics),1
+Samuel Nowakowski,Art history,1
+Samuel Nowakowski,Citizen journalism,1
+Samuel Nowakowski,Erasmus+,1
+Samuel Nowakowski,Citizenship,1
+Samuel Nowakowski,Public relations,1
+Samuel Nowakowski,The Renaissance,1
+Samuel Nowakowski,Diplomacy,1
+Samuel Nowakowski,Promotion (chess),1
+Samuel Nowakowski,Philosophy,4
+Samuel Nowakowski,Epistemology,1
+Samuel Nowakowski,Human–computer interaction,1
+Samuel Nowakowski,Economics,2
+Samuel Nowakowski,Linguistics,2
+Samuel Nowakowski,TRACE (psycholinguistics),2
+Samuel Nowakowski,Finance,2
+Samuel Nowakowski,Order (exchange),1
+Samuel Nowakowski,Creativity,1
+Samuel Nowakowski,Decision support system,1
+Samuel Nowakowski,Intuition,1
+Samuel Nowakowski,Originality,1
+Samuel Nowakowski,Set (abstract data type),3
+Samuel Nowakowski,Programming language,3
+Samuel Nowakowski,Biology,4
+Samuel Nowakowski,Data science,3
+Samuel Nowakowski,Machine learning,2
+Samuel Nowakowski,Data mining,2
+Samuel Nowakowski,Paleontology,3
+Samuel Nowakowski,Context (archaeology),3
+Samuel Nowakowski,Genetics,1
+Samuel Nowakowski,Sequence (biology),1
+Samuel Nowakowski,Exploratory analysis,1
+Samuel Nowakowski,World Wide Web,3
+Samuel Nowakowski,Mathematics,1
+Samuel Nowakowski,Pure mathematics,1
+Samuel Nowakowski,Field (mathematics),1
+Samuel Nowakowski,Ecology,1
+Samuel Nowakowski,Humanities,3
+Samuel Nowakowski,The Internet,1
+Samuel Nowakowski,Communication,1
+Samuel Nowakowski,Digital humanities,1
+Samuel Nowakowski,Affect (linguistics),1
+Samuel Nowakowski,Dematerialization (economics),1
+Samuel Nowakowski,Computer network,2
+Samuel Nowakowski,Semantic Web,1
+Samuel Nowakowski,Resource (disambiguation),2
+Samuel Nowakowski,Knowledge management,1
+Samuel Nowakowski,Multimedia,2
+Samuel Nowakowski,Social media,1
+Samuel Nowakowski,Social web,1
+Samuel Nowakowski,Operating system,2
+Samuel Nowakowski,Process (computing),1
+Samuel Nowakowski,Recommender system,2
+Samuel Nowakowski,Online learning,1
+Samuel Nowakowski,Psychology,1
+Samuel Nowakowski,Computer vision,1
+Samuel Nowakowski,Tracking (education),1
+Samuel Nowakowski,Space (punctuation),1
+Samuel Nowakowski,Position (finance),1
+Samuel Nowakowski,Kalman filter,1
+Samuel Nowakowski,Extended Kalman filter,1
+Samuel Nowakowski,Tracking system,1
+Samuel Nowakowski,Fast Kalman filter,1
+Armelle Brun,Physical chemistry,1
+Armelle Brun,Entropy (arrow of time),1
+Armelle Brun,Polarization (electrochemistry),1
+Armelle Brun,Holy Grail,1
+Armelle Brun,Factorial analysis,1
+Barbara Gendron,Computer science,5
+Barbara Gendron,Set (abstract data type),1
+Barbara Gendron,Programming language,1
+Barbara Gendron,Code (set theory),1
+Barbara Gendron,Philosophy,2
+Barbara Gendron,Artificial intelligence,2
+Barbara Gendron,Natural language processing,3
+Barbara Gendron,Word (group theory),1
+Barbara Gendron,Pattern recognition (psychology),1
+Barbara Gendron,Speech recognition,3
+Barbara Gendron,Linguistics,2
+Barbara Gendron,Code-switching,1
+Barbara Gendron,Unsupervised learning,1
+Barbara Gendron,Embedding,1
+Barbara Gendron,Utterance,1
+Barbara Gendron,Word embedding,1
+Barbara Gendron,SIGNAL (programming language),1
+Barbara Gendron,Psychology,2
+Barbara Gendron,Cognitive science,1
+Barbara Gendron,Context (archaeology),2
+Barbara Gendron,Archaeology,1
+Barbara Gendron,History,1
+Barbara Gendron,Conversation,3
+Barbara Gendron,Emotion recognition,1
+Barbara Gendron,Communication,3
+Barbara Gendron,Cognitive psychology,1
+Barbara Gendron,Sociology,1
+Barbara Gendron,Art,2
+Barbara Gendron,Environmental science,1
+Barbara Gendron,Humanities,2
+Barbara Gendron,Engineering,1
+Barbara Gendron,Biology,1
+Barbara Gendron,Metric (unit),1
+Barbara Gendron,Operations management,1
+Barbara Gendron,Human–computer interaction,1
+Barbara Gendron,Paleontology,1
+Barbara Gendron,Epistemology,1
+Barbara Gendron,Ontology,1
+Gaspard Michel,Computer science,1
+Gaspard Michel,Philosophy,1
+Gaspard Michel,Artificial intelligence,1
+Gaspard Michel,Psychology,1
+Gaspard Michel,Natural language processing,1
+Gaspard Michel,Geometry,1
+Gaspard Michel,Mathematics,1
+Gaspard Michel,Social psychology,1
+Gaspard Michel,Linguistics,1
+Gaspard Michel,Character (mathematics),1
+Gaspard Michel,Attribution,1
+Gaspard Michel,Authorship attribution,1
+Sylvain Castagnos,Statistics,1
+Sylvain Castagnos,Physics,1
+Sylvain Castagnos,Engineering,1
+Sylvain Castagnos,Quantum mechanics,1
+Sylvain Castagnos,Metric (unit),1
+Sylvain Castagnos,Operations management,1
+Sylvain Castagnos,Chemistry,1
+Sylvain Castagnos,Physical chemistry,1
+Sylvain Castagnos,Social media,1
+Sylvain Castagnos,Entropy (arrow of time),1
+Sylvain Castagnos,Polarization (electrochemistry),1
+Sylvain Castagnos,Holy Grail,1
+Sylvain Castagnos,Factorial analysis,1
+Mohammed Khatbane,Computer science,1
+Mohammed Khatbane,Artificial intelligence,1
+Mohammed Khatbane,Theoretical computer science,1
+Mohammed Khatbane,Distributed computing,1
+Mohammed Khatbane,Graph,1
+Mohammed Khatbane,Embedding,1
+Mohammed Khatbane,Knowledge graph,1
+Prunelle D. Treuil,Computer science,1
+Prunelle D. Treuil,Philosophy,1
+Alain Gély,Mathematics,4
+Alain Gély,Physics,2
+Alain Gély,Acoustics,2
+Alain Gély,Lattice (music),2
+Alain Gély,Pure mathematics,2
+Alain Gély,Combinatorics,2
+Alain Gély,Political science,1
+Alain Gély,Law,1
+Alain Gély,Discrete mathematics,1
+Alain Gély,Graph,2
+Alain Gély,Distributive property,2
+Alain Gély,Semilattice,1
+Alain Gély,Distributivity,2
+Alain Gély,Distributive lattice,2
+Alain Gély,Element (criminal law),1
+Alain Gély,Semigroup,1
+Alain Gély,Infimum and supremum,1
+Alain Gély,Art,1
+Alain Gély,Humanities,1
+Alain Gély,Computer science,1
+Alain Gély,Theoretical computer science,1
+Alain Gély,Biology,1
+Alain Gély,Algorithm,1
+Alain Gély,Paleontology,1
+Alain Gély,Context (archaeology),1
+Alain Gély,Ecology,1
+Alain Gély,Formal concept analysis,1
+Alain Gély,Lattice Miner,1
+Alain Gély,Reuse,1
+Alain Gély,Congruence lattice problem,1
+Guénaël Cabanès,Computer science,5
+Guénaël Cabanès,Artificial intelligence,5
+Guénaël Cabanès,Geometry,2
+Guénaël Cabanès,Mathematics,2
+Guénaël Cabanès,Pattern recognition (psychology),2
+Guénaël Cabanès,Data mining,2
+Guénaël Cabanès,Barycentric coordinate system,2
+Guénaël Cabanès,Political science,3
+Guénaël Cabanès,Law,3
+Guénaël Cabanès,Representation (politics),3
+Guénaël Cabanès,Politics,3
+Guénaël Cabanès,Cluster analysis,4
+Guénaël Cabanès,Data stream clustering,2
+Guénaël Cabanès,CURE data clustering algorithm,2
+Guénaël Cabanès,Correlation clustering,2
+Guénaël Cabanès,k-means clustering,1
+Guénaël Cabanès,Operating system,1
+Guénaël Cabanès,Image (mathematics),2
+Guénaël Cabanès,Sliding window protocol,1
+Guénaël Cabanès,Window (computing),1
+Guénaël Cabanès,Histogram,2
+Guénaël Cabanès,Coordinate system,1
+Guénaël Cabanès,Generative model,1
+Guénaël Cabanès,Generative grammar,1
+Guénaël Cabanès,Machine learning,1
+Guénaël Cabanès,Unsupervised learning,1
+Brieuc Conan‐Guez,Computer science,3
+Brieuc Conan‐Guez,Statistics,1
+Brieuc Conan‐Guez,Epistemology,1
+Brieuc Conan‐Guez,Philosophy,1
+Brieuc Conan‐Guez,Artificial intelligence,3
+Brieuc Conan‐Guez,Mathematics,2
+Brieuc Conan‐Guez,Chemistry,2
+Brieuc Conan‐Guez,Biochemistry,2
+Brieuc Conan‐Guez,Machine learning,1
+Brieuc Conan‐Guez,Regularization (linguistics),1
+Brieuc Conan‐Guez,Econometrics,1
+Brieuc Conan‐Guez,Bayesian probability,2
+Brieuc Conan‐Guez,Variety (cybernetics),1
+Brieuc Conan‐Guez,Calibration,1
+Brieuc Conan‐Guez,Bayes' theorem,1
+Brieuc Conan‐Guez,Thought experiment,1
+Brieuc Conan‐Guez,Uncertainty quantification,1
+Brieuc Conan‐Guez,Argument (complex analysis),1
+Brieuc Conan‐Guez,Psychology,1
+Brieuc Conan‐Guez,Social psychology,1
+Brieuc Conan‐Guez,Cognitive psychology,1
+Brieuc Conan‐Guez,Counterfactual thinking,1
+Brieuc Conan‐Guez,CLARITY,1
+Brieuc Conan‐Guez,Physics,1
+Brieuc Conan‐Guez,Pattern recognition (psychology),1
+Brieuc Conan‐Guez,Convolutional neural network,1
+Brieuc Conan‐Guez,COSMIC cancer database,1
+Brieuc Conan‐Guez,Bayesian inference,1
+Brieuc Conan‐Guez,Astrophysics,1
+Brieuc Conan‐Guez,Galaxy,1
+Brieuc Conan‐Guez,Redshift,1
+Brieuc Conan‐Guez,Weak gravitational lensing,1
+Brieuc Conan‐Guez,Bayesian linear regression,1
+Joël Legrand,Computer science,7
+Joël Legrand,Epistemology,2
+Joël Legrand,Philosophy,2
+Joël Legrand,Information retrieval,4
+Joël Legrand,Ontology,2
+Joël Legrand,Biology,6
+Joël Legrand,Data science,4
+Joël Legrand,Bioinformatics,5
+Joël Legrand,Pharmacogenomics,4
+Joël Legrand,Computer security,3
+Joël Legrand,Artificial intelligence,5
+Joël Legrand,Natural language processing,5
+Joël Legrand,Mathematics,5
+Joël Legrand,Convolutional neural network,1
+Joël Legrand,Machine learning,3
+Joël Legrand,Deep learning,1
+Joël Legrand,Mathematical analysis,4
+Joël Legrand,Labeled data,2
+Joël Legrand,Artificial neural network,1
+Joël Legrand,Embedded system,1
+Joël Legrand,Recurrent neural network,1
+Joël Legrand,Domain (mathematical analysis),4
+Joël Legrand,Bottleneck,1
+Joël Legrand,Exploit,1
+Joël Legrand,Information extraction,3
+Joël Legrand,Relationship extraction,2
+Joël Legrand,Text corpus,1
+Joël Legrand,Biomedicine,1
+Joël Legrand,Programming language,1
+Joël Legrand,Geometry,1
+Joël Legrand,Physics,3
+Joël Legrand,Optics,2
+Joël Legrand,Data mining,3
+Joël Legrand,Relation (database),2
+Joël Legrand,Sentence,1
+Joël Legrand,Basis (linear algebra),1
+Joël Legrand,Focus (optics),1
+Joël Legrand,Comprehension,1
+Joël Legrand,Operating system,1
+Joël Legrand,Event (particle physics),1
+Joël Legrand,Quantum mechanics,1
+Joël Legrand,Linguistics,1
+Joël Legrand,Granularity,1
+Joël Legrand,Vocabulary,1
+Joël Legrand,World Wide Web,1
+Joël Legrand,Key (lock),2
+Joël Legrand,Computer network,1
+Joël Legrand,Resource (disambiguation),1
+Joël Legrand,Baseline (sea),1
+Joël Legrand,Domain knowledge,2
+Joël Legrand,USable,1
+Joël Legrand,Fishery,1
+Joël Legrand,Transfer of learning,1
+Joël Legrand,Economics,2
+Joël Legrand,Management,2
+Joël Legrand,Task (project management),2
+Joël Legrand,Ecology,1
+Joël Legrand,Classifier (UML),1
+Joël Legrand,Adaptation (eye),1
+Joël Legrand,Domain adaptation,1
+Joël Legrand,Syntax,1
+Joël Legrand,Multi-task learning,1
+Joël Legrand,Reuse,1
+Joël Legrand,Named-entity recognition,1
+Samuel Cruz‐Lara,Computer science,18
+Samuel Cruz‐Lara,Set (abstract data type),1
+Samuel Cruz‐Lara,Programming language,3
+Samuel Cruz‐Lara,Epistemology,1
+Samuel Cruz‐Lara,Philosophy,3
+Samuel Cruz‐Lara,Artificial intelligence,6
+Samuel Cruz‐Lara,Natural language processing,3
+Samuel Cruz‐Lara,Information retrieval,2
+Samuel Cruz‐Lara,Geometry,1
+Samuel Cruz‐Lara,Ontology,1
+Samuel Cruz‐Lara,Mathematics,1
+Samuel Cruz‐Lara,Physics,3
+Samuel Cruz‐Lara,Optics,1
+Samuel Cruz‐Lara,Theoretical computer science,1
+Samuel Cruz‐Lara,Natural language,2
+Samuel Cruz‐Lara,Quality (philosophy),1
+Samuel Cruz‐Lara,Economics,1
+Samuel Cruz‐Lara,Management,1
+Samuel Cruz‐Lara,Task (project management),1
+Samuel Cruz‐Lara,Focus (optics),1
+Samuel Cruz‐Lara,Description logic,1
+Samuel Cruz‐Lara,Axiom,1
+Samuel Cruz‐Lara,Domain knowledge,1
+Samuel Cruz‐Lara,Parsing,1
+Samuel Cruz‐Lara,Upper ontology,1
+Samuel Cruz‐Lara,Formal ontology,1
+Samuel Cruz‐Lara,Computer security,1
+Samuel Cruz‐Lara,Pattern recognition (psychology),2
+Samuel Cruz‐Lara,Generative model,1
+Samuel Cruz‐Lara,Generative grammar,1
+Samuel Cruz‐Lara,Thermodynamics,1
+Samuel Cruz‐Lara,Machine learning,1
+Samuel Cruz‐Lara,Deep learning,1
+Samuel Cruz‐Lara,Data mining,1
+Samuel Cruz‐Lara,Component (thermodynamics),1
+Samuel Cruz‐Lara,Algorithm,1
+Samuel Cruz‐Lara,Anomaly detection,1
+Samuel Cruz‐Lara,State (computer science),1
+Samuel Cruz‐Lara,Exploit,1
+Samuel Cruz‐Lara,Intrusion detection system,1
+Samuel Cruz‐Lara,Geography,2
+Samuel Cruz‐Lara,Political science,2
+Samuel Cruz‐Lara,Law,2
+Samuel Cruz‐Lara,Representation (politics),2
+Samuel Cruz‐Lara,Politics,2
+Samuel Cruz‐Lara,Archaeology,3
+Samuel Cruz‐Lara,External Data Representation,1
+Samuel Cruz‐Lara,Textile,1
+Samuel Cruz‐Lara,Clothing industry,1
+Samuel Cruz‐Lara,Fashion industry,1
+Samuel Cruz‐Lara,Textile industry,1
+Samuel Cruz‐Lara,Clothing,1
+Samuel Cruz‐Lara,Operating system,9
+Samuel Cruz‐Lara,World Wide Web,9
+Samuel Cruz‐Lara,Human–computer interaction,6
+Samuel Cruz‐Lara,Emotion recognition,1
+Samuel Cruz‐Lara,Emotion detection,1
+Samuel Cruz‐Lara,Multimedia,9
+Samuel Cruz‐Lara,Session (web analytics),1
+Samuel Cruz‐Lara,Facial expression,1
+Samuel Cruz‐Lara,Mobile apps,1
+Samuel Cruz‐Lara,Android (operating system),1
+Samuel Cruz‐Lara,Affective computing,1
+Samuel Cruz‐Lara,Sociology,1
+Samuel Cruz‐Lara,Linguistics,1
+Samuel Cruz‐Lara,Software engineering,2
+Samuel Cruz‐Lara,Database,2
+Samuel Cruz‐Lara,Telecommunications,4
+Samuel Cruz‐Lara,Metadata,1
+Samuel Cruz‐Lara,Data exchange,1
+Samuel Cruz‐Lara,Domain-specific language,1
+Samuel Cruz‐Lara,Information exchange,1
+Samuel Cruz‐Lara,XML,2
+Samuel Cruz‐Lara,Standardization,2
+Samuel Cruz‐Lara,Interoperability,2
+Samuel Cruz‐Lara,Metamodeling,1
+Samuel Cruz‐Lara,Information model,1
+Samuel Cruz‐Lara,Psychology,1
+Samuel Cruz‐Lara,Communication,1
+Samuel Cruz‐Lara,Parallel computing,1
+Samuel Cruz‐Lara,Virtual reality,3
+Samuel Cruz‐Lara,Interface (matter),1
+Samuel Cruz‐Lara,Maximum bubble pressure method,1
+Samuel Cruz‐Lara,Bubble,1
+Samuel Cruz‐Lara,Metaverse,3
+Samuel Cruz‐Lara,Engineering,1
+Samuel Cruz‐Lara,Work (physics),1
+Samuel Cruz‐Lara,Mechanical engineering,1
+Samuel Cruz‐Lara,History,1
+Samuel Cruz‐Lara,Natural (archaeology),1
+Samuel Cruz‐Lara,Image (mathematics),1
+Samuel Cruz‐Lara,Event (particle physics),1
+Samuel Cruz‐Lara,Quantum mechanics,1
+Samuel Cruz‐Lara,Action (physics),1
+Samuel Cruz‐Lara,Object (grammar),1
+Samuel Cruz‐Lara,Subject (documents),1
+Samuel Cruz‐Lara,Histogram,1
+Samuel Cruz‐Lara,Art,5
+Samuel Cruz‐Lara,Visual arts,5
+Samuel Cruz‐Lara,Architecture,5
+Samuel Cruz‐Lara,Software,5
+Samuel Cruz‐Lara,Software architecture,1
+Samuel Cruz‐Lara,Reference architecture,1
+Samuel Cruz‐Lara,Applications architecture,1
+Samuel Cruz‐Lara,Business,1
+Samuel Cruz‐Lara,Tourism,1
+Samuel Cruz‐Lara,Computer graphics (images),6
+Samuel Cruz‐Lara,Graphics,4
+Samuel Cruz‐Lara,Digital television,3
+Samuel Cruz‐Lara,Interactive television,4
+Samuel Cruz‐Lara,Humanities,1
+Samuel Cruz‐Lara,Software deployment,2
+Samuel Cruz‐Lara,Rendering (computer graphics),2
+Samuel Cruz‐Lara,Mobile device,2
+Samuel Cruz‐Lara,User interface,2
+Samuel Cruz‐Lara,Personalization,2
+Samuel Cruz‐Lara,Process (computing),1
+Samuel Cruz‐Lara,Gene,1
+Samuel Cruz‐Lara,Chemistry,1
+Samuel Cruz‐Lara,Biochemistry,1
+Samuel Cruz‐Lara,Composite material,1
+Samuel Cruz‐Lara,Materials science,1
+Samuel Cruz‐Lara,Range (aeronautics),1
+Samuel Cruz‐Lara,Computer network,1
+Samuel Cruz‐Lara,Messenger RNA,1
+Samuel Cruz‐Lara,Translation (biology),1
+Samuel Cruz‐Lara,Broadcasting (networking),1
+Jean Charles Lamirel,World Wide Web,1
+Jean Charles Lamirel,Computer science,2
+Jean Charles Lamirel,Philosophy,1
+Jean Charles Lamirel,Artificial intelligence,2
+Jean Charles Lamirel,Information retrieval,1
+Jean Charles Lamirel,Mathematics,2
+Jean Charles Lamirel,Engineering,1
+Jean Charles Lamirel,Biology,1
+Jean Charles Lamirel,Data science,1
+Jean Charles Lamirel,Task (project management),1
+Jean Charles Lamirel,Systems engineering,1
+Jean Charles Lamirel,Pure mathematics,1
+Jean Charles Lamirel,Field (mathematics),1
+Jean Charles Lamirel,Paleontology,1
+Jean Charles Lamirel,Context (archaeology),1
+Jean Charles Lamirel,Political science,1
+Jean Charles Lamirel,Law,1
+Jean Charles Lamirel,Archaeology,1
+Jean Charles Lamirel,History,1
+Jean Charles Lamirel,Theology,1
+Jean Charles Lamirel,Knowledge management,1
+Jean Charles Lamirel,Novelty,1
+Jean Charles Lamirel,Creativity,1
+Jean Charles Lamirel,Plan (archaeology),1
+Jean Charles Lamirel,Originality,1
+Jean Charles Lamirel,Citation,1
+Jean Charles Lamirel,Scientific literature,1
+Jean Charles Lamirel,Programming language,1
+Jean Charles Lamirel,Machine learning,1
+Jean Charles Lamirel,Mathematical analysis,1
+Jean Charles Lamirel,Generalization,1
+Jean Charles Lamirel,Algorithm,1
+Jean Charles Lamirel,Combinatorics,1
+Jean Charles Lamirel,Mathematical optimization,1
+Jean Charles Lamirel,Dimension (graph theory),1
+Jean Charles Lamirel,Support vector machine,1
+Jean Charles Lamirel,Kernel (algebra),1
+Jean Charles Lamirel,Heuristic,1
+Jean Charles Lamirel,Integer programming,1
+Jean Charles Lamirel,Extension (predicate logic),1
+Jean Charles Lamirel,Tabu search,1
+
+    `;
+
+
+    </script>
+</body>
+</html>

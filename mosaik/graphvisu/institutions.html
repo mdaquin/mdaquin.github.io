@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-authorship Network</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force-limit@1"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            /* box-shadow: 0 20px 40px rgba(0,0,0,0.1); */
+            /* backdrop-filter: blur(10px); */
+        }
+        #graph-container {
+            /* border: 2px solid #e9ecef; */
+            border-radius: 10px;
+            background: white;
+            margin-top: 20px;
+            /* overflow: hidden; */
+        }
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .legend {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }        
+        .legend-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+        .legend-item {
+            font-size: 14px;
+            color: #6c757d;
+            margin: 3px 0;
+        }
+        .node-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            fill: #333;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">        
+        <div id="graph-container"></div>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        let svg, simulation, nodes, links;
+        let width = 800; // MDA
+        let height = 600; // MDA
+
+        function parseData(csvText) {
+            const lines = csvText.trim().split('\n');
+            const data = [];            
+            for (let i = 1; i < lines.length; i++) {
+                const parts = lines[i].split(',');
+                if (parts.length >= 3) {
+                    // MDA filter out unique papers
+                    if (parseInt(parts[2].trim()) > 0.0) 
+                        data.push({
+                            author1: parts[0].trim(),
+                            author2: parts[1].trim(),
+                            papers: parseInt(parts[2].trim()) || 1
+                        });
+                }
+            }
+            return data;
+        }
+
+        function processGraphData(data) {
+            const nodeMap = new Map();
+            const links = [];
+
+            // Process each collaboration
+            data.forEach(d => {
+                // Add to node map and track total collaborations
+                if (!nodeMap.has(d.author1)) {
+                    nodeMap.set(d.author1, { id: d.author1, totalPapers: 0 }); 
+                }
+                if (!nodeMap.has(d.author2)) {
+                    nodeMap.set(d.author2, { id: d.author2, totalPapers: 0 });
+                }
+                
+                // Add papers to both authors' totals
+                nodeMap.get(d.author1).totalPapers += d.papers;
+                nodeMap.get(d.author2).totalPapers += d.papers;
+                nodeMap.get(d.author1).mosaik = 1; // MDA
+                
+                // Create link
+                links.push({
+                    source: d.author1,
+                    target: d.author2,
+                    papers: d.papers
+                });
+            });
+
+            return {
+                nodes: Array.from(nodeMap.values()),
+                links: links
+            };
+        }
+
+        function generateGraph(csvText) {
+            if (!csvText) {
+                alert('Please enter some data first!');
+                return;
+            }
+
+                const rawData = parseData(csvText);
+                if (rawData.length === 0) {
+                    alert('No valid data found. Please check your format.');
+                    return;
+                }
+                const graphData = processGraphData(rawData);
+                createVisualization(graphData);
+        }
+
+        function createVisualization(data) {
+            // Clear previous visualization
+            d3.select('#graph-container').selectAll('*').remove();
+
+            // Create SVG
+            svg = d3.select('#graph-container')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Define scales
+            const maxPapers = d3.max(data.links, d => d.papers);
+            const maxTotalPapers = d3.max(data.nodes, d => d.totalPapers);
+
+            const linkWidthScale = d3.scaleLinear()
+                .domain([1, maxPapers])
+                .range([1, 8]);
+                
+            const nodeRadiusScale = d3.scaleLinear()
+                .domain([1, maxTotalPapers])
+                .range([8, 25]);
+
+            wallForce = d3.forceLimit() // MDA
+                // .radius(node => node.r) // this leads to NaNs...
+                .x0(0)
+                .x1(width-30)
+                .y0(0)
+                .y1(height-30);
+
+            wallForce // MDA
+                .cushionWidth(25)
+                .cushionStrength(0.26);
+
+            // Create force simulation
+            simulation = d3.forceSimulation(data.nodes)
+                .force('link', d3.forceLink(data.links).id(d => d.id).distance(100))
+                .force('charge', d3.forceManyBody().strength(-50))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(d => nodeRadiusScale(d.totalPapers) + 5))
+                .force('walls', wallForce); // MDA
+            
+                // Create links
+            const link = svg.append('g')
+                .selectAll('line')
+                .data(data.links)
+                .enter()
+                .append('line')
+                .attr('stroke', '#999')
+                .attr('stroke-opacity', 0.6)
+                .attr('stroke-width', d => linkWidthScale(d.papers));
+
+            // Create nodes
+            const node = svg.append('g')
+                .selectAll('circle')
+                .data(data.nodes)
+                .enter()
+                .append('circle')
+                .attr('r', d => nodeRadiusScale(d.totalPapers))
+                .attr('fill', d => {
+                    // MDA color based on membership in mosaik
+                    if ("mosaik" in d && d.mosaik == 1) return '#FF8500'; // orange for mosaik members
+                    return '#3C096C'; // blue for others
+                })
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 2)
+                .style('cursor', 'grab')
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+
+            // Create labels
+            const labels = svg.append('g')
+                .selectAll('text')
+                .data(data.nodes)
+                .enter()
+                .append('text')
+                .attr('class', 'node-label')
+                .text(d => d.id)
+                .attr('dy', d => nodeRadiusScale(d.totalPapers) + 15);
+
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+
+            // Add hover effects
+            node
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.id}</strong><br>Total Connections: ${d.totalPapers}`);
+                    
+                    d3.select(this).attr('stroke-width', 4);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function(event, d) {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-width', 2);
+                });
+
+            link
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.source.id} ↔ ${d.target.id}</strong><br>Connections: ${d.papers}`);
+                    
+                    d3.select(this).attr('stroke-opacity', 1);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function() {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-opacity', 0.6);
+                });
+
+            // Update positions on simulation tick
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                node
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                labels
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y);
+            });
+
+            // Drag functions
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+        }
+
+        // Load sample data on page load
+        window.onload = function() {
+            width = window.innerWidth - 60;
+            height = window.innerHeight - 100;
+            generateGraph(csvtext);
+        };
+
+    const csvtext = `
+author,institution,nb
+Claire Gardent,University of Edinburgh,22
+Fabien Lauer,Centre de Recherche en Automatique de Nancy,18
+Jean-Charles Lamirel,Institut de l'Information Scientifique et Technique,18
+Miguel Couceiro,University of Luxembourg,16
+Jean Lieber,National Research University Higher School of Economics,15
+Miguel Couceiro,National Research University Higher School of Economics,15
+Sabeur Aridhi,Pathwest Laboratory Medicine,14
+Jean Lieber,The Open University,13
+Jean Lieber,Open Knowledge (United Kingdom),13
+David Langlois,SMART Reading,13
+Jean-Charles Lamirel,University of Turkish Aeronautical Association,12
+Jean Lieber,Université de Strasbourg,11
+Jean Lieber,Université Claude Bernard Lyon 1,11
+Jean-Charles Lamirel,University of Aleppo,11
+Jean Lieber,Institut National des Sciences Appliquées de Lyon,10
+Jean Lieber,Laboratoire d'Informatique en Images et Systèmes d'Information,10
+Jean Lieber,Université Sorbonne Paris Nord,10
+Bart Lamiroy,Lehigh University,9
+Jean Lieber,Université de Moncton,9
+Christophe Cerisara,University of West Bohemia,9
+Sabeur Aridhi,Computer Algorithms for Medicine,9
+Mathieu d’Aquin,Université Sorbonne Paris Nord,8
+Sabeur Aridhi,Centre Hospitalier Régional et Universitaire de Nancy,8
+Sabeur Aridhi,French Clinical Research Infrastructure Network,8
+Sabeur Aridhi,Laboratoire de Biologie du Développement,8
+Bart Lamiroy,Orange (France),7
+Mathieu d’Aquin,National Research University Higher School of Economics,7
+Nicolas Jay,National Research University Higher School of Economics,7
+Sabeur Aridhi,Tunis El Manar University,7
+Sabeur Aridhi,"Laboratoire d'Informatique, de Modélisation et d'Optimisation des Systèmes",7
+Sabeur Aridhi,Université Clermont Auvergne,7
+Sabeur Aridhi,"Institut Supérieur d’Informatique, de Modélisation et de leurs Applications",7
+Sabeur Aridhi,Shahjalal University of Science and Technology,7
+Lydia Boudjeloud-Assala,Électricité de France (France),7
+Lydia Boudjeloud-Assala,Raidió Teilifís Éireann (Ireland),7
+Pavel Král,University of West Bohemia,7
+Bart Lamiroy,Université Paris Cité,6
+Bart Lamiroy,Délégation Paris 5,6
+Bart Lamiroy,Universitat Autònoma de Barcelona,6
+Bart Lamiroy,Computer Vision Center,6
+Jean Lieber,Archives Henri-Poincaré - Philosophie et Recherches sur les Sciences et les Technologies,6
+Jean Lieber,Université du Québec à Montréal,6
+Mathieu d’Aquin,Ollscoil na Gaillimhe – University of Galway,6
+Nicolas Jay,Inserm,6
+Nicolas Jay,Centre de Médecine Préventive,6
+Miguel Couceiro,Université Côte d'Azur,6
+Miguel Couceiro,Orange (France),6
+Miguel Couceiro,Orange (Poland),6
+Miguel Couceiro,Royal Military College of Canada,6
+Yannick Parmentier,CentraleSupélec,6
+Yannick Parmentier,University of Edinburgh,6
+Yannick Parmentier,Utrecht University,6
+Yannick Parmentier,Meta (Israel),6
+Claire Gardent,Université d'Orléans,6
+Emmanuel Nauer,Université Claude Bernard Lyon 1,6
+Emmanuel Nauer,Institut National des Sciences Appliquées de Lyon,6
+Emmanuel Nauer,Laboratoire d'Informatique en Images et Systèmes d'Information,6
+Emmanuel Nauer,Université du Québec à Montréal,6
+Joël Legrand,Inserm,6
+Joël Legrand,Université Paris Cité,6
+Joël Legrand,Sorbonne Université,6
+Joël Legrand,Centre de Recherche des Cordeliers,6
+Joël Legrand,Stanford University,6
+Samuel Cruz‐Lara,Centrum Wiskunde & Informatica,6
+Jean Lieber,Institut de Recherche en Informatique de Toulouse,5
+Jean Lieber,Université Toulouse - Jean Jaurès,5
+Jean Lieber,Institut Polytechnique de Bordeaux,5
+Jean Lieber,Université Toulouse III - Paul Sabatier,5
+Jean Lieber,Université Toulouse-I-Capitole,5
+Jean Lieber,"Laboratoire des Sciences de l'Ingénieur, de l'Informatique et de l'Imagerie",5
+Jean Lieber,Ecole Nationale du Génie de l'Eau et de l'Environnement de Strasbourg (ENGEES),5
+Jean Lieber,Institut National de la Recherche Agronomique,5
+Jean Lieber,Norsk Hydro (Germany),5
+Christophe Cerisara,Centre de Recherche en Automatique de Nancy,5
+Sabeur Aridhi,Taibah University,5
+Sabeur Aridhi,University of Jeddah,5
+Gaël Guibon,University of Luxembourg,5
+Miguel Couceiro,Computer Algorithms for Medicine,5
+Miguel Couceiro,Pathwest Laboratory Medicine,5
+Miguel Couceiro,Institut de Recherche en Informatique de Toulouse,5
+Miguel Couceiro,Université Toulouse - Jean Jaurès,5
+Miguel Couceiro,Institut Polytechnique de Bordeaux,5
+Miguel Couceiro,Université Toulouse III - Paul Sabatier,5
+Miguel Couceiro,Université Toulouse-I-Capitole,5
+Geoffray Bonnin,University of Klagenfurt,5
+Geoffray Bonnin,TU Dortmund University,5
+Parisa Rastin,CY Cergy Paris Université,5
+Parisa Rastin,Equipes Traitement de l'Information et Systèmes,5
+Parisa Rastin,Université Paris Cité,5
+Parisa Rastin,Sorbonne Paris Cité,5
+Parisa Rastin,Université Sorbonne Paris Nord,5
+Parisa Rastin,Laboratoire d'Informatique de Paris-Nord,5
+Claire Gardent,Meta (Israel),5
+Claire Gardent,Université de Strasbourg,5
+Emmanuel Nauer,Université de Strasbourg,5
+Armelle Brun,Équipe de Recherche sur les Processus Innovatifs,5
+Barbara Gendron,Université Sorbonne Paris Nord,5
+Barbara Gendron,Sorbonne Université,5
+Barbara Gendron,Laboratoire d'Informatique de Paris-Nord,5
+Guénaël Cabanès,"Biologie Computationnelle, Quantitative et Synthétique",5
+Jean Lieber,Université Fédérale de Toulouse Midi-Pyrénées,4
+Jean Lieber,Centre Hospitalier Régional et Universitaire de Nancy,4
+Jean Lieber,Centre de Médecine Préventive,4
+Nicolas Jay,Université de Bourgogne,4
+Nicolas Jay,CHU Dijon Bourgogne,4
+Nicolas Jay,Maison des Sciences sociales et des Humanités de Dijon,4
+Sabeur Aridhi,Meharry Medical College,4
+Sabeur Aridhi,Khulna University of Engineering and Technology,4
+Sabeur Aridhi,Université de Lille,4
+David Langlois,École Nationale Supérieure d'Informatique,4
+Miguel Couceiro,Universität Hamburg,4
+Miguel Couceiro,Hamburg University of Technology,4
+Miguel Couceiro,Helsinki Institute for Information Technology,4
+Miguel Couceiro,University of Helsinki,4
+Miguel Couceiro,Aalto University,4
+Miguel Couceiro,Linköping University,4
+Miguel Couceiro,University of Lisbon,4
+Miguel Couceiro,Universidade Nova de Lisboa,4
+Miguel Couceiro,Khalifa University of Science and Technology,4
+Miguel Couceiro,Université Claude Bernard Lyon 1,4
+Jean-Charles Lamirel,Dalian University of Technology,4
+Claire Gardent,Technical University of Darmstadt,4
+Emmanuel Nauer,The Open University,4
+Emmanuel Nauer,Open Knowledge (United Kingdom),4
+Emmanuel Nauer,Archives Henri-Poincaré - Philosophie et Recherches sur les Sciences et les Technologies,4
+Emmanuel Nauer,Université de Moncton,4
+Armelle Brun,Université Côte d'Azur,4
+Armelle Brun,Orange (France),4
+Armelle Brun,Orange (Poland),4
+Armelle Brun,University of Luxembourg,4
+Armelle Brun,National Technical University of Ukraine “Igor Sikorsky Kyiv Polytechnic Institute”,4
+Samuel Nowakowski,Centre for Artificial Intelligence and Robotics,4
+Guénaël Cabanès,Equipes Traitement de l'Information et Systèmes,4
+Guénaël Cabanès,CY Cergy Paris Université,4
+Guénaël Cabanès,Laboratoire d'Informatique de Paris-Nord,4
+Joël Legrand,Université du Québec à Montréal,4
+Samuel Cruz‐Lara,Philips (Netherlands),4
+Samuel Cruz‐Lara,Pontifícia Universidade Católica do Rio de Janeiro,4
+Jean Lieber,Lycée Louis-le-Grand,3
+Jean Lieber,University of Technology Sydney,3
+Jean Lieber,ARC Centre of Excellence for Engineered Quantum Systems,3
+Mathieu d’Aquin,Fraunhofer Institute for Open Communication Systems,3
+Mathieu d’Aquin,Weizenbaum Institute,3
+Mathieu d’Aquin,University of Lisbon,3
+Mathieu d’Aquin,Sorbonne Université,3
+Mathieu d’Aquin,Laboratoire d'Informatique de Paris-Nord,3
+Christophe Cerisara,CentraleSupélec,3
+Christophe Cerisara,University of Edinburgh,3
+Christophe Cerisara,Utrecht University,3
+Christophe Cerisara,Meta (Israel),3
+Christophe Cerisara,Panasonic (Poland),3
+Christophe Cerisara,Panasonic (United States),3
+Christophe Cerisara,State Street (United States),3
+Sabeur Aridhi,Tunis University,3
+Sabeur Aridhi,Tallinn University,3
+Sabeur Aridhi,Universitat Ramon Llull,3
+Sabeur Aridhi,Institut Químic de Sarrià,3
+Sabeur Aridhi,University of St Andrews,3
+Sabeur Aridhi,"University of California, San Diego",3
+Sabeur Aridhi,Evaluation des technologies de santé et des pratiques médicales,3
+Sabeur Aridhi,Centre Hospitalier Universitaire de Lille,3
+Sabeur Aridhi,Université du Québec à Montréal,3
+Sabeur Aridhi,Badji Mokhtar-Annaba University,3
+Sylvain Castagnos,Laboratoire lorrain de psychologie et neurosciences de la dynamique des comportements,3
+Chahrazed Labba,Shanghai Key Laboratory of Trustworthy Computing,3
+Chahrazed Labba,Università della Svizzera italiana,3
+Chahrazed Labba,University of Stuttgart,3
+Frédéric Pennerath,Instituto de Engenharia de Sistemas e Computadores Investigação e Desenvolvimento,3
+Frédéric Pennerath,University of Lisbon,3
+Frédéric Pennerath,Universidade Nova de Lisboa,3
+Frédéric Pennerath,Université Paris Dauphine-PSL,3
+Frédéric Pennerath,CentraleSupélec,3
+Frédéric Pennerath,National Research University Higher School of Economics,3
+Parisa Rastin,Université du Québec à Montréal,3
+Lydia Boudjeloud-Assala,Université Paris-Sud,3
+Miguel Couceiro,Sorbonne Université,3
+Miguel Couceiro,Centre Hospitalier Régional et Universitaire de Nancy,3
+Miguel Couceiro,Fundació Universitat-Empresa de les Illes Balears,3
+Miguel Couceiro,Health Research Institute of the Balearic Islands,3
+Miguel Couceiro,Universitat de les Illes Balears,3
+Miguel Couceiro,CentraleSupélec,3
+Miguel Couceiro,Supélec,3
+Miguel Couceiro,University of Gothenburg,3
+Miguel Couceiro,University of Szeged,3
+Azim Roussanaly,VNU University of Science,3
+Yannick Parmentier,Université d'Orléans,3
+Jean-Charles Lamirel,Département d'Informatique,3
+Jean-Charles Lamirel,Le Mans Université,3
+Jean-Charles Lamirel,Indian Institute of Technology Hyderabad,3
+Jean-Charles Lamirel,Université Paris 8,3
+Claire Gardent,Institut de Recherche en Informatique de Toulouse,3
+Claire Gardent,Université Toulouse - Jean Jaurès,3
+Claire Gardent,Institut Polytechnique de Bordeaux,3
+Claire Gardent,Université Fédérale de Toulouse Midi-Pyrénées,3
+Claire Gardent,Université Toulouse III - Paul Sabatier,3
+Claire Gardent,Université Toulouse-I-Capitole,3
+Claire Gardent,Utrecht University,3
+Claire Gardent,University of Malta,3
+Claire Gardent,National Center for Biotechnology Information,3
+Claire Gardent,Tudor Place,3
+Claire Gardent,United States National Library of Medicine,3
+Claire Gardent,Analyse et Traitement Informatique de la Langue Française,3
+Emmanuel Nauer,National Research University Higher School of Economics,3
+Emmanuel Nauer,Nantes Université,3
+Samuel Nowakowski,La Rochelle Université,3
+Alain Gély,Instituto de Engenharia de Sistemas e Computadores Investigação e Desenvolvimento,3
+Alain Gély,University of Lisbon,3
+Alain Gély,Universidade Nova de Lisboa,3
+Alain Gély,Université Paris Dauphine-PSL,3
+Alain Gély,National Research University Higher School of Economics,3
+Guénaël Cabanès,Université Sorbonne Paris Nord,3
+Brieuc Conan‐Guez,CentraleSupélec,3
+Brieuc Conan‐Guez,Supélec,3
+Brieuc Conan‐Guez,Instituto de Engenharia de Sistemas e Computadores Investigação e Desenvolvimento,3
+Brieuc Conan‐Guez,University of Lisbon,3
+Brieuc Conan‐Guez,Universidade Nova de Lisboa,3
+Brieuc Conan‐Guez,Université Paris Dauphine-PSL,3
+Samuel Cruz‐Lara,Max Planck Society,3
+Samuel Cruz‐Lara,Supélec,3
+Samuel Cruz‐Lara,The Dialogue,3
+Samuel Cruz‐Lara,Max Planck Digital Library,3
+Bart Lamiroy,Université de Strasbourg,2
+Bart Lamiroy,Dalian University of Technology,2
+Bart Lamiroy,University of Tartu,2
+Bart Lamiroy,Université Gustave Eiffel,2
+Bart Lamiroy,La Rochelle Université,2
+Bart Lamiroy,École Nationale Supérieure des Mines de Paris,2
+Bart Lamiroy,Centre de Recerca Matemàtica,2
+Fabien Lauer,Université Libre de Bruxelles,2
+Fabien Lauer,University of Southern Denmark,2
+Fabien Lauer,Odense University Hospital,2
+Fabien Lauer,Académie Nationale de Médecine,2
+Fabien Lauer,Petz Aladár Megyei Oktató Kórház,2
+Fabien Lauer,University of Pecs,2
+Fabien Lauer,ParisTech,2
+Fabien Lauer,Institut de Biomécanique Humaine Georges Charpak,2
+Fabien Lauer,"University of California, Berkeley",2
+Jean Lieber,Nantes Université,2
+Jean Lieber,United States Naval Research Laboratory,2
+Jean Lieber,Waseda University,2
+Mathieu d’Aquin,Dublin City University,2
+Mathieu d’Aquin,Université du Québec à Montréal,2
+Mathieu d’Aquin,Centre Hospitalier Régional et Universitaire de Nancy,2
+Mathieu d’Aquin,Centre de Médecine Préventive,2
+Nicolas Jay,Institute for System Programming,2
+Nicolas Jay,Centre Hospitalier Régional et Universitaire de Nancy,2
+Nicolas Jay,The Open University,2
+Nicolas Jay,Open Knowledge (United Kingdom),2
+Christophe Cerisara,Institut Universitaire de France,2
+Sabeur Aridhi,University of Jendouba,2
+Sabeur Aridhi,Iowa State University,2
+Sabeur Aridhi,Royal Holloway University of London,2
+Sabeur Aridhi,Middle East Technical University,2
+Sabeur Aridhi,Hacettepe University,2
+Sabeur Aridhi,European Bioinformatics Institute,2
+Sabeur Aridhi,University of Helsinki,2
+Sabeur Aridhi,University College London,2
+Sabeur Aridhi,The Francis Crick Institute,2
+Sabeur Aridhi,University of Kent,2
+Sabeur Aridhi,Montana State University,2
+Sabeur Aridhi,University of Belgrade,2
+Sabeur Aridhi,"University of California, Berkeley",2
+Sabeur Aridhi,University of Oxford,2
+Sabeur Aridhi,Centre for Human Genetics,2
+Sabeur Aridhi,Compugen (Israel),2
+Sabeur Aridhi,University of Bonn,2
+Sabeur Aridhi,Translational Therapeutics (United States),2
+Sabeur Aridhi,University of Pennsylvania,2
+Sabeur Aridhi,University of Padua,2
+Sabeur Aridhi,University of Missouri,2
+Sabeur Aridhi,Baylor College of Medicine,2
+Sabeur Aridhi,Institució Catalana de Recerca i Estudis Avançats,2
+Sabeur Aridhi,Institute for Research in Biomedicine,2
+Sabeur Aridhi,Indiana University Bloomington,2
+Sabeur Aridhi,Oxford Brookes University,2
+Sabeur Aridhi,Institute of Structural and Molecular Biology,2
+Sabeur Aridhi,University of Milan,2
+Sabeur Aridhi,Technical University of Munich,2
+Sabeur Aridhi,Jožef Stefan Institute,2
+Sabeur Aridhi,University of Bologna,2
+Sabeur Aridhi,Dartmouth College,2
+Sabeur Aridhi,Swiss Integrative Center for Human Health,2
+Sabeur Aridhi,University of Lausanne,2
+Sabeur Aridhi,New York University,2
+Sabeur Aridhi,Flatiron Health (United States),2
+Sabeur Aridhi,Flatiron Institute,2
+Sabeur Aridhi,Simons Foundation,2
+Sabeur Aridhi,Université de Montpellier,2
+Sabeur Aridhi,"Laboratoire d'Informatique, de Robotique et de Microélectronique de Montpellier",2
+Sabeur Aridhi,MRC Laboratory of Molecular Biology,2
+Sabeur Aridhi,Jožef Stefan International Postgraduate School,2
+Sabeur Aridhi,National Research Council,2
+Sabeur Aridhi,"Institute of Biomembranes, Bioenergetics and Molecular Biotechnologies",2
+Sabeur Aridhi,Hanover College,2
+Sabeur Aridhi,National Tsing Hua University,2
+Sabeur Aridhi,San Diego Supercomputer Center,2
+Sabeur Aridhi,University of Michigan,2
+Sabeur Aridhi,Universitat Politècnica de Catalunya,2
+Sabeur Aridhi,Barcelona Supercomputing Center,2
+Sabeur Aridhi,Spanish National Cancer Research Centre,2
+Sabeur Aridhi,Biology of Infection,2
+Sabeur Aridhi,Helmholtz Centre for Infection Research,2
+Sabeur Aridhi,Vrije Universiteit Brussel,2
+Sabeur Aridhi,Institute of Bioinformatics,2
+Sabeur Aridhi,İskenderun Technical University,2
+Sabeur Aridhi,Hebrew University of Jerusalem,2
+Sabeur Aridhi,University of Washington Medical Center,2
+Sabeur Aridhi,Ollscoil na Gaillimhe – University of Galway,2
+Sabeur Aridhi,University of Miami,2
+Sabeur Aridhi,Spanish National Centre for Cardiovascular Research,2
+Sabeur Aridhi,Isotopen Technologien München (Germany),2
+Sabeur Aridhi,University of Southern Mississippi,2
+Sabeur Aridhi,University of Bristol,2
+Sabeur Aridhi,La Jolla Bioengineering Institute,2
+Sabeur Aridhi,Universidade Federal do Ceará,2
+David Langlois,Islamic University of Gaza,2
+David Langlois,Académie de Nancy-Metz,2
+David Langlois,Centre for Artificial Intelligence and Robotics,2
+David Langlois,Institut de Recherche en Informatique de Toulouse,2
+David Langlois,Université Toulouse - Jean Jaurès,2
+David Langlois,Institut Polytechnique de Bordeaux,2
+David Langlois,Université Fédérale de Toulouse Midi-Pyrénées,2
+David Langlois,Université Toulouse III - Paul Sabatier,2
+David Langlois,Université Toulouse-I-Capitole,2
+David Langlois,"University of California, Santa Cruz",2
+David Langlois,Analyse et Traitement Informatique de la Langue Française,2
+David Langlois,Institut de l'Information Scientifique et Technique,2
+David Langlois,Universidad de Deusto,2
+David Langlois,Université d'Avignon et des Pays de Vaucluse,2
+David Langlois,AGH University of Krakow,2
+David Langlois,Institut de Recherche en Informatique et Systèmes Aléatoires,2
+David Langlois,Advanced Telecommunications Research Institute International,2
+Gaël Guibon,Instituto de Engenharia de Sistemas e Computadores Investigação e Desenvolvimento,2
+Gaël Guibon,University of Lisbon,2
+Gaël Guibon,Universidade Nova de Lisboa,2
+Gaël Guibon,Université Paris Dauphine-PSL,2
+Miguel Couceiro,Université Paris Cité,2
+Miguel Couceiro,Laboratoire de Recherche en Informatique,2
+Miguel Couceiro,Université Sorbonne Paris Nord,2
+Miguel Couceiro,Laboratoire d'Informatique de Paris-Nord,2
+Miguel Couceiro,Maison des Sciences sociales et des Humanités Lorraine,2
+Miguel Couceiro,Universidade Presbiteriana Mackenzie,2
+Miguel Couceiro,Universidade Estadual de Campinas (UNICAMP),2
+Miguel Couceiro,Université Fédérale de Toulouse Midi-Pyrénées,2
+Miguel Couceiro,University of Technology Sydney,2
+Miguel Couceiro,ARC Centre of Excellence for Engineered Quantum Systems,2
+Miguel Couceiro,British Institute of Technology and E-commerce,2
+Azim Roussanaly,"Vietnam National University, Hanoi",2
+Azim Roussanaly,Tunis University,2
+Azim Roussanaly,Tunis El Manar University,2
+Yannick Parmentier,Société Française d'Allergologie,2
+Yannick Parmentier,University of Tübingen,2
+Geoffray Bonnin,Laboratoire lorrain de psychologie et neurosciences de la dynamique des comportements,2
+Egor Dudyrev,National Research University Higher School of Economics,2
+Egor Dudyrev,Institute for System Programming,2
+Jean-Charles Lamirel,Centre d'Excellence en Technologies de l'Information et de la Communication,2
+Jean-Charles Lamirel,Centre de Recherche en Sciences et Technologies de l'Information et de la Communication,2
+Jean-Charles Lamirel,Université de Reims Champagne-Ardenne,2
+Jean-Charles Lamirel,Centre de Recherche en Économie et Statistique,2
+Jean-Charles Lamirel,International Institute of Information Technology,2
+Jean-Charles Lamirel,"International Institute of Information Technology, Hyderabad",2
+Jean-Charles Lamirel,Technische Universität Ilmenau,2
+Jean-Charles Lamirel,Bureau de Recherches Géologiques et Minières,2
+Jean-Charles Lamirel,CentraleSupélec,2
+Jean-Charles Lamirel,University of Edinburgh,2
+Jean-Charles Lamirel,Utrecht University,2
+Jean-Charles Lamirel,Meta (Israel),2
+Jean-Charles Lamirel,Université de Strasbourg,2
+Aurélie Bannay,Inserm,2
+Aurélie Bannay,Université de Rennes,2
+Aurélie Bannay,Centre Hospitalier Universitaire de Rennes,2
+Aurélie Bannay,Laboratoire Traitement du Signal et de l'Image,2
+Aurélie Bannay,"Institut de Recherche en Santé, Environnement et Travail",2
+Aurélie Bannay,École des Hautes Études en Santé Publique,2
+Claire Gardent,Huawei Technologies (United Kingdom),2
+Claire Gardent,Klinik und Poliklinik für Psychosomatik und Psychotherapie,2
+Claire Gardent,GESIS - Leibniz-Institute for the Social Sciences,2
+Claire Gardent,Westlake University,2
+Claire Gardent,Dalian University of Technology,2
+Claire Gardent,University of Tartu,2
+Claire Gardent,University of Southampton,2
+Emmanuel Nauer,Institut de Recherche en Informatique de Toulouse,2
+Emmanuel Nauer,Université Toulouse - Jean Jaurès,2
+Emmanuel Nauer,Institut Polytechnique de Bordeaux,2
+Emmanuel Nauer,Université Fédérale de Toulouse Midi-Pyrénées,2
+Emmanuel Nauer,Université Toulouse III - Paul Sabatier,2
+Emmanuel Nauer,Université Toulouse-I-Capitole,2
+Emmanuel Nauer,University of Technology Sydney,2
+Emmanuel Nauer,ARC Centre of Excellence for Engineered Quantum Systems,2
+Emmanuel Nauer,Université Sorbonne Paris Nord,2
+Brieuc Conan‐Guez,National Research University Higher School of Economics,2
+Joël Legrand,Université Côte d'Azur,2
+Joël Legrand,Orange (France),2
+Joël Legrand,Orange (Poland),2
+Joël Legrand,National Research University Higher School of Economics,2
+Joël Legrand,Université de Montpellier,2
+Joël Legrand,"Laboratoire d'Informatique, de Robotique et de Microélectronique de Montpellier",2
+Joël Legrand,Centre Hospitalier Régional et Universitaire de Nancy,2
+Joël Legrand,French Clinical Research Infrastructure Network,2
+Joël Legrand,Computer Algorithms for Medicine,2
+Joël Legrand,Pathwest Laboratory Medicine,2
+Joël Legrand,Laboratoire de Biologie du Développement,2
+Joël Legrand,Université Sorbonne Paris Nord,2
+Joël Legrand,Laboratoire d'Informatique Médicale et d'Ingénierie des Connaissances en e-Santé,2
+Joël Legrand,Délégation Paris 5,2
+Joël Legrand,Sorbonne Paris Cité,2
+Joël Legrand,Assistance Publique – Hôpitaux de Paris,2
+Joël Legrand,Hôpital Européen Georges-Pompidou,2
+Joël Legrand,University of Washington Medical Center,2
+Joël Legrand,Nutrition-Génétique et Exposition aux Risques Environnementaux,2
+Bart Lamiroy,Institut Élie Cartan de Lorraine,1
+Bart Lamiroy,National Technical University of Ukraine “Igor Sikorsky Kyiv Polytechnic Institute”,1
+Bart Lamiroy,Thammasat University,1
+Bart Lamiroy,Hodges University,1
+Bart Lamiroy,Laboratoire d'Informatique Fondamentale et Appliquée de Tours,1
+Bart Lamiroy,Université de Tours,1
+Bart Lamiroy,Université de Rouen Normandie,1
+Bart Lamiroy,Boise State University,1
+Bart Lamiroy,Computer Algorithms for Medicine,1
+Bart Lamiroy,UniLaSalle Amiens (ESIEE-Amiens),1
+Bart Lamiroy,ESI Group (France),1
+Fabien Lauer,Université Lille Nord de France,1
+Jean Lieber,University of Basel,1
+Jean Lieber,Analyse et Traitement Informatique de la Langue Française,1
+Jean Lieber,Université de Tours,1
+Jean Lieber,"CItés, Territoires, Environnement et Sociétés",1
+Jean Lieber,Toulouse School of Economics,1
+Jean Lieber,Institute for Advanced Study in Toulouse,1
+Jean Lieber,Laboratoire de Recherche Historique Rhône-Alpes,1
+Jean Lieber,Université Paris 8,1
+Jean Lieber,Institut de l'Information Scientifique et Technique,1
+Jean Lieber,Université de franche-comté,1
+Jean Lieber,University of Luxembourg,1
+Jean Lieber,École Normale Supérieure de Lyon,1
+Jean Lieber,Université Paris Cité,1
+Jean Lieber,Sorbonne Paris Cité,1
+Jean Lieber,Institut Universitaire de France,1
+Jean Lieber,Université d'Artois,1
+Jean Lieber,British Institute of Technology and E-commerce,1
+Jean Lieber,Norwegian University of Science and Technology,1
+Jean Lieber,Université de Montpellier,1
+Jean Lieber,Université de Bretagne Occidentale,1
+Jean Lieber,Centre François Viète,1
+Jean Lieber,Badji Mokhtar-Annaba University,1
+Jean Lieber,Institut de Recherche en Informatique et Systèmes Aléatoires,1
+Jean Lieber,ASTER,1
+Jean Lieber,Luxembourg Institute of Health,1
+Jean Lieber,CEA LIST,1
+Jean Lieber,Saarland University,1
+Jean Lieber,Institut Curie,1
+Jean Lieber,Conservatoire National des Arts et Métiers,1
+Anna Liednikova,CentraleSupélec,1
+Anna Liednikova,University of Edinburgh,1
+Anna Liednikova,Utrecht University,1
+Anna Liednikova,Meta (Israel),1
+Mathieu d’Aquin,Laboratoire Énergies et Mécanique Théorique et Appliquée,1
+Mathieu d’Aquin,National Institute for Materials Science,1
+Mathieu d’Aquin,Stanford University,1
+Mathieu d’Aquin,Leipzig University,1
+Mathieu d’Aquin,Health Protection Surveillance Centre,1
+Mathieu d’Aquin,National College of Ireland,1
+Mathieu d’Aquin,Université Côte d'Azur,1
+Mathieu d’Aquin,Orange (France),1
+Mathieu d’Aquin,Orange (Poland),1
+Mathieu d’Aquin,Équipe de Recherche sur les Processus Innovatifs,1
+Mathieu d’Aquin,University College Dublin,1
+Mathieu d’Aquin,Ghent University Hospital,1
+Mathieu d’Aquin,Université de Strasbourg,1
+Mathieu d’Aquin,Archives Henri-Poincaré - Philosophie et Recherches sur les Sciences et les Technologies,1
+Mathieu d’Aquin,Institut Curie,1
+Mathieu d’Aquin,Conservatoire National des Arts et Métiers,1
+Mathieu d’Aquin,University of Luxembourg,1
+Nicolas Jay,Institut Élie Cartan de Lorraine,1
+Nicolas Jay,Centre d'Investigation Clinique Pierre Drouin,1
+Nicolas Jay,Interdisciplinarité en Santé Publique Interventions et Instruments de mesure complexes – Région Est,1
+Nicolas Jay,Laboratoire de Chimie Physique et Microbiologie pour l'Environnement,1
+Nicolas Jay,Université Libre de Bruxelles,1
+Nicolas Jay,Université de Montpellier,1
+Nicolas Jay,"Laboratoire d'Informatique, de Robotique et de Microélectronique de Montpellier",1
+Nicolas Jay,Hôpitaux Universitaires de Strasbourg,1
+Nicolas Jay,Luxembourg Institute of Health,1
+Christophe Cerisara,KU Leuven,1
+Christophe Cerisara,Polytechnic University of Turin,1
+Christophe Cerisara,Istituto Euro Mediterraneo di Scienza e Tecnologia,1
+Christophe Cerisara,University of Calabria,1
+Christophe Cerisara,University of Trieste,1
+Christophe Cerisara,University of Palermo,1
+Christophe Cerisara,Institute for High Performance Computing and Networking,1
+Christophe Cerisara,Computer Algorithms for Medicine,1
+Sabeur Aridhi,La Rochelle Université,1
+Sabeur Aridhi,"University of Nevada, Las Vegas",1
+Sabeur Aridhi,Universitat Autònoma de Barcelona,1
+Sabeur Aridhi,Computer Vision Center,1
+Sabeur Aridhi,Manouba University,1
+Sabeur Aridhi,Centre de Recherche en Informatique,1
+Sabeur Aridhi,Inserm,1
+Sabeur Aridhi,Collège de France,1
+Sabeur Aridhi,Centre Interdisciplinaire de Recherche en Biologie,1
+Sabeur Aridhi,Institut Henri Poincaré,1
+Sabeur Aridhi,SIB Swiss Institute of Bioinformatics,1
+Sabeur Aridhi,Nutrition-Génétique et Exposition aux Risques Environnementaux,1
+Sabeur Aridhi,Centre Hospitalier Universitaire de Nantes,1
+Sabeur Aridhi,Humanitas University,1
+Sabeur Aridhi,Université Paris Cité,1
+Sabeur Aridhi,Sorbonne Paris Cité,1
+Sabeur Aridhi,Assistance Publique – Hôpitaux de Paris,1
+Sabeur Aridhi,Hôpital Européen Georges-Pompidou,1
+Sabeur Aridhi,Paris Cardiovascular Research Center,1
+David Langlois,Hassiba Benbouali University of Chlef,1
+David Langlois,Université des Sciences et de la Technologie d'Oran Mohamed Boudiaf,1
+David Langlois,Polytechnique Montréal,1
+David Langlois,Tunis El Manar University,1
+David Langlois,University of Sfax,1
+David Langlois,Advanced Systems Laboratory,1
+Sylvain Castagnos,Université d'Avignon et des Pays de Vaucluse,1
+Sylvain Castagnos,National Research University Higher School of Economics,1
+Sylvain Castagnos,CEA LIST,1
+Chahrazed Labba,Université Fédérale de Toulouse Midi-Pyrénées,1
+Chahrazed Labba,Université Paris Cité,1
+Chahrazed Labba,Institut Français de Recherche sur l'Asie de l'Est,1
+Chahrazed Labba,Sorbonne Paris Cité,1
+Chahrazed Labba,Institut Jean Lamour,1
+Chahrazed Labba,Jožef Stefan Institute,1
+Chahrazed Labba,"Travaux et Recherches Archéologiques sur les Cultures, les Espaces et les Sociétés",1
+Chahrazed Labba,Freelancer (Portugal),1
+Chahrazed Labba,ASM International,1
+Chahrazed Labba,University of Sciences and Technology Houari Boumediene,1
+Chahrazed Labba,University of Béjaïa,1
+Chahrazed Labba,Galatasaray University,1
+Frédéric Pennerath,Université Paris Cité,1
+Frédéric Pennerath,Laboratoire AstroParticule et Cosmologie,1
+Frédéric Pennerath,Supélec,1
+Parisa Rastin,Institut d'Etudes Politiques de Paris,1
+Parisa Rastin,University of Luxembourg,1
+Lydia Boudjeloud-Assala,CentraleSupélec,1
+Lydia Boudjeloud-Assala,Technical University of Denmark,1
+Lydia Boudjeloud-Assala,Laboratoire de Statistique Théorique et Appliquée,1
+Thamer Mecharnia,Lancaster University,1
+Thamer Mecharnia,Birmingham City University,1
+Thamer Mecharnia,Fraunhofer Institute for Building Physics,1
+Thamer Mecharnia,Jönköping University,1
+Thamer Mecharnia,Mines Saint-Étienne,1
+Thamer Mecharnia,Universitat Ramon Llull,1
+Gaël Guibon,Inserm,1
+Gaël Guibon,Université Paris Cité,1
+Gaël Guibon,Assistance Publique – Hôpitaux de Paris,1
+Gaël Guibon,Sorbonne Université,1
+Gaël Guibon,Centre de Recherche des Cordeliers,1
+Gaël Guibon,Hôpital Européen Georges-Pompidou,1
+Gaël Guibon,Sorbonne Paris Cité,1
+Gaël Guibon,Université Sorbonne Paris Nord,1
+Gaël Guibon,Idiap Research Institute,1
+Gaël Guibon,Société Nationale des Chemins de Fer Français (France),1
+Gaël Guibon,Télécom Paris,1
+Gaël Guibon,Laboratoire Traitement et Communication de l’Information,1
+Gaël Guibon,The Open University,1
+Gaël Guibon,Open Knowledge (United Kingdom),1
+Miguel Couceiro,Inserm,1
+Miguel Couceiro,Centre de Recherche des Cordeliers,1
+Miguel Couceiro,Stanford University,1
+Miguel Couceiro,French Clinical Research Infrastructure Network,1
+Miguel Couceiro,Laboratoire de Biologie du Développement,1
+Miguel Couceiro,Université Paris-Saclay,1
+Miguel Couceiro,Laboratoire Interdisciplinaire des Sciences du Numérique,1
+Miguel Couceiro,Laboratoire Interdisciplinaire de Physique,1
+Miguel Couceiro,CEA Paris-Saclay,1
+Miguel Couceiro,Commissariat à l'Énergie Atomique et aux Énergies Alternatives,1
+Miguel Couceiro,Idiap Research Institute,1
+Miguel Couceiro,Université Paris-Sud,1
+Miguel Couceiro,University of Ioannina,1
+Miguel Couceiro,University of Patras,1
+Miguel Couceiro,"Laboratoire d'Ecophysiologie Végétale, Agronomie & nutritions N.C.S",1
+Miguel Couceiro,Interactions Sol Plante Atmosphère,1
+Miguel Couceiro,Laboratoire AstroParticule et Cosmologie,1
+Miguel Couceiro,Universität Innsbruck,1
+Miguel Couceiro,Research Centre Inria Sophia Antipolis - Méditerranée,1
+Miguel Couceiro,UNSW Sydney,1
+Miguel Couceiro,Paris School of Economics,1
+Miguel Couceiro,Université Paris 1 Panthéon-Sorbonne,1
+Miguel Couceiro,University of Liège,1
+Alexandre Blansché,"Laboratoire de Conception, Optimisation et Modélisation des Systèmes",1
+Alexandre Blansché,Luxembourg Institute of Socio-Economic Research,1
+Alexandre Blansché,University of British Columbia,1
+Alexandre Blansché,CentraleSupélec,1
+Alexandre Blansché,Université du Québec à Montréal,1
+Alexandre Blansché,National Research University Higher School of Economics,1
+Azim Roussanaly,Université de Versailles Saint-Quentin-en-Yvelines,1
+Azim Roussanaly,University of Luxembourg,1
+Azim Roussanaly,National Technical University of Ukraine “Igor Sikorsky Kyiv Polytechnic Institute”,1
+Yannick Parmentier,Laboratoire d'Informatique Fondamentale et Appliquée de Tours,1
+Yannick Parmentier,Université de Tours,1
+Yannick Parmentier,Manouba University,1
+Yannick Parmentier,Université Paris Cité,1
+Yannick Parmentier,Sorbonne Université,1
+Yannick Parmentier,École Normale Supérieure Paris-Saclay,1
+Geoffray Bonnin,Institut National Polytechnique de Toulouse,1
+Geoffray Bonnin,École Nationale d'Ingénieurs de Tarbes,1
+Geoffray Bonnin,Université de Versailles Saint-Quentin-en-Yvelines,1
+Jean-Charles Lamirel,Université Gustave Eiffel,1
+Jean-Charles Lamirel,Université Paris Nanterre,1
+Jean-Charles Lamirel,Université Paris-Saclay,1
+Jean-Charles Lamirel,Université de Toulon,1
+Jean-Charles Lamirel,Université du Québec à Montréal,1
+Jean-Charles Lamirel,Shanghai Key Laboratory of Trustworthy Computing,1
+Jean-Charles Lamirel,Université des Sciences et de la Technologie d'Oran Mohamed Boudiaf,1
+Jean-Charles Lamirel,KU Leuven,1
+Aurélie Bannay,Université de Lille,1
+Aurélie Bannay,Centre Hospitalier Universitaire de Lille,1
+Aurélie Bannay,Hospices Civils de Lyon,1
+Aurélie Bannay,Laboratoire de Traitement de l'Information Médicale,1
+Parisa Rastin,Institut Élie Cartan de Lorraine,1
+Parisa Rastin,"University of Campania ""Luigi Vanvitelli""",1
+Claire Gardent,Xerox (France),1
+Claire Gardent,Wageningen University & Research,1
+Claire Gardent,Airbus (France),1
+Claire Gardent,European Aquaculture Society,1
+Claire Gardent,Ege University,1
+Claire Gardent,Université Paris Cité,1
+Claire Gardent,CentraleSupélec,1
+Claire Gardent,University of Aberdeen,1
+Claire Gardent,Warsaw University of Technology,1
+Claire Gardent,Universidade de Santiago de Compostela,1
+Claire Gardent,Center for Research in Molecular Medicine and Chronic Diseases,1
+Claire Gardent,University of Twente,1
+Claire Gardent,Consejo Superior de Investigaciones Científicas,1
+Claire Gardent,Artificial Intelligence Research Institute,1
+Claire Gardent,Delft University of Technology,1
+Claire Gardent,Indra (Spain),1
+Claire Gardent,Union College,1
+Claire Gardent,Bar-Ilan University,1
+Claire Gardent,Sorbonne Université,1
+Claire Gardent,École Normale Supérieure Paris-Saclay,1
+Claire Gardent,"Indian Institute of Engineering Science and Technology, Shibpur",1
+Claire Gardent,Chambre de Commerce et d'Industrie Occitanie Pyrénées-Méditerranée,1
+Claire Gardent,University of Alicante,1
+Claire Gardent,Uppsala University,1
+Claire Gardent,Växjö Kommun,1
+Claire Gardent,Saarland University,1
+Emmanuel Nauer,British Institute of Technology and E-commerce,1
+Emmanuel Nauer,Centre Hospitalier Régional et Universitaire de Nancy,1
+Emmanuel Nauer,Centre de Médecine Préventive,1
+Emmanuel Nauer,"Laboratoire des Sciences de l'Ingénieur, de l'Informatique et de l'Imagerie",1
+Emmanuel Nauer,Ecole Nationale du Génie de l'Eau et de l'Environnement de Strasbourg (ENGEES),1
+Emmanuel Nauer,Institut National de la Recherche Agronomique,1
+Emmanuel Nauer,Norsk Hydro (Germany),1
+Emmanuel Nauer,CEA LIST,1
+François Buet,National Institute of Informatics,1
+François Buet,Université Paris-Saclay,1
+Christophe Cerisara,Université Sorbonne Paris Nord,1
+Christophe Cerisara,Sorbonne Université,1
+Christophe Cerisara,Laboratoire d'Informatique de Paris-Nord,1
+Christophe Cerisara,University of Luxembourg,1
+Christophe Cerisara,Société Nationale des Chemins de Fer Français (France),1
+Christophe Cerisara,Télécom Paris,1
+Christophe Cerisara,Laboratoire Traitement et Communication de l’Information,1
+Mohammed Fellaji,CentraleSupélec,1
+Mohammed Fellaji,Supélec,1
+Mohammed Fellaji,Instituto de Engenharia de Sistemas e Computadores Investigação e Desenvolvimento,1
+Mohammed Fellaji,University of Lisbon,1
+Mohammed Fellaji,Universidade Nova de Lisboa,1
+Mohammed Fellaji,Université Paris Dauphine-PSL,1
+Armelle Brun,Université Paris-Saclay,1
+Armelle Brun,Commissariat à l'Énergie Atomique et aux Énergies Alternatives,1
+Armelle Brun,CEA LIST,1
+Armelle Brun,Université de Sherbrooke,1
+Armelle Brun,Université d'Avignon et des Pays de Vaucluse,1
+Armelle Brun,The Open University,1
+Armelle Brun,Open Knowledge (United Kingdom),1
+Armelle Brun,University of Mannheim,1
+Armelle Brun,Berliner Hochschule für Technik,1
+Armelle Brun,Université de Versailles Saint-Quentin-en-Yvelines,1
+Armelle Brun,Université Lille Nord de France,1
+Armelle Brun,Centre for Artificial Intelligence and Robotics,1
+Armelle Brun,University of Liège,1
+Armelle Brun,SMART Reading,1
+Armelle Brun,Institut Universitaire de France,1
+Samuel Nowakowski,RWTH Aachen University,1
+Samuel Nowakowski,Eindhoven University of Technology,1
+Samuel Nowakowski,Artevelde University College Ghent,1
+Samuel Nowakowski,Goce Delcev University,1
+Samuel Nowakowski,Mediterranean University,1
+Samuel Nowakowski,University of Belgrade,1
+Barbara Gendron,Université du Québec à Montréal,1
+Barbara Gendron,Société Nationale des Chemins de Fer Français (France),1
+Barbara Gendron,Télécom Paris,1
+Barbara Gendron,Laboratoire Traitement et Communication de l’Information,1
+Barbara Gendron,The Open University,1
+Barbara Gendron,Open Knowledge (United Kingdom),1
+Mohammed Khatbane,Computer Algorithms for Medicine,1
+Mohammed Khatbane,Pathwest Laboratory Medicine,1
+Mohammed Khatbane,Shahjalal University of Science and Technology,1
+Prunelle D. Treuil,The Open University,1
+Prunelle D. Treuil,Open Knowledge (United Kingdom),1
+Prunelle D. Treuil,Université de Strasbourg,1
+Prunelle D. Treuil,Archives Henri-Poincaré - Philosophie et Recherches sur les Sciences et les Technologies,1
+Alain Gély,CentraleSupélec,1
+Guénaël Cabanès,Institut Élie Cartan de Lorraine,1
+Guénaël Cabanès,Université Paris Cité,1
+Guénaël Cabanès,Sorbonne Paris Cité,1
+Guénaël Cabanès,"University of Campania ""Luigi Vanvitelli""",1
+Brieuc Conan‐Guez,Université Paris Cité,1
+Brieuc Conan‐Guez,Laboratoire AstroParticule et Cosmologie,1
+Joël Legrand,CentraleSupélec,1
+Joël Legrand,University of Edinburgh,1
+Joël Legrand,Utrecht University,1
+Joël Legrand,Meta (Israel),1
+Samuel Cruz‐Lara,CentraleSupélec,1
+Samuel Cruz‐Lara,University of Edinburgh,1
+Samuel Cruz‐Lara,Utrecht University,1
+Samuel Cruz‐Lara,Meta (Israel),1
+Samuel Cruz‐Lara,Université de Lille,1
+Samuel Cruz‐Lara,Noldus Information Technology,1
+Samuel Cruz‐Lara,Commissariat à l'Énergie Atomique et aux Énergies Alternatives,1
+Samuel Cruz‐Lara,National Chi Nan University,1
+Samuel Cruz‐Lara,Virtualware Group (Spain),1
+Samuel Cruz‐Lara,Asociación Innovalia,1
+Samuel Cruz‐Lara,CARSA (Spain),1
+Jean Charles Lamirel,Institut de l'Information Scientifique et Technique,1
+Jean Charles Lamirel,Université des Sciences et de la Technologie d'Oran Mohamed Boudiaf,1
+
+    `;
+
+
+    </script>
+</body>
+</html>

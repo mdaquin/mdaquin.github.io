@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-authorship Network</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force-limit@1"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            /* box-shadow: 0 20px 40px rgba(0,0,0,0.1); */
+            /* backdrop-filter: blur(10px); */
+        }
+        #graph-container {
+            /* border: 2px solid #e9ecef; */
+            border-radius: 10px;
+            background: white;
+            margin-top: 20px;
+            /* overflow: hidden; */
+        }
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .legend {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }        
+        .legend-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+        .legend-item {
+            font-size: 14px;
+            color: #6c757d;
+            margin: 3px 0;
+        }
+        .node-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            fill: #333;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">        
+        <div id="graph-container"></div>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        let svg, simulation, nodes, links;
+        let width = 800; // MDA
+        let height = 600; // MDA
+
+        function parseData(csvText) {
+            const lines = csvText.trim().split('\n');
+            const data = [];            
+            for (let i = 1; i < lines.length; i++) {
+                const parts = lines[i].split(',');
+                if (parts.length >= 3) {
+                    // MDA filter out unique papers
+                    if (parseInt(parts[2].trim()) > 0.0) 
+                        data.push({
+                            author1: parts[0].trim(),
+                            author2: parts[1].trim(),
+                            papers: parseInt(parts[2].trim()) || 1
+                        });
+                }
+            }
+            return data;
+        }
+
+        function processGraphData(data) {
+            const nodeMap = new Map();
+            const links = [];
+
+            // Process each collaboration
+            data.forEach(d => {
+                // Add to node map and track total collaborations
+                if (!nodeMap.has(d.author1)) {
+                    nodeMap.set(d.author1, { id: d.author1, totalPapers: 0 }); 
+                }
+                if (!nodeMap.has(d.author2)) {
+                    nodeMap.set(d.author2, { id: d.author2, totalPapers: 0 });
+                }
+                
+                // Add papers to both authors' totals
+                nodeMap.get(d.author1).totalPapers += d.papers;
+                nodeMap.get(d.author2).totalPapers += d.papers;
+                nodeMap.get(d.author1).mosaik = 1; // MDA
+                
+                // Create link
+                links.push({
+                    source: d.author1,
+                    target: d.author2,
+                    papers: d.papers
+                });
+            });
+
+            return {
+                nodes: Array.from(nodeMap.values()),
+                links: links
+            };
+        }
+
+        function generateGraph(csvText) {
+            if (!csvText) {
+                alert('Please enter some data first!');
+                return;
+            }
+
+                const rawData = parseData(csvText);
+                if (rawData.length === 0) {
+                    alert('No valid data found. Please check your format.');
+                    return;
+                }
+                const graphData = processGraphData(rawData);
+                createVisualization(graphData);
+        }
+
+        function createVisualization(data) {
+            // Clear previous visualization
+            d3.select('#graph-container').selectAll('*').remove();
+
+            // Create SVG
+            svg = d3.select('#graph-container')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Define scales
+            const maxPapers = d3.max(data.links, d => d.papers);
+            const maxTotalPapers = d3.max(data.nodes, d => d.totalPapers);
+
+            const linkWidthScale = d3.scaleLinear()
+                .domain([1, maxPapers])
+                .range([1, 8]);
+                
+            const nodeRadiusScale = d3.scaleLinear()
+                .domain([1, maxTotalPapers])
+                .range([8, 25]);
+
+            wallForce = d3.forceLimit() // MDA
+                // .radius(node => node.r) // this leads to NaNs...
+                .x0(0)
+                .x1(width-30)
+                .y0(0)
+                .y1(height-30);
+
+            wallForce // MDA
+                .cushionWidth(25)
+                .cushionStrength(0.26);
+
+            // Create force simulation
+            simulation = d3.forceSimulation(data.nodes)
+                .force('link', d3.forceLink(data.links).id(d => d.id).distance(100))
+                .force('charge', d3.forceManyBody().strength(-70))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(d => nodeRadiusScale(d.totalPapers) + 5))
+                .force('walls', wallForce); // MDA
+            
+                // Create links
+            const link = svg.append('g')
+                .selectAll('line')
+                .data(data.links)
+                .enter()
+                .append('line')
+                .attr('stroke', '#999')
+                .attr('stroke-opacity', 0.6)
+                .attr('stroke-width', d => linkWidthScale(d.papers));
+
+            // Create nodes
+            const node = svg.append('g')
+                .selectAll('circle')
+                .data(data.nodes)
+                .enter()
+                .append('circle')
+                .attr('r', d => nodeRadiusScale(d.totalPapers))
+                .attr('fill', d => {
+                    // MDA color based on membership in mosaik
+                    if ("mosaik" in d && d.mosaik == 1) return '#FF8500'; // orange for mosaik members
+                    return '#999999'; // blue for others
+                })
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 2)
+                .style('cursor', 'grab')
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+
+            // Create labels
+            const labels = svg.append('g')
+                .selectAll('text')
+                .data(data.nodes)
+                .enter()
+                .append('text')
+                .attr('class', 'node-label')
+                .text(d => d.id)
+                .attr('dy', d => nodeRadiusScale(d.totalPapers) + 15);
+
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+
+            // Add hover effects
+            node
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.id}</strong><br>Total Connections: ${d.totalPapers}`);
+                    
+                    d3.select(this).attr('stroke-width', 4);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function(event, d) {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-width', 2);
+                });
+
+            link
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.source.id} ↔ ${d.target.id}</strong><br>Connections: ${d.papers}`);
+                    
+                    d3.select(this).attr('stroke-opacity', 1);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function() {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-opacity', 0.6);
+                });
+
+            // Update positions on simulation tick
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                node
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                labels
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y);
+            });
+
+            // Drag functions
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+        }
+
+        // Load sample data on page load
+        window.onload = function() {
+            width = window.innerWidth - 60;
+            height = window.innerHeight - 100;
+            generateGraph(csvtext);
+        };
+
+    const csvtext = `
+author,venue,nb
+Bart Lamiroy,HAL (Le Centre pour la Communication Scientifique Directe),26
+Bart Lamiroy,arXiv (Cornell University),1
+Bart Lamiroy,Artificial Intelligence Review,1
+Bart Lamiroy,Lecture notes in computer science,16
+Bart Lamiroy,2017 IEEE First Ukraine Conference on Electrical and Computer Engineering (UKRCON),1
+Bart Lamiroy,CiteSeer X (The Pennsylvania State University),7
+Bart Lamiroy,International Conference on Document Analysis and Recognition,2
+Bart Lamiroy,"International Conference Industrial, Engineering & Other Applications Applied Intelligent Systems",1
+Bart Lamiroy,Pattern Recognition Letters,1
+Bart Lamiroy,International Journal of Pattern Recognition and Artificial Intelligence,1
+Bart Lamiroy,International Journal of Image and Graphics,1
+Bart Lamiroy,Springer eBooks,1
+Bart Lamiroy,"Proceedings of SPIE, the International Society for Optical Engineering/Proceedings of SPIE",1
+Bart Lamiroy,Proceedings of the International Conference on Document Analysis and Recognition,1
+Bart Lamiroy,Sketch Based Interfaces and Modeling,1
+Bart Lamiroy,2022 26th International Conference on Pattern Recognition (ICPR),1
+Fabien Lauer,IEEE Transactions on Automatic Control,1
+Fabien Lauer,arXiv (Cornell University),7
+Fabien Lauer,HAL (Le Centre pour la Communication Scientifique Directe),17
+Fabien Lauer,Nonlinear Analysis Hybrid Systems,1
+Fabien Lauer,Lecture notes in control and information sciences,11
+Fabien Lauer,CiteSeer X (The Pennsylvania State University),3
+Fabien Lauer,PubMed,4
+Fabien Lauer,IEEE Transactions on Neural Networks,1
+Fabien Lauer,Research Portal Denmark,2
+Fabien Lauer,"SAM, the Arts et Métiers ParisTech open access repository (Paris Institute of Technology)",2
+Fabien Lauer,International Orthopaedics,1
+Fabien Lauer,European Spine Journal,1
+Fabien Lauer,Automatica,1
+Fabien Lauer,IFAC-PapersOnLine,2
+Fabien Lauer,2021 60th IEEE Conference on Decision and Control (CDC),1
+Fabien Lauer,Université Pierre et Marie CURIE (UPMC),1
+Fabien Lauer,IEEE Transactions on Neural Networks and Learning Systems,1
+Fabien Lauer,Advances in intelligent systems and computing,1
+Fabien Lauer,DataCite API,1
+Fabien Lauer,American Control Conference,2
+Fabien Lauer,Lecture notes in computer science,1
+Jean Lieber,HAL (Le Centre pour la Communication Scientifique Directe),44
+Jean Lieber,Zenodo (CERN European Organization for Nuclear Research),1
+Jean Lieber,Lecture notes in computer science,36
+Jean Lieber,AI Communications,1
+Jean Lieber,Open Archive Toulouse Archive Ouverte (University of Toulouse),1
+Jean Lieber,Studies in computational intelligence,2
+Jean Lieber,CiteSeer X (The Pennsylvania State University),3
+Jean Lieber,arXiv (Cornell University),8
+Jean Lieber,Revue d Épidémiologie et de Santé Publique,1
+Jean Lieber,Duo Research Archive (University of Oslo),1
+Jean Lieber,AI Magazine,1
+Jean Lieber,DataCite API,7
+Jean Lieber,Semantic Web,1
+Jean Lieber,International Joint Conference on Artificial Intelligence,1
+Jean Lieber,Expert Systems with Applications,1
+Jean Lieber,Information Systems,1
+Jean Lieber,European Conference on Artificial Intelligence,2
+Jean Lieber,PubMed,2
+Jean Lieber,Studies in health technology and informatics,2
+Jean Lieber,International Semantic Web Conference,1
+Jean Lieber,Frontiers in artificial intelligence and applications,1
+Jean Lieber,Capturing intelligence,1
+Jean Lieber,Applied Intelligence,1
+Jean Lieber,L objet,1
+Jean Lieber,International Journal of Human-Computer Studies,1
+Mathieu d’Aquin,arXiv (Cornell University),6
+Mathieu d’Aquin,Zenodo (CERN European Organization for Nuclear Research),4
+Mathieu d’Aquin,HAL (Le Centre pour la Communication Scientifique Directe),7
+Mathieu d’Aquin,World Wide Web,1
+Mathieu d’Aquin,DataCite API,6
+Mathieu d’Aquin,Data Intelligence,1
+Mathieu d’Aquin,Lecture notes in computer science,6
+Mathieu d’Aquin,2021 IEEE International Conference on Big Data (Big Data),1
+Mathieu d’Aquin,PubMed,3
+Mathieu d’Aquin,PubMed Central,1
+Mathieu d’Aquin,BMJ Health & Care Informatics,1
+Mathieu d’Aquin,International Joint Conference on Artificial Intelligence,1
+Mathieu d’Aquin,CiteSeer X (The Pennsylvania State University),1
+Mathieu d’Aquin,International Semantic Web Conference,1
+Mathieu d’Aquin,Studies in health technology and informatics,1
+Mathieu d’Aquin,Capturing intelligence,1
+Mathieu d’Aquin,Applied Intelligence,1
+Mathieu d’Aquin,International Journal of Human-Computer Studies,1
+Nicolas Jay,HAL (Le Centre pour la Communication Scientifique Directe),14
+Nicolas Jay,PubMed,6
+Nicolas Jay,DOAJ (DOAJ: Directory of Open Access Journals),1
+Nicolas Jay,PubMed Central,4
+Nicolas Jay,Viruses,1
+Nicolas Jay,arXiv (Cornell University),2
+Nicolas Jay,International Journal of General Systems,1
+Nicolas Jay,Biomarker Research,1
+Nicolas Jay,Revue d Épidémiologie et de Santé Publique,4
+Nicolas Jay,Data Mining and Knowledge Discovery,1
+Nicolas Jay,Lecture notes in computer science,6
+Nicolas Jay,CiteSeer X (The Pennsylvania State University),2
+Nicolas Jay,Europe PMC (PubMed Central),2
+Nicolas Jay,BMC Medical Informatics and Decision Making,2
+Nicolas Jay,"univOAK (4 institutions : Université de Strasbourg, Université de Haute Alsace, INSA Strasbourg, Bibliothèque Nationale et Universitaire de Strasbourg)",1
+Nicolas Jay,Informatique et santé,1
+Nicolas Jay,Studies in health technology and informatics,1
+Christophe Cerisara,Neural Computing and Applications,1
+Christophe Cerisara,HAL (Le Centre pour la Communication Scientifique Directe),25
+Christophe Cerisara,PHM Society European Conference,2
+Christophe Cerisara,arXiv (Cornell University),4
+Christophe Cerisara,"ICASSP 2022 - 2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",1
+Christophe Cerisara,2022 International Joint Conference on Neural Networks (IJCNN),1
+Christophe Cerisara,2021 IEEE International Conference on Big Data (Big Data),1
+Christophe Cerisara,2021 29th European Signal Processing Conference (EUSIPCO),1
+Christophe Cerisara,Lecture notes in computer science,6
+Christophe Cerisara,Communications in computer and information science,1
+Christophe Cerisara,DataCite API,1
+Christophe Cerisara,Computer Speech & Language,5
+Christophe Cerisara,IFIP advances in information and communication technology,1
+Christophe Cerisara,CiteSeer X (The Pennsylvania State University),6
+Christophe Cerisara,Language Resources and Evaluation,1
+Christophe Cerisara,"International Symposium on Control, Communications and Signal Processing",1
+Christophe Cerisara,Speech Communication,1
+Christophe Cerisara,IEEE International Conference on Acoustics Speech and Signal Processing,1
+Christophe Cerisara,The Journal of the Acoustical Society of America,1
+Sabeur Aridhi,HAL (Le Centre pour la Communication Scientifique Directe),19
+Sabeur Aridhi,Future Generation Computer Systems,1
+Sabeur Aridhi,PubMed,4
+Sabeur Aridhi,DOAJ (DOAJ: Directory of Open Access Journals),2
+Sabeur Aridhi,PubMed Central,3
+Sabeur Aridhi,BMC Bioinformatics,1
+Sabeur Aridhi,Europe PMC (PubMed Central),1
+Sabeur Aridhi,LA Referencia (Red Federada de Repositorios Institucionales de Publicaciones Científicas),1
+Sabeur Aridhi,Kent Academic Repository (University of Kent),1
+Sabeur Aridhi,Bristol Research (University of Bristol),2
+Sabeur Aridhi,bioRxiv (Cold Spring Harbor Laboratory),2
+Sabeur Aridhi,UCL Discovery (University College London),2
+Sabeur Aridhi,CentAUR (University of Reading),1
+Sabeur Aridhi,Archivio Istituzionale della Ricerca (Universita Degli Studi Di Milano),1
+Sabeur Aridhi,Repository for Publications and Research Data (ETH Zurich),1
+Sabeur Aridhi,mediaTUM Gesamtbestand (Technische Universität München),2
+Sabeur Aridhi,OpenMETU (Middle East Technical University),2
+Sabeur Aridhi,Archivio istituzionale della ricerca (Alma Mater Studiorum Università di Bologna),2
+Sabeur Aridhi,Deep Blue (University of Michigan),1
+Sabeur Aridhi,King Abdullah University of Science and Technology Repository (King Abdullah University of Science and Technology),1
+Sabeur Aridhi,UTUPub (University of Turku),1
+Sabeur Aridhi,Research Padua  Archive (University of Padua),1
+Sabeur Aridhi,HZI (Helmholtz Centre for Infection Research),1
+Sabeur Aridhi,Genome biology,1
+Sabeur Aridhi,Expert Systems with Applications,2
+Sabeur Aridhi,Knowledge-Based Systems,2
+Sabeur Aridhi,Procedia Computer Science,2
+Sabeur Aridhi,International Journal of Data Mining & Knowledge Management Process,1
+Sabeur Aridhi,Lecture notes in computer science,1
+Sabeur Aridhi,Studies in computational intelligence,1
+Sabeur Aridhi,Scientific Reports,1
+Sabeur Aridhi,Communications in computer and information science,1
+Sabeur Aridhi,Padua Research Archive (University of Padua),1
+Sabeur Aridhi,Gastroenterology,1
+Sabeur Aridhi,arXiv (Cornell University),2
+Sabeur Aridhi,DataCite API,2
+Sabeur Aridhi,International Journal of Machine Learning and Cybernetics,1
+David Langlois,HAL (Le Centre pour la Communication Scientifique Directe),16
+David Langlois,Communications in computer and information science,1
+David Langlois,Lecture notes in computer science,6
+David Langlois,Procedia Computer Science,2
+David Langlois,Natural Language Engineering,1
+David Langlois,CiteSeer X (The Pennsylvania State University),1
+David Langlois,Intelligent Data Analysis,1
+David Langlois,arXiv (Cornell University),1
+David Langlois,DataCite API,1
+David Langlois,Interspeech 2022,1
+David Langlois,Machine Translation,1
+Sylvain Castagnos,Journal of Computer Assisted Learning,1
+Sylvain Castagnos,HAL (Le Centre pour la Communication Scientifique Directe),11
+Sylvain Castagnos,International Journal of Artificial Intelligence Tools,1
+Sylvain Castagnos,Lecture notes in computer science,5
+Sylvain Castagnos,PubMed,1
+Sylvain Castagnos,PubMed Central,1
+Sylvain Castagnos,Scientific Reports,1
+Sylvain Castagnos,Zenodo (CERN European Organization for Nuclear Research),2
+Sylvain Castagnos,European Conference on Artificial Intelligence,1
+Sylvain Castagnos,IGI Global eBooks,1
+Sylvain Castagnos,DOAJ (DOAJ: Directory of Open Access Journals),1
+Sylvain Castagnos,Advances in Multimedia,1
+Sylvain Castagnos,CiteSeer X (The Pennsylvania State University),2
+Sylvain Castagnos,Frontiers in artificial intelligence and applications,2
+Armelle Brun,HAL (Le Centre pour la Communication Scientifique Directe),27
+Armelle Brun,Proceedings of the Genetic and Evolutionary Computation Conference Companion,1
+Armelle Brun,Procedia Computer Science,1
+Chahrazed Labba,Research Square (Research Square),1
+Chahrazed Labba,Cluster Computing,1
+Chahrazed Labba,Lecture notes in computer science,4
+Chahrazed Labba,International Journal of Information and Learning Technology,1
+Chahrazed Labba,HAL (Le Centre pour la Communication Scientifique Directe),2
+Chahrazed Labba,DataCite API,2
+Chahrazed Labba,Zenodo (CERN European Organization for Nuclear Research),2
+Frédéric Pennerath,arXiv (Cornell University),2
+Frédéric Pennerath,HAL (Le Centre pour la Communication Scientifique Directe),3
+Frédéric Pennerath,Lecture notes in computer science,3
+Frédéric Pennerath,DataCite API,1
+Parisa Rastin,HAL (Le Centre pour la Communication Scientifique Directe),5
+Parisa Rastin,arXiv (Cornell University),1
+Parisa Rastin,2022 International Joint Conference on Neural Networks (IJCNN),3
+Parisa Rastin,Lecture notes in computer science,2
+Lydia Boudjeloud-Assala,HAL (Le Centre pour la Communication Scientifique Directe),9
+Lydia Boudjeloud-Assala,Proceedings of the ... Annual Hawaii International Conference on System Sciences/Proceedings of the Annual Hawaii International Conference on System Sciences,1
+Lydia Boudjeloud-Assala,AIS Electronic Library (AISeL) (Association for Information Systems),1
+Lydia Boudjeloud-Assala,ScholarSpace (University of Hawaii at Manoa),1
+Lydia Boudjeloud-Assala,arXiv (Cornell University),1
+Lydia Boudjeloud-Assala,DataCite API,1
+Lydia Boudjeloud-Assala,Lecture notes in computer science,1
+Lydia Boudjeloud-Assala,Studies in computational intelligence,1
+Pavel Král,HAL (Le Centre pour la Communication Scientifique Directe),6
+Pavel Král,arXiv (Cornell University),2
+Pavel Král,DataCite API,1
+Pavel Král,Computer Speech & Language,1
+Pavel Král,IFIP advances in information and communication technology,1
+Pavel Král,CiteSeer X (The Pennsylvania State University),5
+Pavel Král,Language Resources and Evaluation,1
+Pavel Král,Lecture notes in computer science,1
+Thamer Mecharnia,arXiv (Cornell University),1
+Thamer Mecharnia,PubMed,1
+Thamer Mecharnia,Scientific Data,1
+Gaël Guibon,PubMed,1
+Gaël Guibon,Computer Methods and Programs in Biomedicine,1
+Gaël Guibon,arXiv (Cornell University),1
+Miguel Couceiro,Annals of Mathematics and Artificial Intelligence,3
+Miguel Couceiro,HAL (Le Centre pour la Communication Scientifique Directe),39
+Miguel Couceiro,Lecture notes in computer science,10
+Miguel Couceiro,arXiv (Cornell University),18
+Miguel Couceiro,DataCite API,13
+Miguel Couceiro,International Journal of Approximate Reasoning,2
+Miguel Couceiro,Springer eBooks,1
+Miguel Couceiro,Zenodo (CERN European Organization for Nuclear Research),4
+Miguel Couceiro,Fuzzy Sets and Systems,1
+Miguel Couceiro,Order,1
+Miguel Couceiro,2022 IEEE 9th International Conference on Data Science and Advanced Analytics (DSAA),2
+Miguel Couceiro,AI and Ethics,1
+Miguel Couceiro,Communications in computer and information science,3
+Miguel Couceiro,"2022 ACM Conference on Fairness, Accountability, and Transparency",1
+Miguel Couceiro,Frontiers in artificial intelligence and applications,1
+Miguel Couceiro,Algebra Universalis,2
+Miguel Couceiro,International Journal of Foundations of Computer Science,1
+Miguel Couceiro,Advances in intelligent systems and computing,2
+Miguel Couceiro,Open Repository and Bibliography (University of Luxembourg),1
+Miguel Couceiro,International Journal of Data Science and Analytics,1
+Miguel Couceiro,Studies in computational intelligence,1
+Miguel Couceiro,Springer optimization and its applications,1
+Miguel Couceiro,Multiple criteria decision making,1
+Miguel Couceiro,Open Archive Toulouse Archive Ouverte (University of Toulouse),1
+Miguel Couceiro,Discrete Applied Mathematics,1
+Alexandre Blansché,International Journal of Intelligent Robotics and Applications,1
+Alexandre Blansché,HAL (Le Centre pour la Communication Scientifique Directe),3
+Alexandre Blansché,Lecture notes in computer science,1
+Azim Roussanaly,Procedia Computer Science,1
+Azim Roussanaly,Lecture notes in computer science,5
+Azim Roussanaly,International Journal of Information and Learning Technology,1
+Azim Roussanaly,2022 International Conference on Advanced Learning Technologies (ICALT),1
+Azim Roussanaly,HAL (Le Centre pour la Communication Scientifique Directe),9
+Azim Roussanaly,Studies in computational intelligence,1
+Azim Roussanaly,CiteSeer X (The Pennsylvania State University),2
+Azim Roussanaly,Lecture notes in business information processing,2
+Yannick Parmentier,Lecture notes in computer science,5
+Yannick Parmentier,Linköping electronic conference proceedings,1
+Yannick Parmentier,HAL (Le Centre pour la Communication Scientifique Directe),3
+Yannick Parmentier,Computational Linguistics,1
+Yannick Parmentier,DOAJ (DOAJ: Directory of Open Access Journals),1
+Yannick Parmentier,Transactions of the Association for Computational Linguistics,1
+Yannick Parmentier,arXiv (Cornell University),1
+Yannick Parmentier,DataCite API,1
+Geoffray Bonnin,Journal of Computer Assisted Learning,1
+Geoffray Bonnin,HAL (Le Centre pour la Communication Scientifique Directe),6
+Geoffray Bonnin,Lecture notes in computer science,2
+Geoffray Bonnin,Springer eBooks,3
+Geoffray Bonnin,WORLD SCIENTIFIC eBooks,1
+Geoffray Bonnin,"Studies in classification, data analysis, and knowledge organization",1
+Geoffray Bonnin,CiteSeer X (The Pennsylvania State University),1
+Egor Dudyrev,Lecture notes in computer science,1
+Egor Dudyrev,HAL (Le Centre pour la Communication Scientifique Directe),1
+Egor Dudyrev,International Journal of Approximate Reasoning,1
+Jean-Charles Lamirel,Scientometrics,7
+Jean-Charles Lamirel,Lecture notes in computer science,12
+Jean-Charles Lamirel,HAL (Le Centre pour la Communication Scientifique Directe),33
+Jean-Charles Lamirel,Neural Computing and Applications,1
+Jean-Charles Lamirel,Lecture notes in networks and systems,1
+Jean-Charles Lamirel,Journal of Intelligent Information Systems,1
+Jean-Charles Lamirel,International conference on Artificial intelligence and applications,2
+Jean-Charles Lamirel,International Journal of Data Warehousing and Mining,1
+Jean-Charles Lamirel,Advances in intelligent systems and computing,3
+Jean-Charles Lamirel,2022 International Joint Conference on Neural Networks (IJCNN),2
+Jean-Charles Lamirel,Collnet Journal of Scientometrics and Information Management,2
+Jean-Charles Lamirel,Proceedings of the Annual Conference of CAIS / Actes du congrès annuel de l ACSI,1
+Jean-Charles Lamirel,Zenodo (CERN European Organization for Nuclear Research),1
+Jean-Charles Lamirel,Neurocomputing,1
+Jean-Charles Lamirel,Studies in computational intelligence,1
+Jean-Charles Lamirel,Intelligent systems reference library,1
+Jean-Charles Lamirel,InTech eBooks,1
+Jean-Charles Lamirel,"Proceedings. 2005 IEEE International Joint Conference on Neural Networks, 2005.",1
+Jean-Charles Lamirel,"Proceedings of SPIE, the International Society for Optical Engineering/Proceedings of SPIE",1
+Jean-Charles Lamirel,CiteSeer X (The Pennsylvania State University),1
+Jean-Charles Lamirel,RIAO Conference,1
+Jean-Charles Lamirel,The Florida AI Research Society,1
+Jean-Charles Lamirel,Australasian Database Conference,1
+Jean-Charles Lamirel,RePEc: Research Papers in Economics,1
+Aurélie Bannay,PubMed,1
+Aurélie Bannay,Studies in health technology and informatics,1
+Parisa Rastin,2021 IEEE Symposium Series on Computational Intelligence (SSCI),1
+Claire Gardent,HAL (Le Centre pour la Communication Scientifique Directe),33
+Claire Gardent,DOAJ (DOAJ: Directory of Open Access Journals),2
+Claire Gardent,DataCite API,5
+Claire Gardent,Transactions of the Association for Computational Linguistics,3
+Claire Gardent,Edinburgh Research Explorer (University of Edinburgh),6
+Claire Gardent,Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers),1
+Claire Gardent,arXiv (Cornell University),15
+Claire Gardent,Zenodo (CERN European Organization for Nuclear Research),6
+Claire Gardent,Lecture notes in computer science,8
+Claire Gardent,Computational Linguistics,2
+Claire Gardent,Communications in computer and information science,1
+Claire Gardent,Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing,1
+Claire Gardent,Synthesis lectures on human language technologies,10
+Claire Gardent,Data Archiving and Networked Services (DANS),2
+Claire Gardent,Research Publications (Maastricht University),1
+Claire Gardent,Natural Language Generation,3
+Claire Gardent,TUbilio (Technical University of Darmstadt),1
+Claire Gardent,Annals of Mathematics and Artificial Intelligence,1
+Claire Gardent,Advances in intelligent systems and computing,1
+Claire Gardent,Neurocomputing,1
+Claire Gardent,Proceedings of the AAAI Conference on Artificial Intelligence,1
+Claire Gardent,ePrints Soton (University of Southampton),1
+Claire Gardent,Publications Et Travaux Academiques de Lorraine (Universite de Lorraine),1
+Claire Gardent,Conference of the European Chapter of the Association for Computational Linguistics,1
+Claire Gardent,CiteSeer X (The Pennsylvania State University),2
+Emmanuel Nauer,arXiv (Cornell University),2
+Emmanuel Nauer,HAL (Le Centre pour la Communication Scientifique Directe),21
+Emmanuel Nauer,Lecture notes in computer science,15
+Emmanuel Nauer,Open Archive Toulouse Archive Ouverte (University of Toulouse),1
+Emmanuel Nauer,CiteSeer X (The Pennsylvania State University),1
+Emmanuel Nauer,Studies in computational intelligence,1
+Emmanuel Nauer,Revue d Épidémiologie et de Santé Publique,1
+Emmanuel Nauer,Semantic Web,1
+Emmanuel Nauer,DataCite API,1
+Emmanuel Nauer,Information Systems,1
+Emmanuel Nauer,International Journal of General Systems,1
+Emmanuel Nauer,KRDB,1
+Yan Kabrit,Lecture notes in computer science,1
+François Buet,"ICASSP 2022 - 2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",1
+Mohammed Fellaji,arXiv (Cornell University),1
+Armelle Brun,Zenodo (CERN European Organization for Nuclear Research),1
+Armelle Brun,2021 IEEE International Conference on Data Mining (ICDM),1
+Armelle Brun,PubMed,1
+Armelle Brun,PubMed Central,1
+Armelle Brun,Scientific Reports,1
+Armelle Brun,Lecture notes in computer science,8
+Armelle Brun,arXiv (Cornell University),3
+Armelle Brun,Semantic Web,1
+Armelle Brun,2021 11th IEEE International Conference on Intelligent Data Acquisition and Advanced Computing Systems: Technology and Applications (IDAACS),1
+Armelle Brun,2021 IEEE Automatic Speech Recognition and Understanding Workshop (ASRU),1
+Armelle Brun,Advances in analytics for learning and teaching,1
+Armelle Brun,Communications in computer and information science,2
+Armelle Brun,Lecture notes in business information processing,1
+Armelle Brun,2013 IEEE/WIC/ACM International Joint Conferences on Web Intelligence (WI) and Intelligent Agent Technologies (IAT),1
+Armelle Brun,Journal of Intelligent Information Systems,1
+Armelle Brun,Lecture notes in social networks,1
+Armelle Brun,CiteSeer X (The Pennsylvania State University),2
+Armelle Brun,DOAJ (DOAJ: Directory of Open Access Journals),1
+Armelle Brun,Advances in Multimedia,1
+Armelle Brun,Social Network Analysis and Mining,1
+Armelle Brun,Frontiers in artificial intelligence and applications,2
+Samuel Nowakowski,L Observatoire,1
+Samuel Nowakowski,Springer eBooks,2
+Samuel Nowakowski,HAL (Le Centre pour la Communication Scientifique Directe),8
+Samuel Nowakowski,EPiC series in computing,1
+Samuel Nowakowski,Journal of Siberian Federal University Humanities & Social Sciences,1
+Samuel Nowakowski,Sciences et Technologies de l Information et de la Communication pour l Éducation et la Formation,1
+Samuel Nowakowski,arXiv (Cornell University),1
+Samuel Nowakowski,DataCite API,1
+Armelle Brun,DataCite API,1
+Barbara Gendron,arXiv (Cornell University),1
+Sylvain Castagnos,arXiv (Cornell University),1
+Sylvain Castagnos,DataCite API,1
+Mohammed Khatbane,Procedia Computer Science,1
+Alain Gély,Springer eBooks,1
+Alain Gély,HAL (Le Centre pour la Communication Scientifique Directe),3
+Guénaël Cabanès,HAL (Le Centre pour la Communication Scientifique Directe),3
+Guénaël Cabanès,2022 International Joint Conference on Neural Networks (IJCNN),2
+Guénaël Cabanès,Lecture notes in computer science,1
+Brieuc Conan‐Guez,arXiv (Cornell University),2
+Brieuc Conan‐Guez,HAL (Le Centre pour la Communication Scientifique Directe),2
+Brieuc Conan‐Guez,Lecture notes in computer science,1
+Brieuc Conan‐Guez,DataCite API,1
+Joël Legrand,HAL (Le Centre pour la Communication Scientifique Directe),5
+Joël Legrand,PubMed Central,2
+Joël Legrand,Europe PMC (PubMed Central),2
+Joël Legrand,bioRxiv (Cold Spring Harbor Laboratory),2
+Joël Legrand,BMC Bioinformatics,1
+Joël Legrand,International Conference on Learning Representations,1
+Joël Legrand,PubMed,1
+Joël Legrand,Scientific Data,1
+Samuel Cruz‐Lara,HAL (Le Centre pour la Communication Scientifique Directe),7
+Samuel Cruz‐Lara,Lecture notes in computer science,2
+Samuel Cruz‐Lara,Progress in IS,1
+Samuel Cruz‐Lara,Language Resources and Evaluation,1
+Samuel Cruz‐Lara,Lecture notes in business information processing,1
+Samuel Cruz‐Lara,Journal of Virtual Worlds Research,1
+Samuel Cruz‐Lara,Expert Systems with Applications,1
+Samuel Cruz‐Lara,arXiv (Cornell University),1
+Samuel Cruz‐Lara,DataCite API,1
+Samuel Cruz‐Lara,IGI Global eBooks,5
+Samuel Cruz‐Lara,European Conference on Interactive TV,1
+Samuel Cruz‐Lara,MPG.PuRe (Max Planck Society),1
+Samuel Cruz‐Lara,Springer eBooks,1
+Jean Charles Lamirel,HAL (Le Centre pour la Communication Scientifique Directe),1
+Jean Charles Lamirel,International Journal of Knowledge and Learning,1
+Jean Charles Lamirel,"Proceedings - International Conference on Tools with Artificial Intelligence, TAI",1
+
+    `;
+
+
+    </script>
+</body>
+</html>

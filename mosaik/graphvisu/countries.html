@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-authorship Network</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force-limit@1"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            /* box-shadow: 0 20px 40px rgba(0,0,0,0.1); */
+            /* backdrop-filter: blur(10px); */
+        }
+        #graph-container {
+            /* border: 2px solid #e9ecef; */
+            border-radius: 10px;
+            background: white;
+            margin-top: 20px;
+            /* overflow: hidden; */
+        }
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .legend {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }        
+        .legend-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+        .legend-item {
+            font-size: 14px;
+            color: #6c757d;
+            margin: 3px 0;
+        }
+        .node-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            fill: #333;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">        
+        <div id="graph-container"></div>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        let svg, simulation, nodes, links;
+        let width = 800; // MDA
+        let height = 600; // MDA
+
+        function parseData(csvText) {
+            const lines = csvText.trim().split('\n');
+            const data = [];            
+            for (let i = 1; i < lines.length; i++) {
+                const parts = lines[i].split(',');
+                if (parts.length >= 3) {
+                    // MDA filter out unique papers
+                    if (parseInt(parts[2].trim()) > 0.0) 
+                        data.push({
+                            author1: parts[0].trim(),
+                            author2: parts[1].trim(),
+                            papers: parseInt(parts[2].trim()) || 1
+                        });
+                }
+            }
+            return data;
+        }
+
+        function processGraphData(data) {
+            const nodeMap = new Map();
+            const links = [];
+
+            // Process each collaboration
+            data.forEach(d => {
+                // Add to node map and track total collaborations
+                if (!nodeMap.has(d.author1)) {
+                    nodeMap.set(d.author1, { id: d.author1, totalPapers: 0 }); 
+                }
+                if (!nodeMap.has(d.author2)) {
+                    nodeMap.set(d.author2, { id: d.author2, totalPapers: 0 });
+                }
+                
+                // Add papers to both authors' totals
+                nodeMap.get(d.author1).totalPapers += d.papers;
+                nodeMap.get(d.author2).totalPapers += d.papers;
+                nodeMap.get(d.author1).mosaik = 1; // MDA
+                
+                // Create link
+                links.push({
+                    source: d.author1,
+                    target: d.author2,
+                    papers: d.papers
+                });
+            });
+
+            return {
+                nodes: Array.from(nodeMap.values()),
+                links: links
+            };
+        }
+
+        function generateGraph(csvText) {
+            if (!csvText) {
+                alert('Please enter some data first!');
+                return;
+            }
+
+                const rawData = parseData(csvText);
+                if (rawData.length === 0) {
+                    alert('No valid data found. Please check your format.');
+                    return;
+                }
+                const graphData = processGraphData(rawData);
+                createVisualization(graphData);
+        }
+
+        function createVisualization(data) {
+            // Clear previous visualization
+            d3.select('#graph-container').selectAll('*').remove();
+
+            // Create SVG
+            svg = d3.select('#graph-container')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Define scales
+            const maxPapers = d3.max(data.links, d => d.papers);
+            const maxTotalPapers = d3.max(data.nodes, d => d.totalPapers);
+
+            const linkWidthScale = d3.scaleLinear()
+                .domain([1, maxPapers])
+                .range([1, 8]);
+                
+            const nodeRadiusScale = d3.scaleLinear()
+                .domain([1, maxTotalPapers])
+                .range([8, 25]);
+
+            wallForce = d3.forceLimit() // MDA
+                // .radius(node => node.r) // this leads to NaNs...
+                .x0(0)
+                .x1(width-30)
+                .y0(0)
+                .y1(height-30);
+
+            wallForce // MDA
+                .cushionWidth(25)
+                .cushionStrength(0.26);
+
+            // Create force simulation
+            simulation = d3.forceSimulation(data.nodes)
+                .force('link', d3.forceLink(data.links).id(d => d.id).distance(300))
+                .force('charge', d3.forceManyBody().strength(-100))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(d => nodeRadiusScale(d.totalPapers) + 5))
+                .force('walls', wallForce); // MDA
+            
+                // Create links
+            const link = svg.append('g')
+                .selectAll('line')
+                .data(data.links)
+                .enter()
+                .append('line')
+                .attr('stroke', '#999')
+                .attr('stroke-opacity', 0.6)
+                .attr('stroke-width', d => linkWidthScale(d.papers));
+
+            // Create nodes
+            const node = svg.append('g')
+                .selectAll('circle')
+                .data(data.nodes)
+                .enter()
+                .append('circle')
+                .attr('r', d => nodeRadiusScale(d.totalPapers))
+                .attr('fill', d => {
+                    // MDA color based on membership in mosaik
+                    if ("mosaik" in d && d.mosaik == 1) return '#FF8500'; // orange for mosaik members
+                    return '#CCCCCC'; // blue for others
+                })
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 2)
+                .style('cursor', 'grab')
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+
+            // Create labels
+            const labels = svg.append('g')
+                .selectAll('text')
+                .data(data.nodes)
+                .enter()
+                .append('text')
+                .attr('class', 'node-label')
+                .text(d => d.id)
+                .attr('dy', d => nodeRadiusScale(d.totalPapers) + 15);
+
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+
+            // Add hover effects
+            node
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.id}</strong><br>Total Connections: ${d.totalPapers}`);
+                    
+                    d3.select(this).attr('stroke-width', 4);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function(event, d) {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-width', 2);
+                });
+
+            link
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.source.id} ↔ ${d.target.id}</strong><br>Connections: ${d.papers}`);
+                    
+                    d3.select(this).attr('stroke-opacity', 1);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function() {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-opacity', 0.6);
+                });
+
+            // Update positions on simulation tick
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                node
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                labels
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y);
+            });
+
+            // Drag functions
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+        }
+
+        // Load sample data on page load
+        window.onload = function() {
+            width = window.innerWidth - 60;
+            height = window.innerHeight - 100;
+            generateGraph(csvtext);
+        };
+
+    const csvtext = `
+author,spa,nb
+Bart Lamiroy,CN,2
+Bart Lamiroy,EE,2
+Bart Lamiroy,UA,1
+Bart Lamiroy,US,11
+Bart Lamiroy,TH,1
+Bart Lamiroy,ES,6
+Bart Lamiroy,AT,1
+Fabien Lauer,BE,2
+Fabien Lauer,DK,2
+Fabien Lauer,HU,2
+Fabien Lauer,US,2
+Jean Lieber,CH,1
+Jean Lieber,LU,2
+Jean Lieber,GB,14
+Jean Lieber,AU,3
+Jean Lieber,MA,5
+Jean Lieber,DE,6
+Jean Lieber,CA,13
+Jean Lieber,RU,15
+Jean Lieber,US,2
+Jean Lieber,NO,1
+Jean Lieber,JP,2
+Jean Lieber,DZ,1
+Anna Liednikova,GB,1
+Anna Liednikova,NL,1
+Anna Liednikova,IL,1
+Mathieu d’Aquin,JP,1
+Mathieu d’Aquin,IE,6
+Mathieu d’Aquin,US,1
+Mathieu d’Aquin,DE,4
+Mathieu d’Aquin,PT,3
+Mathieu d’Aquin,PL,1
+Mathieu d’Aquin,BE,1
+Mathieu d’Aquin,RU,7
+Mathieu d’Aquin,CA,2
+Mathieu d’Aquin,LU,1
+Nicolas Jay,RU,7
+Nicolas Jay,BE,1
+Nicolas Jay,GB,2
+Nicolas Jay,LU,1
+Christophe Cerisara,BE,1
+Christophe Cerisara,IT,1
+Christophe Cerisara,AT,1
+Christophe Cerisara,GB,3
+Christophe Cerisara,NL,3
+Christophe Cerisara,IL,3
+Christophe Cerisara,CZ,9
+Christophe Cerisara,PL,3
+Christophe Cerisara,US,3
+Sabeur Aridhi,TN,8
+Sabeur Aridhi,EE,3
+Sabeur Aridhi,SA,5
+Sabeur Aridhi,AT,9
+Sabeur Aridhi,AU,14
+Sabeur Aridhi,US,8
+Sabeur Aridhi,BD,11
+Sabeur Aridhi,ES,4
+Sabeur Aridhi,GB,3
+Sabeur Aridhi,TR,2
+Sabeur Aridhi,FI,2
+Sabeur Aridhi,RS,2
+Sabeur Aridhi,IL,2
+Sabeur Aridhi,DE,2
+Sabeur Aridhi,IT,3
+Sabeur Aridhi,SI,2
+Sabeur Aridhi,CH,2
+Sabeur Aridhi,TW,2
+Sabeur Aridhi,BE,2
+Sabeur Aridhi,IN,2
+Sabeur Aridhi,IE,2
+Sabeur Aridhi,CA,3
+Sabeur Aridhi,DZ,3
+Sabeur Aridhi,BR,2
+David Langlois,US,15
+David Langlois,DZ,5
+David Langlois,PS,2
+David Langlois,IN,3
+David Langlois,ES,2
+David Langlois,PL,2
+David Langlois,CA,1
+David Langlois,TN,2
+David Langlois,JP,2
+Sylvain Castagnos,RU,1
+Chahrazed Labba,SI,1
+Chahrazed Labba,PT,1
+Chahrazed Labba,US,1
+Chahrazed Labba,DZ,1
+Chahrazed Labba,TR,1
+Chahrazed Labba,CN,3
+Chahrazed Labba,CH,3
+Chahrazed Labba,DE,3
+Frédéric Pennerath,PT,3
+Frédéric Pennerath,RU,3
+Parisa Rastin,CA,3
+Parisa Rastin,LU,1
+Lydia Boudjeloud-Assala,IE,7
+Lydia Boudjeloud-Assala,DK,1
+Pavel Král,CZ,7
+Thamer Mecharnia,GB,1
+Thamer Mecharnia,DE,1
+Thamer Mecharnia,SE,1
+Thamer Mecharnia,ES,1
+Gaël Guibon,LU,5
+Gaël Guibon,PT,2
+Gaël Guibon,CH,1
+Gaël Guibon,GB,1
+Miguel Couceiro,DE,4
+Miguel Couceiro,FI,4
+Miguel Couceiro,PL,6
+Miguel Couceiro,US,1
+Miguel Couceiro,RU,15
+Miguel Couceiro,SE,7
+Miguel Couceiro,CA,6
+Miguel Couceiro,AT,6
+Miguel Couceiro,AU,8
+Miguel Couceiro,ES,3
+Miguel Couceiro,CH,1
+Miguel Couceiro,LU,16
+Miguel Couceiro,PT,4
+Miguel Couceiro,AE,4
+Miguel Couceiro,BR,2
+Miguel Couceiro,GB,2
+Miguel Couceiro,HU,3
+Miguel Couceiro,GR,1
+Miguel Couceiro,BE,1
+Alexandre Blansché,LU,1
+Alexandre Blansché,CA,2
+Alexandre Blansché,RU,1
+Azim Roussanaly,LU,1
+Azim Roussanaly,UA,1
+Azim Roussanaly,VN,3
+Azim Roussanaly,TN,2
+Yannick Parmentier,TN,1
+Yannick Parmentier,GB,6
+Yannick Parmentier,NL,6
+Yannick Parmentier,IL,6
+Yannick Parmentier,DE,2
+Geoffray Bonnin,AT,5
+Geoffray Bonnin,DE,5
+Egor Dudyrev,RU,2
+Jean-Charles Lamirel,CN,5
+Jean-Charles Lamirel,BE,3
+Jean-Charles Lamirel,IN,5
+Jean-Charles Lamirel,TR,12
+Jean-Charles Lamirel,SY,11
+Jean-Charles Lamirel,DE,2
+Jean-Charles Lamirel,GB,2
+Jean-Charles Lamirel,NL,2
+Jean-Charles Lamirel,IL,2
+Jean-Charles Lamirel,CA,1
+Jean-Charles Lamirel,DZ,1
+Parisa Rastin,IT,1
+Claire Gardent,GB,25
+Claire Gardent,DE,7
+Claire Gardent,IL,6
+Claire Gardent,NL,4
+Claire Gardent,MT,3
+Claire Gardent,BE,1
+Claire Gardent,TR,1
+Claire Gardent,CN,4
+Claire Gardent,PL,1
+Claire Gardent,ES,2
+Claire Gardent,US,4
+Claire Gardent,IN,1
+Claire Gardent,EE,2
+Claire Gardent,SE,1
+Emmanuel Nauer,GB,5
+Emmanuel Nauer,AU,2
+Emmanuel Nauer,RU,3
+Emmanuel Nauer,CA,8
+Emmanuel Nauer,MA,1
+Emmanuel Nauer,DE,1
+François Buet,JP,1
+Christophe Cerisara,LU,1
+Mohammed Fellaji,PT,1
+Armelle Brun,CA,1
+Armelle Brun,GB,1
+Armelle Brun,PL,4
+Armelle Brun,DE,2
+Armelle Brun,LU,4
+Armelle Brun,UA,4
+Armelle Brun,IN,1
+Armelle Brun,BE,1
+Armelle Brun,US,1
+Samuel Nowakowski,DE,1
+Samuel Nowakowski,NL,1
+Samuel Nowakowski,BE,1
+Samuel Nowakowski,IN,4
+Samuel Nowakowski,MK,1
+Samuel Nowakowski,ME,1
+Samuel Nowakowski,RS,1
+Barbara Gendron,CA,1
+Barbara Gendron,GB,1
+Mohammed Khatbane,AT,1
+Mohammed Khatbane,AU,1
+Mohammed Khatbane,BD,1
+Prunelle D. Treuil,GB,1
+Alain Gély,PT,3
+Alain Gély,RU,3
+Guénaël Cabanès,IT,1
+Brieuc Conan‐Guez,PT,3
+Brieuc Conan‐Guez,RU,2
+Joël Legrand,PL,2
+Joël Legrand,US,6
+Joël Legrand,RU,2
+Joël Legrand,CA,4
+Joël Legrand,GB,1
+Joël Legrand,NL,1
+Joël Legrand,IL,1
+Joël Legrand,AT,2
+Joël Legrand,AU,2
+Samuel Cruz‐Lara,GB,1
+Samuel Cruz‐Lara,NL,8
+Samuel Cruz‐Lara,IL,1
+Samuel Cruz‐Lara,DE,3
+Samuel Cruz‐Lara,US,3
+Samuel Cruz‐Lara,TW,1
+Samuel Cruz‐Lara,ES,1
+Samuel Cruz‐Lara,BR,4
+Jean Charles Lamirel,DZ,1
+
+    `;
+
+
+    </script>
+</body>
+</html>
