@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-authorship Network</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-force-limit@1"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            /* box-shadow: 0 20px 40px rgba(0,0,0,0.1); */
+            /* backdrop-filter: blur(10px); */
+        }
+        #graph-container {
+            /* border: 2px solid #e9ecef; */
+            border-radius: 10px;
+            background: white;
+            margin-top: 20px;
+            /* overflow: hidden; */
+        }
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .legend {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }        
+        .legend-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+        .legend-item {
+            font-size: 14px;
+            color: #6c757d;
+            margin: 3px 0;
+        }
+        .node-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            fill: #333;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">        
+        <div id="graph-container"></div>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        let svg, simulation, nodes, links;
+        let width = 800; // MDA
+        let height = 600; // MDA
+
+        function parseData(csvText) {
+            const lines = csvText.trim().split('\n');
+            const data = [];            
+            for (let i = 1; i < lines.length; i++) {
+                const parts = lines[i].split(',');
+                if (parts.length >= 3) {
+                    // MDA filter out unique papers
+                    if (parseInt(parts[2].trim()) > 0) 
+                        data.push({
+                            author1: parts[0].trim(),
+                            author2: parts[1].trim(),
+                            papers: parseInt(parts[2].trim()) || 1
+                        });
+                }
+            }
+            return data;
+        }
+
+        function processGraphData(data) {
+            const nodeMap = new Map();
+            const links = [];
+
+            // Process each collaboration
+            data.forEach(d => {
+                // Add to node map and track total collaborations
+                if (!nodeMap.has(d.author1)) {
+                    nodeMap.set(d.author1, { id: d.author1, totalPapers: 0 }); 
+                }
+                if (!nodeMap.has(d.author2)) {
+                    nodeMap.set(d.author2, { id: d.author2, totalPapers: 0 });
+                }
+                
+                // Add papers to both authors' totals
+                nodeMap.get(d.author1).totalPapers += d.papers;
+                nodeMap.get(d.author2).totalPapers += d.papers;
+                nodeMap.get(d.author1).mosaik = 1; // MDA
+                
+                // Create link
+                links.push({
+                    source: d.author1,
+                    target: d.author2,
+                    papers: d.papers
+                });
+            });
+
+            return {
+                nodes: Array.from(nodeMap.values()),
+                links: links
+            };
+        }
+
+        function generateGraph(csvText) {
+            if (!csvText) {
+                alert('Please enter some data first!');
+                return;
+            }
+
+                const rawData = parseData(csvText);
+                if (rawData.length === 0) {
+                    alert('No valid data found. Please check your format.');
+                    return;
+                }
+                const graphData = processGraphData(rawData);
+                createVisualization(graphData);
+        }
+
+        function createVisualization(data) {
+            // Clear previous visualization
+            d3.select('#graph-container').selectAll('*').remove();
+
+            // Create SVG
+            svg = d3.select('#graph-container')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Define scales
+            const maxPapers = d3.max(data.links, d => d.papers);
+            const maxTotalPapers = d3.max(data.nodes, d => d.totalPapers);
+
+            const linkWidthScale = d3.scaleLinear()
+                .domain([1, maxPapers])
+                .range([1, 8]);
+                
+            const nodeRadiusScale = d3.scaleLinear()
+                .domain([1, maxTotalPapers])
+                .range([8, 25]);
+
+            wallForce = d3.forceLimit() // MDA
+                // .radius(node => node.r) // this leads to NaNs...
+                .x0(0)
+                .x1(width-30)
+                .y0(0)
+                .y1(height-30);
+
+            wallForce // MDA
+                .cushionWidth(25)
+                .cushionStrength(0.26);
+
+            // Create force simulation
+            simulation = d3.forceSimulation(data.nodes)
+                .force('link', d3.forceLink(data.links).id(d => d.id).distance(300))
+                .force('charge', d3.forceManyBody().strength(-200))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(d => nodeRadiusScale(d.totalPapers) + 5))
+                .force('walls', wallForce); // MDA
+            
+                // Create links
+            const link = svg.append('g')
+                .selectAll('line')
+                .data(data.links)
+                .enter()
+                .append('line')
+                .attr('stroke', '#999')
+                .attr('stroke-opacity', 0.6)
+                .attr('stroke-width', d => linkWidthScale(d.papers));
+
+            // Create nodes
+            const node = svg.append('g')
+                .selectAll('circle')
+                .data(data.nodes)
+                .enter()
+                .append('circle')
+                .attr('r', d => nodeRadiusScale(d.totalPapers))
+                .attr('fill', d => {
+                    // MDA color based on membership in mosaik
+                    if ("mosaik" in d && d.mosaik == 1) return '#FF8500'; // orange for mosaik members
+                    return '#333333'; // blue for others
+                })
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 2)
+                .style('cursor', 'grab')
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+
+            // Create labels
+            const labels = svg.append('g')
+                .selectAll('text')
+                .data(data.nodes)
+                .enter()
+                .append('text')
+                .attr('class', 'node-label')
+                .text(d => d.id)
+                .attr('dy', d => nodeRadiusScale(d.totalPapers) + 15);
+
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+
+            // Add hover effects
+            node
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.id}</strong><br>Total Connections: ${d.totalPapers}`);
+                    
+                    d3.select(this).attr('stroke-width', 4);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function(event, d) {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-width', 2);
+                });
+
+            link
+                .on('mouseover', function(event, d) {
+                    tooltip
+                        .style('opacity', 1)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px')
+                        .html(`<strong>${d.source.id} ↔ ${d.target.id}</strong><br>Connections: ${d.papers}`);
+                    
+                    d3.select(this).attr('stroke-opacity', 1);
+                })
+                .on('mousemove', function(event) {
+                    tooltip
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function() {
+                    tooltip.style('opacity', 0);
+                    d3.select(this).attr('stroke-opacity', 0.6);
+                });
+
+            // Update positions on simulation tick
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                node
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                labels
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y);
+            });
+
+            // Drag functions
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+        }
+
+        // Load sample data on page load
+        window.onload = function() {
+            width = window.innerWidth - 60;
+            height = window.innerHeight - 100;
+            generateGraph(csvtext);
+        };
+
+    const csvtext = `
+author,s,nb
+Bart Lamiroy,speech recognition,1
+Bart Lamiroy,statistical language models,8
+Bart Lamiroy,natural language processing,14
+Bart Lamiroy,clustering quality,1
+Bart Lamiroy,formal concept analysis,2
+Bart Lamiroy,intrinsic logic of the user,1
+Bart Lamiroy,collaborative filtering,2
+Bart Lamiroy,semantic web,2
+Bart Lamiroy,metric learning,3
+Bart Lamiroy,system identification,2
+Bart Lamiroy,high dimensional text,1
+Fabien Lauer,statistical language models,3
+Fabien Lauer,system identification,3
+Fabien Lauer,metric learning,12
+Fabien Lauer,collaborative filtering,9
+Fabien Lauer,speech recognition,1
+Fabien Lauer,formal concept analysis,1
+Fabien Lauer,high dimensional text,2
+Jean Lieber,formal concept analysis,35
+Jean Lieber,adaptation knowledge,12
+Jean Lieber,metric learning,1
+Jean Lieber,high dimensional text,1
+Jean Lieber,collaborative filtering,3
+Jean Lieber,semantic web,12
+Jean Lieber,natural language processing,8
+Anna Liednikova,automatic dialog,2
+Mathieu d’Aquin,natural language processing,8
+Mathieu d’Aquin,statistical language models,4
+Mathieu d’Aquin,formal concept analysis,9
+Mathieu d’Aquin,semantic web,5
+Mathieu d’Aquin,adaptation knowledge,3
+Mathieu d’Aquin,metric learning,1
+Nicolas Jay,impact drug response phenotypes,2
+Nicolas Jay,natural language processing,6
+Nicolas Jay,adaptation knowledge,5
+Nicolas Jay,formal concept analysis,5
+Nicolas Jay,collaborative filtering,2
+Nicolas Jay,semantic web,1
+Christophe Cerisara,statistical language models,17
+Christophe Cerisara,natural language processing,8
+Christophe Cerisara,metric learning,3
+Christophe Cerisara,sentence structure,1
+Christophe Cerisara,formal concept analysis,2
+Christophe Cerisara,speech recognition,6
+Christophe Cerisara,system identification,1
+Christophe Cerisara,collaborative filtering,1
+Christophe Cerisara,data recognition,2
+Sabeur Aridhi,metric learning,3
+Sabeur Aridhi,natural language processing,10
+Sabeur Aridhi,formal concept analysis,3
+Sabeur Aridhi,link prediction,3
+Sabeur Aridhi,statistical language models,4
+Sabeur Aridhi,collaborative filtering,1
+David Langlois,statistical language models,10
+David Langlois,natural language processing,10
+David Langlois,semantic web,3
+Sylvain Castagnos,formal concept analysis,3
+Sylvain Castagnos,data for the digital age textile,1
+Sylvain Castagnos,natural language processing,4
+Sylvain Castagnos,collaborative filtering,9
+Sylvain Castagnos,recommender systems,1
+Armelle Brun,adaptation knowledge,2
+Armelle Brun,formal concept analysis,5
+Chahrazed Labba,semantic web,1
+Chahrazed Labba,collaborative filtering,4
+Chahrazed Labba,prediction systems,1
+Chahrazed Labba,natural language processing,1
+Chahrazed Labba,adaptation knowledge,1
+Chahrazed Labba,formal concept analysis,2
+Frédéric Pennerath,statistical language models,2
+Frédéric Pennerath,metric learning,1
+Frédéric Pennerath,data recognition,1
+Frédéric Pennerath,collaborative filtering,1
+Parisa Rastin,natural language processing,2
+Parisa Rastin,statistical language models,3
+Lydia Boudjeloud-Assala,natural language processing,3
+Lydia Boudjeloud-Assala,collaborative filtering,1
+Lydia Boudjeloud-Assala,speech recognition,2
+Lydia Boudjeloud-Assala,metric learning,4
+Pavel Král,statistical language models,6
+Pavel Král,natural language processing,3
+Thamer Mecharnia,natural language processing,1
+Gaël Guibon,speech recognition,1
+Gaël Guibon,statistical language models,4
+Gaël Guibon,natural language processing,1
+Gaël Guibon,formal concept analysis,2
+Miguel Couceiro,collaborative filtering,8
+Miguel Couceiro,formal concept analysis,20
+Miguel Couceiro,semantic web,5
+Miguel Couceiro,adaptation knowledge,7
+Miguel Couceiro,natural language processing,13
+Miguel Couceiro,statistical language models,6
+Miguel Couceiro,metric learning,5
+Miguel Couceiro,international workshop on prompt engineering,1
+Miguel Couceiro,system identification,1
+Miguel Couceiro,data recognition,1
+Miguel Couceiro,clustering quality,2
+Alexandre Blansché,formal concept analysis,2
+Alexandre Blansché,metric learning,1
+Alexandre Blansché,speech recognition,1
+Azim Roussanaly,formal concept analysis,4
+Azim Roussanaly,adaptation knowledge,3
+Azim Roussanaly,prediction systems,2
+Azim Roussanaly,collaborative filtering,3
+Azim Roussanaly,natural language processing,2
+Azim Roussanaly,semantic web,3
+Azim Roussanaly,statistical language models,2
+Yannick Parmentier,natural language processing,9
+Yannick Parmentier,semantic web,1
+Yannick Parmentier,statistical language models,1
+Geoffray Bonnin,data for the digital age textile,2
+Geoffray Bonnin,collaborative filtering,7
+Geoffray Bonnin,semantic web,1
+Geoffray Bonnin,recommender systems,1
+Geoffray Bonnin,metric learning,1
+Geoffray Bonnin,international workshop on prompt engineering,2
+Geoffray Bonnin,natural language processing,1
+Egor Dudyrev,formal concept analysis,1
+Egor Dudyrev,collaborative filtering,1
+Jean-Charles Lamirel,adaptation knowledge,1
+Jean-Charles Lamirel,statistical language models,19
+Jean-Charles Lamirel,natural language processing,20
+Jean-Charles Lamirel,metric learning,9
+Jean-Charles Lamirel,formal concept analysis,2
+Jean-Charles Lamirel,collaborative filtering,3
+Aurélie Bannay,impact drug response phenotypes,1
+Aurélie Bannay,formal concept analysis,1
+Parisa Rastin,speech recognition,1
+Parisa Rastin,clustering quality,1
+Parisa Rastin,metric learning,2
+Claire Gardent,natural language processing,62
+Claire Gardent,automatic dialog,1
+Claire Gardent,semantic web,3
+Claire Gardent,statistical language models,3
+Claire Gardent,sentence structure,1
+Claire Gardent,text production,1
+Claire Gardent,collaborative filtering,1
+Claire Gardent,formal concept analysis,1
+Claire Gardent,nodes in graph,1
+Emmanuel Nauer,natural language processing,8
+Emmanuel Nauer,adaptation knowledge,2
+Emmanuel Nauer,metric learning,1
+Emmanuel Nauer,formal concept analysis,13
+Emmanuel Nauer,collaborative filtering,1
+Emmanuel Nauer,semantic web,4
+Yan Kabrit,formal concept analysis,1
+François Buet,natural language processing,1
+Mohammed Fellaji,statistical language models,1
+Armelle Brun,natural language processing,15
+Armelle Brun,collaborative filtering,23
+Armelle Brun,statistical language models,2
+Armelle Brun,semantic web,1
+Armelle Brun,metric learning,1
+Samuel Nowakowski,natural language processing,1
+Samuel Nowakowski,semantic web,4
+Samuel Nowakowski,data for the digital age textile,1
+Samuel Nowakowski,adaptation knowledge,2
+Samuel Nowakowski,formal concept analysis,4
+Samuel Nowakowski,collaborative filtering,2
+Barbara Gendron,natural language processing,2
+Barbara Gendron,statistical language models,2
+Barbara Gendron,formal concept analysis,2
+Gaspard Michel,statistical language models,1
+Mohammed Khatbane,natural language processing,1
+Prunelle D. Treuil,adaptation knowledge,1
+Alain Gély,formal concept analysis,1
+Alain Gély,natural language processing,2
+Alain Gély,speech recognition,1
+Guénaël Cabanès,speech recognition,1
+Guénaël Cabanès,clustering quality,1
+Guénaël Cabanès,metric learning,2
+Guénaël Cabanès,statistical language models,1
+Brieuc Conan‐Guez,statistical language models,2
+Brieuc Conan‐Guez,data recognition,1
+Brieuc Conan‐Guez,speech recognition,1
+Joël Legrand,semantic web,2
+Joël Legrand,natural language processing,3
+Joël Legrand,impact drug response phenotypes,2
+Samuel Cruz‐Lara,natural language processing,8
+Samuel Cruz‐Lara,metric learning,1
+Samuel Cruz‐Lara,adaptation knowledge,1
+Samuel Cruz‐Lara,statistical language models,1
+Samuel Cruz‐Lara,semantic web,1
+Samuel Cruz‐Lara,formal concept analysis,1
+Samuel Cruz‐Lara,architecture for interactive digital television,4
+Samuel Cruz‐Lara,collaborative filtering,2
+Jean Charles Lamirel,natural language processing,1
+Jean Charles Lamirel,collaborative filtering,1
+
+    `;
+
+
+    </script>
+</body>
+</html>
