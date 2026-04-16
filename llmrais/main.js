@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let validationIndex = 0;
   let validationUserAnswer = Array(9).fill(0);
-  const SEND_EMAIL = "test@test.fr";
+  const SEND_EMAIL = "testllmrais@inria.fr";
 
   // ───────────────────────────────────────────────
   // Fonctions utilitaires
