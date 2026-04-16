@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Expérience de Raisonnement - Règle Cachée</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="autoMode.css">
+</head>
+<body>
+<div class="container">
+    <aside class="sidebar">
+        <div class="header">
+            <div class="icon">🧪</div>
+            <h2>Tests</h2>
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="facile">🟢 Facile</button>
+            <button class="filter-btn" data-filter="moyen">🟡 Moyen</button>
+            <button class="filter-btn" data-filter="difficile">🔴 Difficile</button>
+        </div>
+        <ul id="rule-select"></ul>
+    </aside>
+
+    <main>
+
+        <h1>Expérience de raisonnement</h1>
+        <p>Découvrez la règle cachée reliant les boutons</p>
+
+        <div class="top-bar">
+            <div class="objective-box">
+                <h3>Objectif</h3>
+                <p id="objective-description"></p>
+                <div class="objective-grid" id="objective-grid"></div>
+            </div>
+        </div>
+
+
+        <div class="grid">
+            <button data-id="1">1</button>
+            <button data-id="2">2</button>
+            <button data-id="3">3</button>
+            <button data-id="4">4</button>
+            <button data-id="5">5</button>
+            <button data-id="6">6</button>
+            <button data-id="7">7</button>
+            <button data-id="8">8</button>
+            <button data-id="9">9</button>
+        </div>
+
+        <div class="controls">
+            <button id="reset">CLEAR</button>
+            <button id="next">NEXT</button>
+            <button id="export">SEND</button>
+            <!--<button id="clean">CLEAN</button>-->
+        </div>
+        <div class="comment-box">
+            <textarea id="comment-input" placeholder="Ajouter un commentaire..."></textarea>
+            <button id="add-comment">Valider</button>
+        </div>
+    </main>
+
+    <div id="victory-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Bravo !</h2>
+            <p>L'objectif est atteint, vous avez gagné !!</p>
+            <div id="victory-actions">
+                <button id="close-victory">Continuer</button>
+                <button id="start-validation" class="hidden"> Phase de validation</button>
+            </div>
+        </div>
+    </div>
+    <div id="validation-panel" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close-btn">✕</button>
+            <h2>Validation</h2>
+            <p id="validation-question-text"></p>
+
+            <div class="validation-grids-row">
+                <div class="validation-section">
+                    <h4>État initial</h4>
+                    <div id="validation-initial-grid" class="mini-grid"></div>
+                </div>
+
+                <div class="validation-section">
+                    <h4>Ta réponse</h4>
+                    <p id="validation-click-info"></p>
+                    <div id="validation-answer-grid" class="mini-grid clickable"></div>
+                </div>
+            </div>
+
+            <div class="validation-actions">
+                <button id="validation-back">Retour</button>
+                <button id="validation-check">Vérifier</button>
+                <button id="validation-next" class="hidden">Question suivante</button>
+                <button id="validation-close" class="hidden">Fermer</button>
+            </div>
+
+            <p id="validation-feedback"></p>
+        </div>
+    </div>
+    <div id="validation-success-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close-btn">✕</button>
+            <h2>Bravo !</h2>
+            <p>La validation est réussie, vous avez gagné !!</p>
+            <div class="validation-success-actions">
+                <button id="close-validation-success">Continuer</button>
+            </div>
+        </div>
+    </div>
+    <div id="validation-failure-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Dommage !</h2>
+            <p>Malheureusement, tu n'as pas réussi à trouver la règle.</p>
+            <div class="validation-failure-actions">
+                <button id="close-validation-failure">Continuer</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="resizer"></div>
+
+    <aside class="history">
+        <div class="header">
+            <div class="icon" id="history-icon">📜</div>
+            <h3 id="history-title">Historique des actions</h3>
+            <!-- <button id="toggle-llm-btn" title="Tester avec le LLM">LLM</button> -->
+        </div>
+
+        <!-- Panneau Historique -->
+        <div id="panel-history">
+            <div id="actions-list"></div>
+        </div>
+
+        <!-- Panneau LLM -->
+        <div id="panel-llm" class="hidden">
+            <div id="llm-config">
+                <input type="password" id="llm-api-key" placeholder="Clé API OpenRouter (sk-or-v1-...)" />
+                <select id="llm-model">
+                    <option value="openai/gpt-4o-mini" selected>OpenAI GPT-4o-mini</option>
+                    <option value="qwen/qwen3-next-80b-a3b-instruct">Qwen Qwen3-next-80b-a3b-instruct</option>
+                    <option value="openai/gpt-oss-120b">OpenAI GPT-oss-120b</option>
+                    <option value="nvidia/nemotron-3-super-120b-a12b:free">Nvidia Nemotron-3-super-120b-a12b</option>
+                    <!-- Autres modèles ici -->
+                </select>
+                <select id="llm-mode">
+                    <option value="semi" selected>Mode semi-auto</option>
+                    <option value="auto">Mode automatique</option>
+                </select>
+            </div>
+
+            <div id="llm-messages"></div>
+            <div id="llm-actions-row">
+                <button id="llm-btn-description">📋 Description</button>
+                <button id="llm-btn-etape">👣 Étape</button>
+                <button id="llm-btn-validation-wrapper" style="display: none; background-color: #28a745; color: white;"></button>
+            </div>
+        </div>
+    </aside>
+
+</div>
+<script src="resizer.js"></script>
+<script type="module" src="llmView.js"></script>
+<script type="module" src="main.js"></script>
+</body>
+<div id="send-modal" class="modal hidden">
+    <div class="modal-content send-modal-content">
+        <button class="modal-close-btn" id="close-send-modal">✕</button>
+
+        <h2>Envoi de votre historique</h2>
+
+        <p class="send-help-text">
+            Merci pour votre participation.
+            Voici le récapitulatif de votre test.
+            Vous pouvez soit ouvrir automatiquement votre messagerie, soit copier le texte ci-dessous
+            pour l’envoyer manuellement à l’adresse indiquée.
+        </p>
+
+        <p class="send-destination">
+            Adresse de destination :
+            <strong id="send-destination-email">testllmrais@inria.fr</strong>
+            <button id="copy-send-email" type="button">Copier l’adresse</button>
+        </p>
+
+        <textarea id="send-preview" readonly></textarea>
+
+        <div class="send-actions">
+            <button id="copy-send-text" type="button">Copier le texte</button>
+            <button id="confirm-send" type="button">Envoyer par mail</button>
+        </div>
+
+        <p id="send-feedback"></p>
+    </div>
+</div>
+<footer class="site-footer">
+    <!--p>Projet réalisé par le groupe <strong>MosAIk</strong> - Encadrants : David Langlois &amp; Mathieu D'Aquin</p-->
+    <p class="footer-members">Cissé &bull; Keita &bull; Kodjo &bull; Ibeghouchene</p>
+</footer>
+</html>
