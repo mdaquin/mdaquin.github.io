@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comment fonctionne un ordinateur — machine 4 bits</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="langbar">
+  <button id="langFr" class="lang active" type="button">FR</button>
+  <button id="langEn" class="lang" type="button">EN</button>
+</div>
+
+<main>
+
+  <!-- ============ PROCESSOR ============ -->
+  <section class="panel cpu-panel">
+    <div class="panel-head"><h2 data-i18n="panel.processor">Processeur</h2></div>
+
+    <div class="cpu-grid">
+
+      <div class="reg reg-pc">
+        <div class="reg-name" data-i18n-html="reg.pc">Compteur ordinal <span class="abbr">PC</span></div>
+        <div class="reg-body">
+          <input type="text" id="pcInput" class="regval" maxlength="4" spellcheck="false">
+          <div class="reg-note" data-i18n="reg.pc.note">adresse de la prochaine instruction</div>
+        </div>
+      </div>
+
+      <div class="reg reg-flag">
+        <div class="reg-name" data-i18n="reg.flag">Drapeau de comparaison</div>
+        <div class="reg-body">
+          <div class="flags">
+            <span class="flg" id="flgLt">&lt;</span>
+            <span class="flg" id="flgEq">=</span>
+            <span class="flg" id="flgGt">&gt;</span>
+          </div>
+          <div class="reg-note" data-i18n-html="reg.flag.note">posé par <code>cmp</code>, lu par les sauts</div>
+        </div>
+      </div>
+
+      <div class="reg reg-ir">
+        <div class="reg-name" data-i18n-html="reg.ir">Instruction en cours de traitement <span class="abbr">IR</span></div>
+        <div class="reg-body">
+          <div class="irwords" id="irWords"></div>
+          <div class="irasm" id="irAsm"></div>
+          <div class="reg-note" id="irNote"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="btnStep" class="btn primary"></button>
+      <button id="btnRun" class="btn"></button>
+      <button id="btnReset" class="btn ghost" data-i18n="btn.reset">Réinitialiser le processeur</button>
+      <label class="speed">
+        <span data-i18n="speed">vitesse</span>
+        <input type="range" id="speed" min="60" max="1200" step="20" value="600">
+      </label>
+    </div>
+  </section>
+
+  <!-- ============ MEMORY ============ -->
+  <section class="panel memory-panel">
+    <div class="panel-head"><h2 data-i18n="panel.memory">Mémoire</h2></div>
+
+    <table class="memtable">
+      <thead>
+        <tr>
+          <th class="c-pc"></th>
+          <th class="c-addr" data-i18n="th.address">Adresse</th>
+          <th class="c-val" data-i18n="th.content">Contenu</th>
+        </tr>
+      </thead>
+      <tbody id="memBody"></tbody>
+    </table>
+
+    <div class="memtools">
+      <button id="btnClearMem" class="btn ghost" data-i18n="btn.clear">Effacer la mémoire</button>
+    </div>
+  </section>
+
+  <!-- ============ PROGRAM ============ -->
+  <section class="panel prog-panel">
+    <div class="panel-head">
+      <h2 data-i18n="panel.program">Programme</h2>
+      <select id="examples" class="mini-select">
+        <option value="" data-i18n="examples.placeholder">charger un exemple…</option>
+      </select>
+    </div>
+    <p class="hint" data-i18n-html="prog.hint">
+      Écrire du binaire à la main est fastidieux : tapez le programme ici et appuyez sur
+      <strong>Assembler</strong> pour le placer en mémoire. Vous pouvez aussi ignorer cette
+      zone et modifier directement les cellules mémoire.
+    </p>
+    <textarea id="source" spellcheck="false" rows="12"></textarea>
+    <div class="progtools">
+      <button id="btnAssemble" class="btn primary" data-i18n="btn.assemble">Assembler en mémoire</button>
+      <span id="asmMsg" class="asmmsg"></span>
+    </div>
+  </section>
+
+  <!-- ============ REFERENCE ============ -->
+  <section class="panel ref-panel">
+    <div class="panel-head"><h2 data-i18n="panel.isa">Jeu d'instructions</h2></div>
+    <table class="reftable" id="refTable"></table>
+    <div class="notes">
+      <h3 data-i18n="notes.rules">Règles de cette machine</h3>
+      <ul>
+        <li data-i18n-html="notes.r1"></li>
+        <li data-i18n-html="notes.r2"></li>
+        <li data-i18n-html="notes.r3"></li>
+        <li data-i18n-html="notes.r4"></li>
+        <li data-i18n-html="notes.r5"></li>
+      </ul>
+      <h3 data-i18n="notes.syntax">Syntaxe de l'assembleur</h3>
+      <ul>
+        <li data-i18n-html="notes.s1"></li>
+        <li data-i18n-html="notes.s2"></li>
+        <li data-i18n-html="notes.s3"></li>
+        <li data-i18n-html="notes.s4"></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
