@@ -72,6 +72,8 @@ const I18N = {
     'eff.jeq': 'si le drapeau est "=" alors PC ← a',
     'eff.jlt': 'si le drapeau est "<" alors PC ← a',
     'eff.jgt': 'si le drapeau est ">" alors PC ← a',
+    'eff.jmp': 'PC ← a   (saut toujours effectué)',
+    'eff.inc': 'mem[a] ← mem[a] + 1   (jamais au-dessus de 15)',
     'eff.hlt': 'arrête la machine',
 
     'notes.rules': 'Règles de cette machine',
@@ -82,7 +84,7 @@ const I18N = {
     'notes.r3': 'Une instruction occupe <strong>1 + (nombre de paramètres)</strong> cellules consécutives.',
     'notes.r4': "Après une instruction qui n'est pas un saut, le compteur passe au-delà de " +
       "l'instruction entière. Un saut effectué écrit le compteur à la place.",
-    'notes.r5': 'Les mots <code>1001</code>&ndash;<code>1111</code> ne sont pas des instructions : ' +
+    'notes.r5': 'Les mots <code>1011</code>&ndash;<code>1111</code> ne sont pas des instructions : ' +
       'en charger un arrête la machine avec une <em>instruction illégale</em>.',
 
     'notes.syntax': "Syntaxe de l'assembleur",
@@ -163,6 +165,8 @@ const I18N = {
     'eff.jeq': 'if flag is "=" then PC ← a',
     'eff.jlt': 'if flag is "<" then PC ← a',
     'eff.jgt': 'if flag is ">" then PC ← a',
+    'eff.jmp': 'PC ← a   (jump always taken)',
+    'eff.inc': 'mem[a] ← mem[a] + 1   (never above 15)',
     'eff.hlt': 'stop the machine',
 
     'notes.rules': 'Rules of this machine',
@@ -173,7 +177,7 @@ const I18N = {
     'notes.r3': 'An instruction occupies <strong>1 + (number of parameters)</strong> consecutive cells.',
     'notes.r4': 'After a non-jump instruction the counter moves past the whole instruction. ' +
       'A taken jump writes the counter instead.',
-    'notes.r5': 'Words <code>1001</code>&ndash;<code>1111</code> are not instructions: fetching ' +
+    'notes.r5': 'Words <code>1011</code>&ndash;<code>1111</code> are not instructions: fetching ' +
       'one stops the machine with an <em>illegal instruction</em>.',
 
     'notes.syntax': 'Assembler syntax',
@@ -226,7 +230,9 @@ const ISA = {
   5: { mn: 'jeq', roles: ['target address'], eff: 'eff.jeq' },
   6: { mn: 'jlt', roles: ['target address'], eff: 'eff.jlt' },
   7: { mn: 'jgt', roles: ['target address'], eff: 'eff.jgt' },
-  8: { mn: 'hlt', roles: [], eff: 'eff.hlt' },
+  8: { mn: 'jmp', roles: ['target address'], eff: 'eff.jmp' },
+  9: { mn: 'inc', roles: ['address a'], eff: 'eff.inc' },
+  10: { mn: 'hlt', roles: [], eff: 'eff.hlt' },
 };
 
 const MNEMONICS = {};
@@ -327,6 +333,15 @@ function doExecute() {
       }
       break;
     }
+
+    case 'jmp':
+      cpu.pc = p[0];
+      jumped = true;
+      break;
+
+    case 'inc':
+      write(p[0], Math.min(MAX_VALUE, mem[p[0]] + 1));
+      break;
 
     case 'hlt':
       cpu.status = 'halted';
