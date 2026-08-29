@@ -1,0 +1,30 @@
+{
+  "type": "derouler",
+  "titre": "Coût des ingrédients d'une recette",
+  "data": {
+    "titre": "Coût des ingrédients d'une recette",
+    "contexte": "Un cuisinier veut calculer le coût total des ingrédients nécessaires pour préparer un plat.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de valeurs proposés, en indiquant la valeur de chaque variable à chaque tour de boucle et la valeur renvoyée par chaque appel de fonction.",
+    "algorithme": "Entrée : ingredients (liste de listes [quantité, prix_unitaire])\nSortie : total (entier)\n\nFonction CalculerLigne(qte, prix) :\n  Renvoyer qte × prix\nFin\n\nFonction CalculerTotal(liste) :\n  total ← 0\n  Pour chaque ligne dans liste faire\n    total ← total + CalculerLigne(ligne[0], ligne[1])\n  Fin\n  Renvoyer total\nFin\n\nDébut\n  total_final ← CalculerTotal(ingredients)\n  Afficher \"Coût total :\", total_final\nFin",
+    "cas": [
+      "ingredients = [[2, 3], [1, 5], [4, 2]]",
+      "ingredients = [[3, 10]]",
+      "ingredients = []"
+    ],
+    "consignes": [
+      "Noter l'état des variables (total, ligne) dans CalculerTotal, et les arguments (qte, prix) ainsi que la valeur renvoyée par CalculerLigne à chaque appel."
+    ],
+    "aide": "Utiliser un tableau de suivi avec les colonnes : Tour, ligne, qte, prix, retour CalculerLigne, total.",
+    "code_python": null,
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "cuisine",
+    "notions": [
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T09:28:15.591Z"
+}

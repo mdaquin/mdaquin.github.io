@@ -1,0 +1,32 @@
+{
+  "type": "lire",
+  "titre": "Analyse de la trace mnésique",
+  "data": {
+    "titre": "Analyse de la trace mnésique",
+    "contexte": "En psychologie cognitive, on étudie la capacité d'un sujet à restituer une séquence d'événements. On utilise parfois des modèles simplifiés où l'ordre de rappel dépend de la structure de stockage utilisée.",
+    "enonce": "Soit un programme simulant le processus de rappel d'une séquence d'événements traumatiques stockés soit dans une pile, soit dans une file. Lire le code Python suivant et répondre aux questions.",
+    "code_python": "def traiter_sequence(evenements, structure, est_pile):\n    if len(evenements) == 0:\n        return []\n    \n    if est_pile:\n        # Utilisation d'une pile (LIFO)\n        copie = list(evenements)\n        resultat = []\n        while len(copie) > 0:\n            evenement = copie.pop()  # Retire le dernier élément\n            resultat.append(evenement)\n        return resultat\n    else:\n        # Utilisation d'une file (FIFO)\n        copie = list(evenements)\n        resultat = []\n        while len(copie) > 0:\n            evenement = copie.pop(0)  # Retire le premier élément\n            resultat.append(evenement)\n        return resultat\n\n# Test du programme\nsequence_stimulus = [\"image_1\", \"image_2\", \"image_3\", \"image_4\"]\n\n# Question 1\nrappel_pile = traiter_sequence(sequence_stimulus, \"pile\", True)\nprint(rappel_pile)\n\n# Question 2\nrappel_file = traiter_sequence(sequence_stimulus, \"file\", False)\nprint(rappel_file)",
+    "questions": [
+      "Que renvoie l'appel `traiter_sequence([], \"pile\", True)`?",
+      "Quel est le contenu affiché par la variable `rappel_pile`?",
+      "Quel est le contenu affiché par la variable `rappel_file`?",
+      "Quelle est la différence fondamentale entre l'ordre des éléments dans `rappel_pile` et dans `rappel_file`?"
+    ],
+    "consignes": [
+      "Pour la pile, imaginez que l'élément retiré est toujours celui qui est au sommet (le dernier ajouté).",
+      "Pour la file, imaginez que l'élément retiré est toujours celui qui est en tête (le premier ajouté)."
+    ],
+    "aide": "Suivez pas à pas la modification de la liste 'copie' à chaque étape de la boucle while.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "psychologie",
+    "notions": [
+      "files (FIFO)",
+      "piles (LIFO)"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-11T18:25:16.441Z"
+}

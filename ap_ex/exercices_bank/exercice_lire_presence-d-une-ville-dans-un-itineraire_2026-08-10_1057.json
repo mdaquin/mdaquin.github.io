@@ -1,0 +1,30 @@
+{
+  "type": "lire",
+  "titre": "Présence d'une ville dans un itinéraire",
+  "data": {
+    "titre": "Présence d'une ville dans un itinéraire",
+    "contexte": "Un objet Python un dictionnaire peut représenter une étape d’un itinéraire, avec une ville et une distance. Un itinéraire est une liste de ces dictionnaires.",
+    "enonce": "Lire le programme Python suivant et répondre aux questions.",
+    "code_python": "def contient_ville(itineraire, ville):\n    for etape in itineraire:\n        if etape[\"ville\"] == ville:\n            return True\n    return False\n\nparcours = [\n    {\"ville\": \"Lyon\", \"distance\": 120},\n    {\"ville\": \"Grenoble\", \"distance\": 80},\n    {\"ville\": \"Marseille\", \"distance\": 150}\n]\n\nresultat1 = contient_ville(parcours, \"Grenoble\")\nresultat2 = contient_ville(parcours, \"Nice\")",
+    "questions": [
+      "Que vaut resultat1 à la fin du programme ?",
+      "Que vaut resultat2 à la fin du programme ?",
+      "Que renvoie contient_ville(parcours, \"Lyon\") ?"
+    ],
+    "consignes": [
+      "Justifier brièvement chaque réponse."
+    ],
+    "aide": "Vérifier si le nom de la ville recherchée apparaît dans l’un des dictionnaires de la liste.",
+    "algorithme": null,
+    "type": "lire"
+  },
+  "params": {
+    "domain": "géographie",
+    "notions": [
+      "dictionnaires"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T08:57:49.951Z"
+}

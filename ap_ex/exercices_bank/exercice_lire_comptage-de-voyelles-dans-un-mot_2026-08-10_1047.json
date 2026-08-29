@@ -1,0 +1,33 @@
+{
+  "type": "lire",
+  "titre": "Comptage de voyelles dans un mot",
+  "data": {
+    "titre": "Comptage de voyelles dans un mot",
+    "contexte": "En linguistique computationnelle, on analyse souvent la structure phonétique des mots. Un premier pas simple consiste à compter le nombre de voyelles présentes dans une chaîne de caractères.",
+    "enonce": "Lire le programme Python suivant et indiquer ce qu'il affiche ou renvoie.",
+    "code_python": "def compter_voyelles(mot: str) -> int:\n    voyelles = \"aeiouy\"\n    compteur = 0\n    for lettre in mot:\n        if lettre in voyelles:\n            compteur = compteur + 1\n    return compteur\n\nprint(compter_voyelles(\"python\nprint(compter_voyelles(\"\"\nprint(compter_voyelles(\"linguistique\n",
+    "questions": [
+      "Que renvoie la fonction compter_voyelles pour l'argument \"python\" ?",
+      "Que renvoie la fonction compter_voyelles pour la chaîne vide \"\" ?",
+      "Que renvoie la fonction compter_voyelles pour l'argument \"linguistique\" ?",
+      "Qu'affiche le programme complet lors de son exécution ?"
+    ],
+    "consignes": [
+      "Répondre par les valeurs numériques attendues, dans l'ordre des appels."
+    ],
+    "aide": "Suivez l'évolution de la variable compteur à chaque tour de boucle pour chaque mot testé.",
+    "algorithme": null,
+    "type": "lire"
+  },
+  "params": {
+    "domain": "linguistique",
+    "notions": [
+       "listes / tableaux", 
+       "boucle bornée (Pour)",
+       "conditionnelle (Si / Sinon)"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T08:47:20.502Z"
+}

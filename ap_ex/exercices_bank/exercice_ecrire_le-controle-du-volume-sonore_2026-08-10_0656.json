@@ -1,0 +1,45 @@
+{
+  "type": "ecrire",
+  "titre": "Le contrôle du volume sonore",
+  "data": {
+    "titre": "Le contrôle du volume sonore",
+    "contexte": "Un musicien utilise un amplificateur de son pour régler le volume de son instrument lors d'un concert.",
+    "enonce": "L'algorithme doit augmenter progressivement le volume sonore jusqu'à ce qu'il atteigne un niveau de sécurité défini. On commence avec un volume initial et on augmente ce volume de manière constante à chaque étape jusqu'à ce que le niveau souhaité soit atteint ou dépassé.",
+    "entrees": [
+      {
+        "nom": "volume_actuel",
+        "description": "le niveau sonore de départ (un nombre entier)"
+      },
+      {
+        "nom": "objectif",
+        "description": "le niveau sonore maximal autorisé (un nombre entier)"
+      },
+      {
+        "nom": "pas",
+        "description": "la valeur que l'on ajoute au volume à chaque étape (un nombre entier positif)"
+      }
+    ],
+    "sortie": "le volume sonore final atteint après l'augmentation",
+    "consignes": [
+      "écrire l'algorithme en pseudo-code en respectant les conventions du cours",
+      "utiliser une boucle non bornée pour augmenter le volume",
+      "utiliser une conditionnelle pour vérifier si l'objectif est atteint ou dépassé"
+    ],
+    "aide": "Pensez à mettre à jour la variable du volume à chaque tour de boucle.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "musique",
+    "notions": [
+      "variables et affectation",
+      "opérations arithmétiques",
+      "conditionnelle (Si / Sinon)",
+      "boucle non bornée (Tant que)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T04:56:09.635Z"
+}

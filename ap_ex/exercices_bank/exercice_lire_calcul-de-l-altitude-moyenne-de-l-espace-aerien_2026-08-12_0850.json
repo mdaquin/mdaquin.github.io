@@ -1,0 +1,29 @@
+{
+  "type": "lire",
+  "titre": "Calcul de l'altitude moyenne de l'espace aérien",
+  "data": {
+    "titre": "Calcul de l'altitude moyenne de l'espace aérien",
+    "contexte": "Un drone de surveillance survole les Vosges pour cartographier les sommets de la région Grand-Est.",
+    "enonce": "On utilise le module math pour calculer l'écart de hauteur entre un sommet et une zone de vol. Lire le programme Python suivant et répondre aux questions.",
+    "code_python": "import math\n\n# math.sqrt(x) renvoie la racine carrée de x\n# math.ceil(x) renvoie l'entier immédiatement supérieur à x\n\ndef calculer_altitude_securisee(altitude_sommet, altitude_drone):\n    difference = altitude_drone - altitude_sommet\n    \n    if difference < 0:\n        return 0\n    else:\n        securite = math.sqrt(difference)\n        return math.ceil(securite)\n\n# Test sur le sommet des Vosges\nsommeau_vosges = 1174\ndrone_hauteur = 1200\n\nresultat = calculer_altitude_securisee(sommeau_vosges, drone_hauteur)\nprint(resultat)",
+    "questions": [
+      "Que renvoie la fonction math.sqrt(16)?",
+      "Que renvoie la fonction math.ceil(4.2)?",
+      "Quelle valeur le programme affiche-t-il à la fin de l'exécution?"
+    ],
+    "consignes": [
+      "Pour la dernière question, notez uniquement le nombre entier final sans unité."
+    ],
+    "aide": "Suivez pas à pas l'évolution de la variable 'difference' puis appliquez les fonctions mathématiques dans l'ordre.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "la région Grand-Est",
+    "notions": [
+      "modules et bibliothèques"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-12T06:50:25.761Z"
+}

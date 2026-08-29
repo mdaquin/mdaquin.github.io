@@ -1,0 +1,33 @@
+{
+  "type": "ecrire",
+  "titre": "Conversion d'altitudes en pieds",
+  "data": {
+    "titre": "Conversion d'altitudes en pieds",
+    "contexte": "Un géographe travaille sur une carte topographique et doit convertir des altitudes exprimées en mètres vers le système impérial (pieds). Il souhaite automatiser cette conversion pour toutes les altitudessaisies au clavier.",
+    "enonce": "Écrire un algorithme qui lit une altitude en mètres, la convertit en pieds (1 mètre = 3.28084 pieds), puis affiche le résultat. La saisie se termine quand l'utilisateur entre la valeur 0, qui ne doit pas être convertie.",
+    "entrees": [
+      {
+        "nom": "altitude",
+        "description": "nombre réel positif ou nul représentant une altitude en mètres ; la saisie se poursuit tant que la valeur est différente de 0"
+      }
+    ],
+    "sortie": "l'altitude convertie en pieds, affichée pour chaque saisie non nulle",
+    "consignes": [
+      "écrire l'algorithme en pseudo-code en respectant la syntaxe du cours",
+      "utiliser une boucle non bornée pour répéter la saisie",
+      "arrêter la boucle quand l'utilisateur saisit 0",
+      "afficher chaque résultat converti avec un message clair"
+    ],
+    "aide": "pensez à demander l'altitude à l'intérieur de la boucle et à vérifier la condition d'arrêt avant d'effectuer la conversion",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "géographie",
+    "notions": [
+      "entrées / sorties"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T08:53:18.580Z"
+}

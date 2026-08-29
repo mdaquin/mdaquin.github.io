@@ -1,0 +1,31 @@
+{
+  "type": "lire",
+  "titre": "Comptage des séances longues",
+  "data": {
+    "titre": "Comptage des séances longues",
+    "contexte": "Un coureur note les distances parcourues (en km) lors de ses sorties de la semaine dans une liste. Il veut savoir combien de séances dépassent une certaine distance.",
+    "enonce": "Lire le programme Python ci-dessous et indiquer ce qu'il affiche.",
+    "code_python": "def compter_longues_seances(seances, limite):\n    nb = 0\n    for dist in seances:\n        if dist > limite:\n            nb = nb + 1\n    return nb\n\nsemaine = [8, 12, 5, 15, 10, 7, 11]\nprint(compter_longues_seances(semaine, 10))\nprint(compter_longues_seances(semaine, 5))",
+    "questions": [
+      "Que affiche le programme (deux lignes) ?",
+      "Quelle est la valeur de la variable `nb` juste avant le premier `return` lors de l'appel `compter_longues_seances(semaine, 10)` ?",
+      "Si on appelle `compter_longues_seances([], 10)` avec une liste vide, que renvoie la fonction ?",
+      "Combien de fois la condition `dist > limite` est-elle vraie lors du second appel `compter_longues_seances(semaine, 5)` ?"
+    ],
+    "consignes": [
+      "Écrire les deux affichages sur lignes séparées.",
+      "Répondre par un nombre entier pour les questions 2, 3 et 4."
+    ],
+    "aide": "Suivez l'évolution de la variable `nb` à chaque tour de boucle pour chaque appel de fonction.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "sport",
+    "notions": [
+      "listes / tableaux"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T09:35:27.817Z"
+}

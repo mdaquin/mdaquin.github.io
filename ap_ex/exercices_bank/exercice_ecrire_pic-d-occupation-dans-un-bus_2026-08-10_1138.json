@@ -1,0 +1,35 @@
+{
+  "type": "ecrire",
+  "titre": "Pic d'occupation dans un bus",
+  "data": {
+    "titre": "Pic d'occupation dans un bus",
+    "contexte": "Un bus effectue son trajet avec plusieurs arrêts. À chaque arrêt, des passagers montent et descendent. Le conducteur souhaite connaître le nombre maximal de passagers présents simultanément dans le bus pour vérifier la capacité.",
+    "enonce": "Écrire un algorithme qui parcourt la liste des arrêts, met à jour le nombre de passagers dans le bus à chaque arrêt et détermine le nombre maximal de passagers atteint au cours du trajet. Le bus est vide au départ.",
+    "entrees": [
+      {
+        "nom": "arrets",
+        "description": "Liste de listes d'entiers. Chaque sous-liste contient deux entiers : le nombre de passagers qui montent et le nombre de passagers qui descendent à cet arrêt (exemple : [[5, 0], [3, 2], [0, 4]])."
+      }
+    ],
+    "sortie": "Entier représentant le nombre maximal de passagers présents dans le bus à un moment donné du trajet.",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code.",
+      "Utiliser une boucle bornée pour parcourir la liste des arrêts.",
+      "Utiliser une variable pour mémoriser l'occupation courante et une variable pour le maximum."
+    ],
+    "aide": "Pensez à mettre à jour l'occupation courante avant de la comparer au maximum.",
+    "algorithme": null,
+    "code_python": null,
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "transports",
+    "notions": [
+      "listes / tableaux", 
+      "listes de listes (matrices)"  
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:38:15.351Z"
+}

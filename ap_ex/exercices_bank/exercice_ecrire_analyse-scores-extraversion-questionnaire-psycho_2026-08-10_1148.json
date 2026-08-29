@@ -1,0 +1,37 @@
+{
+  "type": "ecrire",
+  "titre": "Analyse scores extraversion questionnaire psychologie",
+  "data": {
+    "titre": "Analyse scores extraversion questionnaire psychologie",
+    "contexte": "Un psychologue traite les réponses d'un questionnaire de personnalité court (type BFI-10) pour extraire le score d'extraversion de chaque participant.",
+    "enonce": "Écrire un algorithme qui, pour chaque participant, calcule son score d'extraversion à partir de deux items spécifiques (indices 0 et 5). Le premier item est direct, le second est inversé. Les réponses sont des chaînes 'A', 'B', 'C', 'D' converties en 1, 2, 3, 4. L'inversion transforme la valeur v en 5-v. Stocker les résultats dans un dictionnaire associant l'identifiant du participant à son score.",
+    "entrees": [
+      {
+        "nom": "participants",
+        "description": "Liste de dictionnaires, chacun ayant une clé 'id' (chaîne) et une clé 'reponses' (liste de 10 chaînes parmi 'A','B','C','D')"
+      }
+    ],
+    "sortie": "Dictionnaire associant chaque identifiant participant (chaîne) à son score d'extraversion (entier entre 2 et 8).",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code respectant les conventions du cours.",
+      "Définir deux fonctions : ConvertirChoix(lettre) qui renvoie l'entier 1 à 4, et ScorerItem(reponse_item, est_inverse) qui appelle ConvertirChoix et applique l'inversion si nécessaire.",
+      "Le programme principal parcourt la liste participants avec une boucle, puis pour chaque participant parcourt les deux items d'extraversion avec une boucle imbriquée, appelle ScorerItem, accumule la somme et remplit le dictionnaire de résultats.",
+      "Utiliser des noms de paramètres différents des variables du programme principal."
+    ],
+    "aide": "Pensez à initialiser le dictionnaire de résultats avant la boucle principale et à bien indexer les listes d'indices et d'inversion synchroniquement.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "psychologie",
+    "notions": [
+      "boucles imbriquées",
+      "listes / tableaux",
+      "chaînes de caractères",
+      "dictionnaires",
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:48:03.710Z"
+}

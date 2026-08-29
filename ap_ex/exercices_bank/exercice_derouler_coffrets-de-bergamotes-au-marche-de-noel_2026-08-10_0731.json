@@ -1,0 +1,33 @@
+{
+  "type": "derouler",
+  "titre": "Coffrets de bergamotes au marché de Noël",
+  "data": {
+    "titre": "Coffrets de bergamotes au marché de Noël",
+    "contexte": "Un artisan place Charles III prépare des coffrets de 5 bergamotes pour le marché de Noël. Il honore les commandes tant que son stock le permet, sinon il écoule les dernières boîtes à l'unité.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de valeurs proposés, en indiquant la valeur de chaque variable à chaque étape clé (initialisation, début de chaque tour de Pour, test Si, début de chaque tour de Tant que, fin).",
+    "algorithme": "Entrée : nb_commandes (entier), stock_initial (entier)\nSortie : nb_commandes_honorées (entier), stock_final (entier)\nDébut\n  nb_commandes_honorées ← 0\n  stock ← stock_initial\n  Pour i de 1 à nb_commandes faire\n    Si stock ≥ 5 alors\n      stock ← stock − 5\n      nb_commandes_honorées ← nb_commandes_honorées + 1\n    Sinon\n      Tant que stock > 0 faire\n        stock ← stock − 1\n      Fin\n    Fin\n  Fin\n  Renvoyer nb_commandes_honorées, stock\nFin",
+    "cas": [
+      "nb_commandes = 4, stock_initial = 18",
+      "nb_commandes = 3, stock_initial = 20",
+      "nb_commandes = 5, stock_initial = 0"
+    ],
+    "consignes": [
+      "Pour chaque cas, présenter une grille de suivi avec les colonnes : étape, i, stock, nb_commandes_honorées.",
+      "Préciser les valeurs finales renvoyées (nb_commandes_honorées, stock_final)."
+    ],
+    "aide": "Notez que la boucle Tant que s'exécute complètement (jusqu'à stock = 0) avant que la boucle Pour ne passe au tour suivant. La variable i ne change pas pendant l'exécution du Tant que.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "ville de nancy",
+    "notions": [
+      "conditionnelle (Si / Sinon)",
+      "boucle bornée (Pour)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T05:31:10.709Z"
+}

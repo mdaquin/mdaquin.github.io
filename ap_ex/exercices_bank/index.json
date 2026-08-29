@@ -1,0 +1,2615 @@
+{
+  "version": 1,
+  "construit_le": "2026-08-12T08:13:33+00:00",
+  "repertoire": "exercices_bank",
+  "nombre": 100,
+  "facettes": {
+    "types": [
+      {
+        "valeur": "ecrire",
+        "nombre": 29
+      },
+      {
+        "valeur": "derouler",
+        "nombre": 28
+      },
+      {
+        "valeur": "lire",
+        "nombre": 23
+      },
+      {
+        "valeur": "traduire",
+        "nombre": 20
+      }
+    ],
+    "domaines": [
+      {
+        "valeur": "géographie",
+        "nombre": 10
+      },
+      {
+        "valeur": "sport",
+        "nombre": 10
+      },
+      {
+        "valeur": "cuisine",
+        "nombre": 9
+      },
+      {
+        "valeur": "linguistique",
+        "nombre": 9
+      },
+      {
+        "valeur": "psychologie",
+        "nombre": 9
+      },
+      {
+        "valeur": "jeux video",
+        "nombre": 8
+      },
+      {
+        "valeur": "mathématiques",
+        "nombre": 8
+      },
+      {
+        "valeur": "musique",
+        "nombre": 8
+      },
+      {
+        "valeur": "ville de nancy",
+        "nombre": 8
+      },
+      {
+        "valeur": "biologie",
+        "nombre": 7
+      },
+      {
+        "valeur": "la région Grand-Est",
+        "nombre": 7
+      },
+      {
+        "valeur": "transports",
+        "nombre": 7
+      }
+    ],
+    "niveaux": [
+      {
+        "valeur": "découverte",
+        "nombre": 56
+      },
+      {
+        "valeur": "intermédiaire",
+        "nombre": 29
+      },
+      {
+        "valeur": "avancé",
+        "nombre": 15
+      }
+    ],
+    "notions": [
+      {
+        "valeur": "listes / tableaux",
+        "nombre": 20
+      },
+      {
+        "valeur": "conditionnelle (Si / Sinon)",
+        "nombre": 17
+      },
+      {
+        "valeur": "dictionnaires",
+        "nombre": 17
+      },
+      {
+        "valeur": "fonctions",
+        "nombre": 16
+      },
+      {
+        "valeur": "boucle bornée (Pour)",
+        "nombre": 13
+      },
+      {
+        "valeur": "boucles imbriquées",
+        "nombre": 12
+      },
+      {
+        "valeur": "boucle non bornée (Tant que)",
+        "nombre": 10
+      },
+      {
+        "valeur": "variables et affectation",
+        "nombre": 10
+      },
+      {
+        "valeur": "chaînes de caractères",
+        "nombre": 9
+      },
+      {
+        "valeur": "listes de listes (matrices)",
+        "nombre": 9
+      },
+      {
+        "valeur": "récursivité",
+        "nombre": 9
+      },
+      {
+        "valeur": "arbres",
+        "nombre": 7
+      },
+      {
+        "valeur": "files (FIFO)",
+        "nombre": 6
+      },
+      {
+        "valeur": "entrées / sorties",
+        "nombre": 5
+      },
+      {
+        "valeur": "piles (LIFO)",
+        "nombre": 5
+      },
+      {
+        "valeur": "classes et objets",
+        "nombre": 4
+      },
+      {
+        "valeur": "complexité algorithmique",
+        "nombre": 4
+      },
+      {
+        "valeur": "graphes",
+        "nombre": 4
+      },
+      {
+        "valeur": "héritage entre classes",
+        "nombre": 4
+      },
+      {
+        "valeur": "opérations arithmétiques",
+        "nombre": 4
+      },
+      {
+        "valeur": "modules et bibliothèques",
+        "nombre": 2
+      }
+    ],
+    "exclusions": [
+      {
+        "valeur": "liste",
+        "nombre": 22
+      }
+    ]
+  },
+  "exercices": [
+    {
+      "id": "exercice_derouler_analyse-de-la-troncature-d-un-morpheme_2026-08-12_1013",
+      "fichier": "exercice_derouler_analyse-de-la-troncature-d-un-morpheme_2026-08-12_1013.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Analyse de la troncature d'un morphème",
+      "domaine": "linguistique",
+      "notions": [
+        "chaînes de caractères",
+        "arbres",
+        "complexité algorithmique"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-12T08:13:05.357Z",
+      "resume": "En linguistique computationnelle, on cherche parfois à savoir si une unité linguistique (morphème) est contenue au début d'un mot pour identifier des racines communes.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 5,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2216
+    },
+    {
+      "id": "exercice_lire_analyse-de-la-profondeur-d-un-arbre-de-morpholog_2026-08-12_0942",
+      "fichier": "exercice_lire_analyse-de-la-profondeur-d-un-arbre-de-morpholog_2026-08-12_0942.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Analyse de la profondeur d'un arbre de morphologie",
+      "domaine": "linguistique",
+      "notions": [
+        "chaînes de caractères",
+        "arbres",
+        "complexité algorithmique"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-12T07:42:02.514Z",
+      "resume": "En linguistique computationnelle, on utilise des arbres pour représenter la structure syntaxique d'une phrase. La profondeur d'un nœud est le nombre de liens nécessaires pour atte…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 2274
+    },
+    {
+      "id": "exercice_derouler_verification-de-la-fraicheur-des-ingredients_2026-08-12_0856",
+      "fichier": "exercice_derouler_verification-de-la-fraicheur-des-ingredients_2026-08-12_0856.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Vérification de la fraîcheur des ingrédients",
+      "domaine": "cuisine",
+      "notions": [
+        "listes / tableaux",
+        "dictionnaires",
+        "complexité algorithmique"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-12T06:56:50.608Z",
+      "resume": "Un chef veut vérifier si un ingrédient spécifique est présent dans son stock et s'il est périmé ou non.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2448
+    },
+    {
+      "id": "exercice_lire_optimisation-du-stock-de-condiments_2026-08-12_0853",
+      "fichier": "exercice_lire_optimisation-du-stock-de-condiments_2026-08-12_0853.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Optimisation du stock de condiments",
+      "domaine": "cuisine",
+      "notions": [
+        "dictionnaires",
+        "complexité algorithmique"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-12T06:53:51.521Z",
+      "resume": "Un chef de cuisine veut vérifier rapidement la présence d'un ingrédient spécifique dans son inventaire pour préparer une recette.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 4,
+        "aide": true
+      },
+      "octets": 2570
+    },
+    {
+      "id": "exercice_lire_calcul-de-l-altitude-moyenne-de-l-espace-aerien_2026-08-12_0850",
+      "fichier": "exercice_lire_calcul-de-l-altitude-moyenne-de-l-espace-aerien_2026-08-12_0850.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Calcul de l'altitude moyenne de l'espace aérien",
+      "domaine": "la région Grand-Est",
+      "notions": [
+        "modules et bibliothèques"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-12T06:50:25.761Z",
+      "resume": "Un drone de surveillance survole les Vosges pour cartographier les sommets de la région Grand-Est.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1705
+    },
+    {
+      "id": "exercice_traduire_calcul-de-l-indice-de-refraction-de-la-lumiere-d_2026-08-12_0845",
+      "fichier": "exercice_traduire_calcul-de-l-indice-de-refraction-de-la-lumiere-d_2026-08-12_0845.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Calcul de l'indice de réfraction de la lumière dans l'eau de l'Est",
+      "domaine": "la région Grand-Est",
+      "notions": [
+        "modules et bibliothèques"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-12T06:45:12.922Z",
+      "resume": "On souhaite simuler la variation de l'indice de réfraction de la lumière traversant les eaux du lac de Gérardmer selon l'angle d'incidence.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1642
+    },
+    {
+      "id": "exercice_derouler_evaluation-de-l-accessibilite-des-zones-protegee_2026-08-12_0840",
+      "fichier": "exercice_derouler_evaluation-de-l-accessibilite-des-zones-protegee_2026-08-12_0840.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Évaluation de l'accessibilité des zones protégées",
+      "domaine": "géographie",
+      "notions": [
+        "héritage entre classes"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-12T06:40:56.175Z",
+      "resume": "Un gestionnaire de parc naturel souhaite classer des zones de conservation selon leur altitude et leur niveau de protection.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1996
+    },
+    {
+      "id": "exercice_lire_classification-des-zones-climatiques_2026-08-12_0840",
+      "fichier": "exercice_lire_classification-des-zones-climatiques_2026-08-12_0840.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Classification des zones climatiques",
+      "domaine": "géographie",
+      "notions": [
+        "héritage entre classes"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-12T06:40:22.015Z",
+      "resume": "On étudie la température moyenne de différentes zones géographiques pour classer les régions.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 2036
+    },
+    {
+      "id": "exercice_traduire_classification-des-reliefs_2026-08-12_0840",
+      "fichier": "exercice_traduire_classification-des-reliefs_2026-08-12_0840.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Classification des reliefs",
+      "domaine": "géographie",
+      "notions": [
+        "héritage entre classes"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-12T06:40:06.387Z",
+      "resume": "En géographie, on classe les reliefs selon leur altitude. On utilise ici l'héritage pour différencier les plaines des montagnes.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1709
+    },
+    {
+      "id": "exercice_ecrire_calcul-de-la-surface-d-une-parcelle_2026-08-12_0839",
+      "fichier": "exercice_ecrire_calcul-de-la-surface-d-une-parcelle_2026-08-12_0839.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Calcul de la surface d'une parcelle",
+      "domaine": "géographie",
+      "notions": [
+        "héritage entre classes"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-12T06:39:37.766Z",
+      "resume": "Un géomètre prépare une base de données de terrains pour une commune. Pour simplifier ses calculs, il utilise une hiérarchie de classes pour gérer différents types de propriétés.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1645
+    },
+    {
+      "id": "exercice_ecrire_gestion-de-la-fatigue-d-un-nageur_2026-08-12_0831",
+      "fichier": "exercice_ecrire_gestion-de-la-fatigue-d-un-nageur_2026-08-12_0831.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Gestion de la fatigue d'un nageur",
+      "domaine": "sport",
+      "notions": [
+        "classes et objets"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-12T06:31:54.452Z",
+      "resume": "Un entraîneur souhaite suivre l'état de forme de deux nageurs durant une séance d'entraînement en piscine.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1798
+    },
+    {
+      "id": "exercice_lire_le-score-du-marathon_2026-08-12_0831",
+      "fichier": "exercice_lire_le-score-du-marathon_2026-08-12_0831.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Le score du marathon",
+      "domaine": "sport",
+      "notions": [
+        "classes et objets"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-12T06:31:26.626Z",
+      "resume": "Un organisateur de course utilise un programme pour suivre l'état de santé des coureurs en fonction de la fatigue accumulée.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1647
+    },
+    {
+      "id": "exercice_traduire_gestion-d-un-cycliste-en-competition_2026-08-12_0831",
+      "fichier": "exercice_traduire_gestion-d-un-cycliste-en-competition_2026-08-12_0831.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Gestion d'un cycliste en compétition",
+      "domaine": "sport",
+      "notions": [
+        "classes et objets"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-12T06:31:15.530Z",
+      "resume": "Cet algorithme permet de suivre l'état d'un cycliste en enregistrant sa consommation d'énergie lors d'une étape.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1841
+    },
+    {
+      "id": "exercice_derouler_gestion-de-l-energie-d-un-athlete_2026-08-12_0830",
+      "fichier": "exercice_derouler_gestion-de-l-energie-d-un-athlete_2026-08-12_0830.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Gestion de l'énergie d'un athlète",
+      "domaine": "sport",
+      "notions": [
+        "classes et objets"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-12T06:30:58.081Z",
+      "resume": "Un entraîneur utilise un programme pour suivre l'état de fatigue et l'énergie de ses athlètes après chaque série d'exercices.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1934
+    },
+    {
+      "id": "exercice_ecrire_comptage-recursif-des-capteurs-de-pollution_2026-08-11_2046",
+      "fichier": "exercice_ecrire_comptage-recursif-des-capteurs-de-pollution_2026-08-11_2046.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Comptage récursif des capteurs de pollution",
+      "domaine": "ville de nancy",
+      "notions": [
+        "listes de listes (matrices)",
+        "récursivité"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-11T18:46:25.958Z",
+      "resume": "La ville de Nancy dispose de capteurs de qualité de l'air répartis dans plusieurs quartiers. Ces relevés sont organisés dans un tableau où chaque ligne représente un quartier et c…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2117
+    },
+    {
+      "id": "exercice_traduire_releve-de-pollution-atmospherique-a-nancy_2026-08-11_2046",
+      "fichier": "exercice_traduire_releve-de-pollution-atmospherique-a-nancy_2026-08-11_2046.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Relevé de pollution atmosphérique à Nancy",
+      "domaine": "ville de nancy",
+      "notions": [
+        "listes de listes (matrices)",
+        "récursivité"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-11T18:46:10.511Z",
+      "resume": "La ville de Nancy dispose de capteurs de pollution répartis dans différents quartiers. On souhaite calculer la concentration totale de particules fines sur une zone spécifique en…",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1936
+    },
+    {
+      "id": "exercice_lire_analyse-de-reseau-de-transport-a-nancy_2026-08-11_2044",
+      "fichier": "exercice_lire_analyse-de-reseau-de-transport-a-nancy_2026-08-11_2044.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Analyse de réseau de transport à Nancy",
+      "domaine": "ville de nancy",
+      "notions": [
+        "listes de listes (matrices)",
+        "récursivité"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-11T18:44:48.870Z",
+      "resume": "Étudiez le programme Python suivant et répondez aux questions.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 2549
+    },
+    {
+      "id": "exercice_derouler_verification-de-connectivite-d-un-n-ud-de-transi_2026-08-11_2036",
+      "fichier": "exercice_derouler_verification-de-connectivite-d-un-n-ud-de-transi_2026-08-11_2036.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Vérification de connectivité d'un nœud de transit",
+      "domaine": "transports",
+      "notions": [
+        "graphes"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-11T18:36:44.593Z",
+      "resume": "Dans un réseau de transport de marchandises, on souhaite savoir si un terminal spécifique est accessible à partir d'un terminal de départ en suivant uniquement des liaisons direct…",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1914
+    },
+    {
+      "id": "exercice_ecrire_verification-de-la-connectivite-d-un-reseau-ferr_2026-08-11_2035",
+      "fichier": "exercice_ecrire_verification-de-la-connectivite-d-un-reseau-ferr_2026-08-11_2035.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Vérification de la connectivité d'un réseau ferroviaire",
+      "domaine": "transports",
+      "notions": [
+        "graphes"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-11T18:35:34.822Z",
+      "resume": "Une compagnie de transport souhaite s'assurer que toutes ses gares sont accessibles entre elles via le réseau de lignes existant.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1653
+    },
+    {
+      "id": "exercice_derouler_analyse-de-la-sequence-de-rappel-mnesique_2026-08-11_2032",
+      "fichier": "exercice_derouler_analyse-de-la-sequence-de-rappel-mnesique_2026-08-11_2032.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Analyse de la séquence de rappel mnésique",
+      "domaine": "psychologie",
+      "notions": [
+        "récursivité",
+        "piles (LIFO)"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-11T18:32:44.838Z",
+      "resume": "En psychologie cognitive, on étudie comment l'ordre de présentation d'informations influence leur récupération en mémoire.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2015
+    },
+    {
+      "id": "exercice_ecrire_analyse-de-la-hierarchie-des-stimuli_2026-08-11_2028",
+      "fichier": "exercice_ecrire_analyse-de-la-hierarchie-des-stimuli_2026-08-11_2028.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Analyse de la hiérarchie des stimuli",
+      "domaine": "psychologie",
+      "notions": [
+        "récursivité",
+        "arbres"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-11T18:28:10.733Z",
+      "resume": "En psychologie cognitive, on étudie comment un stimulus sensoriel peut en déclencher d'autres de manière séquentielle, formant une chaîne de réactions.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1517
+    },
+    {
+      "id": "exercice_lire_analyse-de-la-trace-mnesique_2026-08-11_2025",
+      "fichier": "exercice_lire_analyse-de-la-trace-mnesique_2026-08-11_2025.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Analyse de la trace mnésique",
+      "domaine": "psychologie",
+      "notions": [
+        "files (FIFO)",
+        "piles (LIFO)"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-11T18:25:16.441Z",
+      "resume": "En psychologie cognitive, on étudie la capacité d'un sujet à restituer une séquence d'événements. On utilise parfois des modèles simplifiés où l'ordre de rappel dépend de la struc…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 4,
+        "aide": true
+      },
+      "octets": 2505
+    },
+    {
+      "id": "exercice_ecrire_gestion-du-rangement-des-assiettes-empilees_2026-08-11_2023",
+      "fichier": "exercice_ecrire_gestion-du-rangement-des-assiettes-empilees_2026-08-11_2023.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Gestion du rangement des assiettes empilées",
+      "domaine": "cuisine",
+      "notions": [
+        "files (FIFO)",
+        "piles (LIFO)"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-11T18:23:02.012Z",
+      "resume": "Dans une cuisine de restaurant, les plongeurs empilent des assiettes propres sur une table pour que les serveurs puissent les récupérer facilement.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1539
+    },
+    {
+      "id": "exercice_lire_la-gestion-des-commandes-de-patisserie_2026-08-11_2022",
+      "fichier": "exercice_lire_la-gestion-des-commandes-de-patisserie_2026-08-11_2022.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "La gestion des commandes de pâtisserie",
+      "domaine": "cuisine",
+      "notions": [
+        "files (FIFO)",
+        "piles (LIFO)"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-11T18:22:25.849Z",
+      "resume": "Un pâtissier utilise une pile pour gérer les étapes de décoration de ses gâteaux et une file pour gérer l'ordre de préparation des ingrédients.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 4,
+        "aide": true
+      },
+      "octets": 2271
+    },
+    {
+      "id": "exercice_ecrire_detection-de-mutation-dans-un-graphe-de-virus_2026-08-11_2019",
+      "fichier": "exercice_ecrire_detection-de-mutation-dans-un-graphe-de-virus_2026-08-11_2019.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Détection de mutation dans un graphe de virus",
+      "domaine": "biologie",
+      "notions": [
+        "graphes"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T18:19:56.439Z",
+      "resume": "Dans un réseau de transmission virale, chaque nœud représente un patient et chaque arc représente une contamination directe entre deux individus. On souhaite surveiller si une var…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1903
+    },
+    {
+      "id": "exercice_derouler_detection-de-propagation-de-signal_2026-08-11_2018",
+      "fichier": "exercice_derouler_detection-de-propagation-de-signal_2026-08-11_2018.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Détection de propagation de signal",
+      "domaine": "biologie",
+      "notions": [
+        "graphes"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T18:18:55.510Z",
+      "resume": "En biologie cellulaire, on étudie comment un signal se propage d'une protéine à une autre au sein d'un réseau d'interactions. On cherche ici à vérifier si une protéine cible est d…",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1792
+    },
+    {
+      "id": "exercice_lire_somme-des-valeurs-d-un-arbre_2026-08-11_2015",
+      "fichier": "exercice_lire_somme-des-valeurs-d-un-arbre_2026-08-11_2015.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Somme des valeurs d'un arbre",
+      "domaine": "mathématiques",
+      "notions": [
+        "arbres"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T18:15:09.472Z",
+      "resume": "On étudie la structure d'un arbre de données où chaque nœud contient une valeur numérique.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1770
+    },
+    {
+      "id": "exercice_traduire_somme-des-valeurs-d-un-arbre-binaire_2026-08-11_2014",
+      "fichier": "exercice_traduire_somme-des-valeurs-d-un-arbre-binaire_2026-08-11_2014.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Somme des valeurs d'un arbre binaire",
+      "domaine": "mathématiques",
+      "notions": [
+        "arbres"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T18:14:59.631Z",
+      "resume": "Dans un arbre binaire, chaque nœud contient une valeur numérique et possède des successeurs (enfants). On souhaite calculer la somme totale des valeurs contenues dans l'arbre.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1604
+    },
+    {
+      "id": "exercice_derouler_parcours-de-feuilles-dans-un-arbre-genealogique_2026-08-11_2014",
+      "fichier": "exercice_derouler_parcours-de-feuilles-dans-un-arbre-genealogique_2026-08-11_2014.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Parcours de feuilles dans un arbre généalogique",
+      "domaine": "mathématiques",
+      "notions": [
+        "arbres"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T18:14:53.465Z",
+      "resume": "Dans un arbre, une feuille est un nœud qui n'a aucun successeur.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1597
+    },
+    {
+      "id": "exercice_ecrire_recherche-de-la-profondeur-maximale-d-un-arbre_2026-08-11_2014",
+      "fichier": "exercice_ecrire_recherche-de-la-profondeur-maximale-d-un-arbre_2026-08-11_2014.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Recherche de la profondeur maximale d'un arbre",
+      "domaine": "mathématiques",
+      "notions": [
+        "arbres"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T18:14:45.035Z",
+      "resume": "Dans un arbre généalogique simplifié, chaque nœud représente un individu et ses successeurs sont ses enfants directs.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1366
+    },
+    {
+      "id": "exercice_ecrire_gestion-de-l-ordre-de-passage-des-athletes_2026-08-11_2011",
+      "fichier": "exercice_ecrire_gestion-de-l-ordre-de-passage-des-athletes_2026-08-11_2011.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Gestion de l'ordre de passage des athlètes",
+      "domaine": "sport",
+      "notions": [
+        "piles (LIFO)"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T18:11:56.774Z",
+      "resume": "Lors d'une compétition de gymnastique, les athlètes arrivent les uns après les autres pour s'échauffer sur un agrès. Pour des raisons de sécurité, l'entraîneur décide de les faire…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1621
+    },
+    {
+      "id": "exercice_ecrire_inversion-de-l-ordre-des-syllabes_2026-08-11_2009",
+      "fichier": "exercice_ecrire_inversion-de-l-ordre-des-syllabes_2026-08-11_2009.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Inversion de l'ordre des syllabes",
+      "domaine": "linguistique",
+      "notions": [
+        "files (FIFO)"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T18:09:02.254Z",
+      "resume": "En linguistique, pour étudier la structure de certains mots, on peut vouloir traiter les syllabes dans l'ordre inverse de leur prononciation.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1413
+    },
+    {
+      "id": "exercice_derouler_verification-de-la-regularite-d-une-sequence-de-_2026-08-11_2008",
+      "fichier": "exercice_derouler_verification-de-la-regularite-d-une-sequence-de-_2026-08-11_2008.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Vérification de la régularité d'une séquence de symboles",
+      "domaine": "linguistique",
+      "notions": [
+        "files (FIFO)"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T18:08:11.012Z",
+      "resume": "En linguistique computationnelle, on utilise des structures de données pour vérifier si une séquence de symboles respecte une certaine symétrie.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1816
+    },
+    {
+      "id": "exercice_traduire_inversion-de-la-sequence-de-phonemes_2026-08-11_2004",
+      "fichier": "exercice_traduire_inversion-de-la-sequence-de-phonemes_2026-08-11_2004.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Inversion de la séquence de phonèmes",
+      "domaine": "linguistique",
+      "notions": [
+        "files (FIFO)"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T18:04:10.602Z",
+      "resume": "En linguistique, l'étude de la structure d'un mot peut nécessiter d'inverser l'ordre des sons (phonèmes) pour analyser des propriétés de symétrie.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1517
+    },
+    {
+      "id": "exercice_traduire_evaluation-d-une-partition_2026-08-11_2001",
+      "fichier": "exercice_traduire_evaluation-d-une-partition_2026-08-11_2001.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Évaluation d'une partition",
+      "domaine": "musique",
+      "notions": [
+        "récursivité"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T18:01:54.852Z",
+      "resume": "On souhaite mesurer la force d'une séquence de notes en sommant leurs intensités, mais de manière récursive.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1568
+    },
+    {
+      "id": "exercice_derouler_l-echo-des-notes_2026-08-11_1917",
+      "fichier": "exercice_derouler_l-echo-des-notes_2026-08-11_1917.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "L'écho des notes",
+      "domaine": "musique",
+      "notions": [
+        "récursivité"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T17:17:41.066Z",
+      "resume": "Cet algorithme calcule la puissance d'un accord en comptant le nombre de fois qu'une note spécifique se répète dans une mélodie.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 4,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1880
+    },
+    {
+      "id": "exercice_lire_la-resonance-des-octaves_2026-08-11_1915",
+      "fichier": "exercice_lire_la-resonance-des-octaves_2026-08-11_1915.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "La résonance des octaves",
+      "domaine": "musique",
+      "notions": [
+        "récursivité"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T17:15:32.280Z",
+      "resume": "En acoustique musicale, on peut modéliser la décroissance de l'intensité sonore d'une note après un impact en appliquant un coefficient de réduction à chaque étape.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1794
+    },
+    {
+      "id": "exercice_ecrire_calcul-de-la-puissance-d-un-accord_2026-08-11_1914",
+      "fichier": "exercice_ecrire_calcul-de-la-puissance-d-un-accord_2026-08-11_1914.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Calcul de la puissance d'un accord",
+      "domaine": "musique",
+      "notions": [
+        "récursivité"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-11T17:14:44.067Z",
+      "resume": "Un compositeur souhaite analyser la densité sonore d'une série de notes jouées successivement dans un morceau de musique.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1367
+    },
+    {
+      "id": "exercice_derouler_calcul-de-la-moyenne-des-variances-locales_2026-08-10_1154",
+      "fichier": "exercice_derouler_calcul-de-la-moyenne-des-variances-locales_2026-08-10_1154.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Calcul de la moyenne des variances locales",
+      "domaine": "mathématiques",
+      "notions": [
+        "boucles imbriquées",
+        "entrées / sorties",
+        "listes / tableaux",
+        "chaînes de caractères",
+        "dictionnaires",
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-10T09:54:43.967Z",
+      "resume": "Cet algorithme calcule une mesure de dispersion sur un ensemble de données numériques.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1851
+    },
+    {
+      "id": "exercice_lire_analyse-de-la-croissance-d-une-population_2026-08-10_1153",
+      "fichier": "exercice_lire_analyse-de-la-croissance-d-une-population_2026-08-10_1153.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Analyse de la croissance d'une population",
+      "domaine": "mathématiques",
+      "notions": [
+        "boucles imbriquées",
+        "entrées / sorties",
+        "listes / tableaux",
+        "chaînes de caractères",
+        "dictionnaires",
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-10T09:53:46.875Z",
+      "resume": "On étudie l'évolution d'une population de bactéries soumise à des cycles de croissance et de déclin selon des facteurs environnementaux.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1875
+    },
+    {
+      "id": "exercice_ecrire_calcul-du-cout-total-de-commandes-multiples_2026-08-10_1152",
+      "fichier": "exercice_ecrire_calcul-du-cout-total-de-commandes-multiples_2026-08-10_1152.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Calcul du coût total de commandes multiples",
+      "domaine": "mathématiques",
+      "notions": [
+        "boucles imbriquées",
+        "entrées / sorties",
+        "listes / tableaux",
+        "chaînes de caractères",
+        "dictionnaires",
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "avancé",
+      "genere_le": "2026-08-10T09:52:54.262Z",
+      "resume": "Un gestionnaire de stock souhaite automatiser le calcul du montant total des commandes pour différents clients en appliquant une remise selon le montant de chaque commande.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1989
+    },
+    {
+      "id": "exercice_ecrire_analyse-scores-extraversion-questionnaire-psycho_2026-08-10_1148",
+      "fichier": "exercice_ecrire_analyse-scores-extraversion-questionnaire-psycho_2026-08-10_1148.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Analyse scores extraversion questionnaire psychologie",
+      "domaine": "psychologie",
+      "notions": [
+        "boucles imbriquées",
+        "listes / tableaux",
+        "chaînes de caractères",
+        "dictionnaires",
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:48:03.710Z",
+      "resume": "Un psychologue traite les réponses d'un questionnaire de personnalité court (type BFI-10) pour extraire le score d'extraversion de chaque participant.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2269
+    },
+    {
+      "id": "exercice_derouler_categorisation-du-stress-des-participants_2026-08-10_1147",
+      "fichier": "exercice_derouler_categorisation-du-stress-des-participants_2026-08-10_1147.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Catégorisation du stress des participants",
+      "domaine": "psychologie",
+      "notions": [
+        "boucles imbriquées",
+        "listes / tableaux",
+        "chaînes de caractères",
+        "dictionnaires",
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:47:34.647Z",
+      "resume": "Un psychologue souhaite classifier le niveau de stress moyen de chaque participant en « faible », « moyen » ou « élevé » à partir de leurs scores de stress par session.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1967
+    },
+    {
+      "id": "exercice_lire_analyse-de-questionnaire-psychometrique_2026-08-10_1147",
+      "fichier": "exercice_lire_analyse-de-questionnaire-psychometrique_2026-08-10_1147.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Analyse de questionnaire psychométrique",
+      "domaine": "psychologie",
+      "notions": [
+        "boucles imbriquées",
+        "listes / tableaux",
+        "chaînes de caractères",
+        "dictionnaires",
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:47:15.909Z",
+      "resume": "Un chercheur traite les réponses d'un questionnaire à échelles de Likert (1 à 5) comprenant des items inversés. Il souhaite obtenir les scores moyens par participant et par dimens…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 2,
+        "aide": true
+      },
+      "octets": 2062
+    },
+    {
+      "id": "exercice_traduire_analyse-de-scores-psychometriques_2026-08-10_1146",
+      "fichier": "exercice_traduire_analyse-de-scores-psychometriques_2026-08-10_1146.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Analyse de scores psychométriques",
+      "domaine": "psychologie",
+      "notions": [
+        "boucles imbriquées",
+        "listes / tableaux",
+        "chaînes de caractères",
+        "dictionnaires",
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:46:35.238Z",
+      "resume": "Calculer la moyenne des scores d'anxiété et de dépression pour une cohorte de patients.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2646
+    },
+    {
+      "id": "exercice_lire_controle-de-chargement-ferroviaire_2026-08-10_1140",
+      "fichier": "exercice_lire_controle-de-chargement-ferroviaire_2026-08-10_1140.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Contrôle de chargement ferroviaire",
+      "domaine": "transports",
+      "notions": [
+        "listes / tableaux"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:40:04.048Z",
+      "resume": "Un gestionnaire de fret doit vérifier la conformité des wagons d'un train avant le départ.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1485
+    },
+    {
+      "id": "exercice_traduire_comptage-des-retards-excessifs-sur-une-ligne-fer_2026-08-10_1139",
+      "fichier": "exercice_traduire_comptage-des-retards-excessifs-sur-une-ligne-fer_2026-08-10_1139.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Comptage des retards excessifs sur une ligne ferroviaire",
+      "domaine": "transports",
+      "notions": [
+        "listes / tableaux"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:39:39.635Z",
+      "resume": "Cet algorithme détermine combien de tronçons d'une ligne de train accusent un retard supérieur à un seuil de tolérance, à partir des durées prévues et réelles.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1986
+    },
+    {
+      "id": "exercice_derouler_charge-maximale-d-un-bus_2026-08-10_1139",
+      "fichier": "exercice_derouler_charge-maximale-d-un-bus_2026-08-10_1139.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Charge maximale d'un bus",
+      "domaine": "transports",
+      "notions": [
+        "listes / tableaux",
+        "listes de listes (matrices)"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:39:06.743Z",
+      "resume": "Un système embarqué enregistre à chaque arrêt le nombre de montées et de descentes. L'algorithme détermine la plus forte charge atteinte en cours de trajet.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1644
+    },
+    {
+      "id": "exercice_ecrire_pic-d-occupation-dans-un-bus_2026-08-10_1138",
+      "fichier": "exercice_ecrire_pic-d-occupation-dans-un-bus_2026-08-10_1138.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Pic d'occupation dans un bus",
+      "domaine": "transports",
+      "notions": [
+        "listes / tableaux",
+        "listes de listes (matrices)"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:38:15.351Z",
+      "resume": "Un bus effectue son trajet avec plusieurs arrêts. À chaque arrêt, des passagers montent et descendent. Le conducteur souhaite connaître le nombre maximal de passagers présents sim…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1677
+    },
+    {
+      "id": "exercice_lire_comptage-des-seances-longues_2026-08-10_1135",
+      "fichier": "exercice_lire_comptage-des-seances-longues_2026-08-10_1135.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Comptage des séances longues",
+      "domaine": "sport",
+      "notions": [
+        "listes / tableaux"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T09:35:27.817Z",
+      "resume": "Un coureur note les distances parcourues (en km) lors de ses sorties de la semaine dans une liste. Il veut savoir combien de séances dépassent une certaine distance.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 4,
+        "aide": true
+      },
+      "octets": 1617
+    },
+    {
+      "id": "exercice_traduire_meilleur-temps-au-100-m-nage-libre_2026-08-10_1135",
+      "fichier": "exercice_traduire_meilleur-temps-au-100-m-nage-libre_2026-08-10_1135.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Meilleur temps au 100 m nage libre",
+      "domaine": "sport",
+      "notions": [
+        "listes / tableaux"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T09:35:21.513Z",
+      "resume": "Un entraîneur souhaite identifier le chrono le plus rapide parmi une série de temps réalisés à l'entraînement.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1310
+    },
+    {
+      "id": "exercice_derouler_comptage-des-victoires-en-volley-ball_2026-08-10_1135",
+      "fichier": "exercice_derouler_comptage-des-victoires-en-volley-ball_2026-08-10_1135.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Comptage des victoires en volley-ball",
+      "domaine": "sport",
+      "notions": [
+        "listes / tableaux"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T09:35:13.666Z",
+      "resume": "Un club de volley-ball souhaite connaître le nombre de matchs gagnés par son équipe première sur une période donnée. Les résultats sont stockés dans une liste.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1598
+    },
+    {
+      "id": "exercice_ecrire_total-hebdomadaire-detennement_2026-08-10_1134",
+      "fichier": "exercice_ecrire_total-hebdomadaire-detennement_2026-08-10_1134.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Total hebdomadaire déténnement",
+      "domaine": "sport",
+      "notions": [
+        "listes / tableaux"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T09:34:48.971Z",
+      "resume": "Un coureur note la distance parcourue chaque jour de la semaine sous forme d'une liste de nombres entiers (en kilomètres).",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1236
+    },
+    {
+      "id": "exercice_derouler_calcul-de-concentrations-apres-dilution_2026-08-10_1133",
+      "fichier": "exercice_derouler_calcul-de-concentrations-apres-dilution_2026-08-10_1133.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Calcul de concentrations après dilution",
+      "domaine": "biologie",
+      "notions": [
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:33:41.664Z",
+      "resume": "En biologie moléculaire, on prépare souvent des dilutions d'ADN ou de protéines. Cet algorithme calcule la concentration finale de plusieurs échantillons après dilution.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2496
+    },
+    {
+      "id": "exercice_lire_analyse-du-taux-gc-dans-des-sequences-adn_2026-08-10_1132",
+      "fichier": "exercice_lire_analyse-du-taux-gc-dans-des-sequences-adn_2026-08-10_1132.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Analyse du taux GC dans des séquences ADN",
+      "domaine": "biologie",
+      "notions": [
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:32:27.523Z",
+      "resume": "En biologie moléculaire, le taux GC (proportion de bases guanine G et cytosine C) d'une séquence d'ADN influence sa stabilité thermique. On souhaite identifier les séquences riche…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1825
+    },
+    {
+      "id": "exercice_traduire_temperature-de-fusion-d-amorces-pcr_2026-08-10_1132",
+      "fichier": "exercice_traduire_temperature-de-fusion-d-amorces-pcr_2026-08-10_1132.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Température de fusion d'amorces PCR",
+      "domaine": "biologie",
+      "notions": [
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:32:12.632Z",
+      "resume": "Cet algorithme calcule la température de fusion (Tm) approximative de plusieurs courtes séquences d'ADN (amorces) utilisées en PCR, selon la formule simplifiée Tm = 4×(G+C) + 2×(A…",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2022
+    },
+    {
+      "id": "exercice_ecrire_calcul-du-pourcentage-gc-d-amorces_2026-08-10_1131",
+      "fichier": "exercice_ecrire_calcul-du-pourcentage-gc-d-amorces_2026-08-10_1131.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Calcul du pourcentage GC d'amorces",
+      "domaine": "biologie",
+      "notions": [
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:31:54.674Z",
+      "resume": "En biologie moléculaire, le pourcentage de bases guanine (G) et cytosine (C) dans une séquence d'ADN influence sa température de fusion. On souhaite analyser une série d'amorces (…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2174
+    },
+    {
+      "id": "exercice_traduire_cout-d-une-recette_2026-08-10_1128",
+      "fichier": "exercice_traduire_cout-d-une-recette_2026-08-10_1128.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Coût d'une recette",
+      "domaine": "cuisine",
+      "notions": [
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T09:28:21.849Z",
+      "resume": "Calculer le coût total d'une recette en additionnant le coût de chaque ingrédient (quantité × prix unitaire).",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1894
+    },
+    {
+      "id": "exercice_derouler_cout-des-ingredients-d-une-recette_2026-08-10_1128",
+      "fichier": "exercice_derouler_cout-des-ingredients-d-une-recette_2026-08-10_1128.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Coût des ingrédients d'une recette",
+      "domaine": "cuisine",
+      "notions": [
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T09:28:15.591Z",
+      "resume": "Un cuisinier veut calculer le coût total des ingrédients nécessaires pour préparer un plat.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1593
+    },
+    {
+      "id": "exercice_ecrire_cout-des-ingredients-d-une-recette_2026-08-10_1128",
+      "fichier": "exercice_ecrire_cout-des-ingredients-d-une-recette_2026-08-10_1128.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Coût des ingrédients d'une recette",
+      "domaine": "cuisine",
+      "notions": [
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T09:28:09.475Z",
+      "resume": "Un pâtissier prépare une fournée de sablés et doit calculer le coût total des ingrédients achetés au marché.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2799
+    },
+    {
+      "id": "exercice_lire_degats-totaux-de-l-inventaire_2026-08-10_1121",
+      "fichier": "exercice_lire_degats-totaux-de-l-inventaire_2026-08-10_1121.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Dégâts totaux de l'inventaire",
+      "domaine": "jeux video",
+      "notions": [
+        "dictionnaires"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T09:21:57.076Z",
+      "resume": "Dans un jeu de rôle, chaque arme possède une valeur de dégâts stockée dans un dictionnaire. L'inventaire du joueur est une liste de noms d'armes.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1610
+    },
+    {
+      "id": "exercice_traduire_total-d-objets-dans-l-inventaire_2026-08-10_1121",
+      "fichier": "exercice_traduire_total-d-objets-dans-l-inventaire_2026-08-10_1121.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Total d'objets dans l'inventaire",
+      "domaine": "jeux video",
+      "notions": [
+        "dictionnaires"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T09:21:53.547Z",
+      "resume": "L'algorithme calcule le nombre total d'objets possédés par un joueur à partir de son inventaire représenté par un dictionnaire.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1357
+    },
+    {
+      "id": "exercice_derouler_total-d-objets-dans-l-inventaire_2026-08-10_1121",
+      "fichier": "exercice_derouler_total-d-objets-dans-l-inventaire_2026-08-10_1121.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Total d'objets dans l'inventaire",
+      "domaine": "jeux video",
+      "notions": [
+        "dictionnaires"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T09:21:49.888Z",
+      "resume": "Dans un jeu de rôle, l'inventaire du joueur est représenté par un dictionnaire associant chaque nom d'objet à sa quantité. L'algorithme ci-dessous calcule le nombre total d'objets…",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1439
+    },
+    {
+      "id": "exercice_ecrire_calcul-du-nombre-total-d-objets-dans-l-inventair_2026-08-10_1121",
+      "fichier": "exercice_ecrire_calcul-du-nombre-total-d-objets-dans-l-inventair_2026-08-10_1121.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Calcul du nombre total d'objets dans l'inventaire",
+      "domaine": "jeux video",
+      "notions": [
+        "dictionnaires"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T09:21:43.115Z",
+      "resume": "Dans un jeu de rôle, le joueur possède un inventaire qui associe chaque type d'objet à la quantité qu'il en possède.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1361
+    },
+    {
+      "id": "exercice_lire_pluviometrie-en-grand-est_2026-08-10_1118",
+      "fichier": "exercice_lire_pluviometrie-en-grand-est_2026-08-10_1118.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Pluviométrie en Grand Est",
+      "domaine": "la région Grand-Est",
+      "notions": [
+        "listes de listes (matrices)"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:18:34.256Z",
+      "resume": "Un service météo régional analyse les précipitations moyennes de quatre grandes villes du Grand Est sur le premier trimestre.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1817
+    },
+    {
+      "id": "exercice_traduire_departement-le-plus-arrose-du-grand-est_2026-08-10_1118",
+      "fichier": "exercice_traduire_departement-le-plus-arrose-du-grand-est_2026-08-10_1118.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Département le plus arrosé du Grand Est",
+      "domaine": "la région Grand-Est",
+      "notions": [
+        "listes de listes (matrices)"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:18:21.764Z",
+      "resume": "Cet algorithme détermine quel département de la région Grand Est a reçu la pluviométrie totale la plus élevée sur une période donnée, à partir d'une matrice de relevés mensuels.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1945
+    },
+    {
+      "id": "exercice_derouler_temperatures-maximales-en-grand-est_2026-08-10_1118",
+      "fichier": "exercice_derouler_temperatures-maximales-en-grand-est_2026-08-10_1118.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Températures maximales en Grand Est",
+      "domaine": "la région Grand-Est",
+      "notions": [
+        "listes de listes (matrices)"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:18:10.997Z",
+      "resume": "Un réseau de stations météo relevé les températures (en dixièmes de degrés) pour plusieurs villes de la région sur quelques jours. L'algorithme identifie la ville ayant la somme d…",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2043
+    },
+    {
+      "id": "exercice_ecrire_moyenne-de-sommeil-par-participant_2026-08-10_1114",
+      "fichier": "exercice_ecrire_moyenne-de-sommeil-par-participant_2026-08-10_1114.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Moyenne de sommeil par participant",
+      "domaine": "psychologie",
+      "notions": [
+        "listes de listes (matrices)",
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T09:14:41.553Z",
+      "resume": "Un laboratoire étudie le sommeil de 4 participants sur 5 nuits. Les durées de sommeil (en heures) sont stockées dans une matrice où chaque ligne correspond à un participant et cha…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1761
+    },
+    {
+      "id": "exercice_derouler_verification-d-autonomie-d-un-drone-de-livraison_2026-08-10_1106",
+      "fichier": "exercice_derouler_verification-d-autonomie-d-un-drone-de-livraison_2026-08-10_1106.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Vérification d'autonomie d'un drone de livraison",
+      "domaine": "transports",
+      "notions": [
+        "fonctions"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T09:06:43.938Z",
+      "resume": "Un service de livraison par drone doit vérifier si l'appareil dispose de suffisamment de batterie pour effectuer un aller-retour vers un client.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1799
+    },
+    {
+      "id": "exercice_lire_presence-d-une-ville-dans-un-itineraire_2026-08-10_1057",
+      "fichier": "exercice_lire_presence-d-une-ville-dans-un-itineraire_2026-08-10_1057.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Présence d'une ville dans un itinéraire",
+      "domaine": "géographie",
+      "notions": [
+        "dictionnaires"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T08:57:49.951Z",
+      "resume": "Un objet Python un dictionnaire peut représenter une étape d’un itinéraire, avec une ville et une distance. Un itinéraire est une liste de ces dictionnaires.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1459
+    },
+    {
+      "id": "exercice_traduire_traduction-temperature-minimale-par-departement_2026-08-10_1057",
+      "fichier": "exercice_traduire_traduction-temperature-minimale-par-departement_2026-08-10_1057.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Traduction : température minimale par département",
+      "domaine": "géographie",
+      "notions": [
+        "dictionnaires"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T08:57:07.751Z",
+      "resume": "Cet algorithme reçoit un dictionnaire associant un nom de département à sa température minimale enregistrée, puis renvoie la température minimale parmi toutes les valeurs présente…",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1677
+    },
+    {
+      "id": "exercice_derouler_altitude-maximale-d-une-etape-de-randonnee_2026-08-10_1055",
+      "fichier": "exercice_derouler_altitude-maximale-d-une-etape-de-randonnee_2026-08-10_1055.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Altitude maximale d'une étape de randonnée",
+      "domaine": "géographie",
+      "notions": [
+        "dictionnaires"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T08:55:55.934Z",
+      "resume": "Un groupe de randoncheurs souhaite connaître l'altitude maximale atteinte au cours d'une étape, afin d'évaluer la difficulté du parcours.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1542
+    },
+    {
+      "id": "exercice_ecrire_temperature-minimale-par-region_2026-08-10_1054",
+      "fichier": "exercice_ecrire_temperature-minimale-par-region_2026-08-10_1054.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Température minimale par région",
+      "domaine": "géographie",
+      "notions": [
+        "dictionnaires"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T08:54:31.375Z",
+      "resume": "Un météorologue souhaite analyser les températures minimales enregistrées dans plusieurs régions géographiques sur une journée donnée. Il dispose d’un relevé sous forme d’un dicti…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1762
+    },
+    {
+      "id": "exercice_ecrire_conversion-d-altitudes-en-pieds_2026-08-10_1053",
+      "fichier": "exercice_ecrire_conversion-d-altitudes-en-pieds_2026-08-10_1053.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Conversion d'altitudes en pieds",
+      "domaine": "géographie",
+      "notions": [
+        "entrées / sorties"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T08:53:18.580Z",
+      "resume": "Un géographe travaille sur une carte topographique et doit convertir des altitudes exprimées en mètres vers le système impérial (pieds). Il souhaite automatiser cette conversion p…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1582
+    },
+    {
+      "id": "exercice_traduire_compter-les-voyelles-d-un-mot_2026-08-10_1047",
+      "fichier": "exercice_traduire_compter-les-voyelles-d-un-mot_2026-08-10_1047.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Compter les voyelles d'un mot",
+      "domaine": "linguistique",
+      "notions": [
+        "listes / tableaux",
+        "boucle bornée (Pour)",
+        "conditionnelle (Si / Sinon)"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T08:47:47.497Z",
+      "resume": "L'algorithme lit un mot saisi au clavier et affiche le nombre de voyelles qu'il contient.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1499
+    },
+    {
+      "id": "exercice_lire_comptage-de-voyelles-dans-un-mot_2026-08-10_1047",
+      "fichier": "exercice_lire_comptage-de-voyelles-dans-un-mot_2026-08-10_1047.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Comptage de voyelles dans un mot",
+      "domaine": "linguistique",
+      "notions": [
+        "listes / tableaux",
+        "boucle bornée (Pour)",
+        "conditionnelle (Si / Sinon)"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T08:47:20.502Z",
+      "resume": "En linguistique computationnelle, on analyse souvent la structure phonétique des mots. Un premier pas simple consiste à compter le nombre de voyelles présentes dans une chaîne de…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 4,
+        "aide": true
+      },
+      "octets": 1621
+    },
+    {
+      "id": "exercice_derouler_comptage-des-voyelles-dans-un-mot_2026-08-10_1047",
+      "fichier": "exercice_derouler_comptage-des-voyelles-dans-un-mot_2026-08-10_1047.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Comptage des voyelles dans un mot",
+      "domaine": "linguistique",
+      "notions": [
+        "listes / tableaux",
+        "boucle bornée (Pour)",
+        "conditionnelle (Si / Sinon)"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T08:47:13.031Z",
+      "resume": "Cet algorithme compte le nombre de voyelles présentes dans un mot donné, ce qui est une étape élémentaire pour estimer le nombre de syllabes en linguistique computationnelle.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1548
+    },
+    {
+      "id": "exercice_ecrire_compter-les-voyelles-d-un-mot_2026-08-10_1047",
+      "fichier": "exercice_ecrire_compter-les-voyelles-d-un-mot_2026-08-10_1047.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Compter les voyelles d'un mot",
+      "domaine": "linguistique",
+      "notions": [
+        "listes / tableaux",
+        "boucle bornée (Pour)",
+        "conditionnelle (Si / Sinon)"
+      ],
+      "exclusions": [],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T08:47:08.205Z",
+      "resume": "Un linguiste amateur souhaite analyser la structure phonétique de mots isolés en comptant leurs voyelles.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1573
+    },
+    {
+      "id": "exercice_ecrire_calcul-distance-reelle-depuis-carte_2026-08-10_0752",
+      "fichier": "exercice_ecrire_calcul-distance-reelle-depuis-carte_2026-08-10_0752.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Calcul distance réelle depuis carte",
+      "domaine": "géographie",
+      "notions": [
+        "entrées / sorties"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T05:52:18.744Z",
+      "resume": "Un randonneur prépare son itinéraire en mesurant la distance entre deux villages sur une carte papier.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1518
+    },
+    {
+      "id": "exercice_derouler_coffrets-de-bergamotes-au-marche-de-noel_2026-08-10_0731",
+      "fichier": "exercice_derouler_coffrets-de-bergamotes-au-marche-de-noel_2026-08-10_0731.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Coffrets de bergamotes au marché de Noël",
+      "domaine": "ville de nancy",
+      "notions": [
+        "conditionnelle (Si / Sinon)",
+        "boucle bornée (Pour)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T05:31:10.709Z",
+      "resume": "Un artisan place Charles III prépare des coffrets de 5 bergamotes pour le marché de Noël. Il honore les commandes tant que son stock le permet, sinon il écoule les dernières boîte…",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2011
+    },
+    {
+      "id": "exercice_ecrire_comptage-arrets-speciaux-tramway-nancy_2026-08-10_0730",
+      "fichier": "exercice_ecrire_comptage-arrets-speciaux-tramway-nancy_2026-08-10_0730.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Comptage arrêts spéciaux tramway Nancy",
+      "domaine": "ville de nancy",
+      "notions": [
+        "conditionnelle (Si / Sinon)",
+        "boucle bornée (Pour)",
+        "boucle non bornée (Tant que)",
+        "boucles imbriquées"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T05:30:50.868Z",
+      "resume": "La ligne de tramway T1 de Nancy dessert plusieurs arrêts dont la place Stanislas, qui est l'arrêt numéro 3. Chaque jour, le tramway effectue un nombre fixe d'arrêts et embarque 10…",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2314
+    },
+    {
+      "id": "exercice_lire_simulation-tramway-t1-nancy_2026-08-10_0729",
+      "fichier": "exercice_lire_simulation-tramway-t1-nancy_2026-08-10_0729.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Simulation tramway T1 Nancy",
+      "domaine": "ville de nancy",
+      "notions": [
+        "conditionnelle (Si / Sinon)",
+        "boucle bornée (Pour)",
+        "boucle non bornée (Tant que)",
+        "boucles imbriquées"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T05:29:48.489Z",
+      "resume": "On simule l'embarquement et le débarquement des voyageurs sur la ligne T1 du tramway de Nancy (arrêts Gare, Stanislas, Callot). La rame a une capacité maximale.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 4,
+        "aide": true
+      },
+      "octets": 2026
+    },
+    {
+      "id": "exercice_traduire_embarquement-tram-stanislas_2026-08-10_0729",
+      "fichier": "exercice_traduire_embarquement-tram-stanislas_2026-08-10_0729.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Embarquement tram Stanislas",
+      "domaine": "ville de nancy",
+      "notions": [
+        "conditionnelle (Si / Sinon)",
+        "boucle bornée (Pour)",
+        "boucle non bornée (Tant que)",
+        "boucles imbriquées"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T05:29:11.270Z",
+      "resume": "Lors de la Fête de la Mirabelle, on simule l'embarquement des voyageurs à l'arrêt Stanislas sur la ligne 1 du tramway. Chaque tram a une capacité limitée et on doit transporter un…",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2308
+    },
+    {
+      "id": "exercice_lire_montee-de-niveau-d-un-heros_2026-08-10_0726",
+      "fichier": "exercice_lire_montee-de-niveau-d-un-heros_2026-08-10_0726.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Montée de niveau d'un héros",
+      "domaine": "jeux video",
+      "notions": [
+        "boucle non bornée (Tant que)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T05:26:41.932Z",
+      "resume": "Un héros gagne de l'expérience en combattant des monstres jusqu'à atteindre le seuil pour monter de niveau.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1187
+    },
+    {
+      "id": "exercice_traduire_coups-portes-au-boss_2026-08-10_0726",
+      "fichier": "exercice_traduire_coups-portes-au-boss_2026-08-10_0726.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Coups portés au boss",
+      "domaine": "jeux video",
+      "notions": [
+        "boucle non bornée (Tant que)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T05:26:33.019Z",
+      "resume": "Un joueur affronte un boss dont les points de vie diminuent à chaque coup porté. L'algorithme détermine combien de coups sont nécessaires pour le vaincre.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1377
+    },
+    {
+      "id": "exercice_derouler_collecte-de-pieces-jusqu-a-un-score-cible_2026-08-10_0726",
+      "fichier": "exercice_derouler_collecte-de-pieces-jusqu-a-un-score-cible_2026-08-10_0726.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Collecte de pièces jusqu'à un score cible",
+      "domaine": "jeux video",
+      "notions": [
+        "boucle non bornée (Tant que)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T05:26:22.378Z",
+      "resume": "Dans un jeu de plateforme, le joueur gagne un nombre fixe de pièces à chaque niveau terminé. L'algorithme calcule combien de niveaux sont nécessaires pour atteindre ou dépasser un…",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1583
+    },
+    {
+      "id": "exercice_ecrire_combat-de-boss-avec-barriere_2026-08-10_0726",
+      "fichier": "exercice_ecrire_combat-de-boss-avec-barriere_2026-08-10_0726.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Combat de boss avec barrière",
+      "domaine": "jeux video",
+      "notions": [
+        "boucle non bornée (Tant que)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T05:26:01.037Z",
+      "resume": "Dans un jeu de rôle, un joueur affronte un boss protégé par une barrière magique. La barrière absorbe les dégâts tant qu'elle n'est pas brisée. Le joueur porte des coups réguliers.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 2102
+    },
+    {
+      "id": "exercice_lire_croissance-bacterienne-en-culture_2026-08-10_0723",
+      "fichier": "exercice_lire_croissance-bacterienne-en-culture_2026-08-10_0723.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Croissance bactérienne en culture",
+      "domaine": "biologie",
+      "notions": [
+        "conditionnelle (Si / Sinon)",
+        "boucles imbriquées"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T05:23:39.869Z",
+      "resume": "On simule l'évolution d'une population de bactéries en boîte de Pétri sur plusieurs jours. La division cellulaire est plus intense à midi (heure 2).",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1575
+    },
+    {
+      "id": "exercice_traduire_comptage-des-longues-rapides-en-natation_2026-08-10_0722",
+      "fichier": "exercice_traduire_comptage-des-longues-rapides-en-natation_2026-08-10_0722.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Comptage des longues rapides en natation",
+      "domaine": "sport",
+      "notions": [
+        "conditionnelle (Si / Sinon)",
+        "boucles imbriquées"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-10T05:22:30.603Z",
+      "resume": "Lors d'un entraînement de natation, un entraîneur souhaite compter combien de longues sont effectuées sous un temps seuil donné, sur plusieurs séries.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1812
+    },
+    {
+      "id": "exercice_ecrire_calcul-du-cout-total-de-vos-ufs_2026-08-10_0700",
+      "fichier": "exercice_ecrire_calcul-du-cout-total-de-vos-ufs_2026-08-10_0700.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Calcul du coût total de vos œufs",
+      "domaine": "cuisine",
+      "notions": [
+        "variables et affectation",
+        "opérations arithmétiques"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T05:00:17.261Z",
+      "resume": "Vous travaillez dans une épicerie fine et vous devez préparer une commande de plusieurs boîtes d'œufs pour un client.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": false
+      },
+      "octets": 1331
+    },
+    {
+      "id": "exercice_ecrire_le-controle-du-volume-sonore_2026-08-10_0656",
+      "fichier": "exercice_ecrire_le-controle-du-volume-sonore_2026-08-10_0656.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Le contrôle du volume sonore",
+      "domaine": "musique",
+      "notions": [
+        "variables et affectation",
+        "opérations arithmétiques",
+        "conditionnelle (Si / Sinon)",
+        "boucle non bornée (Tant que)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T04:56:09.635Z",
+      "resume": "Un musicien utilise un amplificateur de son pour régler le volume de son instrument lors d'un concert.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1734
+    },
+    {
+      "id": "exercice_derouler_le-budget-des-navettes-de-la-ligne-de-tramway_2026-08-10_0651",
+      "fichier": "exercice_derouler_le-budget-des-navettes-de-la-ligne-de-tramway_2026-08-10_0651.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Le budget des navettes de la ligne de tramway",
+      "domaine": "ville de nancy",
+      "notions": [
+        "variables et affectation",
+        "opérations arithmétiques",
+        "boucle non bornée (Tant que)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T04:51:47.664Z",
+      "resume": "Une compagnie de transport à Nancy souhaite calculer le montant restant sur un budget de maintenance après avoir payé une série de réparations imprévues.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1831
+    },
+    {
+      "id": "exercice_derouler_la-preparation-du-sirop-de-sucre_2026-08-10_0648",
+      "fichier": "exercice_derouler_la-preparation-du-sirop-de-sucre_2026-08-10_0648.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "La préparation du sirop de sucre",
+      "domaine": "cuisine",
+      "notions": [
+        "boucle non bornée (Tant que)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "découverte",
+      "genere_le": "2026-08-10T04:48:44.675Z",
+      "resume": "En pâtisserie, pour réaliser un sirop, on verse du sucre dans une casserole et on mélange jusqu'à ce que la quantité de sucre ajoutée atteigne un certain seuil pour garantir la co…",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1625
+    },
+    {
+      "id": "exercice_ecrire_calcul-de-la-somme-des-premiers-entiers_2026-08-09_1246",
+      "fichier": "exercice_ecrire_calcul-de-la-somme-des-premiers-entiers_2026-08-09_1246.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Calcul de la somme des premiers entiers",
+      "domaine": "mathématiques",
+      "notions": [
+        "variables et affectation",
+        "opérations arithmétiques",
+        "boucle bornée (Pour)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "intermédiaire",
+      "genere_le": "2026-08-09T10:46:33.175Z",
+      "resume": "En mathématiques, on s'intéresse souvent à la somme des nombres entiers successifs pour comprendre les propriétés des suites.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1327
+    },
+    {
+      "id": "exercice_traduire_controle-de-volume_2026-08-09_1216",
+      "fichier": "exercice_traduire_controle-de-volume_2026-08-09_1216.json",
+      "type": "traduire",
+      "type_libelle": "Traduire en Python",
+      "titre": "Contrôle de volume",
+      "domaine": "musique",
+      "notions": [
+        "variables et affectation",
+        "conditionnelle (Si / Sinon)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "découverte",
+      "genere_le": "2026-08-09T10:16:29.875Z",
+      "resume": "Un ingénieur du son souhaite vérifier si le volume d'une piste musicale est trop élevé ou non.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1306
+    },
+    {
+      "id": "exercice_ecrire_verification-de-l-age-d-un-concertiste_2026-08-09_1216",
+      "fichier": "exercice_ecrire_verification-de-l-age-d-un-concertiste_2026-08-09_1216.json",
+      "type": "ecrire",
+      "type_libelle": "Écrire l'algorithme",
+      "titre": "Vérification de l'âge d'un concertiste",
+      "domaine": "musique",
+      "notions": [
+        "variables et affectation",
+        "conditionnelle (Si / Sinon)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "découverte",
+      "genere_le": "2026-08-09T10:16:27.521Z",
+      "resume": "Un conservatoire organise un festival de musique pour les jeunes talents. Pour participer à une catégorie spécifique, les musiciens doivent avoir un âge minimum requis.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": false,
+        "cas": 0,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1557
+    },
+    {
+      "id": "exercice_derouler_analyse-du-niveau-de-fatigue_2026-08-09_1131",
+      "fichier": "exercice_derouler_analyse-du-niveau-de-fatigue_2026-08-09_1131.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Analyse du niveau de fatigue",
+      "domaine": "psychologie",
+      "notions": [
+        "variables et affectation",
+        "conditionnelle (Si / Sinon)",
+        "boucle bornée (Pour)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "découverte",
+      "genere_le": "2026-08-09T09:31:47.318Z",
+      "resume": "Cet algorithme sert à évaluer un score de fatigue accumulée sur une courte période de suivi en fonction de l'intensité de fatigue ressentie chaque jour.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1680
+    },
+    {
+      "id": "exercice_derouler_detection-de-notes-repetees_2026-08-09_1130",
+      "fichier": "exercice_derouler_detection-de-notes-repetees_2026-08-09_1130.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Détection de notes répétées",
+      "domaine": "musique",
+      "notions": [
+        "variables et affectation",
+        "conditionnelle (Si / Sinon)",
+        "boucle bornée (Pour)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "découverte",
+      "genere_le": "2026-08-09T09:30:11.443Z",
+      "resume": "Un musicien souhaite vérifier si une courte séquence de notes contient une note identique à une note de référence pour savoir s'il peut répéter un motif.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1953
+    },
+    {
+      "id": "exercice_derouler_le-decompte-des-commercants-de-reims_2026-08-09_1127",
+      "fichier": "exercice_derouler_le-decompte-des-commercants-de-reims_2026-08-09_1127.json",
+      "type": "derouler",
+      "type_libelle": "Dérouler l'algorithme",
+      "titre": "Le décompte des commerçants de Reims",
+      "domaine": "la région Grand-Est",
+      "notions": [
+        "variables et affectation",
+        "conditionnelle (Si / Sinon)",
+        "boucle bornée (Pour)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "découverte",
+      "genere_le": "2026-08-09T09:27:59.619Z",
+      "resume": "Un agent municipal souhaite compter combien de boutiques de la ville ont un chiffre d'affaires supérieur à un certain seuil pour préparer une enquête économique.",
+      "contenu": {
+        "algorithme": true,
+        "code_python": false,
+        "cas": 3,
+        "questions": 0,
+        "aide": true
+      },
+      "octets": 1800
+    },
+    {
+      "id": "exercice_lire_le-trajet-du-tgv-est_2026-08-09_1017",
+      "fichier": "exercice_lire_le-trajet-du-tgv-est_2026-08-09_1017.json",
+      "type": "lire",
+      "type_libelle": "Lire un programme Python",
+      "titre": "Le trajet du TGV Est",
+      "domaine": "la région Grand-Est",
+      "notions": [
+        "variables et affectation",
+        "conditionnelle (Si / Sinon)",
+        "boucle bornée (Pour)"
+      ],
+      "exclusions": [
+        "liste"
+      ],
+      "niveau": "découverte",
+      "genere_le": "2026-08-09T08:17:09.433Z",
+      "resume": "Un contrôleur de train souhaite calculer la distance parcourue par un train circulant entre Strasbourg et Metz en fonction du nombre de stations traversées.",
+      "contenu": {
+        "algorithme": false,
+        "code_python": true,
+        "cas": 0,
+        "questions": 3,
+        "aide": true
+      },
+      "octets": 1660
+    }
+  ]
+}

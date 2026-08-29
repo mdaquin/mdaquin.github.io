@@ -1,0 +1,31 @@
+{
+  "type": "derouler",
+  "titre": "Températures maximales en Grand Est",
+  "data": {
+    "titre": "Températures maximales en Grand Est",
+    "contexte": "Un réseau de stations météo relevé les températures (en dixièmes de degrés) pour plusieurs villes de la région sur quelques jours. L'algorithme identifie la ville ayant la somme des températures la plus élevée (donc la plus chaude sur la période).",
+    "enonce": "Déroulez l'algorithme suivant pour chacun des jeux de valeurs proposés, en indiquant la valeur de chaque variable (i, j, somme_ligne, max_somme, indice_max) à chaque tour de boucle. Précisez la valeur finale renvoyée.",
+    "algorithme": "Entrée : M (matrice d'entiers, températures par ville et par jour)\nSortie : indice_max (entier, indice de la ville la plus chaude, -1 si matrice vide)\nDébut\n  max_somme ← -10000\n  indice_max ← -1\n  Pour i de 0 à Longueur(M) - 1 faire\n    somme_ligne ← 0\n    Pour j de 0 à Longueur(M[i]) - 1 faire\n      somme_ligne ← somme_ligne + M[i][j]\n    Fin\n    Si somme_ligne > max_somme alors\n      max_somme ← somme_ligne\n      indice_max ← i\n    Fin\n  Fin\n  Renvoyer indice_max\nFin",
+    "cas": [
+      "M = [[12, 15, 10], [8, 9, 11], [14, 13, 16], [5, 6, 7]]",
+      "M = []",
+      "M = [[10, 20, 30]]"
+    ],
+    "consignes": [
+      "Présentez le suivi sous forme de tableau (colonnes : tour extérieur i, tour intérieur j, somme_ligne, max_somme, indice_max).",
+      "Pour le cas de la matrice vide, indiquez simplement que la boucle extérieure n'est jamais exécutée et donnez la valeur renvoyée."
+    ],
+    "aide": "Utilisez un tableau de suivi séparé pour chaque jeu de valeurs. N'oubliez pas que les indices commencent à 0 et que Longueur([]) vaut 0.",
+    "code_python": null,
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "la région Grand-Est",
+    "notions": [
+      "listes de listes (matrices)"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:18:10.997Z"
+}

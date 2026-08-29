@@ -1,0 +1,32 @@
+{
+  "type": "derouler",
+  "titre": "Calcul de concentrations après dilution",
+  "data": {
+    "titre": "Calcul de concentrations après dilution",
+    "contexte": "En biologie moléculaire, on prépare souvent des dilutions d'ADN ou de protéines. Cet algorithme calcule la concentration finale de plusieurs échantillons après dilution.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de valeurs proposés. Indiquer la valeur de la liste `concentrations_finales` après chaque tour de la boucle principale, ainsi que la valeur renvoyée par la fonction `CalculerConcentrationFinale` à chaque appel.",
+    "algorithme": "Fonction CalculerConcentrationFinale(c_init, v_init, v_fin) :\n  concentration_finale ← c_init × v_init / v_fin\n  Renvoyer concentration_finale\nFin\n\nEntrée :\n  echantillons : liste de dictionnaires contenant les clés \"concentration\", \"volume_initial\", \"volume_final\"\nSortie :\n  concentrations_finales : liste de réels\nDébut\n  concentrations_finales ← []\n  Pour chaque echantillon dans echantillons faire\n    c ← CalculerConcentrationFinale(echantillon[\"concentration\"], echantillon[\"volume_initial\"], echantillon[\"volume_final\\)])\n    Ajouter(concentrations_finales, c)\n  Fin\n  Renvoyer concentrations_finales\nFin",
+    "cas": [
+      "echantillons = [{\"concentration\": 10.0, \"volume_initial\": 5.0, \"volume_final\": 100.0}, {\"concentration\": 20.0, \"volume_initial\": 2.0, \"volume_final\": 50.0}, {\"concentration\": 5.0, \"volume_initial\": 10.0, \"volume_final\": 100.0}]",
+      "echantillons = [{\"concentration\": 100.0, \"volume_initial\": 1.0, \"volume_final\": 10.0}]",
+      "echantillons = []"
+    ],
+    "consignes": [
+      "Pour chaque cas, présenter le déroulement sous forme de tableau ou de liste d'étapes successives.",
+      "Préciser les arguments passés à la fonction et la valeur qu'elle renvoie à chaque appel.",
+      "Indiquer la liste finale renvoyée par l'algorithme principal."
+    ],
+    "aide": "Préparer un tableau avec les colonnes : tour de boucle, echantillon (valeurs des 3 clés), c (retour fonction), concentrations_finales (état de la liste). La boucle « Pour chaque » traite les éléments dans l'ordre de la liste.",
+    "code_python": null,
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "biologie",
+    "notions": [
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:33:41.664Z"
+}

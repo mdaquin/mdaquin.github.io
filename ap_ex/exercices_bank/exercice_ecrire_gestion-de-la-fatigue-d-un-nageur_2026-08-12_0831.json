@@ -1,0 +1,38 @@
+{
+  "type": "ecrire",
+  "titre": "Gestion de la fatigue d'un nageur",
+  "data": {
+    "titre": "Gestion de la fatigue d'un nageur",
+    "contexte": "Un entraîneur souhaite suivre l'état de forme de deux nageurs durant une séance d'entraînement en piscine.",
+    "enonce": "Définissez une classe Nageur avec deux attributs : nom et niveau_fatigue (un nombre entier représentant la fatigue). La classe doit posséder une méthode pour augmenter la fatigue et une méthode pour vérifier si le nageur est épuisé. Écrivez ensuite le programme principal qui crée deux nageurs, leur fait effectuer deux efforts, et affiche leur état.",
+    "entrees": [
+      {
+        "nom": "nom",
+        "description": "le nom du nageur (chaîne de caractères)"
+      },
+      {
+        "nom": "niveau_fatigue",
+        "description": "la fatigue initiale (entier)"
+      }
+    ],
+    "sortie": "un programme principal qui crée deux objets et affiche l'état de fatigue de chacun après des efforts.",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code.",
+      "La classe doit comporter une méthode qui ajoute une valeur à l'attribut fatigue.",
+      "La classe doit comporter une méthode qui renvoie Vrai si la fatigue est supérieure à 10, sinon Faux.",
+      "Le programme principal doit créer deux objets Nageur avec des noms et des niveaux de fatigue différents.",
+      "Le programme principal doit appeler la méthode d'augmentation de fatigue pour chaque nageur."
+    ],
+    "aide": "N'oubliez pas que chaque objet possède ses propres valeurs pour ses attributs.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "sport",
+    "notions": [
+      "classes et objets"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-12T06:31:54.452Z"
+}

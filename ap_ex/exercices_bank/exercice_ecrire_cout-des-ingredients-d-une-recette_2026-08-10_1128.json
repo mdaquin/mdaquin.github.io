@@ -1,0 +1,58 @@
+{
+  "type": "ecrire",
+  "titre": "Coût des ingrédients d'une recette",
+  "data": {
+    "titre": "Coût des ingrédients d'une recette",
+    "contexte": "Un pâtissier prépare une fournée de sablés et doit calculer le coût total des ingrédients achetés au marché.",
+    "enonce": "Écrire un algorithme qui calcule le coût de chaque ingrédient (farine, sucre, beurre) à partir de sa quantité et de son prix unitaire, puis affiche le coût de chaque ingrédient et le total général. Vous devez écrire une fonction `CalculerCout` prenant une quantité et un prix unitaire en paramètres et renvoyant le coût total. Le programme principal appelle cette fonction trois fois (une par ingrédient), additionne les résultats et affiche les détails.",
+    "entrees": [
+      {
+        "nom": "qteFarine",
+        "description": "quantité de farine en kilogrammes (nombre réel positif)"
+      },
+      {
+        "nom": "prixFarine",
+        "description": "prix unitaire de la farine en euros le kilogramme (nombre réel positif)"
+      },
+      {
+        "nom": "qteSucre",
+        "description": "quantité de sucre en kilogrammes (nombre réel positif)"
+      },
+      {
+        "nom": "prixSucre",
+        "description": "prix unitaire du sucre en euros le kilogramme (nombre réel positif)"
+      },
+      {
+        "nom": "qteBeurre",
+        "description": "quantité de beurre en kilogrammes (nombre réel positif)"
+      },
+      {
+        "nom": "prixBeurre",
+        "description": "prix unitaire du beurre en euros le kilogramme (nombre réel positif)"
+      }
+    ],
+    "sortie": "Le coût de la farine, le coût du sucre, le coût du beurre et le coût total de la recette, chacun affiché avec un libellé explicite.",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code.",
+      "Définir la fonction `CalculerCout(quantite, prixUnitaire)` qui renvoie le produit des deux paramètres.",
+      "Dans le programme principal, appeler `CalculerCout` trois fois avec les paires de variables correspondantes (farine, sucre, beurre).",
+      "Stocker chaque résultat dans une variable distincte (ex: `coutFarine`, `coutSucre`, `coutBeurre`).",
+      "Calculer le total en additionnant ces trois variables.",
+      "Afficher les quatre résultats avec des libellés clairs.",
+      "Les paramètres de la fonction doivent porter des noms différents des variables du programme principal."
+    ],
+    "aide": "La fonction ne fait qu'un calcul simple ; le programme principal organise les données et les appels.",
+    "algorithme": null,
+    "code_python": null,
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "cuisine",
+    "notions": [
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T09:28:09.475Z"
+}

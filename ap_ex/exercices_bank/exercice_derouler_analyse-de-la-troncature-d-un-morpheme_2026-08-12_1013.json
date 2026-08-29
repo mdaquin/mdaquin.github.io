@@ -1,0 +1,35 @@
+{
+  "type": "derouler",
+  "titre": "Analyse de la troncature d'un morphème",
+  "data": {
+    "titre": "Analyse de la troncature d'un morphème",
+    "contexte": "En linguistique computationnelle, on cherche parfois à savoir si une unité linguistique (morphème) est contenue au début d'un mot pour identifier des racines communes.",
+    "enonce": "Déroulez l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque jeu, indiquez la valeur de chaque variable à chaque étape de l'algorithme. Pour les deux derniers jeux, répondez aux questions de complexité.",
+    "algorithme": "Fonction VerifierPrefixe(mot, prefixe) :\n  Entrée :\n    mot : chaîne de caractères\n    prefixe : chaîne de caractères\n  Sortie :\n    booléen\n  Début\n    LongueurM ← Longueur(mot)\n    LongueurP ← Longueur(prefixe)\n    Si LongueurP > LongueurM alors\n      Renvoyer Faux\n    Fin\n    Pour i de 0 à LongueurP - 1 faire\n      Si mot[i] ≠ prefixe[i] alors\n        Renvoyer Faux\n      Fin\n    Fin\n    Renvoyer Vrai\n  Fin",
+    "cas": [
+      "mot = \"anthropologie\", prefixe = \"anthro\"",
+      "mot = \"morphologie\", prefixe = \"morpho\"",
+      "mot = \"grammaire\", prefixe = \"grammaire_extra\"",
+      "Pour un mot de longueur n et un préfixe de longueur n, quel est le nombre maximal de comparaisons de caractères effectuées dans la boucle si le résultat est Vrai?",
+      "Quelle est la classe de complexité de cet algorithme (le pire cas) en fonction de la longueur du préfixe n?"
+    ],
+    "consignes": [
+      "Pour le premier cas, listez les valeurs de i, mot[i] et prefixe[i] à chaque itération.",
+      "Pour le cas limite, précisez la valeur renvoyée dès la première étape.",
+      "Pour les questions de complexité, donnez uniquement la valeur ou la classe demandée."
+    ],
+    "aide": "Tracez un tableau de suivi pour les variables locales lors du déroulement de la boucle.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "linguistique",
+    "notions": [
+      "chaînes de caractères",
+      "arbres",
+      "complexité algorithmique"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-12T08:13:05.357Z"
+}

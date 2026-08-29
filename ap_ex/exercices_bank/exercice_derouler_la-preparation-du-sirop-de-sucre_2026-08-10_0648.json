@@ -1,0 +1,32 @@
+{
+  "type": "derouler",
+  "titre": "La préparation du sirop de sucre",
+  "data": {
+    "titre": "La préparation du sirop de sucre",
+    "contexte": "En pâtisserie, pour réaliser un sirop, on verse du sucre dans une casserole et on mélange jusqu'à ce que la quantité de sucre ajoutée atteigne un certain seuil pour garantir la consistance voulue.",
+    "enonce": "Déroulez l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque tour de boucle, indiquez l'état des variables.",
+    "algorithme": "Entrée :\nquantite_sucre_dans_casserole\nseuil_minimum\n\\nSortie :\nquantite_sucre_dans_casserole\n\\nDébut\n  Tant que quantite_sucre_dans_casserole < seuil_minimum faire\n    quantite_sucre_dans_casserole ← quantite_sucre_dans_casserole + 5\n  Fin\n  Renvoyer quantite_sucre_dans_casserole\nFin",
+    "cas": [
+      "quantite_sucre_dans_casserole = 10, seuil_minimum = 25",
+      "quantite_sucre_dans_casserole = 20, seuil_minimum = 22",
+      "quantite_sucre_dans_casserole = 30, seuil_minimum = 15"
+    ],
+    "consignes": [
+      "Notez les changements de valeurs à chaque étape du processus.",
+      "Identifiez la valeur finale renvoyée par l'algorithme pour chaque cas."
+    ],
+    "aide": "Je vous conseille de tracer un tableau de suivi avec une colonne pour chaque variable afin de noter l'évolution des valeurs à chaque étape.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "cuisine",
+    "notions": [
+      "boucle non bornée (Tant que)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T04:48:44.675Z"
+}

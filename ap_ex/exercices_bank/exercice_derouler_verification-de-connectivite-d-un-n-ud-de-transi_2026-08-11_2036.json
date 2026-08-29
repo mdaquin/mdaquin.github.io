@@ -1,0 +1,30 @@
+{
+  "type": "derouler",
+  "titre": "Vérification de connectivité d'un nœud de transit",
+  "data": {
+    "titre": "Vérification de connectivité d'un nœud de transit",
+    "contexte": "Dans un réseau de transport de marchandises, on souhaite savoir si un terminal spécifique est accessible à partir d'un terminal de départ en suivant uniquement des liaisons directes.",
+    "enonce": "Déroulez l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque tour de boucle, indiquez l'état de la liste 'visites'.",
+    "algorithme": "Fonction VerifierAcces(G, depart, destination)\n  Début\n  visites ← []\n  queue ← [depart]\n  Tant que queue n'est pas vide faire\n    actuel ← queue[0]\n    Supprimer(queue, 0)\n    Si actuel ≠ destination alors\n      Pour chaque successeur de actuel faire\n        Si successeur ∉ visites alors\n          Ajouter(queue, successeur)\n        Fin\n      Fin\n    Fin\n    Ajouter(visites, actuel)\n  Fin\n  Renvoyer destination ∈ visites\n  Fin",
+    "cas": [
+      "G = {\"A\": [\"B\", \"C\"], \"B\": [\"D\"], \"C\": [\"D\"], \"D\": []}, depart = \"A\", destination = \"D\"",
+      "G = {\"A\": [\"B\"], \"B\": []}, depart = \"A\", destination = \"C\"",
+      "G = {\"A\": []}, depart = \"A\", destination = \"A\""
+    ],
+    "consignes": [
+      "Tracez le contenu de la liste 'queue' et de la liste 'visites' à chaque étape du processus.",
+      "Indiquez la valeur finale renvoyée par la fonction pour chaque cas."
+    ],
+    "aide": "Je vous conseille de présenter vos résultats sous forme de tableau de suivi avec des colonnes pour chaque variable (queue, visites, actuel) afin de ne pas perdre le fil lors des itérations.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "transports",
+    "notions": [
+      "graphes"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-11T18:36:44.593Z"
+}

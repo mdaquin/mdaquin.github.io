@@ -1,0 +1,34 @@
+{
+  "type": "derouler",
+  "titre": "Vérification de la fraîcheur des ingrédients",
+  "data": {
+    "titre": "Vérification de la fraîcheur des ingrédients",
+    "contexte": "Un chef veut vérifier si un ingrédient spécifique est présent dans son stock et s'il est périmé ou non.",
+    "enonce": "Déroulez l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque tour de boucle, notez l'évolution des variables. Pour la partie complexité, répondez aux questions posées.",
+    "algorithme": "Fonction VerifierStock(L, D, cible) :\n  Entrée :\n    L : liste des noms des ingrédients présents en cuisine\n    D : dictionnaire des dates de péremption (clé : nom, valeur : nombre de jours restants)\n    cible : nom de l'ingrédient à vérifier\n  Sortie : un booléen (Vrai si l'ingrédient est présent ET sa durée est de 0 ou moins, sinon Faux)\n  Début\n    frais <- Vrai\n    trouve <- Faux\n    Pour chaque ingredient dans L faire\n      Si ingredient = cible alors\n        trouve <- Vrai\n        Si D[ingredient] <= 0 alors\n          frais <- Faux\n        Fin Si\n      Fin Si\n    Fin Pour\n    Si trouve ET faux (non frais) alors\n      Renvoyer Faux\n    Sinon\n        Renvoyer Vrai\n    Fin Si\n  Fin",
+    "cas": [
+      "L = [\"oeuf\", \"lait\", \"beurre\"], D = {\"oeuf\": 5, \"lait\": -1, \"beurre\": 10}, cible = \"lait\"",
+      "L = [\"sucre\", \"sel\"], D = {\"sucre\": 100, \"sel\": 100}, cible = \"poivre\"",
+      "L = [\"fraise\"], D = {\"fraise\": 0}, cible = \"fraise\""
+    ],
+    "consignes": [
+      "Pour chaque cas, indiquez la valeur de 'trouve' et 'frais' à la fin de l'algorithme.",
+      "Pour le cas 1, déterminez la valeur renvoyée par la fonction.",
+      "Dans le pire cas (où la cible est le dernier élément de la liste ou n'est pas présente), comptez le nombre de comparaisons effectuées par l'algorithme (en comptant les comparaisons de l'instruction 'Si').",
+      "Donnez la classe de complexité de cet algorithme (O(1), O(log n), O(n) ou O(n²))."
+    ],
+    "aide": "Utilisez un tableau de suivi pour noter la valeur des variables à chaque itération de la boucle 'Pour chaque'.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "cuisine",
+    "notions": [
+      "listes / tableaux",
+      "dictionnaires",
+      "complexité algorithmique"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-12T06:56:50.608Z"
+}

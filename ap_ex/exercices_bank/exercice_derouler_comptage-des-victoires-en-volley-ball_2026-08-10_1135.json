@@ -1,0 +1,31 @@
+{
+  "type": "derouler",
+  "titre": "Comptage des victoires en volley-ball",
+  "data": {
+    "titre": "Comptage des victoires en volley-ball",
+    "contexte": "Un club de volley-ball souhaite connaître le nombre de matchs gagnés par son équipe première sur une période donnée. Les résultats sont stockés dans une liste.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de valeurs proposés, en indiquant la valeur de chaque variable à chaque tour de boucle.",
+    "algorithme": "Entrée : resultats (liste de chaînes de caractères)\nSortie : nb_victoires (entier)\nDébut\n  nb_victoires ← 0\n  Pour chaque res dans resultats faire\n    Si res = \"victoire\" alors\n      nb_victoires ← nb_victoires + 1\n    Fin\n  Fin\n  Renvoyer nb_victoires\nFin",
+    "cas": [
+      "resultats = [\"victoire\", \"défaite\", \"victoire\", \"nul\", \"victoire\\]",
+      "resultats = [\"défaite\", \"nul\", \"défaite\\]",
+      "resultats = []"
+    ],
+    "consignes": [
+      "Présenter le déroulement sous forme de tableau avec les colonnes : Tour, res, nb_victoires.",
+      "Indiquer la valeur finale renvoyée par l'algorithme pour chaque cas."
+    ],
+    "aide": "Initialisez un tableau de suivi avant d'entrer dans la boucle. Pour le cas de la liste vide, la boucle n'est pas exécutée : notez directement la valeur finale.",
+    "code_python": null,
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "sport",
+    "notions": [
+      "listes / tableaux"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T09:35:13.666Z"
+}

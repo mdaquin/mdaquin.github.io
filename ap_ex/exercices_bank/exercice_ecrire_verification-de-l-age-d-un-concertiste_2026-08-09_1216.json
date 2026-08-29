@@ -1,0 +1,39 @@
+{
+  "type": "ecrire",
+  "titre": "Vérification de l'âge d'un concertiste",
+  "data": {
+    "titre": "Vérification de l'âge d'un concertiste",
+    "contexte": "Un conservatoire organise un festival de musique pour les jeunes talents. Pour participer à une catégorie spécifique, les musiciens doivent avoir un âge minimum requis.",
+    "enonce": "Écrivez un algorithme qui vérifie si un musicien a l'âge nécessaire pour participer au festival. L'algorithme doit comparer l'âge du musicien avec l'âge minimum et afficher un message de succès ou un message d'échec.",
+    "entrees": [
+      {
+        "nom": "age_musicien",
+        "description": "l'âge du musicien (un nombre entier)"
+      },
+      {
+        "nom": "age_minimum",
+        "description": "l'âge requis pour participer (un nombre entier)"
+      }
+    ],
+    "sortie": "un message affiché : 'Accès autorisé' ou 'Accès refusé'",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code en respectant les conventions du cours",
+      "Utiliser une structure conditionnelle pour comparer les âges",
+      "Utiliser l'instruction 'Afficher' pour le résultat final"
+    ],
+    "aide": "Pensez à utiliser une structure Si... Alors... Sinon... Fin pour comparer les deux valeurs numériques.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "musique",
+    "notions": [
+      "variables et affectation",
+      "conditionnelle (Si / Sinon)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-09T10:16:27.521Z"
+}

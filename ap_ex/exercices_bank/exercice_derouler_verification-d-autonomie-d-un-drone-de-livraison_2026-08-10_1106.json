@@ -1,0 +1,31 @@
+{
+  "type": "derouler",
+  "titre": "Vérification d'autonomie d'un drone de livraison",
+  "data": {
+    "titre": "Vérification d'autonomie d'un drone de livraison",
+    "contexte": "Un service de livraison par drone doit vérifier si l'appareil dispose de suffisamment de batterie pour effectuer un aller-retour vers un client.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de valeurs proposés, en indiquant la valeur de chaque variable à chaque étape (y compris à l'intérieur de la fonction).",
+    "algorithme": "Fonction PeutEffectuerAllerRetour(dist, conso, bat) :\n  consoTotale ← dist × 2 × conso\n  Si consoTotale ≤ bat alors\n    Renvoyer Vrai\n  Sinon\n    Renvoyer Faux\n  Fin\nFin\n\nEntrée : distance (entier), conso (entier), batterie (entier)\nSortie : booléen\n\nDébut\n  Lire distance\n  Lire conso\n  Lire batterie\n  resultat ← PeutEffectuerAllerRetour(distance, conso, batterie)\n  Afficher resultat\nFin",
+    "cas": [
+      "distance = 10, conso = 2, batterie = 50",
+      "distance = 10, conso = 2, batterie = 40",
+      "distance = 0, conso = 5, batterie = 10"
+    ],
+    "consignes": [
+      "Préciser pour chaque cas la valeur renvoyée par la fonction et la valeur finale affichée.",
+      "Utiliser un tableau de suivi avec les colonnes : Étape, distance, conso, batterie, consoTotale, resultat."
+    ],
+    "aide": "Suivez l'exécution dans l'ordre : lecture des entrées, appel de la fonction (exécutez le corps de la fonction avec les valeurs reçues), retour de la fonction, affichage.",
+    "code_python": null,
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "transports",
+    "notions": [
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T09:06:43.938Z"
+}

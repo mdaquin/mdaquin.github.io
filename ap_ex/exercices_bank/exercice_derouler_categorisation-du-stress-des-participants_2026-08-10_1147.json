@@ -1,0 +1,35 @@
+{
+  "type": "derouler",
+  "titre": "Catégorisation du stress des participants",
+  "data": {
+    "titre": "Catégorisation du stress des participants",
+    "contexte": "Un psychologue souhaite classifier le niveau de stress moyen de chaque participant en « faible », « moyen » ou « élevé » à partir de leurs scores de stress par session.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de valeurs proposés, en indiquant la valeur de chaque variable à chaque tour de boucle, et donner la valeur renvoyée à la fin.",
+    "algorithme": "Entrée : participants\nSortie : catégories\nFonction Categorie(valeur) :\n  Si valeur < 30 alors\n    Renvoyer \"faible\"\n  Sinon Si valeur < 60 alors\n    Renvoyer \"moyen\"\n  Sinon\n    Renvoyer \"élevé\"\n  Fin\nFin\nDébut\n  catégories ← {}\n  Pour chaque id dans participants faire\n    scores ← participants[id]\n    somme ← 0\n    Pour chaque score dans scores faire\n      somme ← somme + score\n    Fin\n    moyenne ← somme / Longueur(scores)\n    cat ← Categorie(moyenne)\n    catégories[id] ← cat\n  Fin\n  Renvoyer catégories\nFin",
+    "cas": [
+      "participants = {\"P1\": [10, 20, 30], \"P2\": [40, 50, 60], \"P3\": [70, 80, 90]}",
+      "participants = {\"A\": [5, 5], \"B\": [100]}",
+      "participants = {}"
+    ],
+    "consignes": [
+      "Présenter le suivi sous forme de tableau (variables en colonnes, tours de boucle en lignes).",
+      "Indiquer le dictionnaire final renvoyé."
+    ],
+    "aide": "Utiliser un tableau de suivi avec les variables id, scores, somme, moyenne, cat, catégories.",
+    "code_python": null,
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "psychologie",
+    "notions": [
+      "boucles imbriquées",
+      "listes / tableaux",
+      "chaînes de caractères",
+      "dictionnaires",
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:47:34.647Z"
+}

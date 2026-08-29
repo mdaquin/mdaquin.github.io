@@ -1,0 +1,32 @@
+{
+  "type": "ecrire",
+  "titre": "Température minimale par région",
+  "data": {
+    "titre": "Température minimale par région",
+    "contexte": "Un météorologue souhaite analyser les températures minimales enregistrées dans plusieurs régions géographiques sur une journée donnée. Il dispose d’un relevé sous forme d’un dictionnaire associant le nom de chaque région à sa température minimale.",
+    "enonce": "Écrire un algorithme qui reçoit un dictionnaire dont les clés sont des noms de régions et les valeurs sont des températures minimales (en degrés Celsius, sous forme de nombres réels). L’algorithme doit déterminer et renvoyer le nom de la région dont la température minimale est la plus basse. On suppose que le dictionnaire contient au moins une entrée.",
+    "entrees": [
+      {
+        "nom": "temperatures",
+        "description": "dictionnaire dont les clés sont des chaînes de caractères (noms de régions) et les valeurs sont des réels (températures en degrés Celsius)"
+      }
+    ],
+    "sortie": "chaîne de caractères correspondant au nom de la région ayant la température minimale la plus basse",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code en respectant les conventions vues en cours.",
+      "Utiliser une boucle pour parcourir les paires (région, température).",
+      "Utiliser une variable pour mémoriser la région la plus froide rencontrée."
+    ],
+    "aide": "pensez à initialiser la région la plus froide avec la première entrée du dictionnaire.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "géographie",
+    "notions": [
+      "dictionnaires"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T08:54:31.375Z"
+}

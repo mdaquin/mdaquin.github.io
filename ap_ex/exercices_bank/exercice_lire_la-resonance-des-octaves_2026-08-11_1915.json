@@ -1,0 +1,30 @@
+{
+  "type": "lire",
+  "titre": "La résonance des octaves",
+  "data": {
+    "titre": "La résonance des octaves",
+    "contexte": "En acoustique musicale, on peut modéliser la décroissance de l'intensité sonore d'une note après un impact en appliquant un coefficient de réduction à chaque étape.",
+    "enonce": "On considère la fonction Python suivante qui calcule l'intensité sonore restante après un certain nombre de vibrations. Lisez attentivement le code et répondez aux questions suivantes.",
+    "code_python": "def intensite_restante(niveau_initial, vibrations):\n    if vibrations == 0:\n        return niveau_initial\n    else:\n        # La note perd 50% de son intensité à chaque vibration\n        nouveau_niveau = niveau_initial / 2\n        return intensite_restante(nouveau_niveau, vibrations - 1)\n\n# Appel final pour l'exercice\nprint(intensite_restante(100, 3))",
+    "questions": [
+      "Que renvoie la fonction `intensite_restante(100, 0)`?",
+      "Quelles sont les valeurs de l'argument `niveau_initial` à chaque étape de l'appel `intensite_restante(100, 3)`?",
+      "Quel est le résultat affiché par le programme à la fin?"
+    ],
+    "consignes": [
+      "Détaillez votre raisonnement étape par étape pour la question 2.",
+      "Les résultats numériques doivent être donnés sous forme décimale (ex: 0.5)."
+    ],
+    "aide": "Pour comprendre la récursivité, dessinez une suite de flèches montrant comment chaque appel appelle le suivant avec des valeurs différentes, jusqu'à atteindre le cas où vibrations est égal à 0.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "musique",
+    "notions": [
+      "récursivité"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T17:15:32.280Z"
+}

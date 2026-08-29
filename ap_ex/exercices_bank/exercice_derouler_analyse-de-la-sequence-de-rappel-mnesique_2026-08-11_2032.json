@@ -1,0 +1,31 @@
+{
+  "type": "derouler",
+  "titre": "Analyse de la séquence de rappel mnésique",
+  "data": {
+    "titre": "Analyse de la séquence de rappel mnésique",
+    "contexte": "En psychologie cognitive, on étudie comment l'ordre de présentation d'informations influence leur récupération en mémoire.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque appel de la fonction, notez l'état de la pile et la valeur renvoyée une fois que l'appel est terminé. Suivez précisément l'ordre des appels (descendant) puis le retour des valeurs (remontant).",
+    "algorithme": "Fonction AnalyserSequence(S) : \n  Entrée : \n    S : liste de nombres\n  Sortie : \n    L : liste de nombres\n  Début\n    P ← pile vide\n    Renvoyer AnalyserSequenceRecursive(S, P)\n  Fin\n\nFonction AnalyserSequenceRecursive(S, P) : \n  Entrée : \n    S : liste de nombres\n    P : pile de nombres\n  Sortie : \n    L : liste de nombres\n  Début\n    Si Longueur(S) = 0 alors\n      Renvoyer []\n    Fin\n\n    Si NON (P est vide) alors\n      temp ← dépiler(P)\n      L_reste ← AnalyserSequenceRecursive(S sans son premier élément, P)\n      Ajouter(L_reste, temp)\n      Renvoyer L_reste\n    Sinon\n      empiler(P, S[0])\n      L_reste ← AnalyserSequenceRecursive(S sans son premier élément, P)\n      Renvoyer L_reste\n    Fin\n  Fin",
+    "cas": [
+      "S = [1, 2, 3]",
+      "S = [10, 20]",
+      "S = []"
+    ],
+    "consignes": [
+      "Indiquez l'état de la pile P après chaque operation 'empiler' ou 'dépiler'.",
+      "Détaillez l'ordre des appels récursifs avant de remonter les résultats."
+    ],
+    "aide": "Utilisez un tableau pour suivre l'état de la liste S et de la pile P à chaque étape de la récursion.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "psychologie",
+    "notions": [
+      "récursivité",
+      "piles (LIFO)"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-11T18:32:44.838Z"
+}

@@ -1,0 +1,32 @@
+{
+  "type": "lire",
+  "titre": "La gestion des commandes de pâtisserie",
+  "data": {
+    "titre": "La gestion des commandes de pâtisserie",
+    "context": "Un pâtissier utilise une pile pour gérer les étapes de décoration de ses gâteaux et une file pour gérer l'ordre de préparation des ingrédients.",
+    "enonce": "On considère le programme Python suivant qui simule l'organisation d'un chef pâtissier. Lire le programme et répondre aux questions.",
+    "code_python": "def gestion_patisserie():\n    ingredients = []  # une file\n    decorations = []  # une pile\n\n    # Phase 1 : Préparation des ingrédients\n    for item in [\"Farine\", \"Sucre\", \"Beurre\", \"Oeufs\"]:\n        ingredients.append(item)\n\n    # Phase 2 : Préparation des décorations\n    for deco in [\"Chocolat\", \"Fraise\", \"Menthe\"]:\n        decorations.append(deco)\n\n    # Phase 3 : Préparation finale\n    resultat = []\n    \n    # On retire les ingrédients dans l'ordre de préparation\n    while len(ingredients) > 0:\n        element = ingredients.pop(0)\n        resultat.append(element)\n\n    # On retire les décorations en dernier arrivées\n    while len(decorations) > 0:\n        element = decorations.pop()\n        resultat.append(element)\n\n    return resultat\n\nprint(gestion_patisserie())",
+    "questions": [
+      "Quel est l'ordre des éléments dans la liste 'ingredients' après la Phase 1?",
+      "Quel est l'ordre des éléments dans la liste 'decorations' après la Phase 2?",
+      "À quel ordre les éléments de la liste 'decorations' sont-ils retirés de la pile lors de la Phase 3?",
+      "Quel est le contenu final de la liste 'esultat' renvoyée par la fonction?"
+    ],
+    "consignes": [
+      "Précisez l'ordre des éléments en respectant la casse (majuscules/minuscules).",
+      "Séparez les éléments par des virgules dans votre réponse."
+    ],
+    "aide": "Faites bien attention à la différence entre 'append' et 'pop(0)' pour la file, et entre 'append' et 'pop()' pour la pile.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "cuisine",
+    "notions": [
+      "files (FIFO)",
+      "piles (LIFO)"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-11T18:22:25.849Z"
+}

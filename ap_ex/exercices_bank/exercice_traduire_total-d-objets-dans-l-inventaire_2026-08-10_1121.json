@@ -1,0 +1,26 @@
+{
+  "type": "traduire",
+  "titre": "Total d'objets dans l'inventaire",
+  "data": {
+    "titre": "Total d'objets dans l'inventaire",
+    "contexte": "L'algorithme calcule le nombre total d'objets possédés par un joueur à partir de son inventaire représenté par un dictionnaire.",
+    "enonce": "Traduisez l'algorithme suivant en Python en écrivant une fonction qui reçoit un dictionnaire d'inventaire et renvoie le total des quantités.",
+    "algorithme": "Entrée : inventaire ← { \"potion\": 3, \"épée\": 1, \"bouclier\": 2 }\nSortie : total ← entier\nDébut\n  total ← 0\n  Pour chaque objet dans inventaire faire\n    total ← total + inventaire[objet]\n  Fin\n  Renvoyer total\nFin",
+    "consignes": [
+      "Nommez la fonction calculer_total_objets(inventaire).",
+      "La fonction doit renvoyer un entier (le total).",
+      "Écrivez un appel de test, par exemple : print(calculer_total_objets({\"potion\": 3, \"épée\": 1, \"bouclier\": 2}))"
+    ],
+    "aide": "Pour chaque clé dans un dictionnaire se traduit par « for cle in dictionnaire: » en Python ; l'accès à la valeur se fait par dictionnaire[cle].",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "jeux video",
+    "notions": [
+      "dictionnaires"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T09:21:53.547Z"
+}

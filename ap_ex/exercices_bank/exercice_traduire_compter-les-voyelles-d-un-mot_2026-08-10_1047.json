@@ -1,0 +1,28 @@
+{
+  "type": "traduire",
+  "titre": "Compter les voyelles d'un mot",
+  "data": {
+    "titre": "Compter les voyelles d'un mot",
+    "contexte": "L'algorithme lit un mot saisi au clavier et affiche le nombre de voyelles qu'il contient.",
+    "enonce": "Traduisez l'algorithme suivant en Python en écrivant une fonction compter_voyelles(mot) qui renvoie le nombre de voyelles, puis appelez-la avec un mot lu via input() et affichez le résultat.",
+    "algorithme": "Entrée : mot (chaîne de caractères)\nSortie : nbVoyelles (entier)\nDébut\n  voyelles ← ['a','e','i','o','u','y']\n  nbVoyelles ← 0\n  Pour chaque c dans mot faire\n    Si c ∈ voyelles alors\n      nbVoyelles ← nbVoyelles + 1\n    Fin\n  Fin\n  Afficher nbVoyelles\nFin",
+    "consignes": [
+      "La fonction doit s'appeler compter_voyelles et prendre un paramètre mot de type str.",
+      "Elle doit renvoyer un entier (le nombre de voyelles).",
+      "Après la définition, écrivez : mot = input() puis print(compter_voyelles(mot))."
+    ],
+    "aide": "Rappel : « Pour chaque c dans mot faire » se traduit par « for c in mot: » ; « Si condition alors » par « if condition: » ; « Afficher x » par « print(x) ».",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "linguistique",
+    "notions": [
+       "listes / tableaux", 
+       "boucle bornée (Pour)",
+       "conditionnelle (Si / Sinon)"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T08:47:47.497Z"
+}

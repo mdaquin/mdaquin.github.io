@@ -1,0 +1,25 @@
+{
+  "type": "traduire",
+  "titre": "Meilleur temps au 100 m nage libre",
+  "data": {
+    "titre": "Meilleur temps au 100 m nage libre",
+    "contexte": "Un entraîneur souhaite identifier le chrono le plus rapide parmi une série de temps réalisés à l'entraînement.",
+    "enonce": "Traduisez l'algorithme suivant en une fonction Python nommée meilleur_temps qui reçoit une liste d'entiers (les temps en secondes) et renvoie le plus petit temps.",
+    "algorithme": "Entrée : temps (liste d'entiers, au moins un élément)\nSortie : meilleur (entier)\nDébut\n  meilleur ← temps[0]\n  Pour chaque t dans temps faire\n    Si t < meilleur alors\n      meilleur ← t\n    Fin\n  Fin\n  Renvoyer meilleur\nFin",
+    "consignes": [
+      "Écrivez la fonction meilleur_temps(temps: list[int]) -> int : qui implémente l'algorithme.",
+      "Ajoutez un appel de test, par exemple : print(meilleur_temps([68, 72, 65, 70, 67]))"
+    ],
+    "aide": "« Pour chaque x dans L » se traduit par « for x in L: » en Python. L'affectation utilise « = ». La comparaison stricte s'écrit « < ».",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "sport",
+    "notions": [
+      "listes / tableaux"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T09:35:21.513Z"
+}

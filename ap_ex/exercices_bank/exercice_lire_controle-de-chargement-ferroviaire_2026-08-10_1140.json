@@ -1,0 +1,29 @@
+{
+  "type": "lire",
+  "titre": "Contrôle de chargement ferroviaire",
+  "data": {
+    "titre": "Contrôle de chargement ferroviaire",
+    "contexte": "Un gestionnaire de fret doit vérifier la conformité des wagons d'un train avant le départ.",
+    "enonce": "Lire le programme suivant et indiquer ce qu'il affiche.",
+    "code_python": "def analyser_chargement(poids_wagons, limite):\n    nb_surcharge = 0\n    poids_total = 0\n    for poids in poids_wagons:\n        poids_total = poids_total + poids\n        if poids > limite:\n            nb_surcharge = nb_surcharge + 1\n    return nb_surcharge, poids_total\n\nchargement_1 = [12, 15, 18, 10]\nchargement_2 = [20, 20, 20]\nprint(analyser_chargement(chargement_1, 15))\nprint(analyser_chargement(chargement_2, 18))",
+    "questions": [
+      "Que renvoie l'appel analyser_chargement([12, 15, 18, 10], 15) ?",
+      "Que renvoie l'appel analyser_chargement([20, 20, 20], 18) ?",
+      "Si on appelle analyser_chargement([], 10) avec une liste vide, que renvoie la fonction ?"
+    ],
+    "consignes": [
+      "Indiquer les résultats sous la forme de couples (nombre_surcharge, poids_total)."
+    ],
+    "aide": "Suivre l'évolution des variables nb_surcharge et poids_total à chaque itération de la boucle.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "transports",
+    "notions": [
+      "listes / tableaux"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:40:04.048Z"
+}

@@ -1,0 +1,32 @@
+{
+  "type": "traduire",
+  "titre": "Embarquement tram Stanislas",
+  "data": {
+    "titre": "Embarquement tram Stanislas",
+    "contexte": "Lors de la Fête de la Mirabelle, on simule l'embarquement des voyageurs à l'arrêt Stanislas sur la ligne 1 du tramway. Chaque tram a une capacité limitée et on doit transporter un nombre cible de voyageurs.",
+    "enonce": "Traduire l'algorithme ci-dessous en une fonction Python nommée `simuler_tram_stanislas`. La fonction prend quatre entiers en paramètres et renvoie un couple (total_transportes, trams_utilises). Écrire aussi un appel de test avec des valeurs petites.",
+    "algorithme": "Entrée : nb_trams_prevus (entier), capacite_tram (entier), objectif_voyageurs (entier), attente_initiale (entier)\nSortie : total_transportes (entier), trams_utilises (entier)\nDébut\n  total_transportes ← 0\n  trams_utilises ← 0\n  attente ← attente_initiale\n  Pour tram de 1 à nb_trams_prevus faire\n    embarques ← 0\n    Tant que embarques < capacite_tram ET attente > 0 ET total_transportes < objectif_voyageurs faire\n      embarques ← embarques + 1\n      attente ← attente - 1\n      total_transportes ← total_transportes + 1\n    Fin\n    trams_utilises ← trams_utilises + 1\n    Si total_transportes ≥ objectif_voyageurs alors\n      // Les trams suivants partiront vides\n    Fin\n  Fin\n  Renvoyer total_transportes, trams_utilises\nFin",
+    "consignes": [
+      "Nom de la fonction : simuler_tram_stanislas",
+      "Paramètres : nb_trams_prevus, capacite_tram, objectif_voyageurs, attente_initiale (tous des int)",
+      "Retour : tuple de deux entiers (total_transportes, trams_utilises)",
+      "Appel de test à inclure : print(simuler_tram_stanislas(5, 30, 100, 120))"
+    ],
+    "aide": "« Pour tram de 1 à n » se traduit par `for tram in range(1, n + 1):`. « Tant que cond » se traduit par `while cond:`. Les variables se mettent à jour par affectation simple.",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "ville de nancy",
+    "notions": [
+      "conditionnelle (Si / Sinon)",
+      "boucle bornée (Pour)",
+      "boucle non bornée (Tant que)",
+      "boucles imbriquées"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T05:29:11.270Z"
+}

@@ -1,0 +1,31 @@
+{
+  "type": "lire",
+  "titre": "Montée de niveau d'un héros",
+  "data": {
+    "titre": "Montée de niveau d'un héros",
+    "contexte": "Un héros gagne de l'expérience en combattant des monstres jusqu'à atteindre le seuil pour monter de niveau.",
+    "enonce": "Lire le programme suivant et indiquer ce qu'il affiche.",
+    "code_python": "xp = 0\nseuil = 100\ngain = 17\ntours = 0\nwhile xp < seuil:\n    xp = xp + gain\n    tours = tours + 1\nprint(\"Niveau atteint après\", tours, \"combats\" )\nprint(\"Expérience finale :\", xp)",
+    "questions": [
+      "Combien de combats le héros effectue-t-il avant d'atteindre le niveau ?",
+      "Quelle est l'expérience finale affichée ?",
+      "Que se passe-t-il si on initialise xp à 120 avant la boucle ?"
+    ],
+    "consignes": [
+      "Répondre par des nombres entiers."
+    ],
+    "aide": "Suivez l'évolution de xp et de tours à chaque itération de la boucle while.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "jeux video",
+    "notions": [
+      "boucle non bornée (Tant que)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T05:26:41.932Z"
+}

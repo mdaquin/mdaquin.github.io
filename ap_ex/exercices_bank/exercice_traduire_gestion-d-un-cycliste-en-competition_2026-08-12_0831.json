@@ -1,0 +1,28 @@
+{
+  "type": "traduire",
+  "titre": "Gestion d'un cycliste en compétition",
+  "data": {
+    "titre": "Gestion d'un cycliste en compétition",
+    "contexte": "Cet algorithme permet de suivre l'état d'un cycliste en enregistrant sa consommation d'énergie lors d'une étape.",
+    "enonce": "Traduisez l'algorithme suivant en Python. Assurez-vous que la classe est correctement définie et que les méthodes utilisent bien l'argument self.",
+    "algorithme": "Classe Cycliste\n  Attributs :\n    nom, nom de l'athlète\n    energie, niveau d'énergie actuel\n  Constructeur(n)\n    nom ← n\n    energie ← 100\n  Fin\n\n  Méthode parcourir(distance)\n    energie ← energie - (distance / 10)\n  Fin\n\n  Méthode afficher_etat()\n    Afficher nom, \" : \", energie, \" %\"\n  Fin\nFin\n\nDébut\n  athlète1 ← nouveau Cycliste(\"Alice\")\n  athlète1.parcourir(50)\n  athlète1.afficher_etat()\n\n  athlète2 ← nouveau Cycliste(\"Bob\")\n  athlète2.parcourir(20)\n  athlète2.afficher_etat()\nFin",
+    "consignes": [
+      "Le constructeur doit se traduire par la méthode __init__.",
+      "Chaque méthode de la classe doit prendre 'elf' en premier paramètre.",
+      "La méthode parcourir doit prendre un paramètre nommé 'distance'.",
+      "La méthode afficher_etat doit utiliser print() pour afficher le nom et l'énergie.",
+      "Écrivez le code complet incluant la classe et le bloc de test final qui crée les deux objets et appelle leurs méthodes."
+    ],
+    "aide": "En Python, pour définir une classe, on utilise 'class NomDeLaClasse:'. Le constructeur s'écrit 'def __init__(self, param):'.",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "sport",
+    "notions": [
+      "classes et objets"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-12T06:31:15.530Z"
+}

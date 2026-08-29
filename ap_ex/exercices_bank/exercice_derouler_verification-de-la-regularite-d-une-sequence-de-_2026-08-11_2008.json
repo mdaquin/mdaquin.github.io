@@ -1,0 +1,31 @@
+{
+  "type": "derouler",
+  "titre": "Vérification de la régularité d'une séquence de symboles",
+  "data": {
+    "titre": "Vérification de la régularité d'une séquence de symboles",
+    "contexte": "En linguistique computationnelle, on utilise des structures de données pour vérifier si une séquence de symboles respecte une certaine symétrie.",
+    "enonce": "Déroulez l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque tour de boucle, tracez l'état de la file et les valeurs des variables. Indiquez ensuite la valeur finale renvoyée par l'algorithme.",
+    "algorithme": "Fonction VerifierSymetrie(S) :\n  Entrée :\n    S (une chaîne de caractères)\n  Sortie :\n    booléen\n  Début\n    F ← file vide\n    i ← 0\n    Pour chaque symbole dans S faire\n      ajouter(F, symbole)\n    Fin\n    \n    est_symetrique ← Vrai\n    Tant que len(F) > 0 faire\n      si retirer(F) ≠ S[i] alors\n        est_symetrique ← Faux\n      Fin\n      i ← i + 1\n    Fin\n    \n    Renvoyer est_symetrique\n  Fin",
+    "cas": [
+      "S = \"ABA\"",
+      "S = \"ABC\"",
+      "S = \"\""
+    ],
+    "consignes": [
+      "Pour chaque cas, listez l'état de la file après la première boucle 'Pour chaque'.",
+      "Pour la boucle 'Tant que', détaillez à chaque étape : la valeur de 'ymbole' (retiré), l'état de la file et la valeur de 'est_symetrique'.",
+      "Précisez le résultat final renvoyé."
+    ],
+    "aide": "Utilisez un tableau de suivi pour noter l'évolution de la file et de la variable 'est_symetrique' à chaque étape du déroulement.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "linguistique",
+    "notions": [
+      "files (FIFO)"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T18:08:11.012Z"
+}

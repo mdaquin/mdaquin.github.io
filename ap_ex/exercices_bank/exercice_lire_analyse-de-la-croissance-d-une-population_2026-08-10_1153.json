@@ -1,0 +1,35 @@
+{
+  "type": "lire",
+  "titre": "Analyse de la croissance d'une population",
+  "data": {
+    "titre": "Analyse de la croissance d'une population",
+    "contexte": "On étudie l'évolution d'une population de bactéries soumise à des cycles de croissance et de déclin selon des facteurs environnementaux.",
+    "enonce": "Soit le programme Python suivant simulant l'évolution d'une population. Lisez attentivement le code et répondez aux questions.",
+    "code_python": "def calculer_population(n, taux):\n    population ← n\n    for i in range(1, taux + 1):\n        population = population * 2\n    return population\n\n# Paramètres de l'étude\ninitiale = 10\ncycles = [2, 3, 4]\nresultats = {}\n\nfor c in cycles:\n    valeur = calculer_population(initiale, c)\n    resultats[f\"cycle_{c}\"] = valeur\n\nfor cle in resultats:\n    print(f\"Statut {cle} : {resultats[cle]}\")",
+    "questions": [
+      "Que renvoie l'appel de fonction `calculer_population(5, 2)`?",
+      "Quel est l'ordre exact des affichages à la fin du programme?",
+      "Si on modifie `initiale = 0`, qu'affiche le programme?"
+    ],
+    "consignes": [
+      "Pour la question 1, ne faites pas l'affichage, donnez juste la valeur renvoyée.",
+      "Pour la question 2, indiquez la valeur de chaque statut affiché."
+    ],
+    "aide": "Suivez attentivement l'évolution de la variable 'population' à chaque étape de la boucle dans la fonction, puis observez comment les résultats sont stockés dans le dictionnaire avant l'affichage final.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "mathématiques",
+    "notions": [
+      "boucles imbriquées",
+      "entrées / sorties",
+      "listes / tableaux",
+      "chaînes de caractères",
+      "dictionnaires",
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-10T09:53:46.875Z"
+}

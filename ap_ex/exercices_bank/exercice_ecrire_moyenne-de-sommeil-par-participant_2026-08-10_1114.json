@@ -1,0 +1,37 @@
+{
+  "type": "ecrire",
+  "titre": "Moyenne de sommeil par participant",
+  "data": {
+    "titre": "Moyenne de sommeil par participant",
+    "contexte": "Un laboratoire étudie le sommeil de 4 participants sur 5 nuits. Les durées de sommeil (en heures) sont stockées dans une matrice où chaque ligne correspond à un participant et chaque colonne à une nuit.",
+    "enonce": "Écrire un algorithme qui définit une fonction MoyenneParticipant recevant la matrice et un numéro de participant (indice de ligne), calculant et renvoyant la moyenne de ses nuits de sommeil. Le programme principal appelle cette fonction pour un participant donné et affiche le résultat.",
+    "entrees": [
+      {
+        "nom": "matrice",
+        "description": "liste de 4 listes de 5 nombres réels (heures de sommeil), indices lignes 0 à 3, indices colonnes 0 à 4"
+      },
+      {
+        "nom": "indice",
+        "description": "entier entre 0 et 3 inclus, numéro du participant choisi"
+      }
+    ],
+    "sortie": "nombre réel : moyenne des 5 nuits de sommeil du participant désigné",
+    "consignes": [
+      "Écrire l'algorithme complet en pseudo-code (fonction puis programme principal).",
+      "Utiliser une boucle bornée pour sommer les valeurs d'une ligne.",
+      "Respecter les conventions de pseudo-code du cours (Entrée, Sortie, Début, Fin, flèches, indentation)."
+    ],
+    "aide": "Pensez à récupérer la longueur d'une ligne via Longueur(matrice[indice]) pour connaître le nombre de nuits.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "psychologie",
+    "notions": [
+      "listes de listes (matrices)",
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:14:41.553Z"
+}

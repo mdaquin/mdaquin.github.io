@@ -1,0 +1,33 @@
+{
+  "type": "ecrire",
+  "titre": "Gestion de l'ordre de passage des athlètes",
+  "data": {
+    "titre": "Gestion de l'ordre de passage des athlètes",
+    "contexte": "Lors d'une compétition de gymnastique, les athlètes arrivent les uns après les autres pour s'échauffer sur un agrès. Pour des raisons de sécurité, l'entraîneur décide de les faire passer dans l'ordre inverse de leur arrivée pour tester l'agilité du dernier arrivé en premier.",
+    "enonce": "Écrire un algorithme qui prend en compte une liste d'athlètes arrivant sur le tapis et qui utilise une pile pour réorganiser leur passage. La liste finale doit présenter les athlètes dans l'ordre inverse de leur arrivée.",
+    "entrees": [
+      {
+        "nom": "liste_arrivees",
+        "description": "Une liste de chaînes de caractères contenant les noms des athlètes dans l'ordre de leur arrivée."
+      }
+    ],
+    "sortie": "Une nouvelle liste contenant les noms des athlètes dans l'ordre de passage (ordre inverse de l'arrivée).",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code",
+      "Utiliser une pile pour stocker les noms et inverser l'ordre",
+      "Utiliser les opérations empiler et dépiler",
+      "Vérifier que la pile n'est pas vide avant de dépiler"
+    ],
+    "aide": "Pensez qu'en empilant tous les éléments d'une liste, le dernier élément saisi se retrouve au sommet de la pile.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "sport",
+    "notions": [
+      "piles (LIFO)"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T18:11:56.774Z"
+}

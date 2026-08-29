@@ -1,0 +1,36 @@
+{
+  "type": "ecrire",
+  "titre": "Calcul de la surface d'une parcelle",
+  "data": {
+    "titre": "Calcul de la surface d'une parcelle",
+    "contexte": "Un géomètre prépare une base de données de terrains pour une commune. Pour simplifier ses calculs, il utilise une hiérarchie de classes pour gérer différents types de propriétés.",
+    "enonce": "On souhaite calculer la superficie totale d'un complexe de terrains. On considère une classe mère 'Terrain' qui contient une méthode pour calculer son coût d'entretien. On définit ensuite une classe fille 'Parcelle' qui hérite de 'Terrain' et ajoute une taxe spécifique sur la surface.",
+    "entrees": [
+      {
+        "nom": "superficie_base",
+        "description": "la surface de base du terrain en m²"
+      },
+      {
+        "nom": "taux_entretien",
+        "description": "le coût de l'entretien par m²"
+      }
+    ],
+    "sortie": "le coût total d'entretien pour une parcelle spécifique",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code",
+      "Utiliser l'héritage pour que la classe 'Parcelle' récupère les attributs de 'Terrain'",
+      "La classe 'Parcelle' doit ajouter une méthode 'calculer_taxe' qui utilise la superficie et le taux d'entretien"
+    ],
+    "aide": "Rappelez-vous que la classe fille peut appeler la méthode de la classe mère via 'uper.Constructeur(...)' pour initialiser les attributs communs.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "géographie",
+    "notions": [
+      "héritage entre classes"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-12T06:39:37.766Z"
+}

@@ -1,0 +1,36 @@
+{
+  "type": "ecrire",
+  "titre": "Calcul de la somme des premiers entiers",
+  "data": {
+    "titre": "Calcul de la somme des premiers entiers",
+    "contexte": "En mathématiques, on s'intéresse souvent à la somme des nombres entiers successifs pour comprendre les propriétés des suites.",
+    "enonce": "Écrire un algorithme qui calcule la somme de tous les nombres entiers compris entre 1 et un nombre N donné. L'algorithme doit additionner successivement chaque nombre de la séquence.",
+    "entrees": [
+      {
+        "nom": "n",
+        "description": "un nombre entier positif"
+      }
+    ],
+    "sortie": "la somme totale des entiers de 1 à n",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code en respectant les conventions du cours.",
+      "Utiliser une variable pour stocker le résultat intermédiaire.",
+      "Utiliser une boucle bornée pour parcourir les nombres."
+    ],
+    "aide": "Pensez à initialiser votre variable de cumul à zéro avant de commencer la boucle.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "mathématiques",
+    "notions": [
+      "variables et affectation",
+      "opérations arithmétiques",
+      "boucle bornée (Pour)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-09T10:46:33.175Z"
+}

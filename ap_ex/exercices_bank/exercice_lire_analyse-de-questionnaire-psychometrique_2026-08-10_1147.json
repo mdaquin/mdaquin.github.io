@@ -1,0 +1,33 @@
+{
+  "type": "lire",
+  "titre": "Analyse de questionnaire psychométrique",
+  "data": {
+    "titre": "Analyse de questionnaire psychométrique",
+    "contexte": "Un chercheur traite les réponses d'un questionnaire à échelles de Likert (1 à 5) comprenant des items inversés. Il souhaite obtenir les scores moyens par participant et par dimension.",
+    "enonce": "Lire le programme Python suivant et répondre aux questions.",
+    "code_python": "def calculer_score(reponses, items, inverses):\n    total = 0\n    for cle in items:\n        val = reponses[cle]\n        if cle in inverses:\n            val = 6 - val\n        total += val\n    return total / len(items)\n\nparticipants = [\n    {'id': 'P1', 'Q1': 4, 'Q2': 2, 'Q3': 5, 'Q4': 3},\n    {'id': 'P2', 'Q1': 2, 'Q2': 4, 'Q3': 1, 'Q4': 5}\n]\nechelles = {\n    'Anxiete': {'items': ['Q1', 'Q3'], 'inverses': ['Q3']},\n    'Extraversion': {'items': ['Q2', 'Q4'], 'inverses': []}\n}\n\nresultats = {}\nfor p in participants:\n    scores = {}\n    for nom, cfg in echelles.items():\n        s = calculer_score(p, cfg['items'], cfg['inverses'])\n        scores[nom] = s\n    resultats[p['id']] = scores\n\nprint(resultats)",
+    "questions": [
+      "Que renvoie l'appel `calculer_score({'Q1': 3, 'Q3': 4}, ['Q1', 'Q3'], ['Q3'])` ?",
+      "Que affiche le programme complet ?"
+    ],
+    "consignes": [
+      "Donner la valeur numérique exacte pour la première question.",
+      "Reproduire la structure du dictionnaire affiché (clés, sous-clés, valeurs)."
+    ],
+    "aide": "Suivre l'exécution : la boucle externe parcourt les participants, la boucle interne les échelles. La fonction applique l'inversion (6 - valeur) seulement pour les items listés dans 'inverses'.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "psychologie",
+    "notions": [
+      "boucles imbriquées",
+      "listes / tableaux",
+      "chaînes de caractères",
+      "dictionnaires",
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:47:15.909Z"
+}

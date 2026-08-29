@@ -1,0 +1,36 @@
+{
+  "type": "ecrire",
+  "titre": "Vérification de la connectivité d'un réseau ferroviaire",
+  "data": {
+    "titre": "Vérification de la connectivité d'un réseau ferroviaire",
+    "contexte": "Une compagnie de transport souhaite s'assurer que toutes ses gares sont accessibles entre elles via le réseau de lignes existant.",
+    "enonce": "À partir d'un graphe représentant un réseau de lignes de train, déterminez s'il est possible de relier toutes les gares du réseau sans interruption. L'algorithme doit vérifier si le graphe est connexe, c'est-à-dire si, à partir d'une gare de départ choisie, on peut atteindre toutes les autres gares du réseau.",
+    "entrees": [
+      {
+        "nom": "nœuds",
+        "description": "une liste contenant les identifiants de toutes les gares"
+      },
+      {
+        "nom": "adjacences",
+        "description": "un dictionnaire où chaque clé est une gare et sa valeur est la liste des gares directement reliées par une ligne"
+      }
+    ],
+    "sortie": "Vrai si toutes les gares sont reliées entre elles, Faux sinon",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code",
+      "Utiliser une structure de données de type pile ou file pour explorer le réseau",
+      "Utiliser une liste pour mémoriser les gares déjà visitées"
+    ],
+    "aide": "Pour explorer le réseau, vous pouvez partir d'une première gare et marquer toutes les gares atteignables une par une.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "transports",
+    "notions": [
+      "graphes"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-11T18:35:34.822Z"
+}

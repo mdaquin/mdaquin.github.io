@@ -1,0 +1,30 @@
+{
+  "type": "derouler",
+  "titre": "Altitude maximale d'une étape de randonnée",
+  "data": {
+    "titre": "Altitude maximale d'une étape de randonnée",
+    "contexte": "Un groupe de randoncheurs souhaite connaître l'altitude maximale atteinte au cours d'une étape, afin d'évaluer la difficulté du parcours.",
+    "enonce": "Déroulez l'algorithme suivant à la main pour chaque jeu de valeurs proposé. Pour chaque tour de boucle, indiquez la valeur des variables concernées. Enfin, indiquez ce que renvoie l'algorithme.",
+    "algorithme": "Entrée : D ← {} (dictionnaire associant un sommet à son altitude en mètres)\nSortie : l'altitude maximale parmi tous les sommets\nDébut\n  max_alt ← 0\n  Pour chaque alt dans Valeurs(D) faire\n    Si alt > max_alt alors\n      max_alt ← alt\n    Fin\n  Fin\n  Renvoyer max_alt\nFin",
+    "cas": [
+      "D = {\"Col du Lautaret\": 2058, \"L'Alpe d'Huez\": 1860, \"Mont Ventoux\": 1624}",
+      "D = {\"Sommet 1\": 850}",
+      "D = {}"
+    ],
+    "consignes": [
+      "Précisez la valeur de max_alt à la fin de chaque tour de boucle.",
+      "Indiquez l'altitude maximale renvoyée par l'algorithme pour chaque cas."
+    ],
+    "aide": "Utilisez un tableau pour suivre l'évolution de max_alt à chaque itération. Attention au cas où le dictionnaire est vide.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "géographie",
+    "notions": [
+      "dictionnaires"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T08:55:55.934Z"
+}

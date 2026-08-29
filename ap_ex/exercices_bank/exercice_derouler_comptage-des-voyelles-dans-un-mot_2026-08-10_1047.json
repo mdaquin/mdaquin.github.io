@@ -1,0 +1,32 @@
+{
+  "type": "derouler",
+  "titre": "Comptage des voyelles dans un mot",
+  "data": {
+    "titre": "Comptage des voyelles dans un mot",
+    "contexte": "Cet algorithme compte le nombre de voyelles présentes dans un mot donné, ce qui est une étape élémentaire pour estimer le nombre de syllabes en linguistique computationnelle.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de valeurs proposés, en indiquant la valeur de chaque variable à chaque tour de boucle.",
+    "algorithme": "Entrée : mot (chaîne de caractères)\nSortie : nb_voyelles (entier)\nDébut\n  nb_voyelles ← 0\n  voyelles ← [\"a\", \"e\", \"i\", \"o\", \"u\", \"y\", \"A\", \"E\", \"I\", \"O\", \"U\", \"Y\"]\n  Pour chaque lettre dans mot faire\n    Si lettre ∈ voyelles alors\n      nb_voyelles ← nb_voyelles + 1\n    Fin\n  Fin\n  Renvoyer nb_voyelles\nFin",
+    "cas": [
+      "mot = \"algo\"",
+      "mot = \"PYTHON\"",
+      "mot = \"\"\""
+    ],
+    "consignes": [
+      "Notez la valeur de nb_voyelles au début, puis après chaque itération de la boucle."
+    ],
+    "aide": "Préparez un tableau avec les colonnes : lettre, nb_voyelles. Rappelez-vous que la chaîne vide ne fait exécuter la boucle zéro fois.",
+    "code_python": null,
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "linguistique",
+    "notions": [
+       "listes / tableaux", 
+       "boucle bornée (Pour)",
+       "conditionnelle (Si / Sinon)"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T08:47:13.031Z"
+}

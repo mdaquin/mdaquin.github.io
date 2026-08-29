@@ -1,0 +1,35 @@
+{
+  "type": "ecrire",
+  "titre": "Calcul du pourcentage GC d'amorces",
+  "data": {
+    "titre": "Calcul du pourcentage GC d'amorces",
+    "contexte": "En biologie moléculaire, le pourcentage de bases guanine (G) et cytosine (C) dans une séquence d'ADN influence sa température de fusion. On souhaite analyser une série d'amorces (courtes séquences) pour sélectionner celles ayant un pourcentage GC adapté.",
+    "enonce": "Écrire un algorithme qui, pour chaque séquence d'une liste donnée, calcule et affiche son pourcentage de bases G et C. Une fonction dédiée doit effectuer le calcul pour une séquence unique, puis être appelée dans une boucle sur la liste.",
+    "entrees": [
+      {
+        "nom": "sequences",
+        "description": "Liste de 3 à 5 chaînes de caractères représentant des brins d'ADN (ex: [\"ATGCGTA\", \"GGCCAA\", \"TTATATA\"}). Chaque chaîne contient uniquement les lettres A, T, G, C et fait 5 à 15 caractères."
+      }
+    ],
+    "sortie": "Affichage pour chaque séquence : la séquence suivie de son pourcentage GC (valeur réelle, par exemple \"ATGCGTA : 57.14\" ).",
+    "consignes": [
+      "Écrire l'algorithme complet en pseudo-code (en-tête Entrée/Sortie, Début/Fin).",
+      "Déclarer une fonction PourcentageGC(sequence) qui reçoit une chaîne, compte les occurrences de 'G' et 'C', calcule le pourcentage et le renvoie.",
+      "Dans le programme principal, parcourir la liste sequences avec une boucle « Pour chaque », appeler la fonction pour chaque élément, et afficher le résultat.",
+      "Respecter les conventions du cours : flèche ←, indices à 0 si parcours par indice, opérateurs ET/OU, Renvoyer pour la fonction."
+    ],
+    "aide": "Dans la fonction, initialiser un compteur à 0, boucler sur chaque caractère de la chaîne, incrémenter si le caractère vaut 'G' ou 'C', puis renvoyer (compteur / Longueur(sequence)) × 100.",
+    "algorithme": null,
+    "code_python": null,
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "biologie",
+    "notions": [
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:31:54.674Z"
+}

@@ -1,0 +1,34 @@
+{
+  "type": "derouler",
+  "titre": "Analyse du niveau de fatigue",
+  "data": {
+    "titre": "Analyse du niveau de fatigue",
+    "contexte": "Cet algorithme sert à évaluer un score de fatigue accumulée sur une courte période de suivi en fonction de l'intensité de fatigue ressentie chaque jour.",
+    "enonce": "Déroulez l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque tour de boucle, notez l'évolution de la variable 'core_total'. À la fin, déterminez la valeur renvoyée par l'algorithme.",
+    "algorithme": "Entrée :\n  nombre_de_jours\n  intensite_quotidienne\nSortie :\n  score_total\nDébut\n  score_total ← 0\n  Pour j de 1 à nombre_de_jours faire\n    Si intensite_quotidienne > 5 alors\n      score_total ← score_total + 2\n    Sinon\n      score_total ← score_total + 1\n    Fin\n  Fin\n  Renvoyer score_total\nFin",
+    "cas": [
+      "nombre_de_jours = 3, intensite_quotidienne = 7",
+      "nombre_de_jours = 4, intensite_quotidienne = 2",
+      "nombre_de_jours = 0, intensite_quotidienne = 5"
+    ],
+    "consignes": [
+      "Tracez l'évolution des variables sur un papier.",
+      "Précisez bien la valeur finale renvoyée pour chaque cas."
+    ],
+    "aide": "Je vous conseille de dessiner un petit tableau avec une colonne pour l'indice de la boucle 'j' et une colonne pour la variable 'core_total'.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "psychologie",
+    "notions": [
+      "variables et affectation",
+      "conditionnelle (Si / Sinon)",
+      "boucle bornée (Pour)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-09T09:31:47.318Z"
+}

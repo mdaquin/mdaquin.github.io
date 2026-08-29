@@ -1,0 +1,35 @@
+{
+  "type": "derouler",
+  "titre": "Calcul de la moyenne des variances locales",
+  "data": {
+    "titre": "Calcul de la moyenne des variances locales",
+    "contexte": "Cet algorithme calcule une mesure de dispersion sur un ensemble de données numériques.",
+    "enonce": "Déroulez l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque jeu de valeurs, indiquez la valeur des variables à chaque étape importante du processus.",
+    "algorithme": "Fonction CalculEcart(valeurs, cible):\n  ecart ← 0\n  Pour chaque v dans valeurs faire\n    Si v ≠ cible alors\n      ecart ← ecart + (v - cible) * (v - cible)\n    Fin\n  Fin\n  Renvoyer ecart\nFin\n\nDébut\n  Entrée :\n  n (entier)\n  donnees (liste d'entiers)\n  \n  SommeEcarts ← 0\n  \n  Pour i de 0 à Longueur(donnees) - 1 faire\n    valeur_actuelle ← donnees[i]\n    SommeEcarts ← SommeEcarts + CalculEcart(donnees, valeur_actuelle)\n  Fin\n  \n  Afficher \"Résultat :\", SommeEcarts / n\nFin",
+    "cas": [
+      "n = 3, donnees = [2, 4, 6]",
+      "n = 4, donnees = [5, 5, 5, 5]",
+      "n = 2, donnees = [1, 10]"
+    ],
+    "consignes": [
+      "Détaillez le passage de chaque argument à la fonction CalculEcart.",
+      "Suivez attentivement la variable SommeEcarts au fur et à mesure des appels de la fonction."
+    ],
+    "aide": "Tracez un tableau de suivi pour les variables SommeEcarts, valeur_actuelle et le résultat renvoyé par la fonction à chaque itération de la boucle principale.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "mathématiques",
+    "notions": [
+      "boucles imbriquées",
+      "entrées / sorties",
+      "listes / tableaux",
+      "chaînes de caractères",
+      "dictionnaires",
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-10T09:54:43.967Z"
+}

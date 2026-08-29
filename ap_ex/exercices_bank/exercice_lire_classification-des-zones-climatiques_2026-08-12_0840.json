@@ -1,0 +1,30 @@
+{
+  "type": "lire",
+  "titre": "Classification des zones climatiques",
+  "data": {
+    "titre": "Classification des zones climatiques",
+    "contexte": "On étudie la température moyenne de différentes zones géographiques pour classer les régions.",
+    "enonce": "Lisez attentivement le code Python suivant et répondez aux questions en suivant l'exécution ligne par ligne.",
+    "code_python": "class ZoneClimatique:\n    def __init__(self, nom, temp_moyenne):\n        self.nom = nom\n        self.temp_moyenne = temp_moyenne\n\n    def description(self):\n        return f\"La zone {self.nom} a une température de {self.temp_moyenne}°C.\"\n\nclass ZoneTropicale(ZoneClimatique):\n    def __init__(self, nom, temp_moyenne, humidite):\n        super().__init__(nom, temp_moyenne)\n        self.humidite = humidite\n\n    def description(self):\n        return f\"Zone tropicale ({self.nom}) : {self.temp_moyenne}°C et {self.humidite}% d'humidité.\"\n\n# Tests du programme\nregion_A = ZoneClimatique(\"Tempérée\", 15)\nregion_B = ZoneTropicale(\"Équatoriale\", 28, 85)\n\nprint(region_A.description())\nprint(region_B.description())",
+    "questions": [
+      "Que contient l'attribut self.nom de l'objet region_A?",
+      "Quelle méthode est appelée pour l'objet region_A, et d'où provient-elle?",
+      "Quelle est la différence entre le résultat de l'appel à la méthode description() pour region_A et pour region_B?"
+    ],
+    "consignes": [
+      "Précisez bien la valeur de retour pour chaque question.",
+      "Faites attention aux détails de l'affichage (majuscules, ponctuation)."
+    ],
+    "aide": "N'oubliez pas que la classe ZoneTropicale hérite de la classe ZoneClimatique : elle possède donc les attributs et les méthodes de sa classe mère, sauf si elle les redéfinit.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "géographie",
+    "notions": [
+      "héritage entre classes"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-12T06:40:22.015Z"
+}

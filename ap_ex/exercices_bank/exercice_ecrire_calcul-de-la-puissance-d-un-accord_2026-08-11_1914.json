@@ -1,0 +1,32 @@
+{
+  "type": "ecrire",
+  "titre": "Calcul de la puissance d'un accord",
+  "data": {
+    "titre": "Calcul de la puissance d'un accord",
+    "contexte": "Un compositeur souhaite analyser la densité sonore d'une série de notes jouées successivement dans un morceau de musique.",
+    "enonce": "Écrire un algorithme qui calcule la somme des valeurs numériques de toutes les notes contenues dans une liste. L'algorithme doit utiliser impérativement une approche récursive pour explorer la liste.",
+    "entrees": [
+      {
+        "nom": "notes",
+        "description": "une liste de nombres entiers représentant la hauteur de chaque note"
+      }
+    ],
+    "sortie": "la somme totale des valeurs de la liste",
+    "consignes": [
+      "rédiger l'algorithme en pseudo-code en respectant les conventions du cours",
+      "utiliser une approche récursive uniquement : l'algorithme ne doit contenir aucune boucle",
+      "identifier clairement le cas d'arrêt (quand la liste est vide) et le cas général"
+    ],
+    "aide": "Pour le cas général, la somme est égale à la valeur de la première note plus la somme des notes restantes dans la liste.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "musique",
+    "notions": [
+      "récursivité"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T17:14:44.067Z"
+}

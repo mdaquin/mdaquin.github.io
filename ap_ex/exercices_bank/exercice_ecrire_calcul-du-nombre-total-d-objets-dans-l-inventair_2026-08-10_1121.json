@@ -1,0 +1,33 @@
+{
+  "type": "ecrire",
+  "titre": "Calcul du nombre total d'objets dans l'inventaire",
+  "data": {
+    "titre": "Calcul du nombre total d'objets dans l'inventaire",
+    "contexte": "Dans un jeu de rôle, le joueur possède un inventaire qui associe chaque type d'objet à la quantité qu'il en possède.",
+    "enonce": "Écrire un algorithme qui, étant donné l'inventaire du joueur, calcule et renvoie le nombre total d'objets (la somme de toutes les quantités).",
+    "entrees": [
+      {
+        "nom": "inventaire",
+        "description": "dictionnaire associant chaque nom d'objet (chaîne) à sa quantité (entier positif ou nul), contenant entre 3 et 6 paires."
+      }
+    ],
+    "sortie": "entier représentant le nombre total d'objets dans l'inventaire.",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code selon les conventions du cours.",
+      "Utiliser une boucle « Pour chaque » sur les valeurs du dictionnaire.",
+      "Utiliser une variable pour accumuler la somme.",
+      "Renvoyer le total à la fin."
+    ],
+    "aide": "Parcourir les quantités une par une et les ajouter à un compteur initialisé à zéro.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "jeux video",
+    "notions": [
+      "dictionnaires"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T09:21:43.115Z"
+}

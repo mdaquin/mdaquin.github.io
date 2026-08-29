@@ -1,0 +1,30 @@
+{
+  "type": "derouler",
+  "titre": "Détection de propagation de signal",
+  "data": {
+    "titre": "Détection de propagation de signal",
+    "contexte": "En biologie cellulaire, on étudie comment un signal se propage d'une protéine à une autre au sein d'un réseau d'interactions. On cherche ici à vérifier si une protéine cible est directement reliée à une protéine source via un lien unique.",
+    "enonce": "Déroulez l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque tour de boucle, indiquez l'état des variables et, à la fin, la valeur renvoyée par la fonction.",
+    "algorithme": "Fonction VerifierLien(G, source, cible):\n  Entrée :\n    G (un graphe)\n    source (un nœud)\n    cible (un nœud)\n  Sortie :\n    booléen (Vrai si un lien existe, sinon Faux)\n  Début\n    trouve ← Faux\n    Pour chaque successeur de source faire\n      Si successeur = cible alors\n        trouve ← Vrai\n      Fin\n    Fin\n    Renvoyer trouve\n  Fin",
+    "cas": [
+      "G = graphe où le nœud 'A' a pour successeurs ['B', 'C'], source = 'A', cible = 'B'",
+      "G = graphe où le nœud 'P1' a pour successeurs ['P2'], source = 'P1', cible = 'P3'",
+      "G = graphe où le nœud 'X' n'a aucun successeur, source = 'X', cible = 'Y'"
+    ],
+    "consignes": [
+      "Notez la valeur de la variable 'trouve' à chaque étape de la boucle.",
+      "Précisez clairement le résultat final pour chaque cas."
+    ],
+    "aide": "Tracez un tableau de suivi avec une colonne pour la variable 'uccesseur' et une colonne pour la variable 'trouve'.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "biologie",
+    "notions": [
+      "graphes"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T18:18:55.510Z"
+}

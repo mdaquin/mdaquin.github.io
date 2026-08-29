@@ -1,0 +1,38 @@
+{
+  "type": "ecrire",
+  "titre": "Calcul du coût total de commandes multiples",
+  "data": {
+    "titre": "Calcul du coût total de commandes multiples",
+    "contexte": "Un gestionnaire de stock souhaite automatiser le calcul du montant total des commandes pour différents clients en appliquant une remise selon le montant de chaque commande.",
+    "enonce": "Écrire un algorithme qui calcule le prix total de plusieurs commandes. Pour chaque commande, si le montant est supérieur à 100 euros, une remise de 10% est appliquée, sinon le prix reste inchangé. L'algorithme doit traiter une liste de montants et afficher le prix final pour chaque commande, ainsi que le montant total cumulé de toutes les commandes (après remises).",
+    "entrees": [
+      {
+        "nom": "liste_prix",
+        "description": "Une liste de nombres réels représentant le prix brut de chaque commande."
+      }
+    ],
+    "sortie": "Affichage du prix remisé pour chaque commande et du montant total final.",
+    "consignes": [
+      "Écrire le programme en pseudo-code.",
+      "Définir une fonction nommée 'appliquer_remise' qui prend un prix en paramètre et renvoie le prix après application de la remise de 10% si le prix est > 100, sinon renvoie le prix original.",
+      "Le programme principal doit parcourir la liste des prix, appeler la fonction pour chaque élément et accumuler le total.",
+      "Utiliser des noms de variables différents pour les paramètres de la fonction et les variables du programme principal."
+    ],
+    "aide": "Pensez à initialiser une variable de cumul à 0 avant de commencer la boucle de traitement.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "mathématiques",
+    "notions": [
+      "boucles imbriquées",
+      "entrées / sorties",
+      "listes / tableaux",
+      "chaînes de caractères",
+      "dictionnaires",
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-10T09:52:54.262Z"
+}

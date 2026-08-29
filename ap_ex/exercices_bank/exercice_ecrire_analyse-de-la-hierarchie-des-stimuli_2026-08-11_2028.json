@@ -1,0 +1,38 @@
+{
+  "type": "ecrire",
+  "titre": "Analyse de la hiérarchie des stimuli",
+  "data": {
+    "titre": "Analyse de la hiérarchie des stimuli",
+    "contexte": "En psychologie cognitive, on étudie comment un stimulus sensoriel peut en déclencher d'autres de manière séquentielle, formant une chaîne de réactions.",
+    "enonce": "Écrire un algorithme récursif qui calcule la profondeur maximale d'une chaîne de réactions. Un stimulus est représenté par un arbre où chaque nœud est un événement et ses successeurs sont les événements qu'il déclenche.",
+    "entrees": [
+      {
+        "nom": "nœud_actuel",
+        "description": "le nœud (événement) que l'on étudie actuellement"
+      },
+      {
+        "nom": "arbre",
+        "description": "l'arbre représentant la structure des réactions"
+      }
+    ],
+    "sortie": "la profondeur maximale de la chaîne de réactions à partir du nœud actuel",
+    "consignes": [
+      "écrire l'algorithme en pseudo-code",
+      "utiliser impérativement la récursivité",
+      "interdiction d'utiliser des boucles (Tant que ou Pour)",
+      "identifier clairement le cas d'arrêt et le cas général"
+    ],
+    "aide": "Pensez à réduire la taille du problème en examinant les successeurs de l'événement courant.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "psychologie",
+    "notions": [
+      "récursivité",
+      "arbres"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-11T18:28:10.733Z"
+}

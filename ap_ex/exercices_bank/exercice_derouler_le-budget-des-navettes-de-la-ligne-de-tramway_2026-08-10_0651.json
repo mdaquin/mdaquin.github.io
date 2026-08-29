@@ -1,0 +1,34 @@
+{
+  "type": "derouler",
+  "titre": "Le budget des navettes de la ligne de tramway",
+  "data": {
+    "titre": "Le budget des navettes de la ligne de tramway",
+    "contexte": "Une compagnie de transport à Nancy souhaite calculer le montant restant sur un budget de maintenance après avoir payé une série de réparations imprévues.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque tour de boucle, indiquez l'état des variables et, à la fin, déterminez la valeur renvoyée par l'algorithme.",
+    "algorithme": "Entrée :\n  budget_initial\n  coût_réparation\n  nombre_réparations\nSortie :\n  budget_restant\nDébut\n  budget_restant ← budget_initial\n  compteur ← 1\n  Tant que compteur ≤ nombre_réparations faire\n    budget_restant ← budget_restant − coût_réparation\n    compteur ← compteur + 1\n  Fin\n  Renvoyer budget_restant\nFin",
+    "cas": [
+      "budget_initial = 50, coût_réparation = 10, nombre_réparations = 3",
+      "budget_initial = 20, coût_réparation = 5, nombre_réparations = 5",
+      "budget_initial = 100, coût_réparation = 25, nombre_réparations = 0"
+    ],
+    "consignes": [
+      "Notez bien la valeur de chaque variable à chaque étape du processus.",
+      "Faites attention au moment où la condition de la boucle devient fausse."
+    ],
+    "aide": "Je vous conseille de tracer un tableau avec une colonne pour chaque variable afin de suivre leur évolution à chaque tour de boucle.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "ville de nancy",
+    "notions": [
+      "variables et affectation",
+      "opérations arithmétiques",
+      "boucle non bornée (Tant que)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T04:51:47.664Z"
+}

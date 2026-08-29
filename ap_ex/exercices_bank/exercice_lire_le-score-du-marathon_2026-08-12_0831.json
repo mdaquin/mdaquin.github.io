@@ -1,0 +1,29 @@
+{
+  "type": "lire",
+  "titre": "Le score du marathon",
+  "data": {
+    "titre": "Le score du marathon",
+    "contexte": "Un organisateur de course utilise un programme pour suivre l'état de santé des coureurs en fonction de la fatigue accumulée.",
+    "enonce": "Lire le programme Python suivant et répondre aux questions.",
+    "code_python": "class Coureur:\n    def __init__(self, nom, fatigue):\n        self.nom = nom\n        self.fatigue = fatigue\n\n    def courir(self, distance):\n        self.fatigue = self.fatigue + (distance * 2)\n\n    def est_en_forme(self):\n        if self.fatigue < 50:\n            return True\n        else:\n            return False\n\n# Test du programme\nc1 = Coureur(\"Alice\", 10)\nc2 = Coureur(\"Bob\", 45)\n\nc1.courir(15)\nc2.courir(5)\n\nprint(f\"{c1.nom} est en forme?\", c1.est_en_forme())\nprint(f\"{c2.nom} est en forme?\", c2.est_en_forme())",
+    "questions": [
+      "Quelle est la valeur de l'attribut fatigue de l'objet c1 après l'appel de la méthode courir(15)?",
+      "Que renvoie l'appel de la méthode est_en_forme() pour l'objet c2?",
+      "Qu'affiche le programme lors de la dernière ligne (le dernier print)?"
+    ],
+    "consignes": [
+      "Pour la question 3, indiquez précisément ce qui est affiché à l'écran, y compris le texte et la valeur."
+    ],
+    "aide": "Suivez attentivement l'évolution de l'attribut 'fatigue' pour chaque objet séparément.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "sport",
+    "notions": [
+      "classes et objets"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-12T06:31:26.626Z"
+}

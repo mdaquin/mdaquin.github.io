@@ -1,0 +1,27 @@
+{
+  "type": "traduire",
+  "titre": "Somme des valeurs d'un arbre binaire",
+  "data": {
+    "titre": "Somme des valeurs d'un arbre binaire",
+    "contexte": "Dans un arbre binaire, chaque nœud contient une valeur numérique et possède des successeurs (enfants). On souhaite calculer la somme totale des valeurs contenues dans l'arbre.",
+    "enonce": "Traduisez l'algorithme suivant en Python afin de calculer la somme des valeurs de tous les nœuds d'un arbre.",
+    "algorithme": "Fonction SommeArbre(nœud) :\n  Entrée : nœud (un nœud ou None)\n  Sortie : la somme des valeurs\n  Début\n    Si nœud = None alors\n      Renvoyer 0\n    Sinon\n      somme ← 0\n      Pour chaque enfant dans successeurs(nœud) faire\n        somme ← somme + SommeArbre(enfant)\n      Fin\n      Renvoyer somme + nœud.valeur\n    Fin\n  Fin",
+    "consignes": [
+      "Écrivez une fonction nommée somme_arbre qui prend en paramètre un objet 'nœud'.",
+      "L'objet 'nœud' possède un attribut '.valeur' (un nombre) et un attribut '.successeurs' (une liste de nœuds).",
+      "La fonction doit renvoyer la somme des valeurs de l'arbre de manière récursive.",
+      "Testez votre fonction avec un arbre simple dont la racine a une valeur de 10 et un seul enfant qui a une valeur de 5."
+    ],
+    "aide": "En Python, la structure 'Pour chaque x dans L faire' se traduit par 'for x in L:'.",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "mathématiques",
+    "notions": [
+      "arbres"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T18:14:59.631Z"
+}

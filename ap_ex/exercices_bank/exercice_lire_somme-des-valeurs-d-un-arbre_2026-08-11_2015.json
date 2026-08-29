@@ -1,0 +1,29 @@
+{
+  "type": "lire",
+  "titre": "Somme des valeurs d'un arbre",
+  "data": {
+    "titre": "Somme des valeurs d'un arbre",
+    "contexte": "On étudie la structure d'un arbre de données où chaque nœud contient une valeur numérique.",
+    "enonce": "Un arbre est représenté par un objet possédant un attribut 'valeur' (un entier) et un attribut 'enfants' (une liste contenant d'autres arbres). Lire le programme suivant et répondre aux questions.",
+    "code_python": "class Noeud:\n    def __init__(self, valeur):\n        self.valeur = valeur\n        self.enfants = []\n\ndef somme_valeurs(noeud):\n    total = noeud.valeur\n    for enfant in noeud.enfants:\n        total = total + somme_valeurs(enfant)\n    return total\n\n# Construction de l'arbre\nracine = Noeud(10)\nfeuille_A = Noeud(5)\nfeuille_B = Noeud(3)\nracine.enfants.append(feuille_A)\nracine.enfants.append(feuille_B)\n\nprint(somme_valeurs(racine))",
+    "questions": [
+      "Quelle est la valeur renvoyée par l'appel `somme_valeurs(racine)`?",
+      "Si l'on ajoute un nouvel enfant à `feuille_A` avec la valeur 2 (via `feuille_A.enfants.append(Noeud(2))`), quelle sera la nouvelle valeur renvoyée par `somme_valeurs(racine)`?",
+      "Que renvoie la fonction si l'arbre ne contient que la racine (sans aucun enfant)?"
+    ],
+    "consignes": [
+      "Pour la question 1, détaillez l'étape de calcul pour chaque nœud."
+    ],
+    "aide": "Le programme utilise une fonction récursive : la fonction s'appelle elle-même sur chaque enfant pour additionner les valeurs de l'arbre.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "mathématiques",
+    "notions": [
+      "arbres"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T18:15:09.472Z"
+}

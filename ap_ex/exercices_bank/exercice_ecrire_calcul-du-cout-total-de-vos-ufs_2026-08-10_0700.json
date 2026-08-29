@@ -1,0 +1,38 @@
+{
+  "type": "ecrire",
+  "titre": "Calcul du coût total de vos œufs",
+  "data": {
+    "titre": "Calcul du coût total de vos œufs",
+    "contexte": "Vous travaillez dans une épicerie fine et vous devez préparer une commande de plusieurs boîtes d'œufs pour un client.",
+    "enonce": "Écrivez un algorithme qui calcule le prix total à payer par le client. Le prix est calculé en multipliant le nombre total d'œufs par le prix d'un seul œuf. L'algorithme doit demander au client combien de boîtes il souhaite acheter et le prix unitaire d'un œuf.",
+    "entrees": [
+      {
+        "nom": "nombre_de_boites",
+        "description": "le nombre entier de boîtes choisies par le client"
+      },
+      {
+        "nom": "prix_unitaire_oeuf",
+        "description": "le prix en euros d'un seul œuf"
+      }
+    ],
+    "sortie": "le montant total de la commande en euros",
+    "consignes": [
+      "rédiger l'algorithme en pseudo-code",
+      "utiliser les conventions d'écriture du cours (Entrée, Sortie, Début, Fin)"
+    ],
+    "aide": null,
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "cuisine",
+    "notions": [
+      "variables et affectation",
+      "opérations arithmétiques"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T05:00:17.261Z"
+}

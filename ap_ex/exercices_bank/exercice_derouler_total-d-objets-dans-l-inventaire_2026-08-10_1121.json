@@ -1,0 +1,31 @@
+{
+  "type": "derouler",
+  "titre": "Total d'objets dans l'inventaire",
+  "data": {
+    "titre": "Total d'objets dans l'inventaire",
+    "contexte": "Dans un jeu de rôle, l'inventaire du joueur est représenté par un dictionnaire associant chaque nom d'objet à sa quantité. L'algorithme ci-dessous calcule le nombre total d'objets portés.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de valeurs proposés, en indiquant la valeur de chaque variable à chaque tour de boucle.",
+    "algorithme": "Entrée : inventaire (dictionnaire)\nSortie : total (entier)\nDébut\n  total ← 0\n  Pour chaque qte dans Valeurs(inventaire) faire\n    total ← total + qte\n  Fin\n  Renvoyer total\nFin",
+    "cas": [
+      "inventaire = {\"potion\": 3, \"epee\": 1, \"bouclier\": 1}",
+      "inventaire = {}",
+      "inventaire = {\"cle\": 1}"
+    ],
+    "consignes": [
+      "Présenter le déroulement sous forme de tableau avec les colonnes : Tour, qte, total.",
+      "Indiquer la valeur finale renvoyée pour chaque cas."
+    ],
+    "aide": "Pensez à initialiser le tableau avec les valeurs avant la boucle (tour 0). Pour le dictionnaire vide, la boucle n'est jamais exécutée.",
+    "code_python": null,
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "jeux video",
+    "notions": [
+      "dictionnaires"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T09:21:49.888Z"
+}

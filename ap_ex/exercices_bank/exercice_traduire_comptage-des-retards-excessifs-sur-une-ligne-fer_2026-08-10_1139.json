@@ -1,0 +1,27 @@
+{
+  "type": "traduire",
+  "titre": "Comptage des retards excessifs sur une ligne ferroviaire",
+  "data": {
+    "titre": "Comptage des retards excessifs sur une ligne ferroviaire",
+    "contexte": "Cet algorithme détermine combien de tronçons d'une ligne de train accusent un retard supérieur à un seuil de tolérance, à partir des durées prévues et réelles.",
+    "enonce": "Traduisez l'algorithme ci-dessous en une fonction Python. Respectez scrupuleusement les noms de variables et la logique du pseudo-code.",
+    "algorithme": "Entrée : durées_prévues (liste d'entiers)\nEntrée : durées_réelles (liste d'entiers)\nEntrée : seuil_tolérance (entier)\nSortie : nb_retards_excessifs (entier)\nDébut\n  nb_retards_excessifs ← 0\n  Pour i de 0 à Longueur(durées_prévues) − 1 faire\n    retard ← durées_réelles[i] − durées_prévues[i]\n    Si retard > seuil_tolérance alors\n      nb_retards_excessifs ← nb_retards_excessifs + 1\n    Fin\n  Fin\n  Renvoyer nb_retards_excessifs\nFin",
+    "consignes": [
+      "Écrivez une fonction nommée `compter_retards_excessifs` qui prend trois paramètres : `durées_prévues` (list[int]), `durées_réelles` (list[int]) et `seuil_tolérance` (int).",
+      "La fonction doit retourner un entier (le nombre de tronçons en retard excessif).",
+      "Ajoutez un appel de test dans le script principal avec :\n  durées_prévues = [12, 8, 15, 10]\n  durées_réelles = [14, 8, 20, 11]\n  seuil_tolérance = 3\n  et affichez le résultat retourné."
+    ],
+    "aide": "La boucle « Pour i de 0 à Longueur(L) − 1 faire » se traduit par `for i in range(len(L)):`. L'accès à l'élément d'indice i s'écrit `L[i]`. La différence se calcule avec l'opérateur `-`.",
+    "code_python": null,
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "transports",
+    "notions": [
+      "listes / tableaux"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:39:39.635Z"
+}

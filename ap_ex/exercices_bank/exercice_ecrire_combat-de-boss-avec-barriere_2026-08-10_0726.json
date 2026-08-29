@@ -1,0 +1,43 @@
+{
+  "type": "ecrire",
+  "titre": "Combat de boss avec barrière",
+  "data": {
+    "titre": "Combat de boss avec barrière",
+    "contexte": "Dans un jeu de rôle, un joueur affronte un boss protégé par une barrière magique. La barrière absorbe les dégâts tant qu'elle n'est pas brisée. Le joueur porte des coups réguliers.",
+    "enonce": "Écrire un algorithme qui calcule le nombre de coups nécessaires pour vaincre le boss. La barrière a une résistance initiale, le boss a une vie initiale et chaque coup inflige un montant de dégâts fixe. Tant que la barrière a de la résistance (strictement positive), les dégâts la réduisent ; sinon, ils réduisent la vie du boss. L'algorithme affiche le nombre total de coups portés.",
+    "entrees": [
+      {
+        "nom": "resistance_barriere",
+        "description": "entier positif ou nul, points de résistance initiale de la barrière (ex: 10)"
+      },
+      {
+        "nom": "vie_boss",
+        "description": "entier strictement positif, points de vie initiale du boss (ex: 30)"
+      },
+      {
+        "nom": "degats_coup",
+        "description": "entier strictement positif, dégâts infligés par chaque coup (ex: 7)"
+      }
+    ],
+    "sortie": "entier, nombre de coups nécessaires pour réduire la vie du boss à 0 ou moins",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code selon les conventions du cours.",
+      "Utiliser une boucle non bornée (Tant que).",
+      "Utiliser une conditionnelle (Si ... Sinon ... Fin) à l'intérieur de la boucle pour gérer la barrière et la vie.",
+      "Utiliser des variables distinctes pour la résistance courante, la vie courante et le compteur de coups."
+    ],
+    "aide": "Initialiser les variables courantes avec les valeurs d'entrée avant la boucle ; la condition d'arrêt ne dépend que de la vie du boss.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "jeux video",
+    "notions": [
+      "boucle non bornée (Tant que)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T05:26:01.037Z"
+}

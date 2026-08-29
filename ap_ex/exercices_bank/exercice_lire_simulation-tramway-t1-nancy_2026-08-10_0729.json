@@ -1,0 +1,37 @@
+{
+  "type": "lire",
+  "titre": "Simulation tramway T1 Nancy",
+  "data": {
+    "titre": "Simulation tramway T1 Nancy",
+    "contexte": "On simule l'embarquement et le débarquement des voyageurs sur la ligne T1 du tramway de Nancy (arrêts Gare, Stanislas, Callot). La rame a une capacité maximale.",
+    "enonce": "Lire le programme Python ci-dessous et répondre aux questions sans l'exécuter.",
+    "code_python": "voyageurs = 0\ncapacite = 30\nfor arret in range(1, 4):\n    attente = 10\n    while voyageurs < capacite and attente > 0:\n        if arret == 2:\n            prioritaire = True\n        else:\n            prioritaire = False\n        if prioritaire:\n            voyageurs = voyageurs + 2\n            attente = attente - 2\n        else:\n            voyageurs = voyageurs + 1\n            attente = attente - 1\n    for porte in range(1, 3):\n        voyageurs = voyageurs - 3\nprint(voyageurs)",
+    "questions": [
+      "Quelle valeur le programme affiche-t-il à la fin ?",
+      "Combien de fois la boucle `while` s'exécute-t-elle au premier arrêt (arret = 1) ?",
+      "Que devient la variable `voyageurs` pendant l'exécution de la boucle `for porte` au deuxième arrêt ?",
+      "Cas particulier : si on initialise `capacite = 5`, quelle valeur est affichée ?"
+    ],
+    "consignes": [
+      "Répondre précisément pour chaque question.",
+      "Justifier en suivant l'évolution des variables `voyageurs` et `attente`."
+    ],
+    "aide": "Suivez pas à pas la valeur de `voyageurs` à chaque itération de la boucle principale `for arret`. Notez que `range(1, 4)` donne 1, 2, 3 et que `range(1, 3)` donne 1, 2.",
+    "algorithme": null,
+    "type": "lire"
+  },
+  "params": {
+    "domain": "ville de nancy",
+    "notions": [
+      "conditionnelle (Si / Sinon)",
+      "boucle bornée (Pour)",
+      "boucle non bornée (Tant que)",
+      "boucles imbriquées"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T05:29:48.489Z"
+}

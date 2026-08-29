@@ -1,0 +1,33 @@
+{
+  "type": "lire",
+  "titre": "Le trajet du TGV Est",
+  "data": {
+    "titre": "Le trajet du TGV Est",
+    "context": "Un contrôleur de train souhaite calculer la distance parcourue par un train circulant entre Strasbourg et Metz en fonction du nombre de stations traversées.",
+    "enonce": "Voici un programme Python qui calcule la distance totale parcourue par un train. Lisez attentivement le code et répondez aux questions.",
+    "code_python": "def calculer_distance(nombre_stations):\n    distance_totale = 0\n    for i de 1 à nombre_stations faire:\n        distance_totale = distance_totale + 15\n    \n    si distance_totale > 50 alors\n        distance_totale = distance_totale + 10\n    sinon\n        distance_totale = distance_totale + 5\n    fin\n    \n    return distance_totale",
+    "questions": [
+      "Quelle est la valeur renvoyée par la fonction si nombre_stations vaut 3?",
+      "Quelle est la valeur renvoyée par la fonction si nombre_stations vaut 2?",
+      "Que se passe-t-il pour la variable distance_totale si nombre_stations vaut 0?"
+    ],
+    "consignes": [
+      "Détaillez vos étapes de calcul pour chaque question."
+    ],
+    "aide": "Faites bien attention au calcul à l'intérieur de la boucle 'Pour', puis n'oubliez pas de vérifier la condition 'Si' une fois que la boucle est terminée.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "la région Grand-Est",
+    "notions": [
+      "variables et affectation",
+      "conditionnelle (Si / Sinon)",
+      "boucle bornée (Pour)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-09T08:17:09.433Z"
+}

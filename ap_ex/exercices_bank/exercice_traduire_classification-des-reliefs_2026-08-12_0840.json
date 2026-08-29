@@ -1,0 +1,27 @@
+{
+  "type": "traduire",
+  "titre": "Classification des reliefs",
+  "data": {
+    "titre": "Classification des reliefs",
+    "contexte": "En géographie, on classe les reliefs selon leur altitude. On utilise ici l'héritage pour différencier les plaines des montagnes.",
+    "enonce": "Traduisez l'algorithme suivant en Python en respectant les structures de classes et l'utilisation de l'héritage.",
+    "algorithme": "Classe Relief\n  Attributs:\n    nom, altitude\n  Constructeur(n, a):\n    nom ← n\n    altitude ← a\n  Méthode afficher_nom()\n    Afficher \"Le relief nommé est :\", self.nom\n  Fin\nFin\n\nClasse Montagne(Relief)\n  Attributs:\n    altitude_sommet\n  Constructeur(n, a, s):\n    super.Constructeur(n, a)\n    altitude_sommet ← s\n  Fin\nFin",
+    "consignes": [
+      "Créez la classe 'Relief' avec un constructeur prenant deux paramètres.",
+      "Créez la classe 'Montagne' qui hérite de 'Relief'. Son constructeur doit utiliser 'uper()' pour initialiser le nom et l'altitude, puis ajouter l'attribut 'altitude_sommet'.",
+      "Écrivez un script de test qui crée un objet de la classe 'Montagne' nommé 'ontagne_test' avec le nom 'Mont Blanc', une altitude de 4807 et un sommet de 4807.",
+      "Appelez la méthode 'afficher_nom' sur l'objet 'ontagne_test' pour vérifier l'héritage."
+    ],
+    "aide": "L'instruction 'uper().__init__(...)' permet d'appeler le constructeur de la classe parente dans le constructeur de la classe enfant.",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "géographie",
+    "notions": [
+      "héritage entre classes"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-12T06:40:06.387Z"
+}

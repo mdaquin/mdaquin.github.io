@@ -1,0 +1,31 @@
+{
+  "type": "derouler",
+  "titre": "Charge maximale d'un bus",
+  "data": {
+    "titre": "Charge maximale d'un bus",
+    "contexte": "Un système embarqué enregistre à chaque arrêt le nombre de montées et de descentes. L'algorithme détermine la plus forte charge atteinte en cours de trajet.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de valeurs proposés, en indiquant la valeur de chaque variable à chaque tour de boucle.",
+    "algorithme": "Entrée : arrets (liste de listes d'entiers [montants, descendants])\nSortie : max_charge (entier)\nDébut\n  charge ← 0\n  max_charge ← 0\n  Pour chaque arret dans arrets faire\n    montants ← arret[0]\n    descendants ← arret[1]\n    charge ← charge + montants - descendants\n    Si charge > max_charge alors\n      max_charge ← charge\n    Fin\n  Fin\n  Renvoyer max_charge\nFin",
+    "cas": [
+      "arrets = [[10, 0], [5, 3], [8, 10], [2, 1]]",
+      "arrets = [[5, 2]]",
+      "arrets = []"
+    ],
+    "consignes": [
+      "Pour chaque cas, présenter un tableau de suivi des variables charge et max_charge à chaque itération de la boucle, et indiquer la valeur finale renvoyée."
+    ],
+    "aide": "Initialiser un tableau avec les colonnes : Itération, montants, descendants, charge, max_charge. Ne pas oublier l'état initial avant la première itération.",
+    "code_python": null,
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "transports",
+    "notions": [
+      "listes / tableaux", 
+      "listes de listes (matrices)"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:39:06.743Z"
+}

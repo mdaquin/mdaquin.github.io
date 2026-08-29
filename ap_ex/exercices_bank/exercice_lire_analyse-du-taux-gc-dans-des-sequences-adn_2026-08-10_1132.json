@@ -1,0 +1,31 @@
+{
+  "type": "lire",
+  "titre": "Analyse du taux GC dans des séquences ADN",
+  "data": {
+    "titre": "Analyse du taux GC dans des séquences ADN",
+    "contexte": "En biologie moléculaire, le taux GC (proportion de bases guanine G et cytosine C) d'une séquence d'ADN influence sa stabilité thermique. On souhaite identifier les séquences riches en GC parmi un échantillon.",
+    "enonce": "Lire le programme Python suivant et indiquer ce qu'il affiche.",
+    "code_python": "def calculer_taux_gc(brin: str) -> float:\n    compte_gc = 0\n    for base in brin:\n        if base == 'G' or base == 'C':\n            compte_gc = compte_gc + 1\n    return compte_gc / len(brin)\n\ndef est_riche_en_gc(brin: str) -> bool:\n    taux = calculer_taux_gc(brin)\n    return taux >= 0.5\n\nsequences = [\"ATGC\", \"GGCC\", \"AAAA\", \"GCGC\"]\ncompteur = 0\nfor seq in sequences:\n    if est_riche_en_gc(seq):\n        compteur = compteur + 1\nprint(compteur)",
+    "questions": [
+      "Que renvoie l'appel `calculer_taux_gc(\"AGCT\")` ?",
+      "Que renvoie l'appel `est_riche_en_gc(\"AAAA\")` ?",
+      "Qu'affiche le programme complet lors de son exécution ?"
+    ],
+    "consignes": [
+      "Donner la valeur numérique exacte pour la première question.",
+      "Répondre `True` ou `False` pour la deuxième question.",
+      "Indiquer l'entier affiché pour la troisième question."
+    ],
+    "aide": "Suivez l'exécution pas à pas : pour chaque séquence de la liste, la fonction `est_riche_en_gc` est appelée, elle-même appelle `calculer_taux_gc`, et le résultat détermine si `compteur` est incrémenté.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "biologie",
+    "notions": [
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:32:27.523Z"
+}

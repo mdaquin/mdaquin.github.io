@@ -1,0 +1,34 @@
+{
+  "type": "derouler",
+  "titre": "Détection de notes répétées",
+  "data": {
+    "titre": "Détection de notes répétées",
+    "contexte": "Un musicien souhaite vérifier si une courte séquence de notes contient une note identique à une note de référence pour savoir s'il peut répéter un motif.",
+    "enonce": "Déroulez l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque tour de boucle, notez la valeur des variables pour suivre l'évolution de l'algorithme.",
+    "algorithme": "Entrée :\n  nombre_de_notes\n  note_cible\n  premiere_note\n  deuxieme_note\n  troisieme_note\nSortie :\n  resultat\nDébut\n  resultat ← 0\n  Pour i de 1 à nombre_de_notes faire\n    Si i = 1 alors\n      note_actuelle ← premiere_note\n    Sinon\n      Si i = 2 alors\n        note_actuelle ← deuxieme_note\n      Sinon\n        note_actuelle ← troisieme_note\n      Fin\n    Fin\n    Si note_actuelle = note_cible alors\n      resultat ← 1\n    Fin\n  Fin\n  Renvoyer resultat\nFin",
+    "cas": [
+      "nombre_de_notes = 3, note_cible = 42, premiere_note = 10, deuxieme_note = 20, troisieme_note = 42",
+      "nombre_de_notes = 2, note_cible = 15, premiere_note = 15, deuxieme_note = 5",
+      "nombre_de_notes = 3, note_cible = 50, premiere_note = 1, deuxieme_note = 2, troisieme_note = 3"
+    ],
+    "consignes": [
+      "Utilisez un tableau de suivi pour noter l'évolution de 'esultat' et de 'note_actuelle' à chaque étape.",
+      "Faites bien attention au moment où la boucle s'arrête."
+    ],
+    "aide": "N'oubliez pas que la variable 'esultat' peut changer de valeur au cours de l'exécution.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "musique",
+    "notions": [
+      "variables et affectation",
+      "conditionnelle (Si / Sinon)",
+      "boucle bornée (Pour)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-09T09:30:11.443Z"
+}

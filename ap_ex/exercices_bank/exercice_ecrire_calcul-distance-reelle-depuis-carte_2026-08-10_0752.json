@@ -1,0 +1,39 @@
+{
+  "type": "ecrire",
+  "titre": "Calcul distance réelle depuis carte",
+  "data": {
+    "titre": "Calcul distance réelle depuis carte",
+    "contexte": "Un randonneur prépare son itinéraire en mesurant la distance entre deux villages sur une carte papier.",
+    "enonce": "L'algorithme demande la distance mesurée sur la carte en centimètres et le dénominateur de l'échelle (par exemple 25000 pour une échelle 1/25000). Il calcule la distance réelle au sol en kilomètres et l'affiche.",
+    "entrees": [
+      {
+        "nom": "distance_carte",
+        "description": "distance mesurée sur la carte en centimètres, nombre réel positif"
+      },
+      {
+        "nom": "denominateur_echelle",
+        "description": "dénominateur de l'échelle de la carte, entier positif (exemple : 25000 pour 1/25000)"
+      }
+    ],
+    "sortie": "distance réelle au sol en kilomètres, nombre réel",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code selon les conventions du cours.",
+      "Utiliser les mots-clés Entrée, Sortie, Début, Fin, Afficher et l'affectation ←."
+    ],
+    "aide": "Rappel : 1 kilomètre = 100 000 centimètres. La distance réelle en cm vaut distance_carte × denominateur_echelle.",
+    "algorithme": null,
+    "code_python": null,
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "géographie",
+    "notions": [
+      "entrées / sorties"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T05:52:18.744Z"
+}

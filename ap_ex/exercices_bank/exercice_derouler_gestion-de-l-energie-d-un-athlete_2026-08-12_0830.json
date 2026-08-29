@@ -1,0 +1,30 @@
+{
+  "type": "derouler",
+  "titre": "Gestion de l'énergie d'un athlète",
+  "data": {
+    "titre": "Gestion de l'énergie d'un athlète",
+    "contexte": "Un entraîneur utilise un programme pour suivre l'état de fatigue et l'énergie de ses athlètes après chaque série d'exercices.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque étape, indiquez la valeur de l'énergie de chaque athlète après l'exécution de la méthode appelée.",
+    "algorithme": "Classe Athlète\n  Attributs:\n    nom, le nom de l'athlète\n    energie, le niveau d'énergie actuel (en %)\n  Constructeur(n, e):\n    nom ← n\n    energie ← e\n  Méthode s'entraîner(intensite):\n    Si intensite < 10 alors\n      energie ← energie + 5\n    Sinon\n      energie ← energie - intensite\n    Fin\n    \n  Méthode etat_forme():\n    Si energie > 50 alors\n      Renvoyer \"En forme\"\n    Sinon\n      Renvoyer \"Fatigué\"\n    Fin\n  Fin\nFin\n\nAlgorithme Suivi_Entrainement\nEntrée:\n  L, la liste des intensités des exercices\nSortie:\n  Rien\nDébut\n  A1 ← nouveau Athlète(\"Alice\", 80)\n  A2 ← nouveau Athlète(\"Bob\", 45)\n  Pour chaque i dans L faire\n    A1.s'entraîner(i)\n    A2.s'entraîner(i)\n  Fin\nFin",
+    "cas": [
+      "L = [15, 20]",
+      "L = [5, 5, 5]",
+      "L = [100]"
+    ],
+    "consignes": [
+      "Pour chaque valeur de l'intensité dans la liste L, suivez l'évolution de l'attribut 'energie' de l'objet A1 et de l'objet A2.",
+      "Notez bien si l'état de l'un influence l'autre."
+    ],
+    "aide": "Utilisez un tableau pour suivre l'évolution de l'attribut 'energie' pour A1 et A2 séparément à chaque étape de la boucle.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "sport",
+    "notions": [
+      "classes et objets"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-12T06:30:58.081Z"
+}

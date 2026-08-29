@@ -1,0 +1,24 @@
+{
+  "type": "traduire",
+  "titre": "Département le plus arrosé du Grand Est",
+  "data": {
+    "titre": "Département le plus arrosé du Grand Est",
+    "contexte": "Cet algorithme détermine quel département de la région Grand Est a reçu la pluviométrie totale la plus élevée sur une période donnée, à partir d'une matrice de relevés mensuels.",
+    "enonce": "Traduisez l'algorithme ci-dessous en une fonction Python nommée `departement_max_pluie` qui prend en paramètre une matrice (liste de listes) de nombres réels et renvoie l'indice (entier) du département ayant la pluviométrie totale maximale. Écrivez également un appel de test avec une matrice d'exemple.",
+    "algorithme": "Entrée : M (matrice de réels) // M[i][j] pluviométrie du département i au mois j\nSortie : idxMax (entier) // indice du département ayant la pluviométrie totale maximale\nDébut\n  nbDep ← Longueur(M)\n  nbMois ← Longueur(M[0])\n  maxVal ← -1\n  idxMax ← -1\n  Pour i de 0 à nbDep - 1 faire\n    somme ← 0\n    Pour j de 0 à nbMois - 1 faire\n      somme ← somme + M[i][j]\n    Fin\n    Si somme > maxVal alors\n      maxVal ← somme\n      idxMax ← i\n    Fin\n  Fin\n  Renvoyer idxMax\nFin",
+    "consignes": [
+      "La fonction doit s'appeler departement_max_pluie, accepter un unique paramètre matrice (list[list[float]]) et retourner un int. Ajoutez à la fin du script un appel de test, par exemple : print(departement_max_pluie([[10,20,15],[5,25,30],[12,8,18]]))"
+    ],
+    "aide": "Rappel : « Pour i de 0 à n-1 faire » se traduit par `for i in range(n):` ; « Longueur(L) » par `len(L)` ; « Ajouter(L, x) » par `L.append(x)` ; les indices commencent à 0.",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "la région Grand-Est",
+    "notions": [
+      "listes de listes (matrices)"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:18:21.764Z"
+}

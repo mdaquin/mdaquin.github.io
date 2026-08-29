@@ -1,0 +1,37 @@
+{
+  "type": "ecrire",
+  "titre": "Compter les voyelles d'un mot",
+  "data": {
+    "titre": "Compter les voyelles d'un mot",
+    "contexte": "Un linguiste amateur souhaite analyser la structure phonétique de mots isolés en comptant leurs voyelles.",
+    "enonce": "Écrire un algorithme qui lit un mot saisi au clavier, compte combien de voyelles (a, e, i, o, u, y) il contient, puis affiche ce nombre. On considère que le mot est saisi en minuscules sans accent ni espace.",
+    "entrees": [
+      {
+        "nom": "mot",
+        "description": "chaîne de caractères non vide, en minuscules, sans accent ni espace, représentant le mot à analyser"
+      }
+    ],
+    "sortie": "un entier représentant le nombre de voyelles présentes dans le mot",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code selon les conventions du cours.",
+      "Utiliser une boucle bornée pour parcourir chaque caractère du mot.",
+      "Utiliser une variable compteur initialisée à 0.",
+      "Utiliser une structure conditionnelle pour tester si le caractère courant est une voyelle."
+    ],
+    "aide": "Parcourez le mot caractère par caractère ; pour chaque caractère, vérifiez s'il appartient à l'ensemble des voyelles.",
+    "algorithme": null,
+    "code_python": null,
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "linguistique",
+    "notions": [
+       "listes / tableaux", 
+       "boucle bornée (Pour)",
+       "conditionnelle (Si / Sinon)"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T08:47:08.205Z"
+}

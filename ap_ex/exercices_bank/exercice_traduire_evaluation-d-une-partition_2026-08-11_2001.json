@@ -1,0 +1,28 @@
+{
+  "type": "traduire",
+  "titre": "Évaluation d'une partition",
+  "data": {
+    "titre": "Évaluation d'une partition",
+    "contexte": "On souhaite mesurer la force d'une séquence de notes en sommant leurs intensités, mais de manière récursive.",
+    "enonce": "Traduisez l'algorithme de calcul de la puissance totale d'une séquence de notes en langage Python.",
+    "algorithme": "Fonction PuissanceSequence(notes) :\n  Entrée :\n    notes : liste d'entiers représentant l'intensité de chaque note\n  Sortie :\n    La somme des intensités\n  Début\n    Si Longueur(notes) = 0 alors\n      Renvoyer 0\n    Sinon\n      Somme_restante ← PuissanceSequence(notes sans son premier élément)\n      Renvoyer notes[0] + Somme_restante\n    Fin\n  Fin",
+    "consignes": [
+      "Nommez la fonction : calculer_puissance",
+      "La fonction prend un paramètre nommé 'notes' (une liste d'entiers).",
+      "La fonction doit renvoyer un entier.",
+      "Utilisez la récursion : la fonction doit s'appeler elle-même pour traiter le reste de la liste.",
+      "Écrivez une ligne de test à la fin pour appeler la fonction avec la liste [80, 95, 70] et afficher le résultat avec print()."
+    ],
+    "aide": "En Python, pour obtenir la partie de la liste sans le premier élément, vous pouvez utiliser la notation avec les tranches (slicing).",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "musique",
+    "notions": [
+      "récursivité"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T18:01:54.852Z"
+}

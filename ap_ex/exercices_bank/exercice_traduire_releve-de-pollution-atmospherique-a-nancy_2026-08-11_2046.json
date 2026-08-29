@@ -1,0 +1,28 @@
+{
+  "type": "traduire",
+  "titre": "Relevé de pollution atmosphérique à Nancy",
+  "data": {
+    "titre": "Relevé de pollution atmosphérique à Nancy",
+    "contexte": "La ville de Nancy dispose de capteurs de pollution répartis dans différents quartiers. On souhaite calculer la concentration totale de particules fines sur une zone spécifique en utilisant les données récoltées par plusieurs stations.",
+    "enonce": "Traduisez l'algorithme de calcul de la somme des mesures de pollution en Python. Votre code doit utiliser la récursivité pour parcourir les relevés et ne doit contenir aucune boucle.",
+    "algorithme": "Fonction SommeReleves(grille_mesures, i)\n  Entrée : \n    grille_mesures : liste de listes de nombres\n    i : indice de la ligne actuelle\n  Sortie : \n    somme totale des mesures de la ligne i\n  Début\n    Si i = Longueur(grille_mesures) alors\n      Renvoyer 0\n    Sinon\n      somme_ligne ← 0\n      Pour chaque valeur dans grille_mesures[i] faire\n        somme_ligne ← somme_ligne + valeur\n      Fin\n      Renvoyer somme_ligne + SommeReleves(grille_mesures, i + 1)\n    Fin\n  Fin",
+    "consignes": [
+      "Nommer la fonction : somme_pollution",
+      "La fonction doit prendre deux paramètres : une liste de listes (la matrice des mesures) et un entier (l'indice de la ligne en cours).",
+      "La fonction doit renvoyer la somme de toutes les valeurs contenues dans les listes de la matrice.",
+      "Écrire un appel de test avec une matrice de 3 lignes et 2 colonnes pour vérifier votre code."
+    ],
+    "aide": "Rappel : l'accès à une ligne entière d'une matrice s'effectue avec un seul indice, par exemple M[i].",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "ville de nancy",
+    "notions": [
+      "listes de listes (matrices)",
+      "récursivité"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-11T18:46:10.511Z"
+}

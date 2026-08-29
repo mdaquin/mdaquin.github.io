@@ -1,0 +1,34 @@
+{
+  "type": "derouler",
+  "titre": "Le décompte des commerçants de Reims",
+  "data": {
+    "titre": "Le décompte des commerçants de Reims",
+    "contexte": "Un agent municipal souhaite compter combien de boutiques de la ville ont un chiffre d'affaires supérieur à un certain seuil pour préparer une enquête économique.",
+    "enonce": "Déroulez l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque tour de la boucle, notez la valeur des variables affichées dans un tableau de suivi.",
+    "algorithme": "Entrée :\n  nombre_boutiques\n  seuil_minimum\n  chiffre_affaires_boutique\nSortie:\n  compteur\nDébut\n  compteur ← 0\n  Pour i de 1 à nombre_boutiques faire\n    Si chiffre_affaires_boutique > seuil_minimum alors\n      compteur ← compteur + 1\n    Sinon\n      rien\n    Fin\n  Fin\n  Renvoyer compteur\nFin",
+    "cas": [
+      "nombre_boutiques = 3, seuil_minimum = 100, chiffre_affaires_boutique = 150",
+      "nombre_boutiques = 4, seuil_minimum = 50, chiffre_affaires_affaires_boutique = 20",
+      "nombre_boutiques = 0, seuil_minimum = 10, chiffre_affaires_boutique = 50"
+    ],
+    "consignes": [
+      "Notez la valeur de la variable 'compteur' après chaque passage dans la boucle.",
+      "Précisez la valeur finale renvoyée par l'algorithme pour chaque cas."
+    ],
+    "aide": "Pour ne pas vous tromper, dessinez un tableau avec une colonne pour chaque variable et une ligne pour chaque itération de la boucle.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "la région Grand-Est",
+    "notions": [
+      "variables et affectation",
+      "conditionnelle (Si / Sinon)",
+      "boucle bornée (Pour)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-09T09:27:59.619Z"
+}

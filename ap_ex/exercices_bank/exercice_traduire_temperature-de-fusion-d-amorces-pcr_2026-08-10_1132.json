@@ -1,0 +1,26 @@
+{
+  "type": "traduire",
+  "titre": "Température de fusion d'amorces PCR",
+  "data": {
+    "titre": "Température de fusion d'amorces PCR",
+    "contexte": "Cet algorithme calcule la température de fusion (Tm) approximative de plusieurs courtes séquences d'ADN (amorces) utilisées en PCR, selon la formule simplifiée Tm = 4×(G+C) + 2×(A+T).",
+    "enonce": "Traduire l'algorithme suivant en Python. Écrire deux fonctions distinctes : `compter_gc` et `calculer_tm`, puis le programme principal qui les utilise.",
+    "algorithme": "Fonction CompterGC(brin) :\n  compteur ← 0\n  Pour chaque base dans brin faire\n    Si base = 'G' OU base = 'C' alors\n      compteur ← compteur + 1\n    Fin\n  Fin\n  Renvoyer compteur\nFin\n\nFonction CalculerTM(sequence) :\n  nb_gc ← CompterGC(sequence)\n  longueur ← Longueur(sequence)\n  nb_at ← longueur - nb_gc\n  tm ← 4 × nb_gc + 2 × nb_at\n  Renvoyer tm\nFin\n\nDébut\n  amorces ← [\"ATGC\", \"GGCC\", \"AAAA\", \"ATAT\" ]\n  Pour i de 0 à Longueur(amorces) - 1 faire\n    seq ← amorces[i]\n    temperature ← CalculerTM(seq)\n    Afficher \"Amorce \" , i , \" : Tm = \" , temperature , \"°C\"\n  Fin\nFin",
+    "consignes": [
+      "La fonction `compter_gc(brin)` prend une chaîne de caractères et renvoie le nombre de 'G' et 'C'.",
+      "La fonction `calculer_tm(sequence)` appelle `compter_gc`, calcule la Tm selon la formule et renvoie l'entier résultat.",
+      "Le programme principal définit la liste `amorces`, parcourt ses indices, appelle `calculer_tm` pour chaque séquence et affiche le résultat formaté."
+    ],
+    "aide": "Pour parcourir les indices d'une liste en Python : `for i in range(len(liste)):`. Pour parcourir les caractères d'une chaîne : `for base in chaine:`. La longueur s'obtient avec `len(chaine)`.",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "biologie",
+    "notions": [
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:32:12.632Z"
+}

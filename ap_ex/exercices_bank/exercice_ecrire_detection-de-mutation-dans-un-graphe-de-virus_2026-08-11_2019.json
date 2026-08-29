@@ -1,0 +1,40 @@
+{
+  "type": "ecrire",
+  "titre": "Détection de mutation dans un graphe de virus",
+  "data": {
+    "titre": "Détection de mutation dans un graphe de virus",
+    "contexte": "Dans un réseau de transmission virale, chaque nœud représente un patient et chaque arc représente une contamination directe entre deux individus. On souhaite surveiller si une variante spécifique est présente dans une chaîne de transmission.",
+    "enonce": "Écrire un algorithme qui vérifie si un patient spécifique (appelé 'patient_cible') est directement relié à au moins un patient porteur d'une mutation particulière. L'algorithme doit parcourir les connexions du patient cible et vérifier si l'un de ses voisins possède la mutation.",
+    "entrees": [
+      {
+        "nom": "graphe_contaminations",
+        "description": "Un graphe représentant les liens de transmission entre patients"
+      },
+      {
+        "nom": "patient_cible",
+        "description": "L'identifiant du patient dont on étudie les contacts"
+      },
+      {
+        "nom": "patients_mutés",
+        "description": "Une liste contenant les identifiants de tous les patients porteurs de la mutation"
+      }
+    ],
+    "sortie": "Une valeur booléenne (Vrai si le patient cible est relié à un patient muté, Faux sinon)",
+    "consignes": [
+      "Rédiger l'algorithme en pseudo-code en respectant les conventions du cours",
+      "Utiliser une boucle pour parcourir les successeurs du patient cible",
+      "Utiliser la notion d'appartenance pour vérifier la présence de la mutation"
+    ],
+    "aide": "Pour savoir si un voisin est muté, vérifiez si son identifiant est présent dans la liste des patients mutés.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "biologie",
+    "notions": [
+      "graphes"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T18:19:56.439Z"
+}

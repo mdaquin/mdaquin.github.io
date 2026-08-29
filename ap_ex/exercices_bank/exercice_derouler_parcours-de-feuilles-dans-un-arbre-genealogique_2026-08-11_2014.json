@@ -1,0 +1,30 @@
+{
+  "type": "derouler",
+  "titre": "Parcours de feuilles dans un arbre généalogique",
+  "data": {
+    "titre": "Parcours de feuilles dans un arbre généalogique",
+    "contexte": "Dans un arbre, une feuille est un nœud qui n'a aucun successeur.",
+    "enonce": "Dérouler l'algorithme suivant pour chacun des jeux de données proposés. Pour chaque étape, notez l'état des variables demandées.",
+    "algorithme": "Fonction CompterFeuilles(nœud)\n  Début\n    compteur ← 0\n    Pour chaque enfant de nœud faire\n      Si enfant est une feuille alors\n        compteur ← compteur + 1\n      Sinon\n        compteur ← compteur + CompterFeuilles(enfant)\n      Fin\n    Fin\n    Renvoyer compteur\n  Fin",
+    "cas": [
+      "L'arbre est un seul nœud (la racine n'a pas de successeurs).",
+      "L'arbre est composé d'une racine ayant deux successeurs : le premier est une feuille, le second a lui-même un seul successeur qui est une feuille.",
+      "L'arbre est composé d'une racine ayant trois successeurs, chacun étant une feuille."
+    ],
+    "consignes": [
+      "Pour les arbres complexes, suivez bien l'ordre des successeurs.",
+      "Indiquez la valeur de la variable 'compteur' à chaque fois qu'elle est modifiée."
+    ],
+    "aide": "Utilisez un schéma pour représenter l'arbre et notez les appels de fonctions pour ne pas perdre le fil du parcours.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "mathématiques",
+    "notions": [
+      "arbres"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T18:14:53.465Z"
+}

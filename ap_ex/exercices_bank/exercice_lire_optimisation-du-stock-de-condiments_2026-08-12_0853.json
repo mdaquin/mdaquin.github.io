@@ -1,0 +1,32 @@
+{
+  "type": "lire",
+  "titre": "Optimisation du stock de condiments",
+  "data": {
+    "titre": "Optimisation du stock de condiments",
+    "context": "Un chef de cuisine veut vérifier rapidement la présence d'un ingrédient spécifique dans son inventaire pour préparer une recette.",
+    "enonce": "Soit le programme Python suivant qui traite un dictionnaire représentant le stock de condiments (le nom du condiment est la clé, et sa quantité en grammes est la valeur). Lire le code et répondre aux questions.",
+    "code_python": "def verifier_stock(inventaire, ingrédient_cible):\n    compteur_recherches = 0\n    trouve = False\n    \n    for nom, quantite in inventaire.items():\n        compteur_recherches += 1\n        if nom == ingrédient_cible:\n            if quantite > 0:\n                trouve = True\n                break\n            else:\n                trouve = False\n                break\n        elif nom == ingrédient_cible:\n            trouve = False\n            break\n            \n    return trouve, compteur_recherches\n\n# Test du programme\nmon_stock = {\n    \"sel\": 500,\n    \"poivre\": 200,\n    \"paprika\": 0,\n    \"curcuma\": 150,\n    \"cumin\": 300\n}\n\nresultat, nb_actions = verifier_stock(mon_stock, \"paprika\")\nprint(f\"Trouvé : {resultat}, Actions : {nb_actions}\")\n\nresultat_sel, nb_actions_sel = verifier_stock(mon_stock, \"sel\")\nprint(f\"Trouvé : {resultat_sel}, Actions : {nb_actions_sel}\")",
+    "questions": [
+      "Que renvoie et qu'affiche l'exécution du programme avec l'ingrédient \"paprika\"?",
+      "Que renvoie et qu'affiche l'exécution du programme avec l'ingrédient \"sel\"?",
+      "En considérant n comme le nombre d'éléments dans le dictionnaire, quel est le nombre maximum de tours de boucle effectués (pire cas)?",
+      "Quelle est la classe de complexité algorithmique de la fonction verifier_stock par rapport à n?"
+    ],
+    "consignes": [
+      "Pour les questions de complexité, choisissez parmi : O(1), O(log n), O(n), O(n log n), O(n²).",
+      "Distinguez bien le nombre d'actions (comparaisons/itérations) pour le cas où l'élément est au début et pour le cas où il est absent ou à la fin."
+    ],
+    "aide": "Attention à l'instruction 'break' qui interrompt la boucle dès qu'une condition est remplie.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "cuisine",
+    "notions": [
+      "dictionnaires",
+      "complexité algorithmique"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-12T06:53:51.521Z"
+}

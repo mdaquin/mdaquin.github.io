@@ -1,0 +1,31 @@
+{
+  "type": "lire",
+  "titre": "Analyse de réseau de transport à Nancy",
+  "data": {
+    "titre": "Analyse de réseau de transport à Nancy",
+    "concontext": "Un ingénieur de la ville de Nancy modélise l'enchaînement de stations de tramway à l'aide d'une matrice de connexions et d'une fonction récursive pour calculer l'importance de certains trajets.",
+    "enonce": "Étudiez le programme Python suivant et répondez aux questions.",
+    "code_python": "def calculer_poids_trajet(matrice_connexions, station_actuelle):\n    # Cas d'arrêt : si la station n'existe pas dans la matrice\n    if station_actuelle >= len(matrice_connexions):\n        return 0\n    \n    # Cas général : poids de la station actuelle + poids de la station suivante\n    # La station suivante est définie par la valeur stockée dans la matrice\n    prochaine_station = matrice_connexions[station_actuelle][0]\n    \n    if prochaine_station == station_actuelle:\n        return 1\n    else:\n        return 1 + calculer_poids_trajet(matrice_connions, prochaine_station)\n\n# Matrice représentant les connexions entre les stations\n# Chaque ligne i contient la station suivante connectée à la station i\n# M[i][0] est la destination depuis la station i\nreseau_nancy = [\n    [1, 0],  # Station 0 connectée à la station 1\n    [2, 0],  # Station 1 connectée à la station 2\n    [0, 0],  # Station 2 est une station terminale (boucle sur elle-même)\n    [1, 0]   # Station 3 connectée à la station 1\n]\n\n# On s'intéresse aux trajets partant des stations 0 et 3\nprint(calculer_poids_trajet(reseau_nancy, 0))\nprint(calculer_poids_trajet(reseau_nancy, 3))",
+    "questions": [
+      "Que renvoie l'appel `calculer_poids_trajet(reseau_nancy, 2)`?",
+      "Que renvoie l'appel `calculer_poids_trajet(reseau_nancy, 0)`?",
+      "Que renvoie l'appel `calculer_poids_trajet(reseau_nancy, 3)`?"
+    ],
+    "consignes": [
+      "Donnez la valeur numérique exacte renvoyée par chaque appel.",
+      "Pour les questions sur les appels récursifs, détaillez mentalement les étapes de l'empilement des appels."
+    ],
+    "aide": "Faites attention à la différence entre l'index de la ligne (la station de départ) et la valeur située dans la première colonne `M[i][0]` qui représente la destination.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "ville de nancy",
+    "notions": [
+      "listes de listes (matrices)",
+      "récursivité"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-11T18:44:48.870Z"
+}

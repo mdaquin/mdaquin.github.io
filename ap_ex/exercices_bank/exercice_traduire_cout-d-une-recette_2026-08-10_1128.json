@@ -1,0 +1,24 @@
+{
+  "type": "traduire",
+  "titre": "Coût d'une recette",
+  "data": {
+    "titre": "Coût d'une recette",
+    "contexte": "Calculer le coût total d'une recette en additionnant le coût de chaque ingrédient (quantité × prix unitaire).",
+    "enonce": "Traduire l'algorithme suivant en Python. Écrire une fonction CalculerCoutIngredient(quantite, prix_unitaire) qui renvoie le coût d'un ingrédient. Dans le programme principal, définir les listes quantites et prix_unitaires, calculer le total en appelant la fonction dans une boucle, puis afficher le résultat.",
+    "algorithme": "Fonction CalculerCoutIngredient(quantite, prix_unitaire) :\n  Renvoyer quantite × prix_unitaire\nFin\n\nEntrée :\nSortie :\nDébut\n  quantites ← [250, 200, 100]\n  prix_unitaires ← [0.02, 0.015, 0.03]\n  total ← 0\n  Pour i de 0 à Longueur(quantites) − 1 faire\n    cout ← CalculerCoutIngredient(quantites[i], prix_unitaires[i])\n    total ← total + cout\n  Fin\n  Afficher \"Coût total de la recette :\", total\nFin",
+    "consignes": [
+      "La fonction doit s'appeler CalculerCoutIngredient et prendre deux paramètres (quantite, prix_unitaire). Elle doit renvoyer le produit des deux arguments. Le programme principal doit initialiser les deux listes, itérer sur les indices avec range(len(...)), appeler la fonction pour chaque ingrédient, accumuler le total dans une variable et l'afficher avec print."
+    ],
+    "aide": "Pour i de 0 à Longueur(L) − 1 se traduit par for i in range(len(L)):. L'affectation utilise =. La multiplication utilise *. Les listes se créent avec des crochets []. L'affichage de plusieurs valeurs se fait avec print(\"Texte\", variable).",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "cuisine",
+    "notions": [
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T09:28:21.849Z"
+}

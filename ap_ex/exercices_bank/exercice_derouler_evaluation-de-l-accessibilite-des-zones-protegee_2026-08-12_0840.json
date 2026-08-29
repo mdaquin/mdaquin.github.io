@@ -1,0 +1,30 @@
+{
+  "type": "derouler",
+  "titre": "Évaluation de l'accessibilité des zones protégées",
+  "data": {
+    "titre": "Évaluation de l'accessibilité des zones protégées",
+    "contexte": "Un gestionnaire de parc naturel souhaite classer des zones de conservation selon leur altitude et leur niveau de protection.",
+    "enonce": "Déroulez l'algorithme suivant pour chacun des jeux de valeurs proposés. Pour chaque étape, indiquez la valeur des variables dans un tableau de suivi.",
+    "algorithme": "Classe Zone\n  Attributs:\n    altitude, l'altitude de la zone\n    nom, le nom de la zone\n  Constructeur(n, a):\n    nom ← n\n    altitude ← a\n  Méthode obtenir_niveau():\n    Renvoyer altitude\n    Fin\n  Fin\n\nClasse ZoneProtegee(Zone)\n  Attributs:\n    indice_risque, la valeur du risque (0 à 10)\n  Constructeur(n, a, r):\n    super.Constructeur(n, a)\n    indice_risque ← r\n  Méthode obtenir_niveau():\n    Renvoyer altitude + indice_risque\n    Fin\n  Fin\n\nAlgorithme CalculerIndice(z):\n  Entrée:\n    z, l'objet zone à analyser\n  Sortie:\n    i, l'indice final calculé\n  Début\n    i ← z.obtenir_niveau()\n    Afficher \"Indice final :\", i\n    Renvoyer i\n  Fin",
+    "cas": [
+      "z = nouvelle ZoneProtegee(\"Pic Nord\", 1500, 5)",
+      "z = nouvelle ZoneProtegee(\"Vallée Verte\", 200, 10)",
+      "z = nouvelle Zone(\"Plaine\", 50)"
+    ],
+    "consignes": [
+      "Notez bien quelle méthode est appelée pour chaque objet.",
+      "Faites attention à la différence entre les objets des deux classes."
+    ],
+    "aide": "Pour les objets de type ZoneProtegee, la méthode obtenir_niveau est celle définie dans la classe ZoneProtegee. Pour les objets de type Zone, utilisez la méthode héritée de la classe mère.",
+    "type": "derouler"
+  },
+  "params": {
+    "domain": "géographie",
+    "notions": [
+      "héritage entre classes"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-12T06:40:56.175Z"
+}

@@ -1,0 +1,32 @@
+{
+  "type": "ecrire",
+  "titre": "Recherche de la profondeur maximale d'un arbre",
+  "data": {
+    "titre": "Recherche de la profondeur maximale d'un arbre",
+    "contexte": "Dans un arbre généalogique simplifié, chaque nœud représente un individu et ses successeurs sont ses enfants directs.",
+    "enonce": "On souhaite déterminer la profondeur maximale de cet arbre. La profondeur est définie comme le nombre maximum d'étapes pour atteindre une feuille en partant de la racine. L'algorithme doit explorer récursivement les successeurs de chaque nœud pour trouver ce chemin le plus long.",
+    "entrees": [
+      {
+        "nom": "racine",
+        "description": "le nœud de départ de l'arbre (un nœud sans parent)"
+      }
+    ],
+    "sortie": "un entier représentant le nombre maximal de niveaux de l'arbre",
+    "consignes": [
+      "écrire l'algorithme en pseudo-code",
+      "utiliser une fonction récursive",
+      "respecter strictement les conventions de notation du cours"
+    ],
+    "aide": "Si un nœud n'a pas de successeur, sa profondeur est de 1, sinon elle est égale à 1 plus la profondeur maximale de ses successeurs.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "mathématiques",
+    "notions": [
+      "arbres"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T18:14:45.035Z"
+}

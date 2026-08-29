@@ -1,0 +1,30 @@
+{
+  "type": "lire",
+  "titre": "Dégâts totaux de l'inventaire",
+  "data": {
+    "titre": "Dégâts totaux de l'inventaire",
+    "contexte": "Dans un jeu de rôle, chaque arme possède une valeur de dégâts stockée dans un dictionnaire. L'inventaire du joueur est une liste de noms d'armes.",
+    "enonce": "Lire le programme suivant et indiquer ce qu'il affiche.",
+    "code_python": "armes = {\"épée\": 10, \"arc\": 8, \"bâton\": 5}\ninventaire = [\"épée\", \"arc\", \"épée\\[\\n\"\n\ndef calculer_degats_total(objets, table_degats):\n    total = 0\n    for objet in objets:\n        total = total + table_degats[objet]\n    return total\n\nprint(calculer_degats_total(inventaire, armes))\nprint(calculer_degats_total([\"bâton\", \"bâton\"], armes))",
+    "questions": [
+      "Que renvoie le premier appel de la fonction calculer_degats_total ?",
+      "Que renvoie le second appel de la fonction calculer_degats_total ?",
+      "Si on ajoutait le nom \"dague\" dans la liste inventaire sans l'ajouter au dictionnaire armes, que se produirait-il à l'exécution ?"
+    ],
+    "consignes": [
+      "Indiquer la valeur numérique pour les deux premières questions.",
+      "Pour la troisième question, décrire l'erreur ou le comportement précis."
+    ],
+    "aide": "Suivre la variable total à chaque tour de boucle en consultant le dictionnaire table_degats avec la clé objet.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "jeux video",
+    "notions": [
+      "dictionnaires"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T09:21:57.076Z"
+}

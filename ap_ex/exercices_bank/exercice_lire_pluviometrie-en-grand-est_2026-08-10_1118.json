@@ -1,0 +1,30 @@
+{
+  "type": "lire",
+  "titre": "Pluviométrie en Grand Est",
+  "data": {
+    "titre": "Pluviométrie en Grand Est",
+    "contexte": "Un service météo régional analyse les précipitations moyennes de quatre grandes villes du Grand Est sur le premier trimestre.",
+    "enonce": "Lire le programme suivant et indiquer ce qu'il affiche.",
+    "code_python": "villes = [\"Reims\", \"Metz\", \"Nancy\", \"Strasbourg\"]\npluie = [\n    [45, 38, 52],\n    [50, 42, 55],\n    [48, 40, 50],\n    [42, 35, 48]\n]\n\ndef moyenne_ligne(mat, i):\n    total = 0\n    for val in mat[i]:\n        total = total + val\n    return total / len(mat[i])\n\nprint(f\"Moyenne {villes[3]} : {moyenne_ligne(pluie, 3)}\"):\n\nmax_total = -1\nville_max = \"\"\nfor idx in range(len(villes)):\n    s = 0\n    for val in pluie[idx]:\n        s = s + val\n    if s > max_total:\n        max_total = s\n        ville_max = villes[idx]\n\nprint(f\"Ville la plus arrosée : {ville_max}\"):",
+    "questions": [
+      "Que affiche le programme lors de son exécution ?",
+      "Quelle valeur la fonction `moyenne_ligne` renvoie-t-elle pour l'appel `moyenne_ligne(pluie, 1)` ?",
+      "Que se passerait-il si l'on appelait `moyenne_ligne(pluie, 4)` ?"
+    ],
+    "consignes": [
+      "Écrire les affichages exactement tels qu'ils apparaissent (une ligne par print).",
+      "Pour la valeur numérique, donner le résultat du calcul."
+    ],
+    "aide": "Suivre l'exécution de la fonction `moyenne_ligne` pour l'indice 3 (Strasbourg), puis simuler la boucle principale qui compare les totaux de chaque ville.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "la région Grand-Est",
+    "notions": [
+      "listes de listes (matrices)"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:18:34.256Z"
+}

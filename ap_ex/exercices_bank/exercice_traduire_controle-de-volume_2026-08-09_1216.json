@@ -1,0 +1,29 @@
+{
+  "type": "traduire",
+  "titre": "Contrôle de volume",
+  "data": {
+    "titre": "Contrôle de volume",
+    "context": "Un ingénieur du son souhaite vérifier si le volume d'une piste musicale est trop élevé ou non.",
+    "enonce": "Traduisez l'algorithme suivant en langage Python afin de vérifier si un niveau sonore est considéré comme 'Saturé' ou 'Correct'.",
+    "algorithme": "Entrée :\n  niveau_sonore\nSortie :\n  Afficher message\nDébut\n  Si niveau_sonore > 90 alors\n    message ← \"Saturé\"\n  Sinon\n    message ← \"Correct\"\n  Fin\n  Afficher message\nFin",
+    "consignes": [
+      "Écrivez une fonction nommée verifier_volume qui prend un paramètre nommé niveau_sonore.",
+      "La fonction ne doit pas renvoyer de valeur, elle doit simplement afficher le message.",
+      "Ajoutez une ligne à la fin de votre code pour tester la fonction avec une valeur de 95."
+    ],
+    "aide": "L'instruction 'Si condition alors' se traduit par 'if condition:', et la structure 'Sinon' par 'else:'.",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "musique",
+    "notions": [
+      "variables et affectation",
+      "conditionnelle (Si / Sinon)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-09T10:16:29.875Z"
+}

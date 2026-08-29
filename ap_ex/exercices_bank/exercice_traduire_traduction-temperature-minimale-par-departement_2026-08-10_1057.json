@@ -1,0 +1,27 @@
+{
+  "type": "traduire",
+  "titre": "Traduction : température minimale par département",
+  "data": {
+    "titre": "Traduction : température minimale par département",
+    "contexte": "Cet algorithme reçoit un dictionnaire associant un nom de département à sa température minimale enregistrée, puis renvoie la température minimale parmi toutes les valeurs présentes.",
+    "enonce": "Écrivez une fonction Python nommée temp_min_departements qui prend en paramètre un dictionnaire températures (nom de département → température minimale en degrés Celsius) et qui renvoie la température minimale parmi toutes les valeurs du dictionnaire.",
+    "algorithme": "Entrée : températures (dictionnaire : nom de département → température minimale en °C)\nSortie : temp_min (la plus petite température enregistrée)\nDébut\n  temp_min ← une grande valeur\n  Pour chaque (dep, temp) dans températures faire\n    Si temp < temp_min alors\n      temp_min ← temp\n    Fin\n  Fin\n  Renvoyer temp_min\nFin",
+    "consignes": [
+      "Nom de la fonction : temp_min_departements",
+      "Paramètre : températures (dictionnaire de str vers float)",
+      "La fonction doit renvoyer un nombre float correspondant à la température minimale",
+      "Écrivez un appel de test simple avec un dictionnaire de 3 départements"
+    ],
+    "aide": "Pour itérer sur un dictionnaire avec ses clés et valeurs, utilisez D.items() dans une boucle for.",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "géographie",
+    "notions": [
+      "dictionnaires"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-10T08:57:07.751Z"
+}

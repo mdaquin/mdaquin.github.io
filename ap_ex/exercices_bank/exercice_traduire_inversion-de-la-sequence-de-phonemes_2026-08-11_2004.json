@@ -1,0 +1,27 @@
+{
+  "type": "traduire",
+  "titre": "Inversion de la séquence de phonèmes",
+  "data": {
+    "titre": "Inversion de la séquence de phonèmes",
+    "contexte": "En linguistique, l'étude de la structure d'un mot peut nécessiter d'inverser l'ordre des sons (phonèmes) pour analyser des propriétés de symétrie.",
+    "enonce": "Traduisez l'algorithme suivant en langage Python pour créer une fonction capable d'inverser l'ordre des éléments d'une liste en utilisant une structure de type pile.",
+    "algorithme": "Fonction InverserSons(liste_sons):\n  Début\n  P ← pile vide\n  Resultat ← []\n  Pour chaque son dans liste_sons faire\n    empiler(P, son)\n  Fin\n  Tant que P n'est pas vide faire\n    son_extrait ← dépiler(P)\n    Ajouter(Resultat, son_extrait)\n  Fin\n  Renvoyer Resultat\n  Fin",
+    "consignes": [
+      "Écrivez une fonction nommée inverser_sons qui prend une liste en paramètre.",
+      "Utilisez la méthode.append(x) pour empiler et.pop() pour dépiler.",
+      "La fonction doit renvoyer la nouvelle liste inversée.",
+      "Testez votre fonction avec la liste ['ba', 'e', 'te'] et vérifiez que l'ordre est bien inversé."
+    ],
+    "aide": "Pour vider une pile jusqu'à ce qu'elle soit vide, utilisez une boucle 'while' avec la condition 'len(P) > 0'.",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "linguistique",
+    "notions": [
+      "files (FIFO)"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T18:04:10.602Z"
+}

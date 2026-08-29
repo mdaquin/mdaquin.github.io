@@ -1,0 +1,30 @@
+{
+  "type": "traduire",
+  "titre": "Analyse de scores psychométriques",
+  "data": {
+    "titre": "Analyse de scores psychométriques",
+    "contexte": "Calculer la moyenne des scores d'anxiété et de dépression pour une cohorte de patients.",
+    "enonce": "Traduire l'algorithme ci-dessous en Python. Écrire deux fonctions distinctes (calculer_moyenne et extraire_scores) puis le programme principal qui prépare les données, appelle ces fonctions et affiche le résultat.",
+    "algorithme": "Fonction CalculerMoyenne(valeurs) :\n  somme ← 0\n  Pour chaque v dans valeurs faire\n    somme ← somme + v\n  Fin\n  Si Longueur(valeurs) > 0 alors\n    Renvoyer somme / Longueur(valeurs)\n  Sinon\n    Renvoyer 0\n  Fin\nFin\n\nFonction ExtraireScores(cohorte, dimension_cible) :\n  extraits ← []\n  Pour chaque patient dans cohorte faire\n    Si dimension_cible ∈ patient alors\n      Ajouter(extraits, patient[dimension_cible])\n    Fin\n  Fin\n  Renvoyer extraits\nFin\n\nDébut\n  cohorte ← [\n    {\"id\": 1, \"anxiete\": 2, \"depression\": 1},\n    {\"id\": 2, \"anxiete\": 4, \"depression\": 3},\n    {\"id\": 3, \"anxiete\": 3, \"depression\": 2}\n  ]\n  dimensions ← [\"anxiete\", \"depression\" ]\n  moyennes ← {}\n  Pour chaque dim dans dimensions faire\n    notes ← ExtraireScores(cohorte, dim)\n    m ← CalculerMoyenne(notes)\n    moyennes[dim] ← m\n  Fin\n  Afficher \"Moyennes par dimension :\", moyennes\nFin",
+    "consignes": [
+      "La fonction calculer_moyenne(liste_valeurs) prend une liste de nombres et renvoie leur moyenne (float) ou 0 si la liste est vide.",
+      "La fonction extraire_scores(liste_patients, dim) prend une liste de dictionnaires et une clé (chaîne), renvoie la liste des valeurs associées à cette clé pour chaque patient qui la possède.",
+      "Dans le programme principal, recréer la liste cohorte et la liste dimensions, initialiser le dictionnaire moyennes, boucler sur dimensions, appeler les deux fonctions, stocker le résultat dans moyennes, puis afficher le dictionnaire final."
+    ],
+    "aide": "Pour parcourir une liste : for element in liste:. Pour un dictionnaire : d[cle]. Pour ajouter à une liste : liste.append(valeur). Longueur : len(liste). Division : /. Les fonctions se déclarent avec def nom(param): ... return valeur.",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "psychologie",
+    "notions": [
+      "boucles imbriquées",
+      "listes / tableaux",
+      "chaînes de caractères",
+      "dictionnaires",
+      "fonctions"
+    ],
+    "exclusions": [],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T09:46:35.238Z"
+}

@@ -1,0 +1,43 @@
+{
+  "type": "ecrire",
+  "titre": "Comptage arrêts spéciaux tramway Nancy",
+  "data": {
+    "titre": "Comptage arrêts spéciaux tramway Nancy",
+    "contexte": "La ligne de tramway T1 de Nancy dessert plusieurs arrêts dont la place Stanislas, qui est l'arrêt numéro 3. Chaque jour, le tramway effectue un nombre fixe d'arrêts et embarque 10 passagers à chaque arrêt. On souhaite savoir combien de fois l'arrêt spécial est visité avant que le total des passagers n'atteigne un seuil donné.",
+    "enonce": "Écrire un algorithme qui, étant donné le nombre d'arrêts par jour et le seuil de passagers, simule le fonctionnement du tramway jour après jour. À chaque jour, pour chaque arrêt, on ajoute 10 passagers au total. Si l'arrêt courant est le numéro 3, on incrémente un compteur. La simulation s'arrête dès que le total de passagers atteint ou dépasse le seuil. L'algorithme renvoie le nombre de visites de l'arrêt spécial.",
+    "entrees": [
+      {
+        "nom": "arretsParJour",
+        "description": "entier positif, nombre d'arrêts effectués par le tramway chaque jour"
+      },
+      {
+        "nom": "seuil",
+        "description": "entier positif, nombre total de passagers à partir duquel la simulation s'arrête"
+      }
+    ],
+    "sortie": "entier, nombre de fois où l'arrêt numéro 3 a été visité avant l'arrêt de la simulation",
+    "consignes": [
+      "Écrire l'algorithme en pseudo-code selon les conventions du cours.",
+      "Utiliser une boucle non bornée (Tant que) pour les jours.",
+      "Utiliser une boucle bornée (Pour) pour les arrêts d'une journée.",
+      "Utiliser une conditionnelle (Si / Sinon) pour détecter l'arrêt spécial.",
+      "Imbriquer la boucle bornée à l'intérieur de la boucle non bornée."
+    ],
+    "aide": "Pensez à initialiser le total des passagers et le compteur d'arrêts spéciaux avant la boucle des jours, et à mettre à jour le total à chaque arrêt.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "ville de nancy",
+    "notions": [
+      "conditionnelle (Si / Sinon)",
+      "boucle bornée (Pour)",
+      "boucle non bornée (Tant que)",
+      "boucles imbriquées"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T05:30:50.868Z"
+}

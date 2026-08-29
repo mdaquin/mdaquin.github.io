@@ -1,0 +1,28 @@
+{
+  "type": "traduire",
+  "titre": "Calcul de l'indice de réfraction de la lumière dans l'eau de l'Est",
+  "data": {
+    "titre": "Calcul de l'indice de réfraction de la lumière dans l'eau de l'Est",
+    "contexte": "On souhaite simuler la variation de l'indice de réfraction de la lumière traversant les eaux du lac de Gérardmer selon l'angle d'incidence.",
+    "enonce": "Traduisez l'algorithme suivant en Python en utilisant une bibliothèque mathématique pour les fonctions trigonométriques.",
+    "algorithme": "Fonction CalculIndice(angle_degré)\n  Résultat ← 1.0 / Cosinus(angle_degré)\n  # La fonction Cosinus renvoie le cosinus de l'angle\n  Renvoyer Résultat\nFin\n\nDébut\n  Angle ← 30\n  Indice ← CalculIndice(Angle)\n  Afficher \"L'indice est :\", Indice\nFin",
+    "consignes": [
+      "Importez le module math en première ligne de votre code.",
+      "Créez une fonction nommée calcul_indice qui prend un paramètre nommé angle_degré.",
+      "La fonction doit utiliser la fonction math.cos pour le calcul.",
+      "Attention : la fonction math.cos travaille en radians, l'algorithme utilise des degrés. Vous devrez convertir l'angle en radians.",
+      "Ajoutez un appel de test à la fin du programme pour calculer l'indice avec un angle de 30 degrés et l'afficher."
+    ],
+    "aide": "La fonction math.radians(x) permet de convertir des degrés en radians.",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "la région Grand-Est",
+    "notions": [
+      "modules et bibliothèques"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-12T06:45:12.922Z"
+}

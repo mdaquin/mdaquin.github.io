@@ -1,0 +1,32 @@
+{
+  "type": "ecrire",
+  "titre": "Inversion de l'ordre des syllabes",
+  "data": {
+    "titre": "Inversion de l'ordre des syllabes",
+    "contexte": "En linguistique, pour étudier la structure de certains mots, on peut vouloir traiter les syllabes dans l'ordre inverse de leur prononciation.",
+    "enonce": "Écrire un algorithme qui prend en entrée une file contenant les syllabes d'un mot et qui les traite pour construire une nouvelle file où les syllabes sont dans l'ordre inverse. L'algorithme doit utiliser une pile pour effectuer cette inversion.",
+    "entrees": [
+      {
+        "nom": "file_syllabes",
+        "description": "une file contenant les syllabes d'un mot (ex: ['ba', 'be', 'bo'])"
+      }
+    ],
+    "sortie": "une nouvelle file contenant les mêmes syllabes dans l'ordre inverse",
+    "consignes": [
+      "écrire l'algorithme en pseudo-code en respectant les conventions du cours",
+      "utiliser une structure de type pile pour réaliser l'inversion",
+      "respecter les règles d'accès aux files (retirer en tête) et aux piles (dépiler le sommet)"
+    ],
+    "aide": "Pensez à vider la première file dans la pile, puis à vider la pile dans la seconde file.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "linguistique",
+    "notions": [
+      "files (FIFO)"
+    ],
+    "exclusions": [],
+    "level": "découverte"
+  },
+  "generatedAt": "2026-08-11T18:09:02.254Z"
+}

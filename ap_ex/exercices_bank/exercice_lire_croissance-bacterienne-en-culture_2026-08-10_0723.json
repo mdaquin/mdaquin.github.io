@@ -1,0 +1,32 @@
+{
+  "type": "lire",
+  "titre": "Croissance bactérienne en culture",
+  "data": {
+    "titre": "Croissance bactérienne en culture",
+    "contexte": "On simule l'évolution d'une population de bactéries en boîte de Pétri sur plusieurs jours. La division cellulaire est plus intense à midi (heure 2).",
+    "enonce": "Lire le programme Python ci-dessous et répondre aux questions sans l'exécuter.",
+    "code_python": "population_initiale = 10\npopulation = population_initiale\nnombre_jours = 3\nheures_par_jour = 4\n\nfor jour in range(nombre_jours):\n    for heure in range(heures_par_jour):\n        if heure == 2:  # pic de division à midi\n            population = population * 2\n        else:\n            population = population + 5\n\nprint(population)",
+    "questions": [
+      "Quelle valeur le programme affiche-t-il à la fin de son exécution ?",
+      "Quelle est la valeur de la variable population après l'exécution complète du premier jour (jour 0) ?",
+      "Si on modifie la première ligne par `population_initiale = 0`, quelle valeur le programme affiche-t-il ?"
+    ],
+    "consignes": [
+      "Donner uniquement les valeurs numériques demandées."
+    ],
+    "aide": "Simulez l'exécution pas à pas en notant la valeur de population à chaque changement d'heure.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "biologie",
+    "notions": [
+      "conditionnelle (Si / Sinon)",
+      "boucles imbriquées"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T05:23:39.869Z"
+}

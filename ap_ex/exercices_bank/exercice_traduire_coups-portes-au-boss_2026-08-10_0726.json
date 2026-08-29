@@ -1,0 +1,27 @@
+{
+  "type": "traduire",
+  "titre": "Coups portés au boss",
+  "data": {
+    "titre": "Coups portés au boss",
+    "contexte": "Un joueur affronte un boss dont les points de vie diminuent à chaque coup porté. L'algorithme détermine combien de coups sont nécessaires pour le vaincre.",
+    "enonce": "Traduisez l'algorithme suivant en une fonction Python nommée `coups_pour_vaincre`. La fonction prend deux paramètres entiers `pv_initial` et `degats` et renvoie le nombre de coups nécessaires.",
+    "algorithme": "Entrée : pv_initial (entier), degats (entier)\nSortie : nb_coups (entier)\nDébut\n  pv_boss ← pv_initial\n  nb_coups ← 0\n  Tant que pv_boss > 0 faire\n    pv_boss ← pv_boss - degats\n    nb_coups ← nb_coups + 1\n  Fin\n  Renvoyer nb_coups\nFin",
+    "consignes": [
+      "Écrivez la fonction `coups_pour_vaincre(pv_initial, degats)`.",
+      "Ajoutez un appel de test avec `pv_initial = 50` et `degats = 12` et affichez le résultat."
+    ],
+    "aide": "La structure « Tant que condition faire » se traduit par `while condition:` en Python. L'indentation délimite le bloc de la boucle.",
+    "type": "traduire"
+  },
+  "params": {
+    "domain": "jeux video",
+    "notions": [
+      "boucle non bornée (Tant que)"
+    ],
+    "exclusions": [
+      "liste"
+    ],
+    "level": "intermédiaire"
+  },
+  "generatedAt": "2026-08-10T05:26:33.019Z"
+}

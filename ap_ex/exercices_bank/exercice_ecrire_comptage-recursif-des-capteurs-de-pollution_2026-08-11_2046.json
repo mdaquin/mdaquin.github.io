@@ -1,0 +1,43 @@
+{
+  "type": "ecrire",
+  "titre": "Comptage récursif des capteurs de pollution",
+  "data": {
+    "titre": "Comptage récursif des capteurs de pollution",
+    "contexte": "La ville de Nancy dispose de capteurs de qualité de l'air répartis dans plusieurs quartiers. Ces relevés sont organisés dans un tableau où chaque ligne représente un quartier et chaque colonne un capteur spécifique.",
+    "enonce": "Écrire une fonction récursive permettant de compter le nombre de capteurs affichant une valeur de pollution strictement supérieure à un seuil critique. L'algorithme doit explorer chaque capteur de la matrice et ne doit utiliser aucune boucle.",
+    "entrees": [
+      {
+        "nom": "matrice_relevés",
+        "description": "Une liste de listes (matrice) représentant les mesures de pollution. Chaque sous-liste correspond à un quartier."
+      },
+      {
+        "nom": "seuil",
+        "description": "Un nombre réel représentant la limite de pollution à dépasser."
+      },
+      {
+        "nom": "index_ligne",
+        "description": "L'indice de la ligne (quartier) en cours d'examen (commence à 0)."
+      }
+    ],
+    "sortie": "Le nombre total de capteurs dépassant le seuil dans les lignes restantes.",
+    "consignes": [
+      "Rédiger l'algorithme en pseudo-code.",
+      "L'algorithme doit être obligatoirement récursif.",
+      "L'utilisation de toute boucle (Pour, Tant que) est strictement interdite.",
+      "Identifier clairement le cas d'arrêt et le cas général.",
+      "La fonction doit traiter la matrice ligne par ligne via la récursion."
+    ],
+    "aide": "Pour traiter chaque ligne de la matrice, votre fonction peut appeler une autre fonction récursive qui parcourt les éléments d'une liste, ou bien vous pouvez traiter le premier élément de la ligne et appeler la fonction sur le reste de la liste.",
+    "type": "ecrire"
+  },
+  "params": {
+    "domain": "ville de nancy",
+    "notions": [
+      "listes de listes (matrices)",
+      "récursivité"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-11T18:46:25.958Z"
+}

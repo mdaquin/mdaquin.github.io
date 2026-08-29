@@ -1,0 +1,32 @@
+{
+  "type": "lire",
+  "titre": "Analyse de la profondeur d'un arbre de morphologie",
+  "data": {
+    "titre": "Analyse de la profondeur d'un arbre de morphologie",
+    "contexte": "En linguistique computationnelle, on utilise des arbres pour représenter la structure syntaxique d'une phrase. La profondeur d'un nœud est le nombre de liens nécessaires pour atteindre une feuille à partir de ce nœud.",
+    "enonce": "Lire le programme Python suivant et répondre aux questions.",
+    "code_python": "class Noeud:\n    def __init__(self, valeur):\n        self.valeur = valeur\n        self.successeurs = []\n\ndef calculer_profondeur_max(nœud):\n    if len(nœud.successeurs) == 0:\n        return 0\n    \n    max_prof = 0\n    for enfant in nœud.successeurs:\n        prof_enfant = 1 + calculer_profondeur_max(enfant)\n        if prof_enfant > max_prof:\n            max_prof = prof_enfant\n    \n    return max_prof\n\n# Construction d'un arbre syntaxique\nracine = Noeud(\"S\")\nn1 = Noeud(\"NP\")\nn2 = Noeud(\"VP\")\nn3 = Noeud(\"N\")\nn4 = Noeud(\"V\")\n\nracine.successeurs = [n1, n2]\nn1.successeurs = [n3]\nn2.successeurs = [n4]\n\nprint(calculer_profondeur_max(racine))",
+    "questions": [
+      "Que renvoie l'appel de la fonction `calculer_profondeur_max(racine)` avec l'arbre construit?",
+      "Si l'on considère un arbre dont le nombre de nœuds est n, et que chaque nœud possède au plus deux successeurs, quel est le nombre maximal d'appels à la fonction `calculer_profondeur_max` dans le pire des cas (un arbre en ligne)?",
+      "Quelle est la classe de complexité temporelle de cet algorithme en fonction du nombre total de nœuds n dans l'arbre?"
+    ],
+    "consignes": [
+      "Pour la question sur le nombre d'appels, donnez une expression en fonction de n.",
+      "Pour la complexité, utilisez la notation O(f(n))."
+    ],
+    "aide": "Pour la question sur le nombre d'appels, tracez l'arbre et comptez combien de fois la fonction est appelée pour chaque nœud.",
+    "type": "lire"
+  },
+  "params": {
+    "domain": "linguistique",
+    "notions": [
+      "chaînes de caractères",
+      "arbres",
+      "complexité algorithmique"
+    ],
+    "exclusions": [],
+    "level": "avancé"
+  },
+  "generatedAt": "2026-08-12T07:42:02.514Z"
+}
