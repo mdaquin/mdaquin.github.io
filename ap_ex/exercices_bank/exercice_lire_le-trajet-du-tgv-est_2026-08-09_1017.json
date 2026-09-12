@@ -5,7 +5,7 @@
     "titre": "Le trajet du TGV Est",
     "context": "Un contrôleur de train souhaite calculer la distance parcourue par un train circulant entre Strasbourg et Metz en fonction du nombre de stations traversées.",
     "enonce": "Voici un programme Python qui calcule la distance totale parcourue par un train. Lisez attentivement le code et répondez aux questions.",
-    "code_python": "def calculer_distance(nombre_stations):\n    distance_totale = 0\n    for i in range(1, nombre_stations + 1):\n        distance_totale = distance_totale + 15\n    \n    if distance_totale > 50 :\n        distance_totale = distance_totale + 10\n    else:\n        distance_totale = distance_totale + 5\n    \n    return distance_totale",
+    "code_python": "def calculer_distance(nombre_stations):\n    distance_totale = 0\n    for i in range(1, nombre_stations + 1):\n        distance_totale = distance_totale + 15\n    \n    if distance_totale > 50:\n        distance_totale = distance_totale + 10\n    else:\n        distance_totale = distance_totale + 5\n    \n    return distance_totale",
     "questions": [
       "Quelle est la valeur renvoyée par la fonction si nombre_stations vaut 3?",
       "Quelle est la valeur renvoyée par la fonction si nombre_stations vaut 2?",
