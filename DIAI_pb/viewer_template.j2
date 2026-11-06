@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reasoning Problems</title>
+<style>
+  :root {
+    --background: #fbfaf7;
+    --text: #1c1b19;
+    --muted: #5f5c55;
+    --accent: #1f4e8c;
+    --accent-soft: #e6edf6;
+    --rule: #d9d6cd;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    background: var(--background);
+    color: var(--text);
+    font-family: Georgia, "Times New Roman", serif;
+  }
+  header, footer {
+    flex: none;
+    display: flex;
+    align-items: center;
+    padding: 1vh 2.5vw;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  header { border-bottom: 1px solid var(--rule); }
+  footer { justify-content: center; border-top: 1px solid var(--rule); }
+  select {
+    width: 100%;
+    padding: 0.4em;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--muted);
+    font: inherit;
+    font-size: clamp(14px, 1.8vh, 22px);
+  }
+  button {
+    padding: 0.5em 1.4em;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font: inherit;
+    font-size: clamp(16px, 2.6vh, 34px);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.15); }
+  button:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  main {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    overflow: auto;
+  }
+  #content {
+    width: 100%;
+    margin: auto;
+    padding: 0.7em 4vw;
+    line-height: 1.38;
+  }
+  .narrative { white-space: pre-line; }
+  .question {
+    margin-top: 0.8em;
+    padding-top: 0.6em;
+    border-top: 2px solid var(--accent);
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .recap {
+    margin-bottom: 0.7em;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 2em 1fr;
+    margin-bottom: 0.65em;
+  }
+  .step-number { color: var(--accent); font-weight: 700; }
+  .step-type {
+    color: var(--accent);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .step-uses { color: var(--muted); font-size: 0.85em; }
+  .field-label { font-weight: 700; }
+  .conclusion {
+    margin-top: 0.9em;
+    padding: 0.6em 0.8em;
+    border-left: 0.3em solid var(--accent);
+    background: var(--accent-soft);
+    font-weight: 700;
+  }
+  .conclusion-label {
+    display: block;
+    color: var(--accent);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 0.72em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+<header>
+  <select id="picker" aria-label="Select a problem"></select>
+</header>
+<main id="stage">
+  <div id="content"></div>
+</main>
+<footer>
+  <button id="toggle" type="button"></button>
+</footer>
+
+<script>
+const problems = {{ problems | tojson }};
+
+const MIN_FONT_SIZE = 16;
+const MAX_FONT_SIZE_RATIO = 0.085;
+
+const picker = document.getElementById("picker");
+const stage = document.getElementById("stage");
+const content = document.getElementById("content");
+const toggle = document.getElementById("toggle");
+
+let showingSolution = false;
+
+function element(className, text) {
+  const node = document.createElement("div");
+  node.className = className;
+  if (text !== undefined) node.textContent = String(text);
+  return node;
+}
+
+function labelledField(className, label, value) {
+  const node = element(className);
+  const labelNode = document.createElement("span");
+  labelNode.className = "field-label";
+  labelNode.textContent = label + " ";
+  node.append(labelNode, String(value));
+  return node;
+}
+
+function renderProblem(problem) {
+  content.replaceChildren(
+    element("narrative", problem.narrative),
+    element("question", problem.question),
+  );
+}
+
+function renderStep(step, index) {
+  const node = element("step");
+  const body = element("step-body");
+  if (step.reasoning) body.append(element("step-type", step.reasoning));
+  if (step.uses) body.append(labelledField("step-uses", "From:", step.uses));
+  if (step.result) body.append(labelledField("step-result", "Result:", step.result));
+  node.append(element("step-number", (step.id ?? index + 1) + "."), body);
+  return node;
+}
+
+function renderSolution(problem) {
+  content.replaceChildren(
+    element("recap", problem.question),
+    ...problem.steps.map(renderStep),
+  );
+  const conclusion = element("conclusion");
+  conclusion.append(element("conclusion-label", "Conclusion according to " + problem.model));
+  conclusion.append(problem.conclusion == null ? "The model gave no conclusion." : String(problem.conclusion));
+  content.append(conclusion);
+}
+
+// Use the largest text size at which everything fits on screen. Text that cannot
+// fit at the minimum size scrolls instead.
+function fitText() {
+  stage.style.overflow = "hidden";
+  let low = MIN_FONT_SIZE;
+  let high = Math.max(MIN_FONT_SIZE, window.innerHeight * MAX_FONT_SIZE_RATIO);
+  while (high - low > 0.5) {
+    const middle = (low + high) / 2;
+    content.style.fontSize = middle + "px";
+    if (stage.scrollHeight <= stage.clientHeight) low = middle;
+    else high = middle;
+  }
+  content.style.fontSize = low + "px";
+  stage.style.overflow = "";
+  stage.scrollTop = 0;
+}
+
+function render() {
+  const problem = problems[picker.value];
+  if (showingSolution) renderSolution(problem);
+  else renderProblem(problem);
+  toggle.textContent = showingSolution ? "Back to the problem" : "Show steps and conclusion";
+  fitText();
+}
+
+let group = null;
+problems.forEach((problem, index) => {
+  const groupLabel = problem.model + " · " + problem.run;
+  if (!group || group.label !== groupLabel) {
+    group = document.createElement("optgroup");
+    group.label = groupLabel;
+    picker.append(group);
+  }
+  const option = document.createElement("option");
+  option.value = index;
+  option.textContent = [problem.id, problem.domain, problem.difficulty].join(" · ");
+  group.append(option);
+});
+
+picker.addEventListener("change", () => {
+  showingSolution = false;
+  render();
+});
+toggle.addEventListener("click", () => {
+  showingSolution = !showingSolution;
+  render();
+});
+window.addEventListener("resize", fitText);
+
+render();
+</script>
+</body>
+</html>
